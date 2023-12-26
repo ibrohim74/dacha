@@ -1,4 +1,3 @@
-
 {
   "users": [
     {
@@ -14,6 +13,13 @@
       "role": "seller",
       "username": "testSeller",
       "id": 2
+    },
+    {
+      "email": "test@mail.com",
+      "password": "$2a$10$pPSMUCF6.CWslhmJrOPMOeLuZyCrMt7/0NiwPTN57i8Xm912KIDu6",
+      "role": "user",
+      "username": "qwewqe",
+      "id": 3
     }
   ]
 }
