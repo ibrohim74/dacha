@@ -1,0 +1,19 @@
+
+{
+  "users": [
+    {
+      "email": "testUser@mail.com",
+      "password": "$2a$10$.LyacWHdqMaL2hrvvWSP/.e0.uYglw44wmZh.EsIBkR04y5Gt.8oy",
+      "role": "user",
+      "username": "testUser",
+      "id": 1
+    },
+    {
+      "email": "testSeller@mail.com",
+      "password": "$2a$10$XmwCc0qbz4rg0Jy3ruBq5ekX8GPkegz/L5U6O8SESSGc60qHhTugG",
+      "role": "seller",
+      "username": "testSeller",
+      "id": 2
+    }
+  ]
+}
