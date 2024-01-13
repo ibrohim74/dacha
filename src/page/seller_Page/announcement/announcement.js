@@ -1,90 +1,109 @@
-import React, {useState} from 'react';
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import {createEventId, INITIAL_EVENTS} from "./event-utils";
+import React, {useEffect, useState} from 'react';
+
+import {formatDate} from "@fullcalendar/core";
+import {
+    Box,
+    List,
+    ListItem,
+    ListItemText,
+    Typography,
+    useTheme,
+} from "@mui/material";
+import Header from "../../../components/header_adminPage";
+import {tokens} from "../../../components/theme";
+import Calendar from "./component/calendar";
+import {GetEvents} from "./modul/announcementCRUD";
+import {Button} from "antd";
+import {useNavigate} from "react-router-dom";
+import {CABINET, CREATE_ANNOUNCEMENT, UPDATE_ANNOUNCEMENT} from "../../../processes/utils/consts";
+import UpdateAnnouncement from "./update_announcement";
+
 
 // announcement = e'lon
 
 const Announcement = () => {
-    const [state , setState]= useState({
-        weekendsVisible: true,
-        currentEvents: []
-    })
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [events, setEvents] = useState([])
+    console.log(events)
+    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await GetEvents();
+                setEvents(result);
+            } catch (error) {
+                console.error("Xatolik:", error);
+            }
+        };
 
-    const handleWeekendsToggle = () => {
-        setState(prevState => ({ ...prevState, weekendsVisible: !prevState.weekendsVisible }));
-    }
+        fetchData();
+    }, [])
 
-    const handleDateSelect = (selectInfo) => {
-        let title = prompt('Please enter a new title for your event')
-        let calendarApi = selectInfo.view.calendar
-
-        calendarApi.unselect() // clear date selection
-
-        if (title) {
-            calendarApi.addEvent({
-                id: createEventId(),
-                title,
-                start: selectInfo.startStr,
-                end: selectInfo.endStr,
-                allDay: selectInfo.allDay
-            })
-        }
-    }
-
-    const handleEventClick = (clickInfo) => {
-        if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)){
-            clickInfo.event.remove()
-        }
-    };
-
-
-    const handleEvents = (events) => {
-        setState({
-            currentEvents: events
-        })
+    const handleUpdateEvent = (id) => {
+        navigate(CABINET+UPDATE_ANNOUNCEMENT)
     }
     return (
         <div>
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
-                initialView='dayGridMonth'
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEvents={true}
-                weekends={state.weekendsVisible}
-                initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-                select={handleDateSelect}
-                eventContent={renderEventContent} // custom render function
-                eventClick={handleEventClick}
-                eventTimeFormat={{hour12:false}}
-                locale={'ru'}
-                eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-                /* you can update a remote database when these fire:
-                eventAdd={function(){}}
-                eventChange={function(){}}
-                eventRemove={function(){}}
-                */
-            />
+            <Box m="20px">
+                <Header title="Calendar" subtitle="Announcement calendar for seller"/>
 
+                <Box display="flex" justifyContent="space-between">
+                    {/* CALENDAR SIDEBAR */}
+                    <Box
+                        flex="1 1 20%"
+                        backgroundColor={colors.primary[400]}
+                        p="15px"
+                        borderRadius="4px"
+                    >
+                        <Typography variant="h5">Events</Typography>
+                        <List>
+                            {events && events.map((event) => (
+
+                                <ListItem
+                                    key={event.id}
+                                    sx={{
+                                        backgroundColor: colors.greenAccent[500],
+                                        margin: "10px 0",
+                                        borderRadius: "2px",
+                                        flexDirection: "column"
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary={event.inputData.title}
+                                        secondary={
+                                            <Typography>
+                                                start: {formatDate(event.start, {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            })} <br/>
+                                                end: {formatDate(event.end, {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            })}
+                                            </Typography>
+                                        }
+                                    />
+                                    <Button onClick={() => handleUpdateEvent(event.id)}>Update</Button>
+                                </ListItem>
+
+
+                            ))}
+                        </List>
+                    </Box>
+
+                    {/* CALENDAR */}
+                    <Box flex="1 1 100%" ml="15px">
+                        <Calendar/>
+                    </Box>
+                </Box>
+            </Box>
         </div>
     );
 };
 
 export default Announcement;
-function renderEventContent(eventInfo) {
-    return (
-        <>
-            <b>{eventInfo.timeText}</b>
-            <i>{eventInfo.event.title}</i>
-        </>
-    )
-}
+
+

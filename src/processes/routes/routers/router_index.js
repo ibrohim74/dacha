@@ -10,9 +10,10 @@ const token = localStorage.getItem('token')
                 {Public.map(({ path, Component }) => (
                     <Route key={path} path={path} element={Component} />
                 ))}
-                {token && Layout.map(({ path, Component }) => (
+                {token ? Layout.map(({ path, Component }) => (
                     <Route key={path} path={`${path}/*`} element={Component} />
-                ))}
+                )) :  <Route path="*" element={<Navigate to="/" replace />} />}
+
             </Routes>
         </BrowserRouter>
     );

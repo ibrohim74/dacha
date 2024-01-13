@@ -3,16 +3,26 @@ import {Link, Route, Routes} from "react-router-dom";
 import {Admin, Layout, Moderate, Seller, Users} from "../../processes/utils/Routes";
 import { jwtDecode } from "jwt-decode";
 import {$host} from "../../processes/http/http";
-import {ANNOUNCEMENT, PROFILE} from "../../processes/utils/consts";
+import Sidebar from "./sidebar/Sidebar";
+import { ColorModeContext, useMode } from "../../components/theme";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import Topbar from "./topbar/Topbar";
 
 
 const LayoutCabinet = () => {
+    const [theme, colorMode] = useMode();
+    const [isSidebar, setIsSidebar] = useState(true);
     const JWT = jwtDecode(localStorage.getItem('token'))
     const [CurrentUser , setCurrentUser] = useState()
     useEffect(()=>{
         const getUser = async ()=>{
-            const res = await $host.get('users/'+JWT.sub)
-            setCurrentUser(res.data)
+            try {
+                const res = await $host.get('user/'+JWT.userId)
+                setCurrentUser(res.data)
+                console.log(res)
+            }catch (e){
+                console.log(e)
+            }
         }
         getUser()
     },[])
@@ -20,27 +30,31 @@ const LayoutCabinet = () => {
 
     return (
         <div>
-            {CurrentUser?.role === "user" && (<>
-                <Link to={PROFILE}>Profile</Link>
-            </>)}
-            {CurrentUser?.role === "seller" && (<>
-                <Link to={PROFILE}>Profile</Link>
-                <Link to={ANNOUNCEMENT}>announcement</Link>
-            </>)}
-            <Routes>
-                {CurrentUser?.role === 'user' &&  Users.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={Component} exact/>
-                ))}
-                {CurrentUser?.role === 'admin' &&  Admin.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={Component} exact/>
-                ))}
-                {CurrentUser?.role === 'moderate' &&  Moderate.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={Component} exact/>
-                ))}
-                {CurrentUser?.role === 'seller' &&  Seller.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={Component} exact/>
-                ))}
-            </Routes>
+            <ColorModeContext.Provider value={colorMode}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <div className={"layout-app"}>
+                        <Sidebar isSidebar={isSidebar} user={CurrentUser}/>
+                        <main className="content">
+                            <Topbar setIsSidebar={setIsSidebar} />
+                            <Routes>
+                                {CurrentUser?.role === "user" && Users.map(({ path, Component }) => (
+                                    <Route key={path} path={path} element={Component} />
+                                ))}
+                                {CurrentUser?.role === "seller" && Seller.map(({ path, Component }) => (
+                                    <Route key={path} path={path} element={Component} />
+                                ))}
+                                {CurrentUser?.role === "admin" && Admin.map(({ path, Component }) => (
+                                    <Route key={path} path={path} element={Component} />
+                                ))}
+                                {CurrentUser?.role === "moderate" && Moderate.map(({ path, Component }) => (
+                                    <Route key={path} path={path} element={Component} />
+                                ))}
+                            </Routes>
+                        </main>
+                    </div>
+                </ThemeProvider>
+            </ColorModeContext.Provider>
         </div>
     );
 };
