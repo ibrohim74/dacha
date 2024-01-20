@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {RegistrationAPI} from "./API";
 import {Link, useNavigate} from "react-router-dom";
-import {CABINET, LOGIN_ROUTE, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
+import {CABINET, LOGIN_ROUTE, POLICY, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
 import {Checkbox, message} from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
 
@@ -9,48 +9,86 @@ const Registration = () => {
     const [user, setUser] = useState({role: "user"});
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setIsLoading] = useState(false)
+    const [checkPolicy , setCheckPolicy] = useState(false)
+    message.config({duration:10})
 
-    
     const checkBox = (e) => {
-        if (e.target.checked){
-            setUser({...user, role:"seller"})
-        }else {
-            setUser({...user, role:"user"})
+        if (e.target.checked) {
+            setUser({...user, role: "seller"})
+        } else {
+            setUser({...user, role: "user"})
         }
     }
-    console.log(user)
-    
+
+    const isStrongPassword = (pass) => {
+        if (pass.length >= 8){
+            if (/[A-Z]/.test(pass)){
+                if (/[a-z]/.test(pass)){
+                    if (/\d/.test(pass)){
+                        if (/[!@#$%^&*(),.?":{}|<>]/.test(pass)){
+                            return true
+                        }else {
+                            message.error('simvol yoki belgi bolishi kerak')
+                        }
+                    }else {
+                        message.error("Kamida bitta raqam bo'lishi va  simvol yoki belgi bolishi kerak")
+                    }
+                }else {
+                    message.error('Kamida bitta kichik harf bolishi va raqam , simvol yoki belgi bolishi kerak')
+                }
+            }else {
+                message.error('Kamida bitta katta harf bolishi va kichik xarif , raqam , simvol yoki belgi bolishi kerak ')
+            }
+        }else {
+
+            message.error('parol 8 tadan kam bolmasligi va katta xarif , kichik xarif , raqam , simvol yoki belgi bolishi kerak')
+            return false
+        }
+    };
+
     const handleSend = async () => {
         setIsLoading(true)
         if (user.username && user.email && user.password && user.lastName && user.firstName && user.phone_number) {
-            RegistrationAPI(user).then(r => {
-                if (r === localStorage.getItem('token')) {
-                    window.location.assign(CABINET + PROFILE)
-                    setTimeout(() => {
-                        setIsLoading(false)
-                    }, 1000)
-                } else {
-                    messageApi.open({
-                        type: 'error',
-                        content: r,
+            if (isStrongPassword(user.password)){
+                if (checkPolicy){
+                    RegistrationAPI(user).then(r => {
+                        if (r === localStorage.getItem('token')) {
+                            window.location.assign(CABINET + PROFILE)
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, 1000)
+                        } else {
+                            if (Array.isArray(r.detail)) {
+                                message.error(r.detail?.map((err) => {
+                                    return err.msg
+                                }))
+                            } else {
+                                message.error(r.detail)
+                            }
+                            setTimeout(() => {
+                                setIsLoading(false)
+                            }, 1000)
+                        }
                     })
-                    setTimeout(() => {
-                        setIsLoading(false)
-                    }, 1000)
+                }else {
+                    message.error('Пользовательское соглашение')
+                    setIsLoading(false)
                 }
-            })
+
+            }else {
+                setIsLoading(false)
+                console.log('error')
+            }
         } else {
             messageApi.open({
                 type: 'error',
                 content: "barcha malumotlarni toldirish shart",
             })
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 1000)
+            setIsLoading(false)
         }
     }
     return (
-        <div>
+        <div style={{height:'100%'}}>
             < >
                 {contextHolder}
                 <div className="container-login">
@@ -63,7 +101,6 @@ const Registration = () => {
                         <div className="inp">
                             <input type="email" placeholder={'email'} autoComplete="email"
                                    onChange={e => setUser({...user, email: e.target.value})}/>
-
                         </div>
                         <div className="inp">
                             <input type="text" placeholder={'username'} autoComplete="username"
@@ -90,12 +127,17 @@ const Registration = () => {
 
                         </div>
                         <div className="inp">
-                            <input type="tel" placeholder={'Phone Number'} autoComplete="Phone Number" id={'PhoneNumber'}
+                            <input type="tel" placeholder={'Phone Number'} autoComplete="Phone Number"
+                                   id={'PhoneNumber'}
                                    onChange={e => setUser({...user, phone_number: e.target.value})}/>
 
                         </div>
                     </div>
-                    <Checkbox onChange={checkBox}><p style={{color:"white"}}>Seller?</p></Checkbox>
+                    <Checkbox onChange={checkBox}><p style={{color: "white"}}>Seller?</p></Checkbox>
+                    <Checkbox onChange={(e)=>setCheckPolicy(e.target.checked)}>
+                        <p style={{color: "white", width:'100%' , margin:0}}>I give my consent to Binovo LLC and
+                        persons acting on its behalf to process my personal data in accordance <Link to={POLICY}>with the Policy</Link>  </p>
+                    </Checkbox>
 
                     {isLoading ? (
                         <button type="submit" onClick={handleSend} disabled={true}><LoadingOutlined/></button>

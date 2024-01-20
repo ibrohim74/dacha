@@ -10,11 +10,12 @@ import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import {
     ANNOUNCEMENT,
     CABINET,
-    CREATE_ANNOUNCEMENT,
-    PROFILE,
+    CREATE_ANNOUNCEMENT, HOSTEL,
+    PROFILE, SCHEDULE,
     UPDATE_ANNOUNCEMENT
 } from "../../../processes/utils/consts";
 import PersonIcon from '@mui/icons-material/Person';
+import GiteIcon from '@mui/icons-material/Gite';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {$authHost} from "../../../processes/http/http";
@@ -175,6 +176,34 @@ useEffect(()=>{
                                     selected={selected}
                                     setSelected={setSelected}
                                 />
+                                <Typography variant="h6"
+                                            color={colors.grey[300]}
+                                            sx={{m: "15px 0 5px 20px"}}>
+                                    Hostel
+                                </Typography>
+                                <Item
+                                    title="Hostel"
+                                    to={CABINET + HOSTEL}
+                                    icon={<GiteIcon/>}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+
+
+
+                                <Typography variant="h6"
+                                            color={colors.grey[300]}
+                                            sx={{m: "15px 0 5px 20px"}}>
+                                    Schedule
+                                </Typography>
+                                <Item
+                                    title="Schedule"
+                                    to={CABINET + SCHEDULE}
+                                    icon={<CalendarMonthIcon/>}
+                                    selected={selected}
+                                    setSelected={setSelected}
+                                />
+
                                 <Typography variant="h6"
                                             color={colors.grey[300]}
                                             sx={{m: "15px 0 5px 20px"}}>

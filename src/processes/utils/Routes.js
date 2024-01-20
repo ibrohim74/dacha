@@ -1,12 +1,12 @@
 import {
     ANNOUNCEMENT,
     CABINET, CHANGE_PASS_TOP,
-    CREATE_ANNOUNCEMENT,
-    HOME_ROUTE,
-    LOGIN_ROUTE,
+    CREATE_ANNOUNCEMENT, CREATE_ROOM,
+    HOME_ROUTE, HOSTEL,
+    LOGIN_ROUTE, POLICY,
     PROFILE,
-    REGISTER_ROUT,
-    UPDATE_ANNOUNCEMENT
+    REGISTER_ROUT, SCHEDULE,
+    UPDATE_ANNOUNCEMENT, UPDATE_HOSTEL
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -17,6 +17,11 @@ import Announcement from "../../page/seller_Page/announcement/announcement";
 import Create_announcement from "../../page/seller_Page/announcement/create_announcement";
 import Update_announcement from "../../page/seller_Page/announcement/update_announcement";
 import Change_pass_TopBar from "../../components/change_pass_TopBar";
+import Hostel from "../../page/seller_Page/hostel/hostel";
+import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/createRoom";
+import ScheduleSeller from "../../page/seller_Page/schedule/scheduleSeller";
+import UpdateHostel from "../../page/seller_Page/hostel/hostelPage/component/updateHostel";
+import Policy from "../../page/policy/policy";
 
 
 
@@ -32,6 +37,10 @@ export const Public =[
     {
         Component:<Registration/>,
         path:REGISTER_ROUT
+    },
+    {
+        Component:<Policy/>,
+        path:POLICY
     }
 ]
 export const Layout = [
@@ -81,6 +90,22 @@ export const Seller = [
     {
         Component:<Change_pass_TopBar/>,
         path:CHANGE_PASS_TOP
+    },
+    {
+        Component:<Hostel/>,
+        path:HOSTEL
+    },
+    {
+        Component:<UpdateHostel/>,
+        path:UPDATE_HOSTEL
+    },
+    {
+        Component:<CreateRoom/>,
+        path:CREATE_ROOM
+    },
+    {
+        Component:<ScheduleSeller/>,
+        path:SCHEDULE
     }
 ]
 export const Moderate = [

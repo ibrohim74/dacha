@@ -45,7 +45,7 @@ const Login = () => {
         }
     }
     return (
-        <div>
+        <div style={{height:"100%"}}>
             {contextHolder}
             <div class="container-login">
                 <div class="pic2"></div>

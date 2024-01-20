@@ -174,7 +174,7 @@ const CreateInputLeft = ({onInputData}) => {
                 <label htmlFor="name">Описание*</label>
                 <TextArea
                     value={initialState.info}
-                    onChange={(e) => setInitialState({ ...initialState, info: e.target.value })}
+                     onChange={(e) => setInitialState({ ...initialState, info: e.target.value })}
                     placeholder="Подумайте, какие подробности вы хотели бы узнать из объявления. И добавьте их в описание"
                     autoSize={{
                         minRows: 3,
