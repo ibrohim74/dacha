@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
+
+.Villas {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1440px;
+
+  font-family: "Rubik", sans-serif;
+}
+
+.topbar {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-left {
+  min-width: 60%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.topbar-logo {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #1f1f1f;
+  cursor: pointer;
+}
+.topbar-logo > div {
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
+  letter-spacing: 2px;
+}
+
+.topbar-searchbar {
+  min-width: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+  border-radius: 18px;
+  border: 1.5px solid #000;
+  background: transparent;
+  box-sizing: border-box;
+}
+.topbar-searchbar > div {
+  color: #000;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 4px;
+  opacity: 0.5;
+}
+
+.topbar-right {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 24px;
+}
+.topbar-right > svg {
+  cursor: pointer;
+}
+.topbar-right a {
+  all: unset;
+  color: #1f1f1f;
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.grid-container {
+  width: 100%;
+  margin-top: 42px;
+  display: flex;
+  justify-content: end;
+  gap: 57px;
+}
+
+.villas-grid {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.villas-grid > * {
+  max-width: 220px;
+}
+
+/**/
+
+.filter {
+  right: calc((100vw - 940px) / 2 + 757px);
+  position: absolute;
+  height: max-content;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  border-radius: 20px;
+  border: 1.5px solid #000;
+  background: #f8f8f8;
+}
+
+.filter select {
+  all: unset;
+  width: 100%;
+  border-bottom: 1px solid; /* Adjust color as needed */
+  margin-top: 20px;
+  padding-bottom: 4px;
+  appearance: none;
+  background: url("../../assets/icons/dchevron.svg") no-repeat;
+  background-position: right 0 center;
+
+  color: #000;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.filter label {
+  color: #1f1f1f;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
+  letter-spacing: 2px;
+}
+
+.filter .label-sc {
+  margin-top: 13px;
+  color: #1f1f1f;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25rem; /* 125% */
+  letter-spacing: 2px;
+  opacity: 0.5;
+}
+
+/*helpers*/
+
+.container-md {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+}
+
+.title-large {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  /* H1 */
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.6875rem; /* 119.444% */
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}

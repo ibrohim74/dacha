@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./item-card.module.css";
-import { Icons } from "../../../../assets/css/icons/icons";
+import { Icons } from "../../assets/icons/icons";
 
 const ItemCard = (props) => {
   const score = props.score;

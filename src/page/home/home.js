@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { LOGIN_ROUTE, REGISTER_ROUT } from "../../processes/utils/consts";
-import { Icons } from "../../assets/css/icons/icons";
+import {
+  LOGIN_ROUTE,
+  REGISTER_ROUT,
+  VILLAS_ROUTE,
+} from "../../processes/utils/consts";
+import { Icons } from "../../assets/icons/icons";
 import styles from "./home.module.css";
-import ItemCard from "./components/item-card/item-card";
+import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 
 const Home = () => {
@@ -78,10 +82,10 @@ const Home = () => {
       <div className={`${styles["villas"]} ${styles["container-md"]}`}>
         <div className={styles["villas-top"]}>
           <div className={styles["title-large"]}>Дачи</div>
-          <div className={styles["allBtn"]}>
+          <Link className={styles["allBtn"]} to={VILLAS_ROUTE}>
             <div>Все</div>
             <Icons.RChevron />
-          </div>
+          </Link>
         </div>
         <div className={styles["villas-grid"]}>
           {villas.map((villa) => (
