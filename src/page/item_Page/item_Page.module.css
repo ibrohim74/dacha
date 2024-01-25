@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
 
-.Villas {
+.Item-Page {
   margin-left: auto;
   margin-right: auto;
   max-width: 1440px;
@@ -84,90 +84,153 @@
   cursor: pointer;
 }
 
-.grid-container {
-  width: 100%;
-  margin-top: 42px;
+/**/
+
+.slider {
+  margin-top: 28px;
+  position: relative;
+  height: 630px;
   display: flex;
-  justify-content: end;
-  gap: 57px;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
 }
 
-.villas-grid {
-  justify-self: end;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.image {
+  width: 100%;
+  border-radius: 10px;
 }
 
-.villas-grid > * {
-  max-width: 220px;
+.arrow-hitbox {
+  position: absolute;
+  top: 50%;
+  width: 100px; /* adjust as needed */
+  height: 100%; /* adjust as needed */
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.arrow-hitbox:hover {
+  background-color: rgba(240, 240, 240, 0.2);
+  filter: brightness(120%);
+}
+
+.arrow-hitbox.left {
+  left: 0;
+  transform: translateY(-50%);
+}
+.arrow-hitbox.right {
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 24px;
+  height: 30px;
+  color: #000;
+  z-index: 10;
+  user-select: none;
+  transform: translateX(50%);
+}
+
+.left-arrow {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 30px;
+  color: #000;
+  z-index: 10;
+  user-select: none;
+  transform: translateX(-50%);
+}
+
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
 }
 
 /**/
 
-.filter {
-  right: calc((100vw - 940px) / 2 + 757px);
-  position: absolute;
-  height: max-content;
-  padding: 20px;
-
+.item-info {
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-
-  border-radius: 20px;
-  border: 1.5px solid #000;
-  background: #f8f8f8;
+  gap: 54px;
+} /*for different sections in item-info*/
+.item-info > div {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.filter select {
-  all: unset;
-  width: 100%;
-  border-bottom: 1px solid; /* Adjust color as needed */
-  margin-top: 20px;
-  padding-bottom: 4px;
-  appearance: none;
-  background: url("../../assets/icons/chevronD.svg") no-repeat;
-  background-position: right 0 center;
-
-  color: #000;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: normal;
+.info-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }
 
-.filter label {
-  color: #1f1f1f;
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.name {
+  color: var(--Text, #363940);
   font-feature-settings: "clig" off, "liga" off;
-  font-size: 1rem;
+  font-size: 2.25rem;
   font-weight: 500;
-  line-height: 1.25rem; /* 125% */
-  letter-spacing: 2px;
 }
 
-.filter .label-sc {
-  margin-top: 13px;
-  color: #1f1f1f;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.25rem; /* 125% */
-  letter-spacing: 2px;
-  opacity: 0.5;
-}
-
-.checkboxes {
+.header-right {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-.checkboxes > div {
-  display: flex;
   align-items: center;
-  justify-content: start;
+  gap: 10px;
 }
-.checkboxes > div > label {
+
+.score > svg {
+  width: 25px;
+  height: 25px;
+}
+
+.book-btn {
+  padding: 10px 51px;
+  background: #d9d9d9;
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1.125rem;
+  font-weight: 500;
   cursor: pointer;
+  user-select: none;
+}
+
+.item-similars {
+  margin-top: 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.similars-grid {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.similars-grid > * {
+  max-width: 220px;
 }
 
 /*helpers*/
@@ -186,6 +249,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: 2.6875rem; /* 119.444% */
+}
+
+.title-md {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .flex {

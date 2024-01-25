@@ -20,6 +20,7 @@ import Create_announcement from "../../page/seller_Page/announcement/create_anno
 import Update_announcement from "../../page/seller_Page/announcement/update_announcement";
 import Change_pass_TopBar from "../../components/change_pass_TopBar";
 import Villas from "../../page/villas/villas";
+import Item_Page from "../../page/item_Page/item_Page";
 
 export const Public = [
   {

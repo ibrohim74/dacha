@@ -64,10 +64,10 @@ const Home = () => {
           <div className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}>
             <div className={styles["title-large"]}>Карта</div>
           </div>
-          <div className={styles["grid-tab"]}>
+          <Link className={styles["grid-tab"]} to={VILLAS_ROUTE}>
             <div className={styles["title-large"]}>Жильё</div>
             <div className={styles["tab-description"]}>(дачи,отели,тд.)</div>
-          </div>
+          </Link>
           <div className={styles["grid-tab"]}>
             <div className={styles["title-large"]}>Еда</div>
           </div>
@@ -84,7 +84,7 @@ const Home = () => {
           <div className={styles["title-large"]}>Дачи</div>
           <Link className={styles["allBtn"]} to={VILLAS_ROUTE}>
             <div>Все</div>
-            <Icons.RChevron />
+            <Icons.ChevronL />
           </Link>
         </div>
         <div className={styles["villas-grid"]}>
@@ -98,7 +98,7 @@ const Home = () => {
           <div className={styles["title-large"]}>Отели</div>
           <div className={styles["allBtn"]}>
             <div>Все</div>
-            <Icons.RChevron />
+            <Icons.ChevronR />
           </div>
         </div>
         <div className={styles["hotels-grid"]}>
