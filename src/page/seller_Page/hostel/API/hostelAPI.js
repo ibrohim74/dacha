@@ -26,7 +26,7 @@ export const GetHostelsAPI = async () => {
         console.log(e)
     }
 }
-export const UpdateHostelsAPI = async (id,data) => {
+export const UpdateHostelsAPI = async (id, data) => {
 
     try {
         const res = await $authHost.put(`/hotel/${id}`, data)
@@ -37,11 +37,11 @@ export const UpdateHostelsAPI = async (id,data) => {
     }
 }
 
-export const DeleteHostelAPI = async (id)=>{
+export const DeleteHostelAPI = async (id) => {
     try {
         const res = await $authHost.delete(`/hotel/${id}`)
         return res.status
-    }catch (e){
+    } catch (e) {
         console.log(e)
     }
 }
@@ -88,22 +88,38 @@ export const DeleteRoomAPI = async (id) => {
 }
 
 export const PostPhotoRoom = async (idRoom, file) => {
-    console.log(idRoom)
-    console.log(file)
     try {
-        const res = await $authHost.post(`/room/${idRoom}/upload_photo`, {file:file},{headers:{
+        const res = await $authHost.post(`/room/${idRoom}/upload_photo`, {file: file}, {
+            headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }})
+            }
+        })
         console.log(res)
+        return res.status
     } catch (e) {
         console.log(e)
     }
 }
 
-export const GetPhotoRoom = async (idRoom , fileId) => {
-    try {
+export const GetPhotoRoom = async (photoPath, id) => {
+    const promises = [];
 
-    }catch (e){
-        console.log(e)}
-}
+    photoPath.forEach((item) => {
+        if (item.roomId === id) {
+            item.photos_path?.forEach((photoItem) => {
+                promises.push(
+                    $authHost.get(photoItem)
+                        .then(res => res.data)
+                        .catch(err => {
+                            console.log(err);
+                            return null;
+                        })
+                );
+            });
+        }
+    });
+
+    // Wait for all promises to resolve
+    return Promise.all(promises);
+};

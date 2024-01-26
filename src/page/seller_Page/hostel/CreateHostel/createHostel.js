@@ -4,7 +4,7 @@ import {Input, message} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
-import {MapContainer, TileLayer, Circle, useMap} from 'react-leaflet';
+import {MapContainer, TileLayer, Circle, useMap, Marker, Popup} from 'react-leaflet';
 import Maps from "./component/maps";
 import SearchInputMap from "./component/searchInputMap";
 import {CreateHostelAPI} from "../API/hostelAPI";
@@ -18,6 +18,7 @@ const CreateHostel = () => {
     const [selectPosition, setSelectPosition] = useState(null);
     const [initialState, setInitialState] = useState({user_id:JWT?.userId});
     const mediaQuery = useMediaQuery('(max-width:750px)');
+    const CenterPositionTashkent = [41.311081, 69.240562];
 
 useEffect(()=>{
     setInitialState({
@@ -63,14 +64,7 @@ useEffect(()=>{
                     placeholder={'Hostel Info'}
                 />
             </div>
-
-            <div style={{width: "100%", height: "100%", display: 'flex', flexDirection: "column"}}>
-                <Maps selectPosition={selectPosition}/>
-            </div>
-            <div style={{width: "100%"}}>
-                <label htmlFor="Search">Search Location</label>
-                <SearchInputMap selectPosition={selectPosition} setSelectPosition={setSelectPosition}/>
-            </div>
+            <Maps/>
             <Button
                 type="submit"
                 color="secondary"

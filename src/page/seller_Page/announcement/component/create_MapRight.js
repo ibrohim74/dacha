@@ -82,7 +82,6 @@ const LocationMarker = ({locName}) => {
                         eventHandlers={{dragend: handleMarkerDrag}}>
                     <Popup>
                         <p style={{fontSize: "10px"}}>{locationName}</p>
-
                     </Popup>
                 </Marker>
             )}

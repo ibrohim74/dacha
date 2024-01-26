@@ -80,13 +80,13 @@ const handleDelete = async ()=>{
                             />
                         </div>
 
-                        <div style={{width: "100%", height: "100%", display: 'flex', flexDirection: "column"}}>
-                            <Maps selectPosition={selectPosition}/>
-                        </div>
-                        <div style={{width: "100%"}}>
-                            <label htmlFor="Search">Search Location</label>
-                            <SearchInputMap selectPosition={selectPosition} setSelectPosition={setSelectPosition} placeholder={item?.location_name}/>
-                        </div>
+                        {/*<div style={{width: "100%", height: "100%", display: 'flex', flexDirection: "column"}}>*/}
+                        {/*    <Maps selectPosition={selectPosition}/>*/}
+                        {/*</div>*/}
+                        {/*<div style={{width: "100%"}}>*/}
+                        {/*    <label htmlFor="Search">Search Location</label>*/}
+                        {/*    <SearchInputMap selectPosition={selectPosition} setSelectPosition={setSelectPosition} placeholder={item?.location_name}/>*/}
+                        {/*</div>*/}
                         <div
                         style={{display:"flex" , justifyContent:"space-between"}}
                         >

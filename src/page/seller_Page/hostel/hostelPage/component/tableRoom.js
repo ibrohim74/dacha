@@ -2,11 +2,19 @@ import React, {useEffect, useState} from 'react';
 import {tokens} from "../../../../../components/theme";
 import {Box, Button, MenuItem, Select, useTheme} from "@mui/material";
 import {DataGrid} from "@mui/x-data-grid";
-import {CreateRoomAPI, DeleteRoomAPI, GetRoomsAPI, PostPhotoRoom, UpdateRoomAPI} from "../../API/hostelAPI";
+import {
+    CreateRoomAPI,
+    DeleteRoomAPI,
+    GetPhotoRoom,
+    GetRoomsAPI,
+    PostPhotoRoom,
+    UpdateRoomAPI
+} from "../../API/hostelAPI";
 import {Input, Modal, Popconfirm, message, Upload} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import './styleRoom.css'
+import {$authHost} from "../../../../../processes/http/http";
 
 
 const cancel = (e) => {
@@ -23,10 +31,13 @@ const TableRoom = () => {
     const [initialState, setInitialState] = useState()
     const [typeHotel, setTypeHotel] = React.useState('');
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingPhoto, setIsLoadingPhoto] = useState(false)
     const [currentRoomID, setCurrentID] = useState()
     const [fileList, setFileList] = useState([])
-    const [currentRoomIdForPhoto , setCurrentRoomIdForPhoto] = useState()
-
+    const [currentRoomIdForPhoto, setCurrentRoomIdForPhoto] = useState()
+    const [imgRoom, setImgRoom] = useState([]);
+    const [loadingModal, setLoadingModal] = useState(false); // Yangi o'zgaruvchi
+    const [allImages, setAllImages] = useState([]); // Yangi o'zgaruvchi
 
     const handleUpdate = (id) => {
         console.log(id + "update")
@@ -42,15 +53,111 @@ const TableRoom = () => {
         })
     }
 
-    const handlePhoto = (file) => {
+    const photoModal = async (id) => {
+        setOpenPhoto(true);
+        setCurrentRoomIdForPhoto(id);
+        setAllImages([]); // Reset allImages
+        setImgRoom([]);   // Reset imgRoom
 
-       PostPhotoRoom(currentRoomIdForPhoto , file.file.originFileObj)
-    }
+        try {
+            setLoadingModal(true);
 
-    const getPhotoRoom = () => {
+            const selectedRoom = rooms.find(item => item.roomId === id);
 
-    }
+            if (selectedRoom) {
+                const imagePromises = selectedRoom.photos_path?.map(async (itemPhoto) => {
+                    try {
+                        const response = await $authHost.get(itemPhoto, { responseType: 'arraybuffer' });
 
+                        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                        const urlCreator = window.URL || window.webkitURL;
+                        const imageUrl = urlCreator.createObjectURL(blob);
+
+                        setImgRoom([imageUrl]);
+                        setFileList((prevList) => [
+                            ...prevList,
+                            {
+                                uid: `-${prevList.length + 1}`,
+                                name: `img${prevList.length + 1}`,
+                                status: 'done',
+                                url: imageUrl
+                            }
+                        ]);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                });
+
+                await Promise.all(imagePromises);
+            } else {
+                console.log(false);
+            }
+        } catch (error) {
+            console.error("Error fetching photo data:", error);
+        } finally {
+            setLoadingModal(false);
+        }
+    };
+
+
+    const handlePhoto = async (file) => {
+        setIsLoadingPhoto(true);
+
+        try {
+            const urlToImg = URL.createObjectURL(file.file.originFileObj);
+
+            // Clear the existing fileList
+            setFileList([]);
+
+            setFileList((prevList) => [
+                ...prevList,
+                {
+                    uid: `-${prevList.length + 1}`,
+                    name: `img${prevList.length + 1}`,
+                    status: 'uploading',
+                    url: null
+                }
+            ]);
+
+            const response = await PostPhotoRoom(currentRoomIdForPhoto, file.file.originFileObj);
+            console.log(response)
+            if (response === 200) {
+                setAllImages([]); // Reset allImages
+                setFileList((prevList) => prevList.map(item => ({
+                    ...item,
+                    status: 'done',
+                    url: urlToImg
+                })));
+            } else {
+                setFileList((prevList) => prevList.map(item => ({
+                    ...item,
+                    status: 'error',
+                    url: null
+                })));
+            }
+        } catch (error) {
+            console.error("Error uploading photo:", error);
+
+            setFileList((prevList) => prevList.map(item => ({
+                ...item,
+                status: 'error',
+                url: null
+            })));
+        } finally {
+            setIsLoadingPhoto(false);
+            setImgRoom([]); // Reset imgRoom
+        }
+    };
+
+
+
+
+
+
+
+
+
+    console.log(imgRoom)
     const columns = [
         {field: "id", headerName: "ID"},
         {
@@ -79,8 +186,7 @@ const TableRoom = () => {
             renderCell: ({row}) => {
                 const photo = () => {
                     const {roomId} = row
-                    setCurrentRoomIdForPhoto(roomId)
-                    setOpenPhoto(true)
+                    photoModal(roomId)
                 }
                 return (
                     <Box>
@@ -168,18 +274,54 @@ const TableRoom = () => {
         </button>
     );
     useEffect(() => {
-        GetRoomsAPI().then((data) => {
+        GetRoomsAPI().then(async (data) => {
             const roomsWithIds = data.map((room, index) => ({
                 ...room,
                 id: (index + 1).toString(),
                 name: room.title,
                 roomsNumber: room.rooms_number,
-                type: room.type
-
+                type: room.type,
+                photos_path: room?.photos_path.split('\n').filter(Boolean)
             }));
+
             setRooms(roomsWithIds);
+
+            const allImagesPromises = roomsWithIds.map(async (room) => {
+                const imagePromises = room.photos_path.map(async (itemPhoto) => {
+                    try {
+                        const response = await $authHost.get(itemPhoto, { responseType: 'arraybuffer' });
+
+                        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                        const urlCreator = window.URL || window.webkitURL;
+                        const imageUrl = urlCreator.createObjectURL(blob);
+
+                        return {
+                            uid: `-${fileList.length + 1}`,
+                            name: `img${fileList.length + 1}`,
+                            status: 'done',
+                            url: imageUrl
+                        };
+                    } catch (err) {
+                        console.log(err);
+                        return null;
+                    }
+                });
+
+                return await Promise.all(imagePromises);
+            });
+
+            const allImages = await Promise.all(allImagesPromises);
+
+            // Flatten the array of arrays and remove null values
+            const flattenedImages = allImages.flat().filter(Boolean);
+
+            // Set fileList only with images fetched from API
+            setFileList(flattenedImages);
+
         });
     }, []);
+
+
     return (
         <div>
             <Box m="20px">
@@ -187,20 +329,29 @@ const TableRoom = () => {
                     title={'Photo'}
                     centered
                     open={openPhoto}
-                    onOk={() => setOpenPhoto(false)}
-                    onCancel={() => setOpenPhoto(false)}
+                    onOk={() => {
+                        setOpenPhoto(false);
+                        setFileList([]); // Clear fileList when modal is closed
+                    }}
+                    onCancel={() => {
+                        setOpenPhoto(false);
+                        setFileList([]); // Clear fileList when modal is closed
+                    }}
                     width={'50%'}
-                    style={{background: "#191919"}}
+                    style={{ background: "#191919" }}
                 >
-
-                    <Upload
-                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onChange={handlePhoto}
-                    >
-                        {fileList.length >= 8 ? null : uploadButton}
-                    </Upload>
+                    {loadingModal ? (
+                        <div>Loading...</div>
+                    ) : (
+                        <Upload
+                            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                            listType="picture-card"
+                            fileList={fileList}
+                            onChange={handlePhoto}
+                        >
+                            {fileList.length >= 8 ? null : uploadButton}
+                        </Upload>
+                    )}
                 </Modal>
                 <Modal
                     title="Modal 1000px width"

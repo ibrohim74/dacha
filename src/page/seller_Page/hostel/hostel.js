@@ -8,10 +8,11 @@ import {GetHostelsAPI} from "./API/hostelAPI";
 const Hostel = () => {
     const [hostel, setHostel] = useState([])
     useEffect(() => {
+
         GetHostelsAPI().then(r => {
             setHostel(r)
         })
-    }, [])
+    }, [])   
     return (
         <Box m={"20px"}>
             {
