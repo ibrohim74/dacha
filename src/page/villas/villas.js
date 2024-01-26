@@ -11,6 +11,13 @@ import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import DatePicker from "../../components/date-picker/date-picker";
 import Header from "../../components/header/header";
+// test json
+import data from "../../assets/test-items.json";
+import {
+  SortItems,
+  FilterItems,
+  GetItems,
+} from "../../processes/utils/items-operations";
 
 const Villas = () => {
   const [selectedMonth, setSelectedMonth] = useState(0); // January
@@ -23,6 +30,9 @@ const Villas = () => {
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
   };
+
+  //test operations on test-items.json
+  const allItemIds = data.items.map((item) => item.id);
 
   const villas = [
     { name: "Дача 1", price: "109.90", score: 5, img: null },
@@ -105,9 +115,12 @@ const Villas = () => {
           {/* {villas.map((villa) => (
             <ItemCard {...villa} />
           ))} */}
-          {selectedType == 0
+          {/* {selectedType == 0
             ? villas.map((villa) => <ItemCard {...villa} />)
-            : hotels.map((hotel) => <ItemCard {...hotel} />)}
+            : hotels.map((hotel) => <ItemCard {...hotel} />)} */}
+          {GetItems(FilterItems(allItemIds, "type", "villa")).map((item) => (
+            <ItemCard {...item} />
+          ))}
         </div>
       </div>
 
