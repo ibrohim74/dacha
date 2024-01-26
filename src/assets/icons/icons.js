@@ -11,6 +11,8 @@ import { ReactComponent as StarHalf } from "./starHalf.svg";
 import { ReactComponent as Chat } from "./chat.svg";
 import { ReactComponent as AppStore } from "./appStore.svg";
 import { ReactComponent as GooglePlay } from "./googlePlay.svg";
+// import { ReactComponent as Notification } from "./notification.svg";
+import { ReactComponent as Bell } from "./bell.svg";
 
 export const Icons = {
   Logo,
@@ -26,4 +28,5 @@ export const Icons = {
   Chat,
   AppStore,
   GooglePlay,
+  Bell,
 };

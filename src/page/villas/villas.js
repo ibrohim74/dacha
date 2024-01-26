@@ -10,6 +10,7 @@ import styles from "./villas.module.css";
 import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import DatePicker from "../../components/date-picker/date-picker";
+import Header from "../../components/header/header";
 
 const Villas = () => {
   const [selectedMonth, setSelectedMonth] = useState(0); // January
@@ -46,27 +47,7 @@ const Villas = () => {
 
   return (
     <div className={styles["Villas"]}>
-      <div className={`${styles["topbar"]} ${styles["container-md"]}`}>
-        <div className={`${styles["topbar-left"]}`}>
-          <Link className={`${styles["topbar-logo"]}`} to={HOME_ROUTE}>
-            <Icons.Logo />
-            <div>Travid</div>
-          </Link>
-          <div className={`${styles["topbar-searchbar"]}`}>
-            <Icons.Magnifier />
-            <div>Найти</div>
-          </div>
-        </div>
-        <div className={`${styles["topbar-right"]}`}>
-          <Icons.Language />
-          <div>
-            <Link to={LOGIN_ROUTE}>sign in</Link>
-          </div>
-          <div>
-            <Link to={REGISTER_ROUT}>sign up</Link>
-          </div>
-        </div>
-      </div>
+      <Header />
 
       <div className={`${styles["grid-container"]} ${styles["container-md"]}`}>
         <div className={styles["filter"]}>

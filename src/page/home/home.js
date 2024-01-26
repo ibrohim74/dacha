@@ -9,6 +9,7 @@ import { Icons } from "../../assets/icons/icons";
 import styles from "./home.module.css";
 import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
+import Header from "../../components/header/header";
 
 const Home = () => {
   const villas = [
@@ -37,27 +38,9 @@ const Home = () => {
         <Link to={LOGIN_ROUTE}>Login</Link> <br />
         <Link to={REGISTER_ROUT}>Registration</Link>
       </div> */}
-      <div className={`${styles["topbar"]} ${styles["container-md"]}`}>
-        <div className={`${styles["topbar-left"]}`}>
-          <div className={`${styles["topbar-logo"]}`}>
-            <Icons.Logo />
-            <div>Travid</div>
-          </div>
-          <div className={`${styles["topbar-searchbar"]}`}>
-            <Icons.Magnifier />
-            <div>Найти</div>
-          </div>
-        </div>
-        <div className={`${styles["topbar-right"]}`}>
-          <Icons.Language />
-          <div>
-            <Link to={LOGIN_ROUTE}>sign in</Link>
-          </div>
-          <div>
-            <Link to={REGISTER_ROUT}>sign up</Link>
-          </div>
-        </div>
-      </div>
+
+      <Header />
+
       <div className={`${styles["categories"]} ${styles["container-md"]}`}>
         <div className={styles["title-large"]}>Категории</div>
         <div className={styles["grid-tabs"]}>
@@ -79,12 +62,13 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       <div className={`${styles["villas"]} ${styles["container-md"]}`}>
         <div className={styles["villas-top"]}>
           <div className={styles["title-large"]}>Дачи</div>
           <Link className={styles["allBtn"]} to={VILLAS_ROUTE}>
             <div>Все</div>
-            <Icons.ChevronL />
+            <Icons.ChevronR />
           </Link>
         </div>
         <div className={styles["villas-grid"]}>
@@ -93,6 +77,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+
       <div className={`${styles["hotels"]} ${styles["container-md"]}`}>
         <div className={styles["hotels-top"]}>
           <div className={styles["title-large"]}>Отели</div>
@@ -107,6 +92,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+
       <Footer />
     </div>
   );
