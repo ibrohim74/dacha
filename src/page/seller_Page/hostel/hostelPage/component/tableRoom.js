@@ -4,7 +4,7 @@ import {Box, Button, MenuItem, Select, useTheme} from "@mui/material";
 import {DataGrid} from "@mui/x-data-grid";
 import {
     CreateRoomAPI,
-    DeleteRoomAPI,
+    DeleteRoomAPI, GetCurrentRoom,
     GetPhotoRoom,
     GetRoomsAPI,
     PostPhotoRoom,
@@ -38,13 +38,22 @@ const TableRoom = () => {
     const [imgRoom, setImgRoom] = useState([]);
     const [loadingModal, setLoadingModal] = useState(false); // Yangi o'zgaruvchi
     const [allImages, setAllImages] = useState([]); // Yangi o'zgaruvchi
-
+    const [currentRoomData, setCurrentRoomData] = useState(); // Yangi o'zgaruvchi
     const handleUpdate = (id) => {
-        console.log(id + "update")
-        setOpen(true)
-        setCurrentID(id)
-    }
+        console.log(id + "update");
+        setOpen(true);
+        setCurrentID(id);
 
+        GetCurrentRoom(id).then((r) => {
+            setCurrentRoomData(r);
+
+            // Move setInitialState inside the then block
+            setInitialState({ info: r?.info });
+            setTypeHotel(r?.type );
+        });
+    };
+
+    console.log(initialState)
     const handleDelete = (id) => {
         DeleteRoomAPI(id).then(r => {
             if (r === 200) {
@@ -67,9 +76,9 @@ const TableRoom = () => {
             if (selectedRoom) {
                 const imagePromises = selectedRoom.photos_path?.map(async (itemPhoto) => {
                     try {
-                        const response = await $authHost.get(itemPhoto, { responseType: 'arraybuffer' });
+                        const response = await $authHost.get(itemPhoto, {responseType: 'arraybuffer'});
 
-                        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                        const blob = new Blob([response.data], {type: response.headers['content-type']});
                         const urlCreator = window.URL || window.webkitURL;
                         const imageUrl = urlCreator.createObjectURL(blob);
 
@@ -148,16 +157,6 @@ const TableRoom = () => {
             setImgRoom([]); // Reset imgRoom
         }
     };
-
-
-
-
-
-
-
-
-
-    console.log(imgRoom)
     const columns = [
         {field: "id", headerName: "ID"},
         {
@@ -254,7 +253,6 @@ const TableRoom = () => {
         setInitialState({...initialState, type: event.target.value});
         setTypeHotel(event.target.value)
     };
-
     const uploadButton = (
         <button
             style={{
@@ -289,9 +287,9 @@ const TableRoom = () => {
             const allImagesPromises = roomsWithIds.map(async (room) => {
                 const imagePromises = room.photos_path.map(async (itemPhoto) => {
                     try {
-                        const response = await $authHost.get(itemPhoto, { responseType: 'arraybuffer' });
+                        const response = await $authHost.get(itemPhoto, {responseType: 'arraybuffer'});
 
-                        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                        const blob = new Blob([response.data], {type: response.headers['content-type']});
                         const urlCreator = window.URL || window.webkitURL;
                         const imageUrl = urlCreator.createObjectURL(blob);
 
@@ -338,7 +336,7 @@ const TableRoom = () => {
                         setFileList([]); // Clear fileList when modal is closed
                     }}
                     width={'50%'}
-                    style={{ background: "#191919" }}
+                    style={{background: "#191919"}}
                 >
                     {loadingModal ? (
                         <div>Loading...</div>
@@ -354,11 +352,14 @@ const TableRoom = () => {
                     )}
                 </Modal>
                 <Modal
-                    title="Modal 1000px width"
+                    title="Update Room"
                     centered
                     open={open}
                     onOk={() => setOpen(false)}
-                    onCancel={() => setOpen(false)}
+                    onCancel={() => {
+                        setOpen(false)
+                        setCurrentRoomData(null)
+                    }}
                     width={'50%'}
                     style={{background: "#191919"}}
                 >
@@ -367,18 +368,18 @@ const TableRoom = () => {
                             <div className="box-2-input">
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="Title">Title</label>
-                                    <Input placeholder={'Title'}
+                                    <Input placeholder={currentRoomData?.title}
                                            onChange={e => setInitialState({...initialState, title: e.target.value})}/>
                                 </div>
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="price">Price</label>
-                                    <Input placeholder={'price'} type={'number'}
+                                    <Input placeholder={currentRoomData?.price} type={'number'}
                                            onChange={e => setInitialState({...initialState, price: e.target.value})}/>
                                 </div>
                             </div>
                             <div className="input" style={{marginBottom: "15px"}}>
                                 <label htmlFor="Floor">Floor</label>
-                                <Input placeholder={'Floor'} type={'number'}
+                                <Input placeholder={currentRoomData?.floor} type={'number'}
                                        onChange={e => setInitialState({...initialState, floor: e.target.value})}/>
                             </div>
                             <div className="input" style={{marginBottom: "15px"}}>
@@ -404,23 +405,25 @@ const TableRoom = () => {
                             </div>
                             <div className="input" style={{marginBottom: "15px"}}>
                                 <label htmlFor="Info">Info</label>
-                                <TextArea placeholder={'Info'}
-                                          onChange={e => setInitialState({...initialState, info: e.target.value})}
-                                          autoSize={{
-                                              minRows: 3,
-                                              maxRows: 5,
-                                          }}/>
+                                <TextArea
+                                    value={initialState?.info}
+                                    onChange={e => setInitialState({...initialState, info: e.target.value})}
+                                    autoSize={{
+                                        minRows: 3,
+                                        maxRows: 5,
+                                    }}
+                                />
                             </div>
                             <div className="box-2-input">
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="Area">Area</label>
-                                    <Input placeholder={'Area'} type={'number'}
+                                    <Input placeholder={currentRoomData?.area} type={'number'}
                                            onChange={e => setInitialState({...initialState, area: e.target.value})}
                                     />
                                 </div>
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="RoomNumber">Room number</label>
-                                    <Input placeholder={'Room number'} type={'number'}
+                                    <Input placeholder={currentRoomData?.rooms_number} type={'number'}
                                            onChange={e => setInitialState({
                                                ...initialState,
                                                rooms_number: e.target.value
@@ -431,7 +434,7 @@ const TableRoom = () => {
                             <div className="box-2-input">
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="MinBookDay">Min book day</label>
-                                    <Input placeholder={'Min book day'} type={'number'}
+                                    <Input placeholder={currentRoomData?.minimum_book_days} type={'number'}
                                            onChange={e => setInitialState({
                                                ...initialState,
                                                minimum_book_days: e.target.value
@@ -440,7 +443,7 @@ const TableRoom = () => {
                                 </div>
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="MaxBookDay">Max book day</label>
-                                    <Input placeholder={'Max book day'} type={'number'}
+                                    <Input placeholder={currentRoomData?.minimum_preorder_days} type={'number'}
                                            onChange={e => setInitialState({
                                                ...initialState,
                                                minimum_preorder_days: e.target.value

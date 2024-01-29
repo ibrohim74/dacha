@@ -19,7 +19,7 @@ const CreateHostel = () => {
     const [initialState, setInitialState] = useState({user_id:JWT?.userId});
     const mediaQuery = useMediaQuery('(max-width:750px)');
     const CenterPositionTashkent = [41.311081, 69.240562];
-
+    console.log(selectPosition)
 useEffect(()=>{
     setInitialState({
         ...initialState, latitude: parseFloat(selectPosition?.lat),
@@ -27,7 +27,7 @@ useEffect(()=>{
         location_name: selectPosition?.display_name
     })
 },[selectPosition])
-
+    console.log(selectPosition)
     const handleSend = async () => {
         if (initialState.longitude && initialState.latitude && initialState.location_name &&
             initialState.title && initialState.info
@@ -64,7 +64,7 @@ useEffect(()=>{
                     placeholder={'Hostel Info'}
                 />
             </div>
-            <Maps/>
+            <Maps setSelectPosition={setSelectPosition} selectPosition={selectPosition}/>
             <Button
                 type="submit"
                 color="secondary"

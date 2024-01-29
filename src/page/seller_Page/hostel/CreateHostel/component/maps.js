@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent, ZoomControl} from "react-leaflet";
 import axios from "axios";
-import {Divider, Input, message} from "antd";
+import {Divider, Input, message, Tooltip} from "antd";
 import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import L from "leaflet";
+import {InfoCircleOutlined} from "@ant-design/icons";
 
 
 
@@ -24,15 +25,14 @@ const customMarkerIcon = new L.Icon({
 });
 
 
-const Maps = () => {
-    const [selectPosition, setSelectPosition] = useState(null);
+const Maps = (props) => {
+    const {selectPosition, setSelectPosition} = props;
     const [searchText, setSearchText] = useState("");
     const [listPlace, setListPlace] = useState([]);
     const [clicked , setClicked] = useState(false)
     const [markerPos , setMarkerPos] = useState([])
     const [mapPos , setMapPos] = useState({lat: 41.311081, lng: 69.240562})
-    const map = useMap();
-    console.log(selectPosition)
+    // const map = useMap();
     const search = async ()=>{
         const params = {
             q: searchText,
@@ -74,8 +74,8 @@ const Maps = () => {
         if (clicked) {
             setClicked(false);
         }
-        map.flyTo(selectPosition?.lat, selectPosition?.lon, map.getZoom())
-    }, [searchText, selectPosition, clicked, map]);
+        // map.flyTo(selectPosition?.lat, selectPosition?.lon, map.getZoom())
+    }, [searchText, selectPosition, clicked]);
 
 
     console.log(mapPos)
@@ -106,12 +106,21 @@ const Maps = () => {
                 <div style={{ display: "flex" }}>
                     <div style={{ flex: 1 }}>
                         <Input
+                            suffix={
+                                <Tooltip title="Shaxar nomini yozib tanlang">
+                                    <InfoCircleOutlined
+                                        style={{
+                                            color: 'rgba(0,0,0,.45)',
+                                        }}
+                                    />
+                                </Tooltip>
+                            }
                             style={{ width: "100%" }}
                             value={searchText}
                             onChange={(event) => {
                                 setSearchText(event.target.value);
                             }}
-                            // placeholder={props?.placeholder}
+                            placeholder={selectPosition?.display_name}
                         />
                     </div>
                     <div

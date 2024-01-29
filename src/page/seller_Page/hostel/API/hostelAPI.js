@@ -87,6 +87,15 @@ export const DeleteRoomAPI = async (id) => {
     }
 }
 
+export const GetCurrentRoom = async (id)=>{
+    try {
+        const res = await $authHost.get(`/room/${id}`)
+        return res.data
+    }catch (e){
+        console.log(e)
+    }
+}
+
 export const PostPhotoRoom = async (idRoom, file) => {
     try {
         const res = await $authHost.post(`/room/${idRoom}/upload_photo`, {file: file}, {
