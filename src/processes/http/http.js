@@ -1,5 +1,6 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { HOME_ROUTE } from "../utils/consts";
 
 // localStorage dan tokenni olish
 let authToken = localStorage.getItem("token");
@@ -22,7 +23,7 @@ const updateAuthHeader = (token) => {
   $authHost.defaults.headers.Authorization = `Bearer ${token}`;
 };
 
-const refreshToken = async () => {
+const RefreshToken = async () => {
   const JWT = localStorage.getItem("token");
   console.log(JWT);
   try {
@@ -43,9 +44,11 @@ const refreshToken = async () => {
     updateAuthHeader(authToken);
   } catch (error) {
     console.error("Token yangilash muvaffaqiyatsiz bo'ldi:", error);
+    window.localStorage.removeItem("token");
+    window.location.assign(HOME_ROUTE);
   }
 };
 
-setInterval(refreshToken, 10 * 60 * 1000);
+setInterval(RefreshToken, 10 * 60 * 1000);
 
-export { $host, $authHost };
+export { $host, $authHost, RefreshToken };
