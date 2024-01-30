@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   LOGIN_ROUTE,
@@ -21,7 +22,14 @@ import {
 
 const Villas = () => {
   const [selectedMonth, setSelectedMonth] = useState(0); // January
-  const [selectedType, setSelectedType] = useState(0); // types: 0 = villa, 1 = hotel, 2 = restaurant
+  const [selectedType, setSelectedType] = useState(0); // types: 0 = "villa", 1 = "hotel", 2 = "restaurant"
+  const [selectedSort, setSelectedSort] = useState(0); // sorts: 0 = "price", 1 = "score"
+  const [filteredItems, setFilteredItems] = useState([]); // Use state for filteredItems
+  const [products, setProducts] = useState([]);
+
+  // Map type and sort to actual values
+  const typeMap = ["villa", "hotel", "restaurant"];
+  const sortMap = ["price", "score"];
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -30,6 +38,21 @@ const Villas = () => {
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
   };
+
+  const handleSortChange = (event) => {
+    setSelectedSort(event.target.value);
+  };
+
+  useEffect(() => {
+    const allItemIds = data.items.map((item) => item.id);
+    const filteredItems = GetItems(
+      SortItems(
+        FilterItems(allItemIds, "type", typeMap[selectedType]),
+        sortMap[selectedSort]
+      )
+    );
+    setFilteredItems(filteredItems); // Update state using the setter function
+  }, [selectedType, selectedSort]);
 
   //test operations on test-items.json
   const allItemIds = data.items.map((item) => item.id);
@@ -55,6 +78,24 @@ const Villas = () => {
     { name: "Отель 8", price: "79.90", score: 3.8, img: null },
   ];
 
+  // working with actual db:
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas"
+        );
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  console.log(products);
+
   return (
     <div className={styles["Villas"]}>
       <Header />
@@ -67,6 +108,13 @@ const Villas = () => {
               <option value={0}>Дачи</option>
               <option value={1}>Отели</option>
               <option value={2}>Рестораны</option>
+            </select>
+          </div>
+          <div>
+            <label>Сортировать по:</label>
+            <select value={selectedSort} onChange={handleSortChange}>
+              <option value={0}>Цена</option>
+              <option value={1}>Оценка</option>
             </select>
           </div>
           <div>
@@ -118,7 +166,7 @@ const Villas = () => {
           {/* {selectedType == 0
             ? villas.map((villa) => <ItemCard {...villa} />)
             : hotels.map((hotel) => <ItemCard {...hotel} />)} */}
-          {GetItems(FilterItems(allItemIds, "type", "villa")).map((item) => (
+          {filteredItems.map((item) => (
             <ItemCard {...item} />
           ))}
         </div>
