@@ -4,22 +4,12 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
-import {DeleteEvent, GetEvents} from "../modul/announcementCRUD";
 import {message} from "antd";
 
 const Calendar = () => {
     const [events, setEvents] = useState([])
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await GetEvents();
-                setEvents(result);
-            } catch (error) {
-                console.error("Xatolik:", error);
-            }
-        };
 
-        fetchData();
     }, [])
 
     const handleDateClick = (selected) => {
@@ -44,15 +34,7 @@ const Calendar = () => {
                 `Are you sure you want to delete the event '${selected.event.extendedProps.inputData.title}'`
             )
         ) {
-            DeleteEvent(selected.event.id).then(r => {
-                if (r === 200) {
-                    selected.event.remove();
-                    window.location.reload()
 
-                } else {
-                    message.error(r)
-                }
-            })
 
         }
     };
