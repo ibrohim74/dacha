@@ -1,5 +1,5 @@
 import {
-    ANNOUNCEMENT,
+    ANNOUNCEMENT, ANNOUNCEMENT_ITEM_PAGE,
     CABINET, CHANGE_PASS_TOP,
     CREATE_ANNOUNCEMENT, CREATE_ROOM,
     HOME_ROUTE, HOSTEL,
@@ -22,6 +22,7 @@ import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/creat
 import ScheduleSeller from "../../page/seller_Page/schedule/scheduleSeller";
 import UpdateHostel from "../../page/seller_Page/hostel/hostelPage/component/updateHostel";
 import Policy from "../../page/policy/policy";
+import AnnouncementItemPage from "../../page/seller_Page/announcement/component/announcementItemPage";
 
 
 
@@ -106,6 +107,10 @@ export const Seller = [
     {
         Component:<ScheduleSeller/>,
         path:SCHEDULE
+    },
+    {
+        Component:<AnnouncementItemPage/>,
+        path:ANNOUNCEMENT_ITEM_PAGE
     }
 ]
 export const Moderate = [

@@ -12,7 +12,7 @@ const CreateAnnouncement = () => {
     const [inputLeft, setInputLeft] = useState(null)
     const [initialState, setInitialState] = useState(null)
     const JWT = jwtDecode(localStorage.getItem('token'))
-
+    console.log(initialState)
     const handleSend = () => {
         if (initialState.title && initialState.info && initialState.price) {
             if (initialState.location_name) {
@@ -20,11 +20,16 @@ const CreateAnnouncement = () => {
                     initialState.area && initialState.rooms_number
                     && initialState.minimum_book_days && initialState.minimum_preorder_days) {
                     CreateAnnouncementAPI(initialState).then(r => {
-                        if (r.status === 200) {
+                        if (r?.status === 200) {
                             message.success('success')
                             window.location.reload()
                         } else {
-                            message.error('error send data')
+                            if (r?.response?.status === 401){
+                                localStorage.clear()
+                                window.location.assign('/')
+                            }else {
+                                message.error('error send data')
+                            }
                         }
                     })
                 } else {                    

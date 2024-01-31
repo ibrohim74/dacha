@@ -17,7 +17,7 @@ const CreateInputLeft = (props) => {
             display_name: selectPosition?.display_name,
             latitude: parseFloat(selectPosition?.lat),
             longitude:parseFloat(selectPosition?.lon),
-            type:'UZS'
+            type:inputLeft?.type ? inputLeft.type : 'UZS'
         })
     }, [selectPosition])
 
@@ -53,7 +53,7 @@ const CreateInputLeft = (props) => {
             </div>
             <div className="input">
                 <label htmlFor="price">цена*</label>
-                <Input addonAfter={selectAfter} defaultValue="UZS"
+                <Input addonAfter={selectAfter}
                        type={'number'}
                        onChange={(e) => setInputLeft({...inputLeft, price: e.target.value})}
                 />

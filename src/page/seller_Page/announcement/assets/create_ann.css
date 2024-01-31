@@ -167,12 +167,28 @@
     flex-direction: column;
 }
 .ann-box-info{
-    width: 77%;
+    width: 100%;
+    height: 100%;
     margin-left: 10px;
+    position: relative;
+}
+.ann-box-footer{
+    width: 77%;
+    height: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    right: 10px;
 }
 .ann-item-title{
     width: 100%;
-    height: 50%;
+    height: 80%;
+}
+.ann-box-footer Button{
+    margin: 0  0 10px 10px;
+    width: 40%;
+    height: 100%;
 }
 .ann-item-title h1,p{
     font-size: 25px;
