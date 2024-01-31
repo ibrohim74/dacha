@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
+
+.Item-Page {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1440px;
+
+  font-family: "Rubik", sans-serif;
+}
+
+/**/
+
+.slider {
+  margin-top: 28px;
+  position: relative;
+  height: 630px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.image {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.arrow-hitbox {
+  position: absolute;
+  top: 50%;
+  width: 100px; /* adjust as needed */
+  height: 100%; /* adjust as needed */
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.arrow-hitbox:hover {
+  background-color: rgba(240, 240, 240, 0.2);
+  filter: brightness(120%);
+}
+
+.arrow-hitbox.left {
+  left: 0;
+  transform: translateY(-50%);
+}
+.arrow-hitbox.right {
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 24px;
+  height: 30px;
+  color: #000;
+  z-index: 10;
+  user-select: none;
+  transform: translateX(50%);
+}
+
+.left-arrow {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 30px;
+  color: #000;
+  z-index: 10;
+  user-select: none;
+  transform: translateX(-50%);
+}
+
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+}
+
+/**/
+
+.item-info {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+}
+
+.info-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.name {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 2.25rem;
+  font-weight: 500;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.score > svg {
+  width: 25px;
+  height: 25px;
+}
+
+.book-btn {
+  padding: 10px 51px;
+  background: #d9d9d9;
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.item-similars {
+  margin-top: 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.similars-grid {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.similars-grid > * {
+  max-width: 220px;
+}
+
+/*helpers*/
+
+.container-md {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+}
+
+.title-large {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  /* H1 */
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.6875rem; /* 119.444% */
+}
+
+.title-md {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}

@@ -1,12 +1,13 @@
 //Public routes
-export const HOME_ROUTE = '/'
-export const LOGIN_ROUTE = '/loginDacha'
-export const REGISTER_ROUT = '/registrationDacha'
-export const POLICY = '/policy'
+export const HOME_ROUTE = "/";
+export const LOGIN_ROUTE = "/loginDacha";
+export const REGISTER_ROUT = "/registrationDacha";
+export const VILLAS_ROUTE = "/villas";
+export const POLICY = "/policy";
 // Dashboard
-export const CABINET = '/cabinet/'
-export const PROFILE = 'profile'
-export const CHANGE_PASS_TOP = 'change_pass'
+export const CABINET = "/cabinet/";
+export const PROFILE = "profile";
+export const CHANGE_PASS_TOP = "change_pass";
 
 // User Routes
 

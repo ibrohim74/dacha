@@ -6,7 +6,7 @@ import {
     LOGIN_ROUTE, POLICY,
     PROFILE,
     REGISTER_ROUT, SCHEDULE,
-    UPDATE_ANNOUNCEMENT, UPDATE_HOSTEL
+    UPDATE_ANNOUNCEMENT, UPDATE_HOSTEL, VILLAS_ROUTE
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -25,101 +25,106 @@ import Policy from "../../page/policy/policy";
 import AnnouncementItemPage from "../../page/seller_Page/announcement/component/announcementItemPage";
 
 
-
-export const Public =[
+import Villas from "../../page/villas/villas";
+import Item_Page from "../../page/item_Page/item_Page";
+export const Public = [
     {
-        Component:<Home/>,
-        path:HOME_ROUTE
+        Component: <Home/>,
+        path: HOME_ROUTE
     },
     {
-        Component:<Login/>,
-        path:LOGIN_ROUTE
+        Component: <Login/>,
+        path: LOGIN_ROUTE
     },
     {
-        Component:<Registration/>,
-        path:REGISTER_ROUT
+        Component: <Registration/>,
+        path: REGISTER_ROUT
     },
     {
-        Component:<Policy/>,
-        path:POLICY
-    }
+        Component: <Policy/>,
+        path: POLICY
+    },
+    {
+        Component: <Villas />,
+        path: VILLAS_ROUTE,
+    },
 ]
 export const Layout = [
     {
-        Component:<LayoutCabinet/>,
-        path:CABINET
+        Component: <LayoutCabinet/>,
+        path: CABINET
     }
 ]
 
 export const Admin = [
     {
-        Component:<Profile/>,
-        path:PROFILE
+        Component: <Profile/>,
+        path: PROFILE
     },
     {
-        Component:<Change_pass_TopBar/>,
-        path:CHANGE_PASS_TOP
+        Component: <Change_pass_TopBar/>,
+        path: CHANGE_PASS_TOP
     }
 ]
 export const Users = [
     {
-        Component:<Profile/>,
-        path:PROFILE
+        Component: <Profile/>,
+        path: PROFILE
     },
     {
-        Component:<Change_pass_TopBar/>,
-        path:CHANGE_PASS_TOP
+        Component: <Change_pass_TopBar/>,
+        path: CHANGE_PASS_TOP
     }
 ]
 export const Seller = [
     {
-        Component:<Profile/>,
-        path:PROFILE
+        Component: <Profile/>,
+        path: PROFILE
     },
     {
-        Component:<Announcement/>,
-        path:ANNOUNCEMENT
+        Component: <Announcement/>,
+        path: ANNOUNCEMENT
     },
     {
-        Component:<Create_announcement/>,
-        path:CREATE_ANNOUNCEMENT
+        Component: <Create_announcement/>,
+        path: CREATE_ANNOUNCEMENT
     },
     {
-        Component:<Update_announcement/>,
-        path:UPDATE_ANNOUNCEMENT
+        Component: <Update_announcement/>,
+        path: UPDATE_ANNOUNCEMENT
     },
     {
-        Component:<Change_pass_TopBar/>,
-        path:CHANGE_PASS_TOP
+        Component: <Change_pass_TopBar/>,
+        path: CHANGE_PASS_TOP
     },
     {
-        Component:<Hostel/>,
-        path:HOSTEL
+        Component: <Hostel/>,
+        path: HOSTEL
     },
     {
-        Component:<UpdateHostel/>,
-        path:UPDATE_HOSTEL
+        Component: <UpdateHostel/>,
+        path: UPDATE_HOSTEL
     },
     {
-        Component:<CreateRoom/>,
-        path:CREATE_ROOM
+        Component: <CreateRoom/>,
+        path: CREATE_ROOM
     },
     {
-        Component:<ScheduleSeller/>,
-        path:SCHEDULE
+        Component: <ScheduleSeller/>,
+        path: SCHEDULE
     },
     {
-        Component:<AnnouncementItemPage/>,
-        path:ANNOUNCEMENT_ITEM_PAGE
+        Component: <AnnouncementItemPage/>,
+        path: ANNOUNCEMENT_ITEM_PAGE
     }
 ]
 export const Moderate = [
     {
-        Component:<Profile/>,
-        path:PROFILE
+        Component: <Profile/>,
+        path: PROFILE
     },
     {
-        Component:<Change_pass_TopBar/>,
-        path:CHANGE_PASS_TOP
+        Component: <Change_pass_TopBar/>,
+        path: CHANGE_PASS_TOP
     }
 ]
