@@ -6,23 +6,29 @@ import {Input, message} from "antd";
 import Header_adminPage from "../../../components/header_adminPage";
 import {jwtDecode} from "jwt-decode";
 import {CreateAnnouncementAPI} from "./API/announcementAPI";
+import {LoadingOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router-dom";
+import {ANNOUNCEMENT, CABINET} from "../../../processes/utils/consts";
 
 
 const CreateAnnouncement = () => {
     const [inputLeft, setInputLeft] = useState(null)
     const [initialState, setInitialState] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
     const JWT = jwtDecode(localStorage.getItem('token'))
-    console.log(initialState)
     const handleSend = () => {
+        setLoading(true)
         if (initialState.title && initialState.info && initialState.price) {
             if (initialState.location_name) {
                 if (initialState.floors &&
                     initialState.area && initialState.rooms_number
                     && initialState.minimum_book_days && initialState.minimum_preorder_days) {
                     CreateAnnouncementAPI(initialState).then(r => {
+                        setLoading(false)
                         if (r?.status === 200) {
                             message.success('success')
-                            window.location.reload()
+                            navigate(CABINET+ANNOUNCEMENT)
                         } else {
                             if (r?.response?.status === 401){
                                 localStorage.clear()
@@ -97,12 +103,22 @@ const CreateAnnouncement = () => {
                                onChange={e => setInitialState({...initialState, minimum_preorder_days: e.target.value})}
                         />
                     </div>
-                    <Button type="submit" color="secondary" variant="contained" size={"large"}
-                            style={{width: "100%", marginTop: "20px"}}
-                            onClick={handleSend}
-                    >
-                        Create
-                    </Button>
+                    {loading ? (
+                        <Button type="submit" color="secondary" variant="contained" size={"large"}
+                                style={{width: "100%", marginTop: "20px"}}
+                                disabled={true}
+                        >
+                            <LoadingOutlined/>
+                        </Button>
+                    ) : (
+                        <Button type="submit" color="secondary" variant="contained" size={"large"}
+                                style={{width: "100%", marginTop: "20px"}}
+                                onClick={handleSend}
+                        >
+                            Create
+                        </Button>
+                    ) }
+
                 </div>
             </div>
         </Box>

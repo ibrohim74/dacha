@@ -10,10 +10,12 @@ import {Input, message, Modal, Select} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import {LoadingOutlined} from '@ant-design/icons';
 import MapsAnnouncement from './mapsAnnouncement';
+import AnnItemAddPhoto from "./annItemAddPhoto";
 
 const AnnouncementItemPage = () => {
     const [dachaData, setDachaData] = useState();
     const [open, setOpen] = useState(false);
+    const [openPhoto, setOpenPhoto] = useState(false);
     const [initialState, setInitialState] = useState({
         display_name: null,
         latitude: null,
@@ -40,6 +42,9 @@ const AnnouncementItemPage = () => {
 
     const updateInfoButton = () => {
         setOpen(current => !current)
+    };
+    const addPhotoButton = () => {
+        setOpenPhoto(current => !current)
     };
     const handleSend = () => {
         if (initialState.title && initialState.info && initialState.price !== 0) {
@@ -112,16 +117,17 @@ const AnnouncementItemPage = () => {
             longitude: parseFloat(selectPosition?.lon),
         });
     }, [selectPosition]);
-    console.log(initialState)
     return (
         <div>
             <Box m="20px">
                 <HeaderAdminPage title="Calendar" subtitle="Announcement calendar for seller"/>
                 <Box display="flex">
-                    <Button type={'button'} color="secondary" variant="contained"style={{marginBottom:'10px'}} onClick={updateInfoButton}>
+                    <Button type={'button'} color="secondary" variant="contained" style={{marginBottom:'10px'}} onClick={updateInfoButton}>
                         Update info
                     </Button>
-                    <Button type={'button'} color="secondary" variant="contained" style={{marginLeft: '20px' , marginBottom:'10px'}}>
+                    <Button type={'button'} color="secondary" variant="contained" style={{marginLeft: '20px' , marginBottom:'10px'}}
+                    onClick={addPhotoButton}
+                    >
                         Add Photo
                     </Button>
                 </Box>
@@ -256,7 +262,7 @@ const AnnouncementItemPage = () => {
 
                     </Box>
                 </Box>}
-
+                {openPhoto && <AnnItemAddPhoto dachaId={id}/>}
 
 
                 <Box display="flex" justifyContent="space-between">

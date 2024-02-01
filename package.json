@@ -21,14 +21,13 @@
     "axios": "^1.6.2",
     "formik": "^2.4.5",
     "gantt-schedule-timeline-calendar": "^3.35.2",
-    "json-server": "^0.17.4",
-    "json-server-auth": "^2.1.0",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
+    "react-loading-skeleton": "^3.3.1",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
@@ -39,8 +38,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dbStart": "npx json-server db.json -m ./node_modules/json-server-auth  --p 8080"
+    "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [
