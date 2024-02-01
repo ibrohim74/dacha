@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {CreateAnnouncementAPI, GetDachaAPI, UpdateDachaAPI} from '../API/announcementAPI';
+import {CreateAnnouncementAPI, DeleteDachaAPI, GetDachaAPI, UpdateDachaAPI} from '../API/announcementAPI';
 import {useParams} from 'react-router-dom';
 import {Box, Button, List, ListItem, ListItemText, Typography, useTheme} from '@mui/material';
 import {tokens} from '../../../../components/theme';
@@ -11,6 +11,7 @@ import TextArea from 'antd/es/input/TextArea';
 import {LoadingOutlined} from '@ant-design/icons';
 import MapsAnnouncement from './mapsAnnouncement';
 import AnnItemAddPhoto from "./annItemAddPhoto";
+import {ANNOUNCEMENT, CABINET} from "../../../../processes/utils/consts";
 
 const AnnouncementItemPage = () => {
     const [dachaData, setDachaData] = useState();
@@ -59,8 +60,6 @@ const AnnouncementItemPage = () => {
                         } if (r?.response?.status === 401) {
                             localStorage.clear()
                             window.location.assign('/')
-                        } else {
-                            message.error('error send data')
                         }
                     })
                 } else {
@@ -74,7 +73,13 @@ const AnnouncementItemPage = () => {
             message.error('barcha malumotlarni toldiring')
         }
     };
-
+    const handleDelete = () =>{
+        DeleteDachaAPI(id).then(r => {
+            if (r.status === 200){
+                window.location.assign(CABINET+ANNOUNCEMENT)
+            }
+        })
+    }
     const priceType = (val) => {
         setInitialState({...initialState, type: val});
     };
@@ -258,11 +263,34 @@ const AnnouncementItemPage = () => {
                                     Update
                                 </Button>
                             )}
+                            {isLoading ? (
+                                <Button
+                                    type="submit"
+                                    color="error"
+                                    variant="contained"
+                                    size={'large'}
+                                    style={{width: '100%',marginTop:'10px'}}
+                                    disabled={true}
+                                >
+                                    <LoadingOutlined/>
+                                </Button>
+                            ) : (
+                                <Button
+                                    type="submit"
+                                    color={'error'}
+                                    variant="contained"
+                                    size={'large'}
+                                    style={{width: '100%',marginTop:'10px'}}
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </Button>
+                            )}
                         </div>
 
                     </Box>
                 </Box>}
-                {openPhoto && <AnnItemAddPhoto dachaId={id}/>}
+                {openPhoto && <AnnItemAddPhoto dachaId={id} dacha={dachaData} open={openPhoto}/>}
 
 
                 <Box display="flex" justifyContent="space-between">

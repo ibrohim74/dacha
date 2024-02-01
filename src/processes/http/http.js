@@ -1,5 +1,5 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { HOME_ROUTE } from "../utils/consts";
 
 // localStorage dan tokenni olish
@@ -8,14 +8,11 @@ let authToken = localStorage.getItem("token");
 const baseURL = "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/";
 
 const $host = axios.create({
-  baseURL: baseURL,
-});
+  baseURL:baseURL
+})
 
 const $authHost = axios.create({
   baseURL: baseURL,
-  headers: {
-    Authorization: `Bearer ${authToken}`,
-  },
 });
 
 // Token va sarlavha header-ni yangilash uchun funktsiya
@@ -28,13 +25,13 @@ const RefreshToken = async () => {
   console.log(JWT);
   try {
     const response = await axios.post(
-      "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/refresh_token",
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${JWT}`,
-        },
-      }
+        "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/refresh_token",
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${JWT}`,
+          },
+        }
     );
     console.log(response);
 
@@ -49,6 +46,26 @@ const RefreshToken = async () => {
   }
 };
 
+$authHost.interceptors.request.use(async (config) => {
+  config.headers.Authorization = `Bearer ${authToken}`;
+  return config;
+});
+
+// 401 xato bo'lganda RefreshToken ni ishlatish
+$authHost.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+      if (error.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        await RefreshToken();
+        return $authHost(originalRequest);
+      }
+      return Promise.reject(error);
+    }
+);
+
+// Har 10 minutda bir tokenni yangilash
 setInterval(RefreshToken, 10 * 60 * 1000);
 
-export { $host, $authHost, RefreshToken };
+export { $authHost , $host, RefreshToken};

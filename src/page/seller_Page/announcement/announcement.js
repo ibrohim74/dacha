@@ -9,6 +9,7 @@ import {Badge} from "antd";
 import {useNavigate} from "react-router-dom";
 import AnnouncementItemPage from "./component/announcementItemPage";
 import {ANNOUNCEMENT_ITEM_PAGE, CABINET} from "../../../processes/utils/consts";
+import Header_adminPage from "../../../components/header_adminPage";
 
 const Announcement = () => {
     const [announcementData, setAnnouncementData] = useState(null)
@@ -24,7 +25,7 @@ const Announcement = () => {
     }, [])
     return (
         <Box m={'20px'}>
-            {/*<Header_adminPage title={"Announcement"} subtitle={'all announcement'}/>*/}
+            <Header_adminPage title={"Announcement"} subtitle={'all announcement'}/>
             <div className="ann-box">
                 {announcementData && announcementData.map((item) => {
                     return (
