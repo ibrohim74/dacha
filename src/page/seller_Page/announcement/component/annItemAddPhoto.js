@@ -119,7 +119,10 @@ const AnnItemAddPhoto = (dacha) => {
     };
 
     const onDrop = async (e) => {
-        const files = e.target.files;
+        e.preventDefault();
+        setIsDragging(false);
+
+        const files = e.dataTransfer.files;
         if (files.length === 0) return;
 
         if (images.length + files.length > MAX_IMAGES_COUNT) {
@@ -142,7 +145,6 @@ const AnnItemAddPhoto = (dacha) => {
 
         message.success('Rasmlar muvaffaqiyatli yuklandi');
     };
-
     useEffect(() => {
         fetchImagesFromServer()
     }, [dachaImg.length, images.length]);
@@ -178,7 +180,8 @@ const AnnItemAddPhoto = (dacha) => {
                             rewind: false,
                         }}>
                             {images?.map((image, index) => (
-                                <SplideSlide key={index} style={{position: 'relative', width: '200px', height: "200px"}}>
+                                <SplideSlide key={index}
+                                             style={{position: 'relative', width: '200px', height: "200px"}}>
                                     <span className="delete" onClick={() => deleteImage(index)}>
                                         <DeleteOutlined/>
                                       </span>

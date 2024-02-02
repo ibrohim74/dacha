@@ -125,7 +125,7 @@ const AnnouncementItemPage = () => {
     return (
         <div>
             <Box m="20px">
-                <HeaderAdminPage title="Calendar" subtitle="Announcement calendar for seller"/>
+                <HeaderAdminPage title={dachaData?.title} subtitle="Announcement calendar for seller"/>
                 <Box display="flex">
                     <Button type={'button'} color="secondary" variant="contained" style={{marginBottom:'10px'}} onClick={updateInfoButton}>
                         Update info
