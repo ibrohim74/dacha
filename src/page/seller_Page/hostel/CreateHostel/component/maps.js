@@ -30,9 +30,7 @@ const Maps = (props) => {
     const [searchText, setSearchText] = useState("");
     const [listPlace, setListPlace] = useState([]);
     const [clicked , setClicked] = useState(false)
-    const [markerPos , setMarkerPos] = useState([])
     const [mapPos , setMapPos] = useState({lat: 41.311081, lng: 69.240562})
-    // const map = useMap();
     const search = async ()=>{
         const params = {
             q: searchText,
@@ -46,7 +44,6 @@ const Maps = (props) => {
             setListPlace(res.data);
         } catch (error) {
             console.error("Error fetching data:", error);
-            // Handle error, e.g., set an error state or show an error message.
         }
 
     }
@@ -74,11 +71,7 @@ const Maps = (props) => {
         if (clicked) {
             setClicked(false);
         }
-        // map.flyTo(selectPosition?.lat, selectPosition?.lon, map.getZoom())
     }, [searchText, selectPosition, clicked]);
-
-
-    console.log(mapPos)
     return (
         <>
             <MapContainer
@@ -120,7 +113,7 @@ const Maps = (props) => {
                             onChange={(event) => {
                                 setSearchText(event.target.value);
                             }}
-                            placeholder={selectPosition?.display_name}
+                            placeholder={selectPosition?.display_name || selectPosition?.location_name}
                         />
                     </div>
                     <div
@@ -131,14 +124,14 @@ const Maps = (props) => {
                 </div>
                 <div>
                     <List component="nav" aria-label="main mailbox folders">
-                        {listPlace.map((item) => {
+                        {searchText && listPlace.map((item) => {
                             return (
                                 <div key={item?.place_id} >
                                     <ListItem
                                         button
                                         onClick={() => {
                                             setSelectPosition(item);
-                                            setClicked((prevClicked) => !prevClicked);
+                                            setSearchText(null);
                                         }}
                                     >
                                         <ListItemIcon>

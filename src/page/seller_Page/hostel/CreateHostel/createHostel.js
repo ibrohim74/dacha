@@ -6,7 +6,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import {GeoSearchControl, OpenStreetMapProvider} from 'leaflet-geosearch';
 import {MapContainer, TileLayer, Circle, useMap, Marker, Popup} from 'react-leaflet';
 import Maps from "./component/maps";
-import SearchInputMap from "./component/searchInputMap";
 import {CreateHostelAPI} from "../API/hostelAPI";
 import {jwtDecode} from "jwt-decode";
 import {CABINET, HOSTEL} from "../../../../processes/utils/consts";

@@ -5,8 +5,7 @@ import {CreateHostelAPI, DeleteHostelAPI, GetHostelsAPI, UpdateHostelsAPI} from 
 import {Input, Popconfirm} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Maps from "../../CreateHostel/component/maps";
-import SearchInputMap from "../../CreateHostel/component/searchInputMap";
-import {jwtDecode} from "jwt-decode";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {CABINET, HOSTEL} from "../../../../../processes/utils/consts";
 
