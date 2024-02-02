@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 import {
   LOGIN_ROUTE,
   REGISTER_ROUT,
@@ -37,6 +38,11 @@ const SliderData = [
 ];
 
 const Item_Page = () => {
+  const [product, setProduct] = useState();
+  const [loading, setLoading] = useState(true); // Add a loading state
+  const [error, setError] = useState(null); // Add an error state
+  const { id } = useParams();
+
   const villas = [
     { name: "Дача 1", price: "109.90", score: 5, img: null },
     { name: "Дача 2", price: "89.90", score: 4.2, img: null },
@@ -58,6 +64,31 @@ const Item_Page = () => {
     { name: "Отель 8", price: "79.90", score: 3.8, img: null },
   ];
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
+        );
+        setProduct(response.data);
+        setLoading(false); // Set loading to false once data is fetched
+      } catch (error) {
+        setLoading(false); // Set loading to false once data is fetched
+        setError("** ERROR ** PRODUCT NOT FOUND"); // Set error state if there's an error
+        console.error("Failed to fetch dacha", error);
+      }
+    };
+
+    fetchProduct();
+  }, []);
+  console.log(product);
+
+  if (loading) {
+    return <div>Loading...</div>; // Render a loading message while data is being fetched
+  }
+  if (error) {
+    return <div>{error}</div>; // Render the error message if there's an error
+  }
   return (
     <div className={styles["Item-Page"]}>
       <Header />
@@ -71,19 +102,24 @@ const Item_Page = () => {
       <div className={`${styles["item-info"]} ${styles["container-md"]}`}>
         <div className={styles["info-header"]}>
           <div className={styles["header-left"]}>
-            <div className={styles["name"]}>Дача 5</div>
+            <div className={styles["name"]}>{product.title}</div>
             <div>
               <Score score={3.5} className={styles["score"]} />
             </div>
           </div>
           <div className={styles["header-right"]}>
             <div className={styles["book-btn"]}>Бронировать</div>
-            <div>5 600 000/день</div>
+            <div>{`${product.price} ${product.type}`}/день</div>
           </div>
         </div>
 
-        <div className={styles["info-description"]}>
+        <div className={styles["info-details"]}>
           <div className={styles["title-md"]}>Подробности</div>
+        </div>
+
+        <div className={styles["info-description"]}>
+          <div className={styles["title-md"]}>Описание</div>
+          <div className={styles["description-text"]}>{product.info}</div>
         </div>
 
         <div className={styles["info-location"]}>

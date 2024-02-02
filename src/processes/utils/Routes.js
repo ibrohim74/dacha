@@ -14,6 +14,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
+  PRODUCT_ROUTE,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -53,7 +54,12 @@ export const Public = [
     Component: <Villas />,
     path: VILLAS_ROUTE,
   },
+  {
+    Component: <Item_Page />,
+    path: PRODUCT_ROUTE,
+  },
 ];
+
 export const Layout = [
   {
     Component: <LayoutCabinet />,

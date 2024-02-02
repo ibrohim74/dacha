@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   LOGIN_ROUTE,
   REGISTER_ROUT,
@@ -21,6 +21,10 @@ import {
 } from "../../processes/utils/items-operations";
 
 const Villas = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search");
+
   const [selectedMonth, setSelectedMonth] = useState(0); // January
   const [selectedType, setSelectedType] = useState(0); // types: 0 = "villa", 1 = "hotel", 2 = "restaurant"
   const [selectedSort, setSelectedSort] = useState(0); // sorts: 0 = "price", 1 = "score"
@@ -57,35 +61,15 @@ const Villas = () => {
   //test operations on test-items.json
   const allItemIds = data.items.map((item) => item.id);
 
-  const villas = [
-    { name: "Дача 1", price: "109.90", score: 5, img: null },
-    { name: "Дача 2", price: "89.90", score: 4.2, img: null },
-    { name: "Дача 3", price: "99.90", score: 3.6, img: null },
-    { name: "Дача 4", price: "39.90", score: 4.7, img: null },
-    { name: "Дача 5", price: "69.90", score: 4.9, img: null },
-    { name: "Дача 6", price: "49.90", score: 4.4, img: null },
-    { name: "Дача 7", price: "59.90", score: 3, img: null },
-    { name: "Дача 8", price: "79.90", score: 2.5, img: null },
-  ];
-  const hotels = [
-    { name: "Отель 1", price: "99.90", score: 4, img: null },
-    { name: "Отель 2", price: "39.90", score: 1.5, img: null },
-    { name: "Отель 3", price: "69.90", score: 5, img: null },
-    { name: "Отель 4", price: "49.90", score: 4.6, img: null },
-    { name: "Отель 5", price: "109.90", score: 4, img: null },
-    { name: "Отель 6", price: "89.90", score: 4.1, img: null },
-    { name: "Отель 7", price: "59.90", score: 3.5, img: null },
-    { name: "Отель 8", price: "79.90", score: 3.8, img: null },
-  ];
-
   // working with actual db:
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas"
-        );
+        const url = searchTerm
+          ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas?title=${searchTerm}`
+          : "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas";
+        const response = await axios.get(url);
         setProducts(response.data);
       } catch (error) {
         console.error("Failed to fetch products", error);
@@ -93,7 +77,8 @@ const Villas = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [searchTerm]);
+
   console.log(products);
 
   return (
@@ -160,14 +145,11 @@ const Villas = () => {
           </div>
         </div>
         <div className={styles["villas-grid"]}>
-          {/* {villas.map((villa) => (
-            <ItemCard {...villa} />
-          ))} */}
-          {/* {selectedType == 0
-            ? villas.map((villa) => <ItemCard {...villa} />)
-            : hotels.map((hotel) => <ItemCard {...hotel} />)} */}
-          {filteredItems.map((item) => (
+          {/* {filteredItems.map((item) => (
             <ItemCard {...item} />
+          ))} */}
+          {products.map((product) => (
+            <ItemCard {...product} />
           ))}
         </div>
       </div>
