@@ -17,7 +17,7 @@ const CreateInputLeft = (props) => {
             display_name: selectPosition?.display_name,
             latitude: parseFloat(selectPosition?.lat),
             longitude:parseFloat(selectPosition?.lon),
-            type:'UZS'
+            type:inputLeft?.type ? inputLeft.type : 'UZS'
         })
     }, [selectPosition])
 
@@ -53,9 +53,24 @@ const CreateInputLeft = (props) => {
             </div>
             <div className="input">
                 <label htmlFor="price">цена*</label>
-                <Input addonAfter={selectAfter} defaultValue="UZS"
-                       type={'number'}
-                       onChange={(e) => setInputLeft({...inputLeft, price: e.target.value})}
+                <Input   addonAfter={selectAfter}
+                         value={inputLeft?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+                         type={'text'}
+                         onChange={(e) => {
+                             const cleanedValue = e.target.value.replace(/\s/g, '');
+                             setInputLeft({
+                                 ...inputLeft,
+                                 price: cleanedValue !== '' ? parseInt(cleanedValue) : 0,
+                             });
+                         }}
+                         onBlur={() => {
+                             if (!inputLeft.price || isNaN(inputLeft.price)) {
+                                 setInputLeft({
+                                     ...inputLeft,
+                                     price: 0,
+                                 });
+                             }
+                         }}
                 />
 
             </div>

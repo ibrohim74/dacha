@@ -186,50 +186,7 @@ const DragDrop = (props) => {
                        onChange={(e) => setInputLeft({ ...inputLeft, price: e.target.value })}/>
             </div>
             <div className="input">
-                <div className="card">
-                    <div className="drag-area" onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
-                        {isDragging ? (
-                            <span className="select" style={{ color: '#70d8bd' }}>
-                                drop images here
-                            </span>
-                        ) : (
-                            <>
-                                drag & drop image here or
-                                <span className="select browse-btn" role={"button"} onClick={selectFiles}>
-                                    Browse
-                                </span>
-                            </>
-                        )}
 
-                        <input type="file" name={"file"} className={"file"} multiple ref={fileInputRef} onChange={onFileSelect}></input>
-                    </div>
-                    <div className="container-inputLeft">
-                        {mediaQuery ? (
-                            <>
-                                <Splide aria-label="My Favorite Images" options={{
-                                    perPage: 1,
-                                    type: 'loop',
-                                    width: "100%",
-                                    rewind: false,
-                                }}>
-                                    {inputLeft.img.map((image, index) => (
-                                        <SplideSlide key={index} style={{ position: "relative" }}>
-                                            <span className="delete" onClick={() => deleteImage(index)}><DeleteOutlined /></span>
-                                            <img src={image.img_url} alt={image.img} />
-                                        </SplideSlide>
-                                    ))}
-                                </Splide>
-                            </>
-                        ) : (
-                            images.map((image, index) => (
-                                <div className="image" key={index}>
-                                    <span className="delete" onClick={() => deleteImage(index)}><DeleteOutlined /></span>
-                                    <img src={image.url} alt={image.name} />
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </div>
             </div>
         </div>
     );

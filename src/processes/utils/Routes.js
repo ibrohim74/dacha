@@ -1,5 +1,6 @@
 import {
   ANNOUNCEMENT,
+  ANNOUNCEMENT_ITEM_PAGE,
   CABINET,
   CHANGE_PASS_TOP,
   CREATE_ANNOUNCEMENT,
@@ -30,9 +31,10 @@ import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/creat
 import ScheduleSeller from "../../page/seller_Page/schedule/scheduleSeller";
 import UpdateHostel from "../../page/seller_Page/hostel/hostelPage/component/updateHostel";
 import Policy from "../../page/policy/policy";
+import AnnouncementItemPage from "../../page/seller_Page/announcement/component/announcementItemPage";
+
 import Villas from "../../page/villas/villas";
 import Item_Page from "../../page/item_Page/item_Page";
-
 export const Public = [
   {
     Component: <Home />,
@@ -123,6 +125,10 @@ export const Seller = [
   {
     Component: <ScheduleSeller />,
     path: SCHEDULE,
+  },
+  {
+    Component: <AnnouncementItemPage />,
+    path: ANNOUNCEMENT_ITEM_PAGE,
   },
 ];
 export const Moderate = [

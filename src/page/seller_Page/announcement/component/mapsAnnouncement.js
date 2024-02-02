@@ -80,8 +80,9 @@ const MapsAnnouncement = (props) => {
     return (
         <>
             <MapContainer
-                zoom={8}
-                center={{lat: 41.311081, lng: 69.240562}}
+                zoom={9}
+                center={{lat: 41.345570, lng: 69.284599
+            }}
                 style={{ width: '100%', height: '200px', overflow: 'hidden', borderRadius: '20px' }}
             >
                 <TileLayer
