@@ -42,12 +42,16 @@
   background: transparent;
   box-sizing: border-box;
 }
-.header-searchbar > div {
+.header-searchbar > input {
+  all: unset;
   color: #000;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.25rem;
+}
+
+.header-searchbar > input::placeholder {
   letter-spacing: 4px;
   opacity: 0.5;
 }

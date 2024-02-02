@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   LOGIN_ROUTE,
   REGISTER_ROUT,
@@ -13,6 +13,7 @@ import { $host } from "../../processes/http/http";
 import styles from "./header.module.css";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [showAccMenu, setshowAccMenu] = useState(false);
   const accMenuRef = useRef();
   const accButtonRef = useRef();
@@ -67,6 +68,12 @@ const Header = () => {
     return JWT != null;
   };
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const searchTerm = event.target.elements.search.value;
+    navigate(`/villas?search=${searchTerm}`);
+  };
+
   return (
     <>
       <div className={`${styles["Header"]} ${styles["container-md"]}`}>
@@ -75,10 +82,10 @@ const Header = () => {
             <Icons.Logo />
             <div>Travid</div>
           </Link>
-          <div className={styles["header-searchbar"]}>
+          <form className={styles["header-searchbar"]} onSubmit={handleSearch}>
             <Icons.Magnifier />
-            <div>Найти</div>
-          </div>
+            <input type="text" name="search" placeholder="Найти" />
+          </form>
         </div>
         <div className={styles["header-right"]}>
           <Icons.Language className={styles["language-btn"]} />

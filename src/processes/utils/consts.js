@@ -3,6 +3,7 @@ export const HOME_ROUTE = "/";
 export const LOGIN_ROUTE = "/loginDacha";
 export const REGISTER_ROUT = "/registrationDacha";
 export const VILLAS_ROUTE = "/villas";
+export const PRODUCT_ROUTE = "/product-page/:id";
 export const POLICY = "/policy";
 // Dashboard
 export const CABINET = "/cabinet/";
