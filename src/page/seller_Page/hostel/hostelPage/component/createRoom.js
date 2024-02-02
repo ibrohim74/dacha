@@ -12,7 +12,7 @@ import {LoadingOutlined} from "@ant-design/icons";
 import './styleRoom.css'
 const CreateRoom = () => {
     const [typeHotel, setTypeHotel] = React.useState('');
-    const [initialState, setInitialState] = useState()
+    const [initialState, setInitialState] = useState({price:0})
     const [isLoading, setIsLoading] = useState(false)
     const mediaQuery = useMediaQuery('(max-width:750px)');
 
@@ -23,9 +23,10 @@ const CreateRoom = () => {
             && initialState.minimum_book_days && initialState.minimum_preorder_days
         ){
             CreateRoomAPI(initialState).then(r => {
+                console.log(r)
                 if (r === 200) {
                     setIsLoading(false)
-                    window.location.assign(HOSTEL)
+                    // window.location.assign(HOSTEL)
                 }else {
                     setIsLoading(false)
                     message.error('error')}
@@ -62,8 +63,25 @@ const CreateRoom = () => {
                         </div>
                         <div className="input-2-row" style={{marginBottom: "15px"}}>
                             <label htmlFor="price">Price</label>
-                            <Input placeholder={'price'} type={'number'}
-                                   onChange={e => setInitialState({...initialState, price: e.target.value})}/>
+                            <Input placeholder={'price'}
+                                   value={initialState?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+                                   type={'text'}
+                                   onChange={(e) => {
+                                       const cleanedValue = e.target.value.replace(/\s/g, '');
+                                       setInitialState({
+                                           ...initialState,
+                                           price: cleanedValue !== '' ? parseInt(cleanedValue) : 0,
+                                       });
+                                   }}
+                                   onBlur={() => {
+                                       if (!initialState?.price || isNaN(initialState.price)) {
+                                           setInitialState({
+                                               ...initialState,
+                                               price: 0,
+                                           });
+                                       }
+                                   }}
+                            />
                         </div>
                     </div>
                     <div className="input" style={{marginBottom: "15px"}}>

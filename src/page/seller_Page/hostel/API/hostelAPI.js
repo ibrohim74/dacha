@@ -49,6 +49,7 @@ export const DeleteHostelAPI = async (id) => {
 export const CreateRoomAPI = async (data) => {
     try {
         const res = await $authHost.post('add_room', data)
+        console.log(res)
         return res?.status
     } catch (e) {
         console.log(e)
@@ -62,6 +63,7 @@ export const GetRoomsAPI = async () => {
         const id = resHostel.data?.map((item) => {
             return item.id
         })
+
         const res = await $authHost.get(`/hotel/${id}/rooms`)
         return res.data
     } catch (e) {

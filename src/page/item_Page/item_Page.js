@@ -13,34 +13,46 @@ import Footer from "../../components/footer/footer";
 import ImageSlider from "../../components/image-slider/image-slider";
 import Score from "../../components/score/score";
 import Header from "../../components/header/header";
+import {MapContainer, Marker, TileLayer} from "react-leaflet";
+import L from "leaflet";
+import {Tag} from "antd";
 
-const SliderData = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
-  },
-];
+// const SliderData = [
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+//   },
+// ];
 
+const customMarkerIcon = new L.Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+});
 const Item_Page = () => {
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true); // Add a loading state
   const [error, setError] = useState(null); // Add an error state
+  const [SliderData, setSliderData] = useState([]);
   const { id } = useParams();
 
   const villas = [
@@ -71,6 +83,7 @@ const Item_Page = () => {
           `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
         );
         setProduct(response.data);
+        setSliderData(response.data?.photos_path.split('\n').filter(Boolean));
         setLoading(false); // Set loading to false once data is fetched
       } catch (error) {
         setLoading(false); // Set loading to false once data is fetched
@@ -81,7 +94,6 @@ const Item_Page = () => {
 
     fetchProduct();
   }, []);
-  console.log(product);
 
   if (loading) {
     return <div>Loading...</div>; // Render a loading message while data is being fetched
@@ -92,7 +104,6 @@ const Item_Page = () => {
   return (
     <div className={styles["Item-Page"]}>
       <Header />
-
       <ImageSlider
         slides={SliderData}
         className={styles["container-md"]}
@@ -115,6 +126,10 @@ const Item_Page = () => {
 
         <div className={styles["info-details"]}>
           <div className={styles["title-md"]}>Подробности</div>
+          <Tag style={{fontSize:'16px', margin:'10px'}}>Этажность : {product?.floors}</Tag>
+          <Tag style={{fontSize:'16px', margin:'10px'}}>Площадь : {product?.area}</Tag>
+          <Tag style={{fontSize:'16px', margin:'10px'}}>количество комнат : {product?.rooms_number}</Tag>
+          <Tag style={{fontSize:'16px', margin:'10px'}}>местоположение : {product?.location_name}</Tag>
         </div>
 
         <div className={styles["info-description"]}>
@@ -124,6 +139,22 @@ const Item_Page = () => {
 
         <div className={styles["info-location"]}>
           <div className={styles["title-md"]}>Локация</div>
+<p>{product?.location_name}</p>
+          <MapContainer zoom={14} center={{lat:product?.latitude , lng:product?.longitude}}
+                        style={{ width: '100%', height: '200px', overflow: 'hidden', borderRadius: '20px' }}
+          >
+            <TileLayer
+                attribution="Dacha.uz"
+                url="https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
+            />
+            <TileLayer url="https://www.google.cn/maps/vt?lyrs=y@189&gl=cn&x={x}&y={y}&z={z}" />
+
+                <Marker
+                    position={[product?.latitude, product?.longitude]}
+                    icon={customMarkerIcon}
+                />
+
+          </MapContainer>
         </div>
 
         <div className={styles["info-reviews"]}>

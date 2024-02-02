@@ -273,6 +273,7 @@ const TableRoom = () => {
     );
     useEffect(() => {
         GetRoomsAPI().then(async (data) => {
+            console.log(data)
             const roomsWithIds = data.map((room, index) => ({
                 ...room,
                 id: (index + 1).toString(),
@@ -373,8 +374,25 @@ const TableRoom = () => {
                                 </div>
                                 <div className="input-2-row" style={{marginBottom: "15px"}}>
                                     <label htmlFor="price">Price</label>
-                                    <Input placeholder={currentRoomData?.price} type={'number'}
-                                           onChange={e => setInitialState({...initialState, price: e.target.value})}/>
+                                    <Input placeholder={currentRoomData?.price}
+                                           value={initialState?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+                                           type={'text'}
+                                           onChange={(e) => {
+                                               const cleanedValue = e.target.value.replace(/\s/g, '');
+                                               setInitialState({
+                                                   ...initialState,
+                                                   price: cleanedValue !== '' ? parseInt(cleanedValue) : 0,
+                                               });
+                                           }}
+                                           onBlur={() => {
+                                               if (!initialState?.price || isNaN(initialState.price)) {
+                                                   setInitialState({
+                                                       ...initialState,
+                                                       price: 0,
+                                                   });
+                                               }
+                                           }}
+                                    />
                                 </div>
                             </div>
                             <div className="input" style={{marginBottom: "15px"}}>

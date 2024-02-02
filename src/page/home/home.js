@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import {
   LOGIN_ROUTE,
@@ -10,18 +10,10 @@ import styles from "./home.module.css";
 import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
+import {GetAllDacha} from "./API/homeAPI";
 
 const Home = () => {
-  const villas = [
-    { name: "Дача 1", price: "109.90", score: 5, img: null },
-    { name: "Дача 2", price: "89.90", score: 4.2, img: null },
-    { name: "Дача 3", price: "99.90", score: 3.6, img: null },
-    { name: "Дача 4", price: "39.90", score: 4.7, img: null },
-    { name: "Дача 5", price: "69.90", score: 4.9, img: null },
-    { name: "Дача 6", price: "49.90", score: 4.4, img: null },
-    { name: "Дача 7", price: "59.90", score: 3, img: null },
-    { name: "Дача 8", price: "79.90", score: 2.5, img: null },
-  ];
+ const [villas , setVillas] = useState([])
   const hotels = [
     { name: "Отель 1", price: "99.90", score: 4, img: null },
     { name: "Отель 2", price: "39.90", score: 1.5, img: null },
@@ -32,6 +24,14 @@ const Home = () => {
     { name: "Отель 7", price: "59.90", score: 3.5, img: null },
     { name: "Отель 8", price: "79.90", score: 3.8, img: null },
   ];
+
+  useEffect(()=>{
+    GetAllDacha().then(r => {
+      if (r?.status === 200){
+        setVillas(r.data)
+      }
+    })
+  },[])
   return (
     <div className={styles["Home"]}>
       {/* <div>
