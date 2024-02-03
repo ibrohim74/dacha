@@ -3,7 +3,7 @@ import {Button, Input, message} from "antd";
 import {LoadingOutlined, UserOutlined} from "@ant-design/icons";
 import {LoginAPI} from "./API";
 import {Link, useNavigate} from "react-router-dom";
-import {CABINET, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
+import {ANNOUNCEMENT, CABINET, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
 import './style/login.css'
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
         if (user.username && user.password) {
             LoginAPI(user.username, user.password).then(r =>{
                 if (r === localStorage.getItem('token')){
-                    window.location.assign(CABINET+PROFILE)
+                    window.location.assign(CABINET+ANNOUNCEMENT)
                     setIsLoading(false)
                 }else {
                     messageApi.open({

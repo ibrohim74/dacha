@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {RegistrationAPI} from "./API";
 import {Link, useNavigate} from "react-router-dom";
-import {CABINET, LOGIN_ROUTE, POLICY, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
+import {ANNOUNCEMENT, CABINET, LOGIN_ROUTE, POLICY, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
 import {Checkbox, message} from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
 
@@ -53,7 +53,7 @@ const Registration = () => {
                 if (checkPolicy){
                     RegistrationAPI(user).then(r => {
                         if (r === localStorage.getItem('token')) {
-                            window.location.assign(CABINET + PROFILE)
+                            window.location.assign(CABINET + ANNOUNCEMENT)
                             setTimeout(() => {
                                 setIsLoading(false)
                             }, 1000)

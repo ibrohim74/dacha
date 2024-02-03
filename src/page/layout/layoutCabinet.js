@@ -3,10 +3,10 @@ import {Link, Route, Routes} from "react-router-dom";
 import {Admin, Layout, Moderate, Seller, Users} from "../../processes/utils/Routes";
 import { jwtDecode } from "jwt-decode";
 import {$host} from "../../processes/http/http";
-import Sidebar from "./sidebar/Sidebar";
 import { ColorModeContext, useMode } from "../../components/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./topbar/Topbar";
+
 
 
 const LayoutCabinet = () => {
@@ -30,13 +30,12 @@ const LayoutCabinet = () => {
 
     return (
         <div>
-            <ColorModeContext.Provider value={colorMode}>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
+
                     <div className={"layout-app"}>
-                        <Sidebar isSidebar={isSidebar} user={CurrentUser}/>
+
                         <main className="content">
-                            <Topbar setIsSidebar={setIsSidebar} />
+
+                            <Topbar/>
                             <Routes>
                                 {CurrentUser?.role === "user" && Users.map(({ path, Component }) => (
                                     <Route key={path} path={path} element={Component} />
@@ -53,8 +52,7 @@ const LayoutCabinet = () => {
                             </Routes>
                         </main>
                     </div>
-                </ThemeProvider>
-            </ColorModeContext.Provider>
+
         </div>
     );
 };

@@ -1,89 +1,143 @@
-import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
-import { ColorModeContext, tokens } from "../../../components/theme";
-import InputBase from "@mui/material/InputBase";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import { Dropdown, Space } from 'antd'
-import LogoutIcon from '@mui/icons-material/Logout';
-import LockResetIcon from '@mui/icons-material/LockReset';
-import {CHANGE_PASS_TOP, HOME_ROUTE} from "../../../processes/utils/consts";
-import {useNavigate} from "react-router-dom";
-
+import React, {useEffect, useRef, useState} from 'react';
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {
+    ANNOUNCEMENT,
+    CABINET,
+    HOME_ROUTE,
+    LOGIN_ROUTE,
+    PROFILE,
+    REGISTER_ROUT,
+    REQUEST_ANNOUNCEMENT
+} from "../../../processes/utils/consts";
+import {Icons} from "../../../assets/icons/icons";
+import {jwtDecode} from "jwt-decode";
+import {$host} from "../../../processes/http/http";
+import styles from '../assets/layout.module.css'
 
 const Topbar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
-  const navigate = useNavigate()
-  const items = [
-    {
-      label:"Log Out",
-      key: '0',
-      icon: <LogoutIcon />,
-      danger: true,
-      onClick:()=>{
-        localStorage.removeItem('token')
-        window.location.assign(HOME_ROUTE)
-      }
-    },
-    {
-      label:"Change Password",
-      key: '1',
-      icon: <LockResetIcon />,
-      danger: false,
-      onClick:()=>{
-        navigate(CHANGE_PASS_TOP)
-      }
-    }
-  ];
-  return (
-    <Box display="flex" justifyContent="space-between" p={2}>
-      {/* SEARCH BAR */}
-      <Box
-        display="flex"
-        backgroundColor={colors.primary[400]}
-        borderRadius="3px"
-      >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
-      </Box>
+    const navigate = useNavigate();
+    const [showAccMenu, setshowAccMenu] = useState(false);
+    const accMenuRef = useRef();
+    const accButtonRef = useRef();
+    const url = useLocation()
+    const
+        JWT = localStorage.getItem("token")
+            ? jwtDecode(localStorage.getItem("token"))
+            : null;
+    const [CurrentUser, setCurrentUser] = useState({username: ""});
+    useEffect(() => {
+        if (JWT) {
+            const getUser = async () => {
+                try {
+                    const res = await $host.get("user/" + JWT.userId);
+                    setCurrentUser(res.data);
+                } catch (e) {
+                    console.log(e);
+                }
+            };
+            getUser();
+        }
 
-      {/* ICONS */}
-      <Box display="flex">
-        <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <Dropdown
-              menu={{
-                items,
-              }}
-              trigger={['click']}
-              placement="bottom" arrow={{ pointAtCenter: true }}
-          >
-          <SettingsOutlinedIcon />
-          </Dropdown>
-        </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon />
-        </IconButton>
-      </Box>
-    </Box>
-  );
+
+    }, []);
+
+    const removeToken = () => {
+        localStorage.clear();
+        setshowAccMenu(false); // This will cause the component to re-render
+        window.location.assign(HOME_ROUTE)
+    };
+
+    const handleOpenAccMenu = () => {
+        setshowAccMenu(true);
+    };
+    const handleCloseAccMenu = () => {
+        setshowAccMenu(false);
+    };
+
+    const handleClickOutside = (event) => {
+        if (
+            accMenuRef.current &&
+            !accMenuRef.current.contains(event.target) &&
+            accButtonRef.current !== event.target
+        ) {
+            handleCloseAccMenu();
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const isLoggedIn = () => {
+        return JWT != null;
+    };
+    return (
+        <div className={`${styles["top-box"]} ${styles.container}`}>
+            <div className={styles['top-box-left']}>
+                <Link className={styles["header-logo"]} to={HOME_ROUTE}>
+                    <Icons.Logo/>
+                    <div>Travid</div>
+                </Link>
+            </div>
+            <div className={styles['top-box-center']}>
+                <div className={url.pathname === CABINET + ANNOUNCEMENT ? styles["topLinkActive"] : ''}>
+                    <Link to={CABINET+ANNOUNCEMENT}>Мои обявления</Link>
+                </div>
+                <div className={url.pathname === CABINET + REQUEST_ANNOUNCEMENT ? styles["topLinkActive"] : ''}>
+                    <Link to={CABINET + REQUEST_ANNOUNCEMENT }>Запросы</Link>
+                </div>
+            </div>
+
+            <div className={styles['top-box-right']}>
+                <Icons.Language className={styles["language-btn"]}/>
+                {isLoggedIn() ? (
+                    <>
+                        <Icons.Bell className={styles["notification-btn"]}/>
+                        <div ref={accButtonRef} onClick={handleOpenAccMenu}>
+                            {CurrentUser.username}
+                        </div>
+                        {showAccMenu && (
+                            <>
+                                <div ref={accMenuRef} className={styles["account-menu"]}>
+                                    <div>
+                                        <Link
+                                            className={styles["menu-btn"]}
+                                            to={`${CABINET}${PROFILE}`} // not sure if good practice /cabinet/profile
+                                        >
+                                            Аккаунт
+                                        </Link>
+                                        <Link className={styles["menu-btn"]}>Избранные</Link>
+                                        <Link className={styles["menu-btn"]}>
+                                            Забронированные
+                                        </Link>
+                                    </div>
+                                    <div className={styles["menu-btn"]} onClick={removeToken}>
+                                        Выйти
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    </>
+                ) : (
+                    <>
+                        <div>
+                            <Link to={LOGIN_ROUTE} className={styles["auth-btn"]}>
+                                sign in
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to={REGISTER_ROUT} className={styles["auth-btn"]}>
+                                sign up
+                            </Link>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default Topbar;
