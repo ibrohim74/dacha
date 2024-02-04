@@ -1,0 +1,23 @@
+.dates-grid {
+  margin-top: 27px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  user-select: none;
+}
+.dates-grid > div {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.weekdays {
+  font-size: 0.75rem;
+  padding: 10px 0 10px 0 !important;
+}
+
+.numbers {
+  cursor: pointer;
+}

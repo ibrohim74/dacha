@@ -1,0 +1,132 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Дача Луна",
+      "type": "villa",
+      "price": 86,
+      "score": 4.1,
+      "img": "villa-moon.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Дача Сол",
+      "type": "villa",
+      "price": 67,
+      "score": 2.2,
+      "img": "villa-sun.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Дача Звезда",
+      "type": "villa",
+      "price": 94,
+      "score": 5.0,
+      "img": "villa-star.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Дача Небо",
+      "type": "villa",
+      "price": 77,
+      "score": 3.8,
+      "img": "villa-sky.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Дача Море",
+      "type": "villa",
+      "price": 42,
+      "score": 1.3,
+      "img": "villa-sea.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Дача Мечта",
+      "type": "villa",
+      "price": 79,
+      "score": 2.6,
+      "img": "villa-dream.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Дача Солнце",
+      "type": "villa",
+      "price": 91,
+      "score": 4.5,
+      "img": "villa-sun.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Дача Луна",
+      "type": "villa",
+      "price": 64,
+      "score": 3.2,
+      "img": "villa-moon.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Отель Луна",
+      "type": "hotel",
+      "price": 33,
+      "score": 1.9,
+      "img": "hotel-moon.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Отель Сол",
+      "type": "hotel",
+      "price": 98,
+      "score": 4.7,
+      "img": "hotel-sun.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Отель Звезда",
+      "type": "hotel",
+      "price": 52,
+      "score": 2.4,
+      "img": "hotel-star.jpg"
+    },
+    {
+      "id": 12,
+      "name": "Отель Небо",
+      "type": "hotel",
+      "price": 89,
+      "score": 5.0,
+      "img": "hotel-sky.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Отель Море",
+      "type": "hotel",
+      "price": 47,
+      "score": 3.6,
+      "img": "hotel-sea.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Отель Мечта",
+      "type": "hotel",
+      "price": 38,
+      "score": 1.1,
+      "img": "hotel-dream.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Отель Солнце",
+      "type": "hotel",
+      "price": 71,
+      "score": 2.8,
+      "img": "hotel-sun.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Отель Луна",
+      "type": "hotel",
+      "price": 55,
+      "score": 4.3,
+      "img": "hotel-moon.jpg"
+    }
+  ]
+}

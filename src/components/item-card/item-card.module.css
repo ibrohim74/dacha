@@ -1,0 +1,43 @@
+.item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+.item-card > svg {
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+.item-card:hover > svg {
+  filter: brightness(105%);
+}
+
+.item-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score {
+  display: flex;
+  gap: 1px;
+}
+
+.price {
+  color: #525252;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 166.667% */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}

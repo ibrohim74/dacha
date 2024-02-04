@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+.header-logo {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    color: #1f1f1f;
+    cursor: pointer;
+}
+.header-logo > div {
+    text-align: right;
+    font-feature-settings: "clig" off, "liga" off;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 2px;
+}
+.top-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px !important;
+    padding: 0 20px !important;
+}
+.container{
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.notification-btn {
+    width: 26px;
+    height: 26px;
+}
+.notification-btn:hover {
+    animation: giggle 1s ease-in-out;
+}
+.top-box-right {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 24px;
+}
+.top-box-right > * {
+    cursor: pointer;
+}
+.account-menu {
+    position: absolute;
+    margin-top: 16rem;
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+
+    border-radius: 8px;
+    border: 1.5px solid #000;
+    background: #f8f8f8;
+    z-index: 1;
+    user-select: none;
+    cursor: unset;
+}
+
+.account-menu > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.account-menu div {
+    color: #1f1f1f;
+    font-feature-settings: "clig" off, "liga" off;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem; /* 142.857% */
+    letter-spacing: 2px;
+}
+.menu-btn {
+    all: unset;
+    color: #1f1f1f;
+    font-feature-settings: "clig" off, "liga" off;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem; /* 142.857% */
+    letter-spacing: 2px;
+
+    cursor: pointer;
+}
+.top-box-center{
+    display: flex;
+}
+.top-box-center div{
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+}
+.top-box-center div:nth-child(2){
+    margin-left: 30px;}
+.top-box-center .topLinkActive{
+    border-bottom: 3px black solid ;
+}
+@keyframes giggle {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(-20deg);
+    }
+    40% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(-20deg);
+    }
+    80% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
