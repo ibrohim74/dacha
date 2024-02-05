@@ -1,0 +1,215 @@
+.Seller-header {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Rubik", sans-serif;
+}
+
+.header-left {
+  min-width: 60%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #1f1f1f;
+  cursor: pointer;
+}
+.header-logo > div {
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
+  letter-spacing: 2px;
+}
+
+.header-tabs {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.header-tab {
+  padding-bottom: 7px;
+  cursor: pointer;
+}
+
+.header-tab.active {
+  position: relative;
+  display: inline-block;
+}
+.header-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 50%; /* Adjust this value to change the starting point of the line */
+  right: 50%; /* Adjust this value to change the ending point of the line */
+  bottom: 0;
+  height: 2px; /* Adjust this value to change the thickness of the line */
+  background-color: black; /* Adjust this value to change the color of the line */
+  border-radius: 5px; /* Adjust this value to change the roundness of the edges */
+  animation: animateLine 0.3s forwards ease-in-out; /* Add animation */
+}
+
+/* .header-searchbar {
+  min-width: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+  border-radius: 18px;
+  border: 1.5px solid #000;
+  background: transparent;
+  box-sizing: border-box;
+}
+.header-searchbar > input {
+  all: unset;
+  color: #000;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.header-searchbar > input::placeholder {
+  letter-spacing: 4px;
+  opacity: 0.5;
+} */
+
+.header-right {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 24px;
+}
+.header-right > * {
+  cursor: pointer;
+}
+.auth-btn {
+  all: unset;
+  color: #1f1f1f;
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.language-btn {
+  width: 26px;
+  height: 26px;
+}
+.language-btn:hover {
+  animation: focus 0.5s ease-in-out;
+}
+
+.notification-btn {
+  width: 26px;
+  height: 26px;
+}
+.notification-btn:hover {
+  animation: giggle 1s ease-in-out;
+}
+
+.account-menu {
+  position: absolute;
+  margin-top: 21rem;
+  padding: 10px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+
+  border-radius: 8px;
+  border: 1.5px solid #000;
+  background: #f8f8f8;
+  z-index: 10;
+  user-select: none;
+  cursor: unset;
+}
+
+.account-menu > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-btn {
+  all: unset;
+  color: #1f1f1f;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 142.857% */
+  letter-spacing: 2px;
+
+  cursor: pointer;
+}
+
+.account-menu div {
+  color: #1f1f1f;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 142.857% */
+  letter-spacing: 2px;
+}
+
+/*helpers*/
+
+.container-md {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+}
+
+/* animations */
+
+@keyframes focus {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes giggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-20deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(-20deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes animateLine {
+  to {
+    left: 10%; /* Value after animation */
+    right: 10%; /* Value after animation */
+  }
+}

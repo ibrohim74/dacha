@@ -38,6 +38,7 @@ export const UpdateDachaAPI = async (id,data)=>{
 export const DeleteDachaAPI = async (id)=>{
     try {
         const res = await $authHost.delete(`/dacha/${id}`)
+        console.log(res)
         return res
     }catch (e){
         console.log(e)
@@ -47,6 +48,7 @@ export const DeleteDachaAPI = async (id)=>{
 export const DeleteDachaPhotoAPI = async (url)=>{
     try {
         const res = await $authHost.delete(url)
+        console.log(res)
         return res
     }catch (e){
         console.log(e)
