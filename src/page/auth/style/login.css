@@ -8,7 +8,16 @@
   align-items: center;
   gap: 15px;
 }
-
+.ant-select-selector{
+  width: 100% !important;
+  background: none !important;
+  border: none!important;
+  outline: none!important;
+  border-bottom: 1px black solid!important;
+  height: 30px!important;
+  border-radius: 0!important;
+}
+.ant-select-focused{border: none!important;}
 .two-register-input {
   display: flex;
   justify-content: space-between;

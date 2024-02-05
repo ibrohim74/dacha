@@ -1,281 +1,312 @@
-import React, { useState } from "react";
-import {
-  RegistrationAPI,
-  SendEmailVerificationAPI,
-  CheckRegistrationCodeAPI,
-} from "./API";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  CABINET,
-  LOGIN_ROUTE,
-  POLICY,
-  PROFILE,
-  REGISTER_ROUT,
-} from "../../processes/utils/consts";
-import { Checkbox, message } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-
-import { $authHost, $host } from "./../../processes/http/http";
+import React, {useState} from 'react';
+import style from './style/registration.module.css';
+import {Icons} from '../../assets/icons/icons';
+import {Link, useNavigate} from 'react-router-dom';
+import {ANNOUNCEMENT, CABINET, POLICY, PROFILE, REGISTER_STEP2_ROUT} from '../../processes/utils/consts';
+import {message, Select} from "antd";
+import Reg_step2 from "./component/reg_step2";
+import './style/login.css'
+import {CheckEmail, CheckEmailAPI, CheckRegistrationCodeAPI, RegistrationAPI} from "./API";
 
 const Registration = () => {
-  const [user, setUser] = useState({ role: "user" });
-  const [messageApi, contextHolder] = message.useMessage();
-  const [isLoading, setIsLoading] = useState(false);
-  const [checkPolicy, setCheckPolicy] = useState(false);
-  const [code, setCode] = useState("");
-  message.config({ duration: 10 });
+    const [initialState, setInitialState] = useState({
+        email: '',
+        password: '',
+        username: '',
+        lastName: '',
+        firstName: '',
+        role: 'user'
+    });
+    const [confirmPass, setConfirmPass] = useState({passConfirm: '', checkBox: false,});
+    const [checkCode, setCheckCode] = useState()
+    const [step1, setStep1] = useState(true)
+    const [step2, setStep2] = useState(false)
+    const [step3, setStep3] = useState(false)
+    const [token, setToken] = useState()
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-  const checkBox = (e) => {
-    if (e.target.checked) {
-      setUser({ ...user, role: "seller" });
-    } else {
-      setUser({ ...user, role: "user" });
-    }
-  };
 
-  const isStrongPassword = (pass) => {
-    if (pass.length >= 8) {
-      if (/[A-Z]/.test(pass)) {
-        if (/[a-z]/.test(pass)) {
-          if (/\d/.test(pass)) {
-            if (/[!@#$%^&*(),.?":{}|<>]/.test(pass)) {
-              return true;
-            } else {
-              message.error("simvol yoki belgi bolishi kerak");
-            }
-          } else {
-            message.error(
-              "Kamida bitta raqam bo'lishi va  simvol yoki belgi bolishi kerak"
-            );
-          }
-        } else {
-          message.error(
-            "Kamida bitta kichik harf bolishi va raqam , simvol yoki belgi bolishi kerak"
-          );
-        }
-      } else {
-        message.error(
-          "Kamida bitta katta harf bolishi va kichik xarif , raqam , simvol yoki belgi bolishi kerak "
-        );
-      }
-    } else {
-      message.error(
-        "parol 8 tadan kam bolmasligi va katta xarif , kichik xarif , raqam , simvol yoki belgi bolishi kerak"
-      );
-      return false;
-    }
-  };
-
-  const handleSend = async () => {
-    setIsLoading(true);
-    if (
-      user.username &&
-      user.email &&
-      user.password &&
-      user.lastName &&
-      user.firstName
-      //   && user.phone_number
-    ) {
-      if (isStrongPassword(user.password)) {
-        if (checkPolicy) {
-          // Check the registration code
-          const checkCodeRes = await CheckRegistrationCodeAPI(code, user.email);
-          //   if (checkCodeRes.status !== "success") {
-          //     let messageContent = checkCodeRes.message;
-          //     if (
-          //       typeof checkCodeRes.message === "object" &&
-          //       checkCodeRes.message !== null
-          //     ) {
-          //       // Convert object to string
-          //       messageContent = JSON.stringify(checkCodeRes.message);
-          //     }
-
-          //     messageApi.open({
-          //       type: checkCodeRes.status,
-          //       content: messageContent,
-          //     });
-          //     setIsLoading(false);
-          //     return;
-          //   }
-
-          console.log(checkCodeRes.token);
-
-          // If the code is correct, proceed with the registration
-          RegistrationAPI(user, checkCodeRes.token).then((r) => {
-            if (r === localStorage.getItem("token")) {
-              //   window.location.assign(CABINET + PROFILE);
-              setTimeout(() => {
-                setIsLoading(false);
-              }, 1000);
-            } else {
-              if (Array.isArray(r.detail)) {
-                message.error(
-                  r.detail?.map((err) => {
-                    return err.msg;
-                  })
-                );
-              } else {
-                message.error(r.detail);
-              }
-              setTimeout(() => {
-                setIsLoading(false);
-              }, 1000);
-            }
-          });
-        } else {
-          message.error("Пользовательское соглашение");
-          setIsLoading(false);
-        }
-      } else {
-        setIsLoading(false);
-        console.log("error");
-      }
-    } else {
-      messageApi.open({
-        type: "error",
-        content: "barcha malumotlarni toldirish shart",
-      });
-      setIsLoading(false);
-    }
-  };
-
-  const handleSendEmailVerification = async () => {
-    setIsLoading(true);
-    if (user.email) {
-      SendEmailVerificationAPI(user.email).then((r) => {
-        let messageContent = r.message;
-        if (typeof r.message === "object" && r.message !== null) {
-          // Convert object to string
-          messageContent = JSON.stringify(r.message);
-        }
-
-        messageApi.open({
-          type: r.status,
-          content: messageContent,
-        });
-        setIsLoading(false);
-      });
-    } else {
-      messageApi.open({
-        type: "error",
-        content: "Email manzilni kiritish shart",
-      });
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div style={{ height: "100%" }}>
-      <>
-        {contextHolder}
-        <div className="container-login">
-          <div className="pic2"></div>
-          <img
-            src="https://store-images.s-microsoft.com/image/apps.28471.14139628370441750.28b315c6-e587-4ac5-8b42-4388ed4a2f09.d5ba0d3b-63ca-4d9d-ba00-47fcfa6b02e1"
-            alt=""
-          />
-          <h1>Registration</h1>
-          <div className="two-register-input">
-            <div className="inp">
-              <input
-                type="email"
-                placeholder={"email"}
-                autoComplete="email"
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="email-input"
-              />
-              <div className="send-code" onClick={handleSendEmailVerification}>
-                Send
-              </div>
-            </div>
-            <div className="inp">
-              <input
-                type="text"
-                placeholder={"emailga yuborilgan kodni kiriting"}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="two-register-input">
-            <div className="inp">
-              <input
-                type="text"
-                placeholder={"username"}
-                autoComplete="username"
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="two-register-input">
-            <div className="inp">
-              <input
-                type="password"
-                placeholder={"password"}
-                autoComplete="new-password"
-                id={"password"}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-              />
-            </div>
-            <div className="inp">
-              <input
-                type="text"
-                placeholder={"First Name"}
-                autoComplete="First Name"
-                id={"FirstName"}
-                onChange={(e) =>
-                  setUser({ ...user, firstName: e.target.value })
+    const isStrongPassword = (pass) => {
+        if (pass.length >= 8) {
+            if (/[A-Z]/.test(pass)) {
+                if (/[a-z]/.test(pass)) {
+                    if (/\d/.test(pass)) {
+                        if (/[!@#$%^&*(),.?":{}|<>]/.test(pass)) {
+                            return true;
+                        } else {
+                            message.error("simvol yoki belgi bolishi kerak");
+                        }
+                    } else {
+                        message.error(
+                            "Kamida bitta raqam bo'lishi va  simvol yoki belgi bolishi kerak"
+                        );
+                    }
+                } else {
+                    message.error(
+                        "Kamida bitta kichik harf bolishi va raqam , simvol yoki belgi bolishi kerak"
+                    );
                 }
-              />
-            </div>
-          </div>
-          <div className="two-register-input">
-            <div className="inp">
-              <input
-                type="text"
-                placeholder={"Last Name"}
-                autoComplete="Last Name"
-                id={"LastName"}
-                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-              />
-            </div>
-            <div className="inp">
-              <input
-                type="tel"
-                placeholder={"Phone Number"}
-                autoComplete="Phone Number"
-                id={"PhoneNumber"}
-                // onChange={(e) =>
-                //   setUser({ ...user, phone_number: e.target.value })
-                // }
-              />
-            </div>
-          </div>
-          <Checkbox onChange={checkBox}>
-            <p style={{ color: "white" }}>Seller?</p>
-          </Checkbox>
-          <Checkbox onChange={(e) => setCheckPolicy(e.target.checked)}>
-            <p style={{ color: "white", width: "100%", margin: 0 }}>
-              I give my consent to Binovo LLC and persons acting on its behalf
-              to process my personal data in accordance{" "}
-              <Link to={POLICY}>with the Policy</Link>{" "}
-            </p>
-          </Checkbox>
+            } else {
+                message.error(
+                    "Kamida bitta katta harf bolishi va kichik xarif , raqam , simvol yoki belgi bolishi kerak "
+                );
+            }
+        } else {
+            message.error(
+                "parol 8 tadan kam bolmasligi va katta xarif , kichik xarif , raqam , simvol yoki belgi bolishi kerak"
+            );
+            return false;
+        }
+    };
 
-          {isLoading ? (
-            <button type="submit" onClick={handleSend} disabled={true}>
-              <LoadingOutlined />
-            </button>
-          ) : (
-            <button type="submit" onClick={handleSend}>
-              Sign up
-            </button>
-          )}
+    const handleSend = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setLoading(true)
+        if (initialState?.email && emailRegex.test(initialState.email)) {
+            if (isStrongPassword(initialState.password)) {
+                if (initialState.password === confirmPass.passConfirm) {
+                    if (confirmPass.checkBox) {
+                        setStep1(false);
+                        setStep3(false)
+                        CheckEmailAPI(initialState?.email).then(r => {
+                            if (r === 200) {
+                                setLoading(false)
+                                setStep2(true);
+                            }
+                        })
+                    } else {
+                        message.error('policy');
+                        setLoading(false)
+                    }
+                } else {
+                    message.error('confirm pass');
+                    setLoading(false)
+                }
+            } else {
 
-          <Link to={LOGIN_ROUTE}>Do you have account? Login</Link>
+            }
+        } else {
+            setLoading(false)
+            message.error('Please enter a valid email');
+        }
+    };
+    const handleSendStep2 = () => {
+        setLoading(true)
+        if (initialState?.email) {
+            if (checkCode?.code) {
+                CheckRegistrationCodeAPI(checkCode.code, initialState.email).then(r => {
+                    if (r?.status === 200) {
+                        setToken(r.data.token)
+                        setStep3(true)
+                        setStep1(false)
+                        setStep2(false)
+                        setLoading(false)
+                    } else {
+                        message.error('xabar jonatishda xatolik')
+                        setLoading(false)
+                    }
+                })
+            }
+        }
+    }
+    const handleSendStep3 = () => {
+        setLoading(true)
+        if (initialState.username) {
+            if (initialState.firstName) {
+                if (initialState.lastName) {
+                    if (token) {
+                        RegistrationAPI(initialState, token).then(r => {
+                            if (r?.status === 200) {
+                                setLoading(false)
+                                if (initialState.role === 'user') {
+                                    navigate(CABINET + PROFILE)
+                                }
+                                if (initialState.role === 'seller') {
+                                    navigate(CABINET + ANNOUNCEMENT)
+                                }
+                            } else {
+                                message.error('reg error')
+                                setLoading(false)
+                            }
+                        })
+                    } else {
+                        setLoading(false)
+                        message.error('registratsiyada xatolik yuzaga keldi qaytadan urunib koring')
+                    }
+                } else {
+                    setLoading(false)
+                    message.error('lastname')
+                }
+            } else {
+                setLoading(false)
+                message.error('firstName')
+            }
+        } else {
+            setLoading(false)
+            message.error('username')
+        }
+    }
+    const handleTypeUser = (val) => {
+        setInitialState({...initialState, role: val})
+    }
+    console.log(initialState)
+    return (
+        <div className={style.regContainer}>
+            <div className={style.regBox}>
+                <div className={style.regLogo}>
+                    <Icons.Logo/>
+                    <div>Travid</div>
+                </div>
+                <span className={style.subTitleReg}>Создать учётный запись</span>
+
+                {step1 && <div autoComplete={'off'} className={style.regContent}>
+                    <div className={style.regInput}>
+                        <label htmlFor="userType">Кем вы являетесь</label>
+                        <Select
+                            id={'userType'}
+                            value={initialState?.role}
+                            defaultValue={initialState?.role}
+                            style={{
+                                width: "100%",
+
+                            }}
+                            onChange={handleTypeUser}
+                            options={[
+                                {
+                                    value: 'user',
+                                    label: 'покупатель',
+                                }, {
+                                    value: 'seller',
+                                    label: 'Продовец',
+                                }
+
+                            ]}
+                        />
+                    </div>
+                    <div className={style.regInput}>
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            autoComplete={'off'}
+                            value={initialState?.email}
+                            onChange={(e) =>
+                                setInitialState({...initialState, email: e.target.value})
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regInput}>
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            autoComplete={'off'}
+                            value={initialState?.password}
+                            onChange={(e) =>
+                                setInitialState({...initialState, password: e.target.value})
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regInput}>
+                        <label htmlFor="confirmPassword">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            autoComplete={'off'}
+                            value={confirmPass?.passConfirm}
+                            onChange={(e) =>
+                                setConfirmPass({
+                                    ...confirmPass,
+                                    passConfirm: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regCheckBox}>
+                        <label htmlFor="checkBox">
+                            I give my consent to Travid and persons acting on its behalf to
+                            process my personal data in accordance{' '}
+                            <Link to={POLICY} style={{color: 'black'}}>
+                                with the Policy
+                            </Link>
+                        </label>
+                        <input
+                            type="checkbox"
+                            id="checkBox"
+                            autoComplete={'off'}
+                            checked={confirmPass?.checkBox}
+                            onChange={(e) =>
+                                setConfirmPass({...confirmPass, checkBox: e.target.checked})
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regButton} onClick={handleSend}>
+                        <button>Создать</button>
+                    </div>
+                </div>}
+                {step2 && <div autoComplete={'off'} className={style.regContent}>
+                    <div className={style.regInput}>
+                        <label htmlFor="checkCode">Потвердите почту</label>
+                        <input type={'number'} onChange={e => setCheckCode({...checkCode, code: e.target.value})}/>
+                    </div>
+                    <div className={style.regButton} onClick={handleSendStep2}>
+                        <button>Создать</button>
+                    </div>
+                </div>}
+                {step3 && <div autoComplete={'off'} className={style.regContent}>
+                    <div className={style.regInput}>
+                        <label htmlFor="email">Юзернейм</label>
+                        <input
+                            type="text"
+                            id="username"
+                            autoComplete={'off'}
+                            value={initialState?.username}
+                            onChange={(e) =>
+                                setInitialState({...initialState, username: e.target.value})
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regInput}>
+                        <label htmlFor="firstName">Имя</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            autoComplete={'off'}
+                            value={initialState?.firstName}
+                            onChange={(e) =>
+                                setInitialState({...initialState, firstName: e.target.value})
+                            }
+                        />
+                    </div>
+
+                    <div className={style.regInput}>
+                        <label htmlFor="lastName">Фамиля</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            autoComplete={'off'}
+                            value={initialState?.lastName}
+                            onChange={(e) =>
+                                setInitialState({
+                                    ...initialState,
+                                    lastName: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+                    <div className={style.regButton} onClick={handleSendStep3}>
+                        <button>Создать</button>
+                    </div>
+                </div>}
+            </div>
         </div>
-      </>
-    </div>
-  );
+    );
 };
 
 export default Registration;

@@ -1,59 +1,39 @@
-import { $authHost, $host } from "../../../processes/http/http";
+  import { $authHost, $host } from "../../../processes/http/http";
+  import axios from "axios";
 
 let isWaiting = false;
 
-export const SendEmailVerificationAPI = async (email) => {
-  if (isWaiting) {
-    return { status: "error", message: "Iltimos, 1 daqiqan ozroq kuting" };
-  }
-
+export const CheckEmailAPI = async (email)=>{
   try {
-    const res = await $host.post("check_email", { email: email });
-    isWaiting = true;
-    setTimeout(() => {
-      isWaiting = false;
-    }, 60000); // 60 seconds * 1000 milliseconds
-    return {
-      status: "success",
-      message: "Tasdiqlash kodi muvaffaqiyatli yuborildi.",
-    };
-  } catch (e) {
-    if (e.message === "Network Error") {
-      return {
-        status: "error",
-        message:
-          "Serverda xatolik yuzaga keldi bir ozdan so'ng yana bir bor urunib ko'ring",
-      };
-    } else {
-      return { status: "error", message: e.response.data };
-    }
+    const res = await $host.post('check_email' , {email:email})
+    console.log(res)
+    return res.status
+  }catch (e){
+    console.log(e)
   }
-};
+}
 
 export const CheckRegistrationCodeAPI = async (code, email) => {
   try {
-    const res = await $host.post("registration_code", {
-      code: code,
-      email: email,
-    });
-    return res.data;
-  } catch (e) {
-    if (e.message === "Network Error") {
-      return "Serverda xatolik yuzaga keldi bir ozdan so'ng yana bir bor urunib ko'ring";
-    } else {
-      return e.response.data;
-    }
+    const res = await $host.post('registration_code' , {code:code ,  email:email})
+    console.log(res)
+    return res
+  }catch (e){
+    console.log(e)
+    return e?.response?.status || e.code
   }
 };
 
 export const RegistrationAPI = async (user, token) => {
   try {
-    const res = await $host.post("register", user, {
+    const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/register", user, {
       headers: { Authorization: `Bearer ${token}` },
     });
     localStorage.setItem("token", res.data.access_token);
-    return res.data.access_token;
+    console.log(res)
+    return res;
   } catch (e) {
+    console.log(e)
     if (e.message === "Network Error") {
       return "Serverda xatolik yuzaga keldi bir ozdan so'ng yana bir bor urunib ko'ring";
     } else {

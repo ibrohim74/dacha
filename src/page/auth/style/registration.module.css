@@ -1,0 +1,76 @@
+.regContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+.regBox{
+    display: flex;
+    flex-direction: column;
+    background: #ECECEC;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    width: 450px;
+    border-radius: 57px;
+}
+.regLogo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subTitleReg{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #6B6B6B;
+}
+.regContent{
+    width: 80%;
+}
+.regInput{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+.regCheckBox{
+    display: flex;
+    width: 100%;
+    font-size: 12px;
+    color: #8E8E8E;
+}
+.regCheckBox input{
+    width: 10% !important;
+    float: right;
+}
+.regCheckBox label{
+    width: 90% !important;
+    float: left;
+}
+.regInput input{
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px black solid;
+    height: 30px;
+}
+
+.regButton{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.regButton button{
+    width: 80%;
+    height: 60px;
+    background: #6B6B6B;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
