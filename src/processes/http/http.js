@@ -41,8 +41,8 @@ const RefreshToken = async () => {
     updateAuthHeader(authToken);
   } catch (error) {
     console.error("Token yangilash muvaffaqiyatsiz bo'ldi:", error);
-    window.localStorage.removeItem("token");
-    window.location.assign(HOME_ROUTE);
+    // window.localStorage.removeItem("token");
+    // window.location.assign(HOME_ROUTE);
   }
 };
 
@@ -51,19 +51,25 @@ $authHost.interceptors.request.use(async (config) => {
   return config;
 });
 
-// 401 xato bo'lganda RefreshToken ni ishlatish
-$authHost.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        await RefreshToken();
-        return $authHost(originalRequest);
-      }
-      return Promise.reject(error);
+$authHost.interceptors.response.use((response) => response, async (error) => {
+    if (error.response.status === 401) {
+        console.log('ref  ')
+       await RefreshToken()
     }
-);
+});
+// 401 xato bo'lganda RefreshToken ni ishlatish
+// $authHost.interceptors.response.use(
+//     (response) => response,
+//     async (error) => {
+//       const originalRequest = error.config;
+//       if (error.status === 401 && !originalRequest._retry) {
+//         originalRequest._retry = true;
+//         await RefreshToken();
+//         return $authHost(originalRequest);
+//       }
+//       return Promise.reject(error);
+//     }
+// );
 
 // Har 10 minutda bir tokenni yangilash
 setInterval(RefreshToken, 10 * 60 * 1000);

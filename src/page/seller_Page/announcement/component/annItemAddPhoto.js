@@ -9,7 +9,6 @@ import Skeleton, {SkeletonTheme} from 'react-loading-skeleton';
 import {DeleteDachaPhotoAPI} from "../API/announcementAPI";
 
 const AnnItemAddPhoto = (dacha) => {
-    const [inputLeft, setInputLeft] = useState({img: []});
     const [images, setImages] = useState([]);
     const [dachaImg, setDachaImg] = useState([]);
     const [loadingFile, setLoadingFile] = useState(false);

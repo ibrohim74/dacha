@@ -15,7 +15,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
-  PRODUCT_ROUTE,
+  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -24,7 +24,6 @@ import LayoutCabinet from "../../page/layout/layoutCabinet";
 import Profile from "../../page/profile/profile";
 import Announcement from "../../page/seller_Page/announcement/announcement";
 import Create_announcement from "../../page/seller_Page/announcement/create_announcement";
-import Update_announcement from "../../page/seller_Page/announcement/update_announcement";
 import Change_pass_TopBar from "../../components/change_pass_TopBar";
 import Hostel from "../../page/seller_Page/hostel/hostel";
 import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/createRoom";
@@ -35,6 +34,7 @@ import AnnouncementItemPage from "../../page/seller_Page/announcement/component/
 
 import Villas from "../../page/villas/villas";
 import Item_Page from "../../page/item_Page/item_Page";
+import RequestsAnnouncement from "../../page/seller_Page/announcement/requests_Announcement";
 export const Public = [
   {
     Component: <Home />,
@@ -102,10 +102,7 @@ export const Seller = [
     Component: <Create_announcement />,
     path: CREATE_ANNOUNCEMENT,
   },
-  {
-    Component: <Update_announcement />,
-    path: UPDATE_ANNOUNCEMENT,
-  },
+
   {
     Component: <Change_pass_TopBar />,
     path: CHANGE_PASS_TOP,
@@ -129,6 +126,10 @@ export const Seller = [
   {
     Component: <AnnouncementItemPage />,
     path: ANNOUNCEMENT_ITEM_PAGE,
+  },
+  {
+    Component: <RequestsAnnouncement />,
+    path: REQUEST_ANNOUNCEMENT,
   },
 ];
 export const Moderate = [

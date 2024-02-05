@@ -24,4 +24,5 @@ export const UPDATE_HOSTEL = 'update_hostel'
 export const CREATE_ROOM = 'create_room'
 export const SCHEDULE = 'schedule'
 export const ANNOUNCEMENT_ITEM_PAGE = 'announcement_item_page/:id'
+export const REQUEST_ANNOUNCEMENT = 'announcement_request'
 // Moderate Routes
