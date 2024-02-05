@@ -42,10 +42,10 @@ export const RegistrationAPI = async (user, token) => {
   }
 };
 
-export const LoginAPI = async (username, password) => {
-  const resData = { login: username, password: password };
+export const LoginAPI = async (data) => {
+
   try {
-    const res = await $host.post("login", resData);
+    const res = await $host.post("login", {email:data.email , password:data.password});
     localStorage.setItem("token", res.data.access_token);
     console.log(res.data.access_token);
     return res.data.access_token;

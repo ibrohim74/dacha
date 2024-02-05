@@ -7,6 +7,7 @@ import {message, Select} from "antd";
 import Reg_step2 from "./component/reg_step2";
 import './style/login.css'
 import {CheckEmail, CheckEmailAPI, CheckRegistrationCodeAPI, RegistrationAPI} from "./API";
+import {LoadingOutlined} from "@ant-design/icons";
 
 const Registration = () => {
     const [initialState, setInitialState] = useState({
@@ -244,19 +245,31 @@ const Registration = () => {
                             }
                         />
                     </div>
+                    {loading ?
+                        <div className={style.regButton} disabled={true}>
+                            <LoadingOutlined/>
+                        </div>
+                        :
+                        <div className={style.regButton} onClick={handleSend}>
+                            <button>Далее</button>
+                        </div>
+                    }
 
-                    <div className={style.regButton} onClick={handleSend}>
-                        <button>Создать</button>
-                    </div>
                 </div>}
                 {step2 && <div autoComplete={'off'} className={style.regContent}>
                     <div className={style.regInput}>
                         <label htmlFor="checkCode">Потвердите почту</label>
                         <input type={'number'} onChange={e => setCheckCode({...checkCode, code: e.target.value})}/>
                     </div>
-                    <div className={style.regButton} onClick={handleSendStep2}>
-                        <button>Создать</button>
-                    </div>
+                    {loading ?
+                        <div className={style.regButton} disabled={true}>
+                            <LoadingOutlined/>
+                        </div>
+                        :
+                        <div className={style.regButton} onClick={handleSend}>
+                            <button>Далее</button>
+                        </div>
+                    }
                 </div>}
                 {step3 && <div autoComplete={'off'} className={style.regContent}>
                     <div className={style.regInput}>
@@ -300,9 +313,15 @@ const Registration = () => {
                             }
                         />
                     </div>
-                    <div className={style.regButton} onClick={handleSendStep3}>
-                        <button>Создать</button>
-                    </div>
+                    {loading ?
+                        <div className={style.regButton} disabled={true}>
+                            <LoadingOutlined/>
+                        </div>
+                        :
+                        <div className={style.regButton} onClick={handleSend}>
+                            <button>Создать</button>
+                        </div>
+                    }
                 </div>}
             </div>
         </div>
