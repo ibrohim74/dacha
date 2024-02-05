@@ -52,7 +52,7 @@ $authHost.interceptors.request.use(async (config) => {
 });
 
 $authHost.interceptors.response.use((response) => response, async (error) => {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
         console.log('ref  ')
        await RefreshToken()
     }
