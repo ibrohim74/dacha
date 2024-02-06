@@ -29,7 +29,6 @@ const Announcement = () => {
       setPhotoUrls(urls);
     });
   }, [announcementData?.length]);
-  console.log(photoUrls);
   return (
     <Box m={"20px"}>
       {/* <Header_adminPage title={"Announcement"} subtitle={"all announcement"} /> */}

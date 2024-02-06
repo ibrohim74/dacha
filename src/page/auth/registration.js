@@ -74,6 +74,14 @@ const Registration = () => {
                             if (r === 200) {
                                 setLoading(false)
                                 setStep2(true);
+                                setStep3(false)
+                                setStep1(false)
+                            }else {
+                                setStep2(false);
+                                setStep3(false)
+                                setStep1(true)
+                                setLoading(false)
+                                message.error('bu email registratsiyadan otgan')
                             }
                         })
                     } else {
@@ -106,6 +114,9 @@ const Registration = () => {
                     } else {
                         message.error('xabar jonatishda xatolik')
                         setLoading(false)
+                        setStep3(false)
+                        setStep1(false)
+                        setStep2(true)
                     }
                 })
             }
@@ -121,14 +132,18 @@ const Registration = () => {
                             if (r?.status === 200) {
                                 setLoading(false)
                                 if (initialState.role === 'user') {
-                                    navigate(CABINET + PROFILE)
+                                    window.location.assign(CABINET + PROFILE)
                                 }
                                 if (initialState.role === 'seller') {
-                                    navigate(CABINET + ANNOUNCEMENT)
+                                    window.location.assign(CABINET + ANNOUNCEMENT)
                                 }
                             } else {
-                                message.error('reg error')
+                                // message.error()
+                                message.error(r?.detail)
                                 setLoading(false)
+                                setStep3(true)
+                                setStep1(false)
+                                setStep2(false)
                             }
                         })
                     } else {
@@ -266,7 +281,7 @@ const Registration = () => {
                             <LoadingOutlined/>
                         </div>
                         :
-                        <div className={style.regButton} onClick={handleSend}>
+                        <div className={style.regButton} onClick={handleSendStep2}>
                             <button>Далее</button>
                         </div>
                     }
@@ -318,7 +333,7 @@ const Registration = () => {
                             <LoadingOutlined/>
                         </div>
                         :
-                        <div className={style.regButton} onClick={handleSend}>
+                        <div className={style.regButton} onClick={handleSendStep3}>
                             <button>Создать</button>
                         </div>
                     }
