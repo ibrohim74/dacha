@@ -93,7 +93,7 @@ const Registration = () => {
                     setLoading(false)
                 }
             } else {
-
+                setLoading(false)
             }
         } else {
             setLoading(false)
@@ -145,7 +145,7 @@ const Registration = () => {
                                 setStep1(false)
                                 setStep2(false)
                             }
-                        })
+                        })       
                     } else {
                         setLoading(false)
                         message.error('registratsiyada xatolik yuzaga keldi qaytadan urunib koring')
