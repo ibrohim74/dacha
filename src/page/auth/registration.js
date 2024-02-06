@@ -2,7 +2,15 @@ import React, {useState} from 'react';
 import style from './style/registration.module.css';
 import {Icons} from '../../assets/icons/icons';
 import {Link, useNavigate} from 'react-router-dom';
-import {ANNOUNCEMENT, CABINET, POLICY, PROFILE, REGISTER_STEP2_ROUT} from '../../processes/utils/consts';
+import {
+    ANNOUNCEMENT,
+    CABINET,
+    LOGIN_ROUTE,
+    POLICY,
+    PROFILE,
+    REGISTER_ROUT,
+    REGISTER_STEP2_ROUT
+} from '../../processes/utils/consts';
 import {message, Select} from "antd";
 import Reg_step2 from "./component/reg_step2";
 import './style/login.css'
@@ -339,6 +347,11 @@ const Registration = () => {
                     }
                 </div>}
             </div>
+            <Link to={LOGIN_ROUTE} style={{
+                marginTop: '2%',
+                color: '#6B6B6B',
+                cursor: "pointer"
+            }}>Уже есть аккаунт?</Link>
         </div>
     );
 };
