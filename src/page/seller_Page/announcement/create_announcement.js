@@ -12,7 +12,7 @@ import { ANNOUNCEMENT, CABINET } from "../../../processes/utils/consts";
 
 const CreateAnnouncement = () => {
   const [inputLeft, setInputLeft] = useState(null);
-  const [initialState, setInitialState] = useState(null);
+  const [initialState, setInitialState] = useState({type:"dacha" , tags:"string"});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const JWT = jwtDecode(localStorage.getItem("token"));
@@ -62,7 +62,7 @@ const CreateAnnouncement = () => {
       longitude: inputLeft?.longitude,
       latitude: inputLeft?.latitude,
       info: inputLeft?.info,
-      type: inputLeft?.type,
+      price_type: inputLeft?.price_type,
       price: inputLeft?.price,
     });
   }, [inputLeft]);

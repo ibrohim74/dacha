@@ -15,12 +15,12 @@ const CreateInputLeft = (props) => {
       display_name: selectPosition?.display_name,
       latitude: parseFloat(selectPosition?.lat),
       longitude: parseFloat(selectPosition?.lon),
-      type: inputLeft?.type ? inputLeft.type : "UZS",
+        price_type: inputLeft?.price_type ? inputLeft.price_type : "UZS",
     });
   }, [selectPosition]);
 
   const priceType = (val) => {
-    setInputLeft({ ...inputLeft, type: val });
+    setInputLeft({ ...inputLeft, price_type: val });
   };
 
   const selectAfter = (

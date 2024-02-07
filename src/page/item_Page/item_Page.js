@@ -46,13 +46,13 @@ const Item_Page = () => {
     const {RangePicker} = DatePicker;
     const [initialState, setInitialState] = useState({
         requested_price:0,
-        customer_id:JWT.userId,
+        customer_id:parseInt(JWT.userId),
         accommodation_id: parseInt(id),
-        start_price:500,
+        start_price:300,
         accommodation_type:'dacha'
     })
 
-
+    console.log(product)
 
 
     const villas = [
@@ -76,6 +76,7 @@ const Item_Page = () => {
                     `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
                 );
                 setProduct(response.data);
+                // setInitialState({...initialState, start_price: product?.price})
                 setSliderData(response.data?.photos_path.split('\n').filter(Boolean));
                 setLoading(false); // Set loading to false once data is fetched
             } catch (error) {
@@ -98,7 +99,6 @@ const Item_Page = () => {
 
     const onChange = (value, dateString) => {
         const minimumBookDays = product?.minimum_book_days;
-        console.log(dateString)
         try {
             const selectedDates = dateString.map(date => dayjs(date));
 
@@ -108,14 +108,14 @@ const Item_Page = () => {
             }
 
             const differenceInDays = selectedDates[1].diff(selectedDates[0], 'day');
-
+            console.log(differenceInDays)
             if (differenceInDays < minimumBookDays) {
                 setInitialState({...initialState, start_day:'' , end_day:''})
                 setErrorNotification(`* Ошибка: Минимальное количество дней бронирования не может быть меньше ${product?.minimum_book_days} дней.`);
             } else {
                 setErrorNotification('');
-                const start_day = selectedDates[0].format('YYYY-MM-DDTHH:mm');
-                const end_day = selectedDates[1].format('YYYY-MM-DDTHH:mm');
+                const start_day = selectedDates[0].format('YYYY.MM.DD HH:mm');
+                const end_day = selectedDates[1].format('YYYY.MM.DD HH:mm');
 
                 // Do something with start_day and end_day, for example, update the state
                 setInitialState({ ...initialState, start_day, end_day });
@@ -127,15 +127,16 @@ const Item_Page = () => {
         }
     };
 
-    console.log(initialState)
-    console.log(product)
+
+
     const handleOpenBron = () => {
         setIsModalOpen(true)
 
     }
     const disabledDate = (current) => {
         const minimumPreorderDays = product?.minimum_preorder_days;
-        return current && (current < dayjs().endOf('day') || current < dayjs().add(minimumPreorderDays, 'day'));
+        return current && current < dayjs().endOf('day')
+        // return current && (current < dayjs().endOf('day') || current < dayjs().add(minimumPreorderDays, 'day'));
     };
     const openNotification = (placement) => {
         api.info({
@@ -178,7 +179,7 @@ const Item_Page = () => {
                 <div className={'input'}>
                     <label htmlFor="reqPrice">напишите цену, о которой хотите договориться</label>
                     <Input
-                        addonAfter={product?.type}
+                        addonAfter={product?.price_type}
                         value={initialState?.requested_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
                         type={'text'}
                         onChange={(e) => {
@@ -199,7 +200,7 @@ const Item_Page = () => {
                     />
                 </div>
                 <div>
-                    <p style={{fontSize:16}}>продавец установил цену {product?.price} {product?.type} за 1 день </p>
+                    <p style={{fontSize:16}}>продавец установил цену {product?.price} {product?.price_type} за 1 день </p>
                 </div>
                 <Button onClick={handleSendData}>отправить</Button>
             </Modal>
