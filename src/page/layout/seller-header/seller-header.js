@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   LOGIN_ROUTE,
   REGISTER_ROUT,
@@ -19,11 +19,26 @@ import styles from "./seller-header.module.css";
 
 const SellerHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showAccMenu, setshowAccMenu] = useState(false);
   const accMenuRef = useRef();
   const accButtonRef = useRef();
-
   const [activeTab, setActiveTab] = useState(null); // null, 0, 1, 2...
+
+  useEffect(() => {
+    const setActiveTabFromLocation = () => {
+      const pathAfterCabinet = location.pathname.split("/")[2];
+      switch (pathAfterCabinet) {
+        case ANNOUNCEMENT:
+          setActiveTab(0);
+          break;
+        default:
+          setActiveTab(1);
+      }
+    };
+
+    setActiveTabFromLocation();
+  }, [location]);
 
   const JWT = localStorage.getItem("token")
     ? jwtDecode(localStorage.getItem("token"))
@@ -96,14 +111,15 @@ const SellerHeader = () => {
             <div>Travid</div>
           </Link>
           <div className={styles["header-tabs"]}>
-            <div
+            <Link
               className={`${styles["header-tab"]} ${
                 activeTab === 0 && styles["active"]
               }`}
               onClick={() => handleClickTab(0)}
+              to={CABINET + ANNOUNCEMENT}
             >
               Мои объявления
-            </div>
+            </Link>
             <div
               className={`${styles["header-tab"]} ${
                 activeTab === 1 && styles["active"]
@@ -147,12 +163,6 @@ const SellerHeader = () => {
                     to={CABINET + CREATE_ANNOUNCEMENT}
                   >
                     Create
-                  </Link>
-                  <Link
-                    className={styles["menu-btn"]}
-                    to={CABINET + UPDATE_ANNOUNCEMENT}
-                  >
-                    Update
                   </Link>
                 </div>
                 <div className={styles["menu-btn"]} onClick={removeToken}>

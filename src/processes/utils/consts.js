@@ -14,15 +14,14 @@ export const CHANGE_PASS_TOP = "change_pass";
 
 // Admin Routes
 
-
 // Seller Routes
-export const ANNOUNCEMENT = 'announcement'
-export const CREATE_ANNOUNCEMENT = 'create_announcement'
-export const UPDATE_ANNOUNCEMENT = 'update_announcement'
-export const HOSTEL = 'hostel'
-export const UPDATE_HOSTEL = 'update_hostel'
-export const CREATE_ROOM = 'create_room'
-export const SCHEDULE = 'schedule'
-export const ANNOUNCEMENT_ITEM_PAGE = 'announcement_item_page/:id'
-export const REQUEST_ANNOUNCEMENT = 'announcement_request'
+export const ANNOUNCEMENT = "announcement";
+export const CREATE_ANNOUNCEMENT = "create_announcement";
+export const UPDATE_ANNOUNCEMENT = "update_announcement";
+export const HOSTEL = "hostel";
+export const UPDATE_HOSTEL = "update_hostel";
+export const CREATE_ROOM = "create_room";
+export const SCHEDULE = "schedule";
+export const ANNOUNCEMENT_ITEM_PAGE = "announcement_item_page/:id";
+export const REQUEST_ANNOUNCEMENT = "announcement_request";
 // Moderate Routes

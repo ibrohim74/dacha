@@ -1,10 +1,30 @@
 .item-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
   cursor: pointer;
 }
+
+.notification-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px; /* adjust as needed */
+  height: 20px; /* adjust as needed */
+  padding: 5px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
 .item-card > svg {
   width: 100%;
   height: auto;
