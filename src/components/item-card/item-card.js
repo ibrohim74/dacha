@@ -37,7 +37,7 @@ const ItemCard = (props) => {
             }
             width={"100%"}
             height={"100%"}
-            style={{ objectFit: "cover" }}
+            // style={{ objectFit: "cover" }}
             alt={props.title || "Null"}
             className={styles["item-img"]}
           />

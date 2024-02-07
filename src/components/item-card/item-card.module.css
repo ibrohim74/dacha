@@ -25,12 +25,16 @@
   z-index: 1;
 }
 
-.item-card > svg {
+.item-card > svg,
+.item-card > img {
   width: 100%;
-  height: auto;
+  max-width: 220px;
+  height: 100%;
+  object-fit: cover;
   transition: filter 0.3s ease;
 }
-.item-card:hover > svg {
+.item-card:hover > svg,
+.item-card:hover > img {
   filter: brightness(105%);
 }
 

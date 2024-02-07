@@ -19,6 +19,7 @@ import ItemCard from "../../../components/item-card/item-card";
 
 const Announcement = () => {
   const [announcementData, setAnnouncementData] = useState(null);
+  const [loading, setLoading] = useState(true); // Add this line
   const [photoUrls, setPhotoUrls] = useState([]); // Fayl yo'l(lar)ni saqlash uchun yangi state
   const navigate = useNavigate();
 
@@ -28,16 +29,15 @@ const Announcement = () => {
 
   useEffect(() => {
     GetAnnouncementAPI().then((r) => {
-      setAnnouncementData(r);
-      const urls = r?.map((item) =>
-        item?.photos_path.split("\n").filter(Boolean)
-      );
-      setPhotoUrls(urls);
+      setAnnouncementData(r.data);
+      setLoading(false); // Set loading to false after data has loaded
     });
   }, [announcementData?.length]);
 
-  let randomScore = +(Math.random() * 4 + 1).toFixed(1);
-  const handleClick = () => {};
+  if (loading) {
+    return <div>Loading...</div>; // Or some loading spinner
+  }
+
   return (
     <Box
       m={"20px"}
@@ -59,51 +59,7 @@ const Announcement = () => {
             notifications: randomNotifications,
             route: `${CABINET + ANNOUNCEMENT_ITEM_PAGE}`,
           };
-          return (
-            // <Badge count={1}>
-            //   <div
-            //     className={styles["item-card"]}
-            //     // onClick={() => handleClickOpen(item.id)}
-            //     handleClick={handleClickOpen}
-            //     key={index}
-            //     // style={{
-            //     //   width: "300px",
-            //     //   height: "300px",
-            //     //   margin: "10px",
-            //     // }}
-            //   >
-            //     {currentPhotoUrl[0] ? (
-            //       <img
-            //         src={
-            //           "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" +
-            //           currentPhotoUrl?.[0]
-            //         }
-            //         // width={"100%"}
-            //         // height={"100%"}
-            //         style={{ objectFit: "cover" }}
-            //         alt={item.title || "Null"}
-            //         className={styles["item-img"]}
-            //       />
-            //     ) : (
-            //       <Icons.ImgPlcHolder
-            //         className={styles["item-img-placeholder"]}
-            //       />
-            //     )}
-            //     <div className={styles["item-info"]}>
-            //       <div className={styles["info-top"]}>
-            //         {item.title || "Null"}
-            //       </div>
-            //       <div className={styles["info-bottom"]}>
-            //         <Score score={randomScore} className={styles["score"]} />
-            //         <div className={styles["price"]}>
-            //           {`${item.price || ""} ${item.type || ""}`}
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </div>
-            // </Badge>
-            <ItemCard {...itemWithRoute} />
-          );
+          return <ItemCard {...itemWithRoute} />;
         })}
     </Box>
   );
