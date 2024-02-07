@@ -127,8 +127,6 @@ const Item_Page = () => {
         }
     };
 
-
-
     const handleOpenBron = () => {
         setIsModalOpen(true)
 
