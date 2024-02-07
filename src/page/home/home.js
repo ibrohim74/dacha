@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   LOGIN_ROUTE,
@@ -10,10 +10,10 @@ import styles from "./home.module.css";
 import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import {GetAllDacha} from "./API/homeAPI";
+import { GetAllDacha } from "./API/homeAPI";
 
 const Home = () => {
- const [villas , setVillas] = useState([])
+  const [villas, setVillas] = useState([]);
   const hotels = [
     { name: "Отель 1", price: "99.90", score: 4, img: null },
     { name: "Отель 2", price: "39.90", score: 1.5, img: null },
@@ -25,13 +25,13 @@ const Home = () => {
     { name: "Отель 8", price: "79.90", score: 3.8, img: null },
   ];
 
-  useEffect(()=>{
-    GetAllDacha().then(r => {
-      if (r?.status === 200){
-        setVillas(r.data)
+  useEffect(() => {
+    GetAllDacha().then((r) => {
+      if (r?.status === 200) {
+        setVillas(r.data);
       }
-    })
-  },[])
+    });
+  }, []);
   return (
     <div className={styles["Home"]}>
       {/* <div>
@@ -42,7 +42,9 @@ const Home = () => {
       <Header />
 
       <div className={`${styles["categories"]} ${styles["container-md"]}`}>
-        <div className={styles["title-large"]}>Категории</div>
+        <div className={styles["title-large"]}>
+          КатегорииКатегорииКатегорииКатегорииКатегории
+        </div>
         <div className={styles["grid-tabs"]}>
           <div className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}>
             <div className={styles["title-large"]}>Карта</div>
