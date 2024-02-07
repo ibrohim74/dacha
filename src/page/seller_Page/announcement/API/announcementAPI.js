@@ -13,7 +13,7 @@ export const GetAnnouncementAPI = async ()=>{
     try {
         const JWT = jwtDecode(localStorage.getItem('token'))
         const res = await $authHost.get(`/user/dachas/${JWT.userId}`)
-        return res.data
+        return res
     }catch (e){
         console.log(e)
     }
@@ -54,4 +54,14 @@ export const DeleteDachaPhotoAPI = async (url)=>{
         console.log(e)
         return e
     }
+}
+
+export const GetRequestAPI = async ()=>{
+    try {
+        const JWT = jwtDecode(localStorage.getItem('token'))
+        const res = await $authHost.get(`/seller/${JWT.userId}/requests`)
+        console.log(res)
+        return res
+    }catch (e){
+        console.log(e)}
 }
