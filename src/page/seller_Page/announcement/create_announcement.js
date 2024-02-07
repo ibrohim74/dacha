@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import Create_InputLeft from "./component/create_InputLeft";
-import styles from "./assets/create_ann.moule.css";
+import styles from "./assets/create_ann.module.css";
 import { Input, message } from "antd";
 import Header_adminPage from "../../../components/header_adminPage";
 import { jwtDecode } from "jwt-decode";
@@ -12,7 +12,10 @@ import { ANNOUNCEMENT, CABINET } from "../../../processes/utils/consts";
 
 const CreateAnnouncement = () => {
   const [inputLeft, setInputLeft] = useState(null);
-  const [initialState, setInitialState] = useState({type:"dacha" , tags:"string"});
+  const [initialState, setInitialState] = useState({
+    type: "dacha",
+    tags: "string",
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const JWT = jwtDecode(localStorage.getItem("token"));

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, memo } from "react";
 import { Button, Input, message, Select, Upload } from "antd";
-import styles from "../assets/create_ann.moule.css";
+import styles from "../assets/create_ann.module.css";
 import "@splidejs/react-splide/css";
 import TextArea from "antd/es/input/TextArea";
 import MapsAnnouncement from "./mapsAnnouncement";
@@ -15,7 +15,7 @@ const CreateInputLeft = (props) => {
       display_name: selectPosition?.display_name,
       latitude: parseFloat(selectPosition?.lat),
       longitude: parseFloat(selectPosition?.lon),
-        price_type: inputLeft?.price_type ? inputLeft.price_type : "UZS",
+      price_type: inputLeft?.price_type ? inputLeft.price_type : "UZS",
     });
   }, [selectPosition]);
 
