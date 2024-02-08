@@ -42,9 +42,7 @@ const Home = () => {
       <Header />
 
       <div className={`${styles["categories"]} ${styles["container-md"]}`}>
-        <div className={styles["title-large"]}>
-          КатегорииКатегорииКатегорииКатегорииКатегории
-        </div>
+        <div className={styles["title-large"]}>Категории</div>
         <div className={styles["grid-tabs"]}>
           <div className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}>
             <div className={styles["title-large"]}>Карта</div>

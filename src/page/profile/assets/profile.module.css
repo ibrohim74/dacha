@@ -1,5 +1,10 @@
+.profileBox {
+  margin-top: 44px;
+  font-family: Rubik;
+}
+
 .profileBox .input-2-row {
-  width: 43% !important;
+  width: 100% !important;
 }
 
 .profileBox .input {
@@ -8,6 +13,8 @@
 .box-2-input {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
 }
 @media screen and (max-width: 750px) {
   .profileBox .input-2-row {
@@ -17,4 +24,40 @@
   .box-2-input {
     flex-direction: column;
   }
+}
+
+.profileBox input,
+.text-input {
+  min-height: 2.5rem;
+  background-color: #d9d9d9 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.text-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 11px;
+  box-sizing: border-box;
+}
+.text-input > input {
+  all: unset;
+}
+
+/*helpers*/
+
+.container-md {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 940px;
+}
+
+.title-large {
+  color: var(--Text, #363940);
+  font-feature-settings: "clig" off, "liga" off;
+  /* H1 */
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.6875rem; /* 119.444% */
 }

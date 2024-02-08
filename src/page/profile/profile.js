@@ -4,15 +4,18 @@ import { $authHost, $host } from "../../processes/http/http";
 import { Box, Button, styled } from "@mui/material";
 import Header_adminPage from "../../components/header_adminPage";
 import { Input, Upload, message } from "antd";
-import styles from './assets/profile.module.css'
+import styles from "./assets/profile.module.css";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { sendProfile_data } from "./API";
+import { Icons } from "../../assets/icons/icons";
+import EditInput from "../../components/edit-input/edit-input";
 
 const Profile = () => {
   const [CurrentUser, setCurrentUser] = useState();
   const [initialValues, setInitialValues] = useState();
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const JWT = jwtDecode(localStorage.getItem("token"));
   const handleChange = async (file) => {
     setLoadingImg(true);
@@ -27,12 +30,12 @@ const Profile = () => {
           },
         }
       );
-      console.log(res)
-      if (res?.status === 200){
+      console.log(res);
+      if (res?.status === 200) {
         setLoadingImg(false);
-        window.location.reload()
-      }else {
-        message.error('rasim xato')
+        window.location.reload();
+      } else {
+        message.error("rasim xato");
       }
     } catch (e) {
       setLoadingImg(false);
@@ -69,6 +72,7 @@ const Profile = () => {
     const getUser = async () => {
       const res = await $host.get("user/" + JWT.userId);
       setCurrentUser(res.data);
+      setIsLoading(false);
     };
     getUser();
     getPhoto();
@@ -113,112 +117,115 @@ const Profile = () => {
       </div>
     </button>
   );
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState(CurrentUser?.firstName);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
-    <div>
-      <Box m="20px" className={styles["profileBox"]}>
-        <Header_adminPage title="PROFILE" subtitle="Update profile" />
+    <Box className={`${styles["profileBox"]} ${styles["container-md"]}`}>
+      {/* <Header_adminPage title="PROFILE" subtitle="Update profile" /> */}
+      <Box className={styles["title-large"]} mb="30px">
+        PROFILE
+      </Box>
 
-        <div className={styles["box-2-input"]}>
-          <div className={styles["input"]}>
-            <Upload
-              name="avatar"
-              listType="picture-card"
-              className={styles["avatar-uploader"]}
-              showUploadList={false}
-              onChange={handleChange}
-            >
-              {imgProfile ? (
-                <img
-                  src={imgProfile}
-                  alt="avatar"
-                  style={{
-                    width: "90%",
-                    height: "90%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
-          </div>
-
-          <div className={styles["input input-2-row"]}>
-            <label htmlFor="firstName">
-              First Name: {CurrentUser?.firstName}
-            </label>
-            <Input
-              placeholder="First Name"
-              size={"large"}
-              onChange={(e) =>
-                setInitialValues({
-                  ...initialValues,
-                  firstName: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="input input-2-row">
-            <label htmlFor="lastName">Last Name: {CurrentUser?.lastName}</label>
-            <Input
-              placeholder="Last Name"
-              size={"large"}
-              onChange={(e) =>
-                setInitialValues({ ...initialValues, lastName: e.target.value })
-              }
-            />
-          </div>
+      <div className={styles["box-2-input"]}>
+        <div className={styles["input"]}>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className={styles["avatar-uploader"]}
+            showUploadList={false}
+            onChange={handleChange}
+          >
+            {imgProfile ? (
+              <img
+                src={imgProfile}
+                alt="avatar"
+                style={{
+                  width: "90%",
+                  height: "90%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              uploadButton
+            )}
+          </Upload>
         </div>
 
-        <div className={styles["input"]}>
-          <label htmlFor="email">Email: {CurrentUser?.email}</label>
-          <Input
-            placeholder="Email"
-            size={"large"}
-            onChange={(e) =>
-              setInitialValues({ ...initialValues, email: e.target.value })
-            }
-          />
-        </div>
-        <div className={styles["input"]}>
-          <label htmlFor="Username">Username: {CurrentUser?.username}</label>
-          <Input
-            placeholder="Username"
-            size={"large"}
-            onChange={(e) =>
-              setInitialValues({ ...initialValues, username: e.target.value })
-            }
-          />
-        </div>
-        <div className={styles["input"]}>
-          <label htmlFor="phone_number">
-            Phone number: {CurrentUser?.phoneNumber}
-          </label>
-          <Input
-            placeholder="phone number"
-            size={"large"}
+        <div className={`${styles["input"]} ${styles["input-2-row"]}`}>
+          <label htmlFor="firstName">First Name:</label>
+          <EditInput
+            className={styles["text-input"]}
+            value={CurrentUser?.firstName}
             onChange={(e) =>
               setInitialValues({
                 ...initialValues,
-                phone_number: e.target.value,
+                firstName: e.target.value,
               })
             }
           />
         </div>
+        <div className={`${styles["input"]} ${styles["input-2-row"]}`}>
+          <label htmlFor="lastName">Last Name:</label>
+          <EditInput
+            className={styles["text-input"]}
+            value={CurrentUser?.lastName}
+            onChange={(e) =>
+              setInitialValues({ ...initialValues, lastName: e.target.value })
+            }
+          />
+        </div>
+      </div>
+      <div className={styles["input"]}>
+        <label htmlFor="email">Email:</label>
+        <EditInput
+          className={styles["text-input"]}
+          value={CurrentUser?.email}
+          onChange={(e) =>
+            setInitialValues({ ...initialValues, email: e.target.value })
+          }
+        />
+      </div>
+      <div className={styles["input"]}>
+        <label htmlFor="Username">Username:</label>
+        <EditInput
+          className={styles["text-input"]}
+          value={CurrentUser?.username}
+          onChange={(e) =>
+            setInitialValues({ ...initialValues, username: e.target.value })
+          }
+        />
+      </div>
+      <div className={styles["input"]}>
+        <label htmlFor="phone_number">Phone number:</label>
+        <EditInput
+          className={styles["text-input"]}
+          value={CurrentUser?.phoneNumber}
+          onChange={(e) =>
+            setInitialValues({
+              ...initialValues,
+              phone_number: e.target.value,
+            })
+          }
+        />
+      </div>
 
-        <Box display="flex" justifyContent="end" mt="20px">
-          <Button
-            type="submit"
-            color="secondary"
-            variant="contained"
-            onClick={handleSend}
-            size={"large"}
-          >
-            Update
-          </Button>
-        </Box>
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button
+          type="submit"
+          variant="contained"
+          onClick={handleSend}
+          size={"large"}
+          style={{ backgroundColor: "#505050" }}
+        >
+          Update
+        </Button>
       </Box>
-    </div>
+    </Box>
   );
 };
 
