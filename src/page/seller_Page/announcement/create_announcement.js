@@ -31,14 +31,15 @@ const CreateAnnouncement = () => {
           initialState.minimum_preorder_days
         ) {
           CreateAnnouncementAPI(initialState).then((r) => {
+            console.log(r)
             setLoading(false);
             if (r?.status === 200) {
               message.success("success");
               navigate(CABINET + ANNOUNCEMENT);
             } else {
               if (r?.response?.status === 401) {
-                localStorage.clear();
-                window.location.assign("/");
+                // localStorage.clear();
+                // window.location.assign("/");
               } else {
                 message.error("error send data");
               }
@@ -46,12 +47,15 @@ const CreateAnnouncement = () => {
           });
         } else {
           message.error("barcha malumotlarni toldiring");
+          setLoading(false);
         }
       } else {
         message.error("qidiruv tugmasi orqali kerakli joyni qidirib tanlang");
+        setLoading(false);
       }
     } else {
       message.error("barcha malumotlarni toldiring");
+      setLoading(false);
     }
   };
   console.log(initialState);

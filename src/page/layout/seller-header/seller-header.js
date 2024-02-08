@@ -10,7 +10,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   HOSTEL,
   SCHEDULE,
-  ANNOUNCEMENT,
+  ANNOUNCEMENT, REQUEST_ANNOUNCEMENT,
 } from "../../../processes/utils/consts";
 import { Icons } from "../../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
@@ -61,6 +61,7 @@ const SellerHeader = () => {
 
   const removeToken = () => {
     localStorage.removeItem("token");
+    window.location.assign(HOME_ROUTE)
     setshowAccMenu(false); // This will cause the component to re-render
   };
 
@@ -120,14 +121,15 @@ const SellerHeader = () => {
             >
               Мои объявления
             </Link>
-            <div
+            <Link
               className={`${styles["header-tab"]} ${
                 activeTab === 1 && styles["active"]
               }`}
               onClick={() => handleClickTab(1)}
+              to={CABINET+REQUEST_ANNOUNCEMENT}
             >
               Запросы
-            </div>
+            </Link>
           </div>
         </div>
         <div className={styles["header-right"]}>

@@ -26,7 +26,7 @@ const Announcement = () => {
   const handleClickOpen = (id) => {
     navigate(CABINET + "announcement_item_page/" + `${id}`);
   };
-
+  console.log(announcementData)
   useEffect(() => {
     GetAnnouncementAPI().then((r) => {
       setAnnouncementData(r.data);
