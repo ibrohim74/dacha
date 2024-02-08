@@ -13,6 +13,8 @@ import { ReactComponent as AppStore } from "./appStore.svg";
 import { ReactComponent as GooglePlay } from "./googlePlay.svg";
 import { ReactComponent as Pencil } from "./pencil.svg";
 import { ReactComponent as Bell } from "./bell.svg";
+import { ReactComponent as AcceptIcon } from "./accept.svg";
+import { ReactComponent as DenyIcon } from "./deny.svg";
 
 export const Icons = {
   Logo,
@@ -30,4 +32,6 @@ export const Icons = {
   GooglePlay,
   Bell,
   Pencil,
+  AcceptIcon,
+  DenyIcon,
 };

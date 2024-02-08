@@ -1,0 +1,82 @@
+.requestItem {
+    background: #d9d9d9;
+    width: 100%;
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 5px;
+}
+
+.req_start {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imgReq {
+    width: 150px;
+    height: 100%;
+}
+
+.req_start__text {
+    width: 48%;
+    height: 100%;
+    font-size: 14px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.req_start__text h1, .req_center__text h1 {
+    font-size: 20px;
+}
+
+.req_start__text p, .req_center__text p {
+    font-size: 14px;
+}
+
+.req_center__text {
+    width: 50%;
+    height: 100%;
+    font-size: 14px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.req_center {
+}
+
+.req_footer {
+    display: flex;
+    justify-content: space-between;
+    width: 7%;
+    margin-right: 20px;
+}
+
+.requestAccept {
+    background: #6B6B6B;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 31px;
+    height: 31px;
+    cursor: pointer;
+}
+
+.requestDeny {
+    background: #6B6B6B;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 31px;
+    height: 31px;
+    cursor: pointer;
+}

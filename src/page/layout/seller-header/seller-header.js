@@ -10,7 +10,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   HOSTEL,
   SCHEDULE,
-  ANNOUNCEMENT,
+  ANNOUNCEMENT, REQUEST_ANNOUNCEMENT,
 } from "../../../processes/utils/consts";
 import { Icons } from "../../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
@@ -61,6 +61,7 @@ const SellerHeader = () => {
 
   const removeToken = () => {
     localStorage.removeItem("token");
+    window.location.assign(HOME_ROUTE)
     setshowAccMenu(false); // This will cause the component to re-render
   };
 
@@ -92,16 +93,6 @@ const SellerHeader = () => {
     };
   }, []);
 
-  const isLoggedIn = () => {
-    return JWT != null;
-  };
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const searchTerm = event.target.elements.search.value;
-    navigate(`/villas?search=${searchTerm}`);
-  };
-
   return (
     <>
       <div className={`${styles["Seller-header"]} ${styles["container-md"]}`}>
@@ -110,25 +101,27 @@ const SellerHeader = () => {
             <Icons.Logo />
             <div>Travid</div>
           </Link>
-          <div className={styles["header-tabs"]}>
+          {CurrentUser?.role === 'seller' && <div className={styles["header-tabs"]}>
             <Link
-              className={`${styles["header-tab"]} ${
-                activeTab === 0 && styles["active"]
-              }`}
-              onClick={() => handleClickTab(0)}
-              to={CABINET + ANNOUNCEMENT}
+                className={`${styles["header-tab"]} ${
+                    activeTab === 0 && styles["active"]
+                }`}
+                onClick={() => handleClickTab(0)}
+                to={CABINET + ANNOUNCEMENT}
             >
               Мои объявления
             </Link>
-            <div
-              className={`${styles["header-tab"]} ${
-                activeTab === 1 && styles["active"]
-              }`}
-              onClick={() => handleClickTab(1)}
+            <Link
+                className={`${styles["header-tab"]} ${
+                    activeTab === 1 && styles["active"]
+                }`}
+                onClick={() => handleClickTab(1)}
+                to={CABINET+REQUEST_ANNOUNCEMENT}
             >
               Запросы
-            </div>
-          </div>
+            </Link>
+          </div>}
+
         </div>
         <div className={styles["header-right"]}>
           <Icons.Language className={styles["language-btn"]} />
@@ -139,10 +132,10 @@ const SellerHeader = () => {
           {showAccMenu && (
             <>
               <div ref={accMenuRef} className={styles["account-menu"]}>
-                <div>
+                {CurrentUser?.role === 'seller' && <div>
                   <Link
-                    className={styles["menu-btn"]}
-                    to={CABINET + PROFILE} // not sure if good practice /cabinet/profile
+                      className={styles["menu-btn"]}
+                      to={CABINET + PROFILE} // not sure if good practice /cabinet/profile
                   >
                     Профиль
                   </Link>
@@ -153,18 +146,26 @@ const SellerHeader = () => {
                     Schedule
                   </Link>
                   <Link
-                    className={styles["menu-btn"]}
-                    to={CABINET + ANNOUNCEMENT}
+                      className={styles["menu-btn"]}
+                      to={CABINET + ANNOUNCEMENT}
                   >
                     Announcement
                   </Link>
                   <Link
-                    className={styles["menu-btn"]}
-                    to={CABINET + CREATE_ANNOUNCEMENT}
+                      className={styles["menu-btn"]}
+                      to={CABINET + CREATE_ANNOUNCEMENT}
                   >
                     Create
                   </Link>
-                </div>
+                </div>}
+                {CurrentUser?.role === 'user' && <div>
+                  <Link
+                      className={styles["menu-btn"]}
+                      to={CABINET + PROFILE} // not sure if good practice /cabinet/profile
+                  >
+                    Профиль
+                  </Link>
+                </div>}
                 <div className={styles["menu-btn"]} onClick={removeToken}>
                   Выйти
                 </div>

@@ -60,8 +60,26 @@ export const GetRequestAPI = async ()=>{
     try {
         const JWT = jwtDecode(localStorage.getItem('token'))
         const res = await $authHost.get(`/seller/${JWT.userId}/requests`)
-        console.log(res)
         return res
     }catch (e){
         console.log(e)}
+}
+
+export const AcceptRequestAPI = async (id)=>{
+    try {
+        const res = await $authHost.post(`/request/${id}/accept`)
+        console.log(res)
+        return res
+    }catch (e){
+        console.log(e)
+    }
+}
+export const DenyRequestAPI = async (id)=>{
+    try {
+        const res = await $authHost.post(`/request/${id}/deny`)
+        console.log(res)
+        return res
+    }catch (e){
+        console.log(e)
+    }
 }
