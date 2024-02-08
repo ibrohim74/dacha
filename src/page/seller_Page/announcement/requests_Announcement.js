@@ -23,15 +23,17 @@ const RequestsAnnouncement = () => {
 
     const acceptRequest = (id) => {
         AcceptRequestAPI(id).then(r => {
-            if (r?.status === 200){
+            if (r?.status === 200) {
                 message.success('success')
+                window.location.reload()
             }
         })
     }
     const denyRequest = (id) => {
         DenyRequestAPI(id).then(r => {
-            if (r?.status === 200){
+            if (r?.status === 200) {
                 message.success('success')
+                window.location.reload()
             }
         })
     }
@@ -61,7 +63,7 @@ const RequestsAnnouncement = () => {
                 console.log(e)
             }
         }
-sellerBooking()
+        sellerBooking()
         fetchData();
     }, []);
 
@@ -119,10 +121,12 @@ sellerBooking()
                                         </div>
                                     </div>
                                     <div className={styles.req_footer}>
-                                        <div className={styles.requestAccept} onClick={e=>acceptRequest(item?.booking_id)}>
+                                        <div className={styles.requestAccept}
+                                             onClick={e => acceptRequest(item?.booking_id)}>
                                             <Icons.AcceptIcon/>
                                         </div>
-                                        <div className={styles.requestDeny} onClick={e=>denyRequest(item?.booking_id)}>
+                                        <div className={styles.requestDeny}
+                                             onClick={e => denyRequest(item?.booking_id)}>
                                             <Icons.DenyIcon/>
                                         </div>
                                     </div>

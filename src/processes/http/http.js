@@ -41,8 +41,8 @@ const RefreshToken = async () => {
     updateAuthHeader(authToken);
   } catch (error) {
     console.error("Token yangilash muvaffaqiyatsiz bo'ldi:", error);
-    window.localStorage.removeItem("token");
-    window.location.assign(HOME_ROUTE);
+    // window.localStorage.removeItem("token");
+    // window.location.assign(HOME_ROUTE);
   }
 };
 
@@ -58,6 +58,6 @@ $authHost.interceptors.response.use((response) => response, async (error) => {
     }
 });
 
-setInterval(RefreshToken, 50 * 60 * 1000);
+setInterval(RefreshToken, 20 * 60 * 1000);
 
 export { $authHost , $host, RefreshToken};

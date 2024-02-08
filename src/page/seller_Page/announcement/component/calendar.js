@@ -5,11 +5,22 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import {message} from "antd";
+import {$authHost} from "../../../../processes/http/http";
+import {jwtDecode} from "jwt-decode";
 
 const Calendar = () => {
     const [events, setEvents] = useState([])
     useEffect(() => {
-
+        const getCalendarEvents = async ()=>{
+            try {
+                const JWT = jwtDecode(localStorage.getItem('token'))
+                const res = await $authHost.get(`/seller/${JWT.userId}/bookings`)
+                console.log(res)
+            }catch (e){
+                console.log(e)
+            }
+        }
+        getCalendarEvents()
     }, [])
 
     const handleDateClick = (selected) => {
