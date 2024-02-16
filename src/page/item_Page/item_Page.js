@@ -15,10 +15,10 @@ import Score from "../../components/score/score";
 import Header from "../../components/header/header";
 import {MapContainer, Marker, TileLayer} from "react-leaflet";
 import L from "leaflet";
-import {Button, DatePicker, Input, Modal, notification, Tag} from "antd";
+import {Button, DatePicker, Input, message, Modal, notification, Tag} from "antd";
 import {jwtDecode} from "jwt-decode";
 import dayjs from 'dayjs';
-import {CreateRequestAPI} from "./API/itemPageAPI";
+import {CreateRequestAPI, GetSellerBookingAPI} from "./API/itemPageAPI";
 
 const customMarkerIcon = new L.Icon({
     iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
@@ -33,12 +33,13 @@ const Context = React.createContext({
 });
 const Item_Page = () => {
     const [product, setProduct] = useState();
-    const [loading, setLoading] = useState(true); // Add a loading state
-    const [error, setError] = useState(null); // Add an error state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [SliderData, setSliderData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [api, contextHolder] = notification.useNotification();
     const [errorNotification, setErrorNotification] = useState('')
+    const [bookingData , setBookingData] = useState([])
     const JWT = localStorage.getItem("token")
         ? jwtDecode(localStorage.getItem("token"))
         : null;
@@ -46,15 +47,11 @@ const Item_Page = () => {
     const {RangePicker} = DatePicker;
     const [initialState, setInitialState] = useState({
         requested_price:0,
-        customer_id:parseInt(JWT.userId),
+        customer_id:parseInt(JWT?.userId),
         accommodation_id: parseInt(id),
         start_price:300,
         accommodation_type:'dacha'
     })
-
-    console.log(product)
-
-
     const villas = [
         {name: "Дача 1", price: "109.90", score: 5, img: null},
         {name: "Дача 2", price: "89.90", score: 4.2, img: null},
@@ -69,40 +66,64 @@ const Item_Page = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const fetchProduct = async () => {
+        try {
+            const response = await axios.get(
+                `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
+            );
+            setProduct(response.data);
+            setSliderData(response.data?.photos_path.split('\n').filter(Boolean));
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError("** ERROR ** PRODUCT NOT FOUND");
+            console.error("Failed to fetch dacha", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchProduct = async () => {
+        fetchProduct();
+
+    }, []);
+    useEffect(() => {
+        const fetchBookingData = async () => {
             try {
-                const response = await axios.get(
-                    `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
-                );
-                setProduct(response.data);
-                // setInitialState({...initialState, start_price: product?.price})
-                setSliderData(response.data?.photos_path.split('\n').filter(Boolean));
-                setLoading(false); // Set loading to false once data is fetched
+                if (product?.parent_id) {
+                    const response = await GetSellerBookingAPI(product.parent_id);
+                    const data = response?.data;
+
+                    // Har bir "booking" ma'lumotini tekshirish
+                    const filteredData = data.filter(booking => booking.accommodation_id === parseInt(id));
+
+                    // "booking" ma'lumotlarini tekshirilgan ma'lumotlar bilan almashtirish
+                    setBookingData(filteredData);
+                }
             } catch (error) {
-                setLoading(false); // Set loading to false once data is fetched
-                setError("** ERROR ** PRODUCT NOT FOUND"); // Set error state if there's an error
-                console.error("Failed to fetch dacha", error);
+                console.error("Error fetching seller booking data:", error);
             }
         };
 
-        fetchProduct();
-    }, []);
+        fetchBookingData();
+    }, [product?.parent_id, id]);
+
+
+
+
+
+
 
     if (loading) {
-        return <div>Loading...</div>; // Render a loading message while data is being fetched
+        return <div>Loading...</div>;
     }
     if (error) {
-        return <div>{error}</div>; // Render the error message if there's an error
+        return <div>{error}</div>;
     }
-
 
     const onChange = (value, dateString) => {
         const minimumBookDays = product?.minimum_book_days;
         try {
             const selectedDates = dateString.map(date => dayjs(date));
 
-            // Check if both selectedDates are valid
             if (selectedDates.some(date => !date.isValid())) {
                 throw new Error('Invalid date format');
             }
@@ -117,7 +138,6 @@ const Item_Page = () => {
                 const start_day = selectedDates[0].format('YYYY.MM.DD HH:mm');
                 const end_day = selectedDates[1].format('YYYY.MM.DD HH:mm');
 
-                // Do something with start_day and end_day, for example, update the state
                 setInitialState({ ...initialState, start_day, end_day });
             }
         } catch (error) {
@@ -132,10 +152,28 @@ const Item_Page = () => {
 
     }
     const disabledDate = (current) => {
-        const minimumPreorderDays = product?.minimum_preorder_days;
-        return current && current < dayjs().endOf('day')
-        // return current && (current < dayjs().endOf('day') || current < dayjs().add(minimumPreorderDays, 'day'));
+        if (!current) return false;
+
+        const today = dayjs();
+
+        if (current.isBefore(today, 'day') || current.isSame(today, 'day')) {
+            return true;
+        }
+
+
+        if (bookingData.length > 0) {
+            if (bookingData.some(booking => (
+                current >= dayjs(booking.start_day) && current <= dayjs(booking.end_day)
+            ))) {
+                return true;
+            }
+        }
+
+        return false;
     };
+
+
+
     const openNotification = (placement) => {
         api.info({
             message: `Бронирование`,
@@ -143,9 +181,14 @@ const Item_Page = () => {
             placement,
         });
     };
-
+                                       
     const handleSendData = () => {
-        CreateRequestAPI(initialState)
+        CreateRequestAPI(initialState).then(r => {
+            if (r?.status === 200){
+                message.success('Jonatildi')
+                window.location.reload()
+            }
+        })
     }
     return (
         <div className={styles["Item-Page"]}>
@@ -169,11 +212,12 @@ const Item_Page = () => {
                     showTime={{
                         format: 'HH:mm',
                     }}
-                    disabledDate={disabledDate}
                     onChange={onChange}
-
                     format="YYYY-MM-DD HH:mm:ss"
+
+                    disabledDate={disabledDate}
                 />
+
                 <div className={'input'}>
                     <label htmlFor="reqPrice">напишите цену, о которой хотите договориться</label>
                     <Input
@@ -202,6 +246,9 @@ const Item_Page = () => {
                 </div>
                 <Button onClick={handleSendData}>отправить</Button>
             </Modal>
+
+
+
             <div className={`${styles["item-info"]} ${styles["container-md"]}`}>
                 <div className={styles["info-header"]}>
                     <div className={styles["header-left"]}>

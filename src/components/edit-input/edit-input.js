@@ -4,7 +4,6 @@ import { Icons } from "../../assets/icons/icons";
 const EditInput = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(props.value);
-  console.log(`Value: ${props.value}`);
 
   const handleChange = (e) => {
     setValue(e.target.value);

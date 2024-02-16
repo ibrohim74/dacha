@@ -10,8 +10,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import { $host } from "../../processes/http/http";
 import { ColorModeContext, useMode } from "../../components/theme";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import Topbar from "./topbar/Topbar";
+
 import SellerHeader from "./seller-header/seller-header";
 
 const LayoutCabinet = () => {

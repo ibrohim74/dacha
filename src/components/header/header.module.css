@@ -38,7 +38,7 @@
   justify-content: start;
   gap: 5px;
   border-radius: 18px;
-  border: 1.5px solid #000;
+  border: 2px solid #000;
   background: transparent;
   box-sizing: border-box;
 }
@@ -103,7 +103,7 @@
   gap: 90px;
 
   border-radius: 8px;
-  border: 1.5px solid #000;
+  border: 2px solid #000;
   background: #f8f8f8;
   z-index: 1;
   user-select: none;

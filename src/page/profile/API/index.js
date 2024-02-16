@@ -18,5 +18,4 @@ export const sendProfile_data = async (data)=>{
     }catch (e){
         return e.response.data.detail
     }
-
 }

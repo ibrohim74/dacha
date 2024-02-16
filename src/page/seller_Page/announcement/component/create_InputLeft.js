@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, memo } from "react";
 import { Button, Input, message, Select, Upload } from "antd";
 import styles from "../assets/create_ann.module.css";
-import "@splidejs/react-splide/css";
 import TextArea from "antd/es/input/TextArea";
 import MapsAnnouncement from "./mapsAnnouncement";
 

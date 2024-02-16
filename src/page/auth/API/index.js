@@ -15,7 +15,8 @@ export const CheckEmailAPI = async (email)=>{
 
 export const CheckRegistrationCodeAPI = async (code, email) => {
   try {
-    const res = await $host.post('registration_code' , {code:code ,  email:email})
+    console.log('kirdi')
+    const res = await $host.post('check_code' , {code:code ,  email:email})
     console.log(res)
     return res
   }catch (e){

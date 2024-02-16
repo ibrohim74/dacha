@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
-    "@demark-pro/react-booking-calendar": "^3.0.5",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fullcalendar/core": "^6.1.10",
@@ -16,23 +15,19 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.15.7",
     "@mui/x-data-grid": "^5.17.2",
-    "@splidejs/react-splide": "^0.7.12",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.12.5",
     "axios": "^1.6.2",
     "dayjs": "^1.11.10",
-    "formik": "^2.4.5",
-    "gantt-schedule-timeline-calendar": "^3.35.2",
+    "jest": "^27.5.1",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
-    "react-loading-skeleton": "^3.3.1",
-    "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "sharp": "^0.33.2",
@@ -42,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -62,5 +57,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.9"
   }
 }

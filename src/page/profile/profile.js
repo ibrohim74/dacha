@@ -30,10 +30,9 @@ const Profile = () => {
           },
         }
       );
-      console.log(res);
       if (res?.status === 200) {
         setLoadingImg(false);
-        window.location.reload();
+        // window.location.reload();
       } else {
         message.error("rasim xato");
       }
@@ -46,21 +45,21 @@ const Profile = () => {
   const getPhoto = async () => {
     setLoadingImg(true);
     try {
-      const res = await $authHost.get(`/media/users/${JWT.userId}/`, {
+      const res = await $authHost.get(`/media/users/${JWT.userId}`, {
         responseType: "arraybuffer",
       });
-      // Convert the binary data to a base64 string
-      const base64 = btoa(
-        new Uint8Array(res.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ""
-        )
-      );
-      // Create a data URL
-      const dataUrl = `data:${res.headers[
-        "content-type"
-      ].toLowerCase()};base64,${base64}`;
-      setImgProfile(dataUrl);
+      if (res?.status === 200){
+        const imageData = res.data;
+        const base64Image = btoa(
+            new Uint8Array(imageData).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+            )
+        );
+        const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+        setImgProfile(dataUrl);
+        setLoadingImg(false);
+      }
       setLoadingImg(false);
     } catch (e) {
       setLoadingImg(false);
@@ -68,12 +67,13 @@ const Profile = () => {
     }
   };
 
+
+  const getUser = async () => {
+    const res = await $host.get("user/" + JWT.userId);
+    setCurrentUser(res.data);
+    setIsLoading(false);
+  };
   useEffect(() => {
-    const getUser = async () => {
-      const res = await $host.get("user/" + JWT.userId);
-      setCurrentUser(res.data);
-      setIsLoading(false);
-    };
     getUser();
     getPhoto();
   }, []);
@@ -103,14 +103,14 @@ const Profile = () => {
       type="button"
     >
       {loadingImg ? (
-        <LoadingOutlined style={{ color: "white" }} />
+        <LoadingOutlined style={{ color: "black " }} />
       ) : (
-        <PlusOutlined style={{ color: "white" }} />
+        <PlusOutlined style={{ color: "black" }} />
       )}
       <div
         style={{
           marginTop: 8,
-          color: "white",
+          color: "black",
         }}
       >
         Upload

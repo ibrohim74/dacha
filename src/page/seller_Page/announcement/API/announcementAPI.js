@@ -1,4 +1,4 @@
-import {$authHost} from "../../../../processes/http/http";
+import {$authHost, $host} from "../../../../processes/http/http";
 import {jwtDecode} from "jwt-decode";
 
 export const CreateAnnouncementAPI = async (data) =>{
@@ -81,5 +81,24 @@ export const DenyRequestAPI = async (id)=>{
         return res
     }catch (e){
         console.log(e)
+    }
+}
+
+export const GetUserById=async (id)=>{
+    try {
+        const res = await  $host.get(`user/${id}`)
+        return  res.data
+    }catch (e){
+        console.log(e)
+    }
+}
+
+export const DeleteBookingById = async (booking_id) =>{
+    try {
+        const res = await $authHost.delete(`/booking/${booking_id}`)
+        return res.status
+    }catch (e){
+        console.log(e)
+        return e?.response?.status
     }
 }

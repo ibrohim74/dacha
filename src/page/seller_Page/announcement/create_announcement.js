@@ -38,8 +38,8 @@ const CreateAnnouncement = () => {
               navigate(CABINET + ANNOUNCEMENT);
             } else {
               if (r?.response?.status === 401) {
-                // localStorage.clear();
-                // window.location.assign("/");
+                localStorage.clear();
+                window.location.assign("/");
               } else {
                 message.error("error send data");
               }

@@ -15,7 +15,7 @@ import {GetAllDacha} from "./API/homeAPI";
 const Home = () => {
     const [villas, setVillas] = useState([]);
     const [buttonAllDach, setButtonAllDach] = useState(1)
-    const [noDataDach, setNoDataDach] = useState(false)
+
     const hotels = [
         {name: "Отель 1", price: "99.90", score: 4, img: null},
         {name: "Отель 2", price: "39.90", score: 1.5, img: null},
@@ -34,7 +34,6 @@ const Home = () => {
             }
         });
     }, [buttonAllDach]);
-    console.log(buttonAllDach)
     return (
         <div className={styles["Home"]}>
             {/* <div>
@@ -69,25 +68,24 @@ const Home = () => {
             <div className={`${styles["villas"]} ${styles["container-md"]}`}>
                 <div className={styles["villas-top"]}>
                     <div className={styles["title-large"]}>Дачи</div>
-                    {villas.length < 15 ? <div className={styles["allBtn"]}>
-                        <div onClick={() => setButtonAllDach(buttonAllDach - 1)}>Nazad</div>
-                        <Icons.ChevronR/>
-                    </div> : <>
-                        {buttonAllDach => 1 && <div className={styles["allBtn"]}>
-                            <div onClick={ setButtonAllDach(buttonAllDach - 1)}>Nazad</div>
+                    {villas.length <= 15 ?  <>
+                        {buttonAllDach > 1 && <div className={styles["allBtn"]}>
+                            <div onClick={() => setButtonAllDach(buttonAllDach - 1)}>Nazad</div>
                             <Icons.ChevronR/>
                         </div>}
+                        {villas.length >= 15 &&
+                            <div className={styles["allBtn"]}>
+                                <div onClick={() => setButtonAllDach(buttonAllDach + 1)}>Все</div>
+                                <Icons.ChevronR/>
+                            </div>
+                        }
 
-                        <div className={styles["allBtn"]}>
-                            <div onClick={() => setButtonAllDach(buttonAllDach + 1)}>Все</div>
-                            <Icons.ChevronR/>
-                        </div>
-                    </>}
+                    </> :  ''}
 
                 </div>
                 <div className={styles["villas-grid"]}>
-                    {villas.map((villa, index) => (
-                        <ItemCard key={index} {...villa} />
+                    {villas.map((villa) => (
+                        <ItemCard key={villa.id} {...villa} />
                     ))}
 
 
@@ -103,9 +101,9 @@ const Home = () => {
                     </div>
                 </div>
                 <div className={styles["hotels-grid"]}>
-                    {hotels.map((hotel) => (
-                        <ItemCard {...hotel} />
-                    ))}
+                    {/*{hotels.map((hotel) => (*/}
+                    {/*    <ItemCard key={hotel.id} {...hotel} />*/}
+                    {/*))}*/}
                 </div>
             </div>
 

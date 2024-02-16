@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Icons } from "../../assets/icons/icons";
 
 
-const ImageSlider = ({ slides, className, styles }) => {
+const ImageSlider = ({ slides , className, styles }) => {
   const [current, setCurrent] = useState(0);
   const length = slides.length;
   const nextSlide = () => {

@@ -127,7 +127,8 @@ const Registration = () => {
                         setStep2(true)
                     }
                 })
-            }
+            }else {setLoading(false)
+            message.error('email pochtangizga kelgan xabarni yozing')}
         }
     }
     const handleSendStep3 = () => {

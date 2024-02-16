@@ -10,3 +10,16 @@ export const CreateRequestAPI = async (data)=>{
         console.log(e)
     }
 }
+export const GetSellerBookingAPI = async (sellerId)=>{
+    try {
+        const res = await $authHost.get(`seller/${sellerId}/bookings`)
+        console.log(sellerId)
+        console.log(res)
+        return res
+    }catch (e){
+        if (e === 401){
+            console.log('234234234234')
+        }
+        console.log(e)
+    }
+}

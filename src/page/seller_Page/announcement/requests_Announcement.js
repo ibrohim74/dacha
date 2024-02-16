@@ -37,32 +37,31 @@ const RequestsAnnouncement = () => {
             }
         })
     }
+    const fetchData = async () => {
+        const requestResponse = await GetRequestAPI();
+        const announcementResponse = await GetAnnouncementAPI();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const requestResponse = await GetRequestAPI();
-            const announcementResponse = await GetAnnouncementAPI();
-
-            if (requestResponse?.status === 200) {
-                setRequests(requestResponse.data);
-            }
-
-            if (announcementResponse?.status === 200) {
-                setDacha(announcementResponse.data);
-                const images = announcementResponse.data.map((item) => item?.photos_path?.split("\n").filter(Boolean));
-                setPhotoUrls(images);
-            }
-        };
-
-        const sellerBooking = async () => {
-            try {
-                const JWT = jwtDecode(localStorage.getItem('token'))
-                const res = await $authHost.get(`/seller/${JWT?.userId}/bookings`)
-                console.log(res)
-            } catch (e) {
-                console.log(e)
-            }
+        if (requestResponse?.status === 200) {
+            setRequests(requestResponse.data);
         }
+
+        if (announcementResponse?.status === 200) {
+            setDacha(announcementResponse.data);
+            const images = announcementResponse.data.map((item) => item?.photos_path?.split("\n").filter(Boolean));
+            setPhotoUrls(images);
+        }
+    };
+
+    const sellerBooking = async () => {
+        try {
+            const JWT = jwtDecode(localStorage.getItem('token'))
+            const res = await $authHost.get(`/seller/${JWT?.userId}/bookings`)
+            console.log(res)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    useEffect(() => {
         sellerBooking()
         fetchData();
     }, []);
@@ -82,7 +81,7 @@ const RequestsAnnouncement = () => {
     }, [requests]);
     console.log(requests)
     return (
-        <Box m={"20px"}>
+        <Box className={styles.containerReq}>
             {requests.length > 0 ? requests.map((item) => (
                 <div key={item.id}>
                     {dacha.map((dachaItem, index) => {

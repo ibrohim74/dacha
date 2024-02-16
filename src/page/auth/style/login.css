@@ -52,7 +52,7 @@
 
 .container-login input:focus {
   border: 2px solid #1f1fff;
-  box-shadow: #6767ff 0px 1px 1px, #6767ff 0px 0px 0px 1px;
+  box-shadow: #6767ff 0 1px 1px, #6767ff 0 0 0 1px;
 }
 
 .container-login input:focus + label {
