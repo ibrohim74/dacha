@@ -15,7 +15,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
-  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT,
+  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -35,6 +35,7 @@ import AnnouncementItemPage from "../../page/seller_Page/announcement/announceme
 import Villas from "../../page/villas/villas";
 import Item_Page from "../../page/item_Page/item_Page";
 import RequestsAnnouncement from "../../page/seller_Page/announcement/requests_Announcement";
+import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
 export const Public =  [
   {
     Component: <Home/>,
@@ -83,6 +84,10 @@ export const Users = [
   {
     Component: <Profile />,
     path: PROFILE,
+  },
+  {
+    Component: <UserRequestPage />,
+    path: REQUEST_USER,
   },
   {
     Component: <Change_pass_TopBar />,

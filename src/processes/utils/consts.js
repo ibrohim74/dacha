@@ -11,7 +11,7 @@ export const PROFILE = "profile";
 export const CHANGE_PASS_TOP = "change_pass";
 
 // User Routes
-
+export const REQUEST_USER = "announcement_user";
 // Admin Routes
 
 // Seller Routes

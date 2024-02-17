@@ -1,0 +1,29 @@
+.user_req_headerBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+.user_req_BtnBox{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+}
+.user_req_Btn{
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+.user_req_Btn.active{
+    border-bottom: 2px black solid;
+}
+.user_req_content{
+    max-width: 1300px;
+    margin: 40px auto 0 auto;
+    padding: 0 15px;
+}

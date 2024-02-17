@@ -10,7 +10,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   HOSTEL,
   SCHEDULE,
-  ANNOUNCEMENT, REQUEST_ANNOUNCEMENT,
+  ANNOUNCEMENT, REQUEST_ANNOUNCEMENT, REQUEST_USER,
 } from "../../../processes/utils/consts";
 import { Icons } from "../../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
@@ -164,6 +164,12 @@ const SellerHeader = () => {
                       to={CABINET + PROFILE} // not sure if good practice /cabinet/profile
                   >
                     Профиль
+                  </Link>
+                  <Link
+                      className={styles["menu-btn"]}
+                      to={CABINET + REQUEST_USER} // not sure if good practice /cabinet/profile
+                  >
+                    мои запроси
                   </Link>
                 </div>}
                 <div className={styles["menu-btn"]} onClick={removeToken}>
