@@ -19,8 +19,10 @@ export const GetAnnouncementAPI = async ()=>{
     }
 }
 export const GetDachaAPI = async (id)=>{
+
     try {
         const res = await $authHost.get(`/dacha/${id}`)
+        console.log(res)
         return res.data
     }catch (e){
         console.log(e)
@@ -66,8 +68,9 @@ export const GetRequestAPI = async ()=>{
 }
 
 export const AcceptRequestAPI = async (id)=>{
+    console.log(id)
     try {
-        const res = await $authHost.post(`/request/${id}/accept`)
+        const res = await $authHost.post(`/request/${parseInt(id)}/accept`)
         console.log(res)
         return res
     }catch (e){
@@ -76,7 +79,7 @@ export const AcceptRequestAPI = async (id)=>{
 }
 export const DenyRequestAPI = async (id)=>{
     try {
-        const res = await $authHost.post(`/request/${id}/deny`)
+        const res = await $authHost.post(`/request/${parseInt(id)}/deny`)
         console.log(res)
         return res
     }catch (e){

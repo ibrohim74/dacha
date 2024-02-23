@@ -8,3 +8,11 @@ export const GetAllDacha =async (page)=>{
         console.log(e)
     }
 }
+export const GetAllHostel =async (page)=>{
+    try {
+        const res =await $host.get('hotels' ,{params:{page:page}})
+       return res
+    }catch (e){
+        console.log(e)
+    }
+}

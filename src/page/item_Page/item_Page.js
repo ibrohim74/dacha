@@ -18,7 +18,10 @@ import L from "leaflet";
 import {Button, DatePicker, Input, message, Modal, notification, Tag} from "antd";
 import {jwtDecode} from "jwt-decode";
 import dayjs from 'dayjs';
-import {CreateRequestAPI, GetSellerBookingAPI} from "./API/itemPageAPI";
+import {CreateRequestAPI, GetSellerBookingAPI, GetSellerBookingItemPageAPI} from "./API/itemPageAPI";
+import {GetDachaAPI} from "../seller_Page/announcement/API/announcementAPI";
+import {GetAllDacha} from "../home/API/homeAPI";
+import Review from "../../components/review/review";
 
 const customMarkerIcon = new L.Icon({
     iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
@@ -28,11 +31,10 @@ const customMarkerIcon = new L.Icon({
     shadowSize: [41, 41],
     shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
-const Context = React.createContext({
-    name: 'Default',
-});
+
 const Item_Page = () => {
-    const [product, setProduct] = useState();
+    const [product, setProduct] = useState([]);
+    const [SimilarDachas , setSimilarDachas] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [SliderData, setSliderData] = useState([]);
@@ -49,68 +51,45 @@ const Item_Page = () => {
         requested_price:0,
         customer_id:parseInt(JWT?.userId),
         accommodation_id: parseInt(id),
-        start_price:300,
         accommodation_type:'dacha'
     })
-    const villas = [
-        {name: "Дача 1", price: "109.90", score: 5, img: null},
-        {name: "Дача 2", price: "89.90", score: 4.2, img: null},
-        {name: "Дача 3", price: "99.90", score: 3.6, img: null},
-        {name: "Дача 4", price: "39.90", score: 4.7, img: null},
-        {name: "Дача 5", price: "69.90", score: 4.9, img: null},
-        {name: "Дача 6", price: "49.90", score: 4.4, img: null},
-        {name: "Дача 7", price: "59.90", score: 3, img: null},
-        {name: "Дача 8", price: "79.90", score: 2.5, img: null},
-    ];
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const fetchProduct = async () => {
+
+    const fetchBookingData = async () => {
         try {
-            const response = await axios.get(
-                `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dacha/${id}`
-            );
-            setProduct(response.data);
-            setSliderData(response.data?.photos_path.split('\n').filter(Boolean));
-            setLoading(false);
+            if (id) {
+                const response = await GetSellerBookingItemPageAPI(id);
+                const data = response.data;
+                const filteredData = data?.filter(booking => booking.accommodation_id === parseInt(id));
+                setBookingData(filteredData);
+
+            }
         } catch (error) {
-            setLoading(false);
-            setError("** ERROR ** PRODUCT NOT FOUND");
-            console.error("Failed to fetch dacha", error);
+            console.error('Sotuvchi bron ma\'lumotlarini olishda xato:', error);
         }
     };
 
-    useEffect(() => {
-        fetchProduct();
 
+    useEffect(() => {
+        GetDachaAPI(id).then(r=>{
+            if (r){
+                setProduct(r);
+                setSliderData(r?.photos_path.split('\n').filter(Boolean));
+                setLoading(false);
+            }
+        });
+        GetAllDacha(1).then(r => {
+            if (r.status === 200){
+                setSimilarDachas(r.data)
+            }
+        })
     }, []);
     useEffect(() => {
-        const fetchBookingData = async () => {
-            try {
-                if (product?.parent_id) {
-                    const response = await GetSellerBookingAPI(product.parent_id);
-                    const data = response?.data;
-
-                    // Har bir "booking" ma'lumotini tekshirish
-                    const filteredData = data.filter(booking => booking.accommodation_id === parseInt(id));
-
-                    // "booking" ma'lumotlarini tekshirilgan ma'lumotlar bilan almashtirish
-                    setBookingData(filteredData);
-                }
-            } catch (error) {
-                console.error("Error fetching seller booking data:", error);
-            }
-        };
-
         fetchBookingData();
     }, [product?.parent_id, id]);
-
-
-
-
-
-
 
     if (loading) {
         return <div>Loading...</div>;
@@ -123,27 +102,23 @@ const Item_Page = () => {
         const minimumBookDays = product?.minimum_book_days;
         try {
             const selectedDates = dateString.map(date => dayjs(date));
-
             if (selectedDates.some(date => !date.isValid())) {
-                throw new Error('Invalid date format');
+                 new Error('Noto‘g‘ri sana formati');
             }
-
             const differenceInDays = selectedDates[1].diff(selectedDates[0], 'day');
-            console.log(differenceInDays)
             if (differenceInDays < minimumBookDays) {
-                setInitialState({...initialState, start_day:'' , end_day:''})
-                setErrorNotification(`* Ошибка: Минимальное количество дней бронирования не может быть меньше ${product?.minimum_book_days} дней.`);
+                setInitialState({ ...initialState, start_day: '', end_day: '' });
+                setErrorNotification(`* XATO: Eng kam sana bron qilish uchun ${product?.minimum_book_days} kun bo'lishi kerak.`);
             } else {
                 setErrorNotification('');
-                const start_day = selectedDates[0].format('YYYY.MM.DD HH:mm');
-                const end_day = selectedDates[1].format('YYYY.MM.DD HH:mm');
-
+                const start_day = selectedDates[0].format('YYYY-MM-DDTHH:mm:ss');
+                const end_day = selectedDates[1].format('YYYY-MM-DDTHH:mm:ss');
                 setInitialState({ ...initialState, start_day, end_day });
             }
         } catch (error) {
-            console.error('Error processing dates:', error);
-            setErrorNotification('* Ошибка: Неверный формат даты или время.');
-            setInitialState({...initialState, start_day:'' , end_day:''})
+            console.error('Sana qayta ishlashda xato:', error);
+            setErrorNotification('* XATO: Noto‘g‘ri sana formati yoki vaqt.');
+            setInitialState({ ...initialState, start_day: '', end_day: '' });
         }
     };
 
@@ -172,8 +147,6 @@ const Item_Page = () => {
         return false;
     };
 
-
-
     const openNotification = (placement) => {
         api.info({
             message: `Бронирование`,
@@ -181,15 +154,18 @@ const Item_Page = () => {
             placement,
         });
     };
-                                       
+
     const handleSendData = () => {
-        CreateRequestAPI(initialState).then(r => {
-            if (r?.status === 200){
-                message.success('Jonatildi')
-                window.location.reload()
+        CreateRequestAPI(initialState).then(response => {
+            if (response?.status === 200) {
+                message.success('Yuborildi');
+                window.location.reload();
             }
-        })
-    }
+        }).catch(error => {
+            console.error('Ma’lumotlarni yuborishda xato:', error);
+            message.error('Ma’lumotlarni yuborishda xato yuz berdi');
+        });
+    };
     return (
         <div className={styles["Item-Page"]}>
             {contextHolder}
@@ -303,13 +279,14 @@ const Item_Page = () => {
 
                 <div className={styles["info-reviews"]}>
                     <div className={styles["title-md"]}>Отзывы</div>
+                    <Review dachaId={id}/>
                 </div>
             </div>
 
             <div className={`${styles["item-similars"]} ${styles["container-md"]}`}>
                 <div className={styles["title-md"]}>Похожие</div>
                 <div className={styles["similars-grid"]}>
-                    {villas.slice(0, 4).map((villa) => (
+                    {SimilarDachas.slice(0, 4).map((villa) => (
                         <ItemCard {...villa} />
                     ))}
                 </div>

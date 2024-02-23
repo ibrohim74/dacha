@@ -18,8 +18,9 @@ import Score from "../../../components/score/score";
 import {transformation} from "leaflet/dist/leaflet-src.esm";
 import {MapContainer, Marker, TileLayer} from "react-leaflet";
 import Calendar_Requests from "./component/Calendar_Requests";
+import Review from "../../../components/review/review";
 
-const AnnouncementItemPage = () => {
+const Announcement_Item_Page = () => {
     const [dachaData, setDachaData] = useState();
     const [initialState, setInitialState] = useState({
         display_name: null,
@@ -263,6 +264,14 @@ const AnnouncementItemPage = () => {
                             <Calendar_Requests events={events} idDacha={id}/>
                         </Box>
                     </Box>
+
+
+
+                        <div className={styles["info-reviews"]}>
+                            <div className={styles["title-md"]}>Отзывы</div>
+                            <Review dachaId={id}/>
+                        </div>
+
                 </div>
 
 
@@ -274,7 +283,7 @@ const AnnouncementItemPage = () => {
     );
 };
 
-export default AnnouncementItemPage;
+export default Announcement_Item_Page;
 
 
          

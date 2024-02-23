@@ -24,7 +24,7 @@ const ChangePassTopBar = () => {
                             window.location.reload()
                         },1500)
                     }
-                    console.log(res)
+
                 }catch (e){
                     message.error(e.response.data?.detail)
                 }

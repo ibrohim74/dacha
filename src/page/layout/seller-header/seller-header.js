@@ -50,7 +50,7 @@ const SellerHeader = () => {
         try {
           const res = await $host.get("user/" + JWT.userId);
           setCurrentUser(res.data);
-          console.log(res);
+
         } catch (e) {
           console.log(e);
         }

@@ -87,7 +87,7 @@ const CreateRoom = () => {
                     <div className="input" style={{marginBottom: "15px"}}>
                         <label htmlFor="Floor">Floor</label>
                         <Input placeholder={'Floor'} type={'number'}
-                               onChange={e => setInitialState({...initialState, floor: e.target.value})}/>
+                               onChange={e => setInitialState({...initialState, floor: parseInt(e.target.value) })}/>
                     </div>
                     <div className="input" style={{marginBottom: "15px"}}>
                         <label htmlFor="Type">Категории</label> <br/>
@@ -117,13 +117,13 @@ const CreateRoom = () => {
                         <div className="input-2-row" style={{marginBottom: "15px"}}>
                             <label htmlFor="Area">Area</label>
                             <Input placeholder={'Area'} type={'number'}
-                                   onChange={e => setInitialState({...initialState, area: e.target.value})}
+                                   onChange={e => setInitialState({...initialState, area: parseInt(e.target.value) })}
                             />
                         </div>
                         <div className="input-2-row" style={{marginBottom: "15px"}}>
                             <label htmlFor="RoomNumber">Room number</label>
                             <Input placeholder={'Room number'} type={'number'}
-                                   onChange={e => setInitialState({...initialState, rooms_number: e.target.value})}
+                                   onChange={e => setInitialState({...initialState, rooms_number: parseInt(e.target.value) })}
                             />
                         </div>
                     </div>
@@ -131,7 +131,7 @@ const CreateRoom = () => {
                         <div className="input-2-row" style={{marginBottom: "15px"}}>
                             <label htmlFor="MinBookDay">Min book day</label>
                             <Input placeholder={'Min book day'} type={'number'}
-                                   onChange={e => setInitialState({...initialState, minimum_book_days: e.target.value})}
+                                   onChange={e => setInitialState({...initialState, minimum_book_days:parseInt(e.target.value) })}
                             />
                         </div>
                         <div className="input-2-row" style={{marginBottom: "15px"}}>
@@ -139,7 +139,7 @@ const CreateRoom = () => {
                             <Input placeholder={'Max book day'} type={'number'}
                                    onChange={e => setInitialState({
                                        ...initialState,
-                                       minimum_preorder_days: e.target.value
+                                       minimum_preorder_days:parseInt(e.target.value)
                                    })}
                             />
                         </div>

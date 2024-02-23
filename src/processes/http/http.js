@@ -40,11 +40,10 @@ const RefreshToken = async () => {
         updateAuthHeader(authToken);
     } catch (error) {
         console.error("Token yangilash muvaffaqiyatsiz bo'ldi:", error);
-        notification.error({duration:3} , 'Sesiya vaqtingiz tugadi boshqatan akuntingizga kiring')
-        setTimeout(() => {
+
             window.location.assign(HOME_ROUTE);
             window.localStorage.removeItem("token");
-        }, 4000)
+
 
     }
 };
@@ -70,6 +69,16 @@ $authHost.interceptors.response.use(
     }
 );
 
+$host.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (error.response?.status === 404 ) {
+           window.localStorage.clear()
+            window.location.reload()
+        }
+        return Promise.reject(error);
+    }
+);
 
 
 setInterval(RefreshToken, 20 * 60 * 1000);

@@ -1,0 +1,42 @@
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #d9d9d9 !important;
+    width: 250px!important;
+    height: 250px!important;
+    border-radius: 10px !important;
+    padding: 10px;
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    position: relative;
+}
+.swiper {
+    width: 100% !important;
+    height: 100% !important;
+}
+.review_body{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    height: 80%;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.swiper-pagination{
+    bottom: 2px !important;
+}
+.swiper-wrapper{
+    height: 300px !important;
+}
+.review_footer{
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    bottom: 10px ;
+    height: 5%;
+}

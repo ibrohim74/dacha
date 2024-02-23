@@ -16,6 +16,7 @@ const CreateAnnouncement = () => {
     type: "dacha",
     tags: "string",
   });
+  console.log(initialState)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const JWT = jwtDecode(localStorage.getItem("token"));
@@ -31,7 +32,7 @@ const CreateAnnouncement = () => {
           initialState.minimum_preorder_days
         ) {
           CreateAnnouncementAPI(initialState).then((r) => {
-            console.log(r)
+
             setLoading(false);
             if (r?.status === 200) {
               message.success("success");
@@ -58,7 +59,7 @@ const CreateAnnouncement = () => {
       setLoading(false);
     }
   };
-  console.log(initialState);
+
 
   useEffect(() => {
     setInitialState({

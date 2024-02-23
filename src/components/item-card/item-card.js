@@ -16,12 +16,11 @@ const ItemCard = (props) => {
         const path = route.replace(":id", props.id);
         navigate(path);
     };
-
+    console.log(props)
     useEffect(() => {
         const images = props?.photos_path?.split("\n").filter(Boolean);
         setItemImgs(images);
     }, [props.photos_path]);
-    console.log(props)
     return (
         <>
             <div className={styles["item-card"]} onClick={handleClick}>
@@ -48,7 +47,7 @@ const ItemCard = (props) => {
                 <div className={styles["item-info"]}>
                     <div className={styles["info-top"]}>{props.title || "Null"}</div>
                     <div className={styles["info-bottom"]}>
-                        <Score score={randomScore} className={styles["score"]}/>
+                        <Score score={props?.rating} className={styles["score"]}/>
                         <div className={styles["price"]}>
                             {`${props.price || ""} ${props.type || ""}`}
                         </div>

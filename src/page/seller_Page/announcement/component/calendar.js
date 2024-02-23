@@ -20,7 +20,7 @@ const Calendar = (data) => {
         try {
             const JWT = jwtDecode(localStorage.getItem('token'));
             const res = await $authHost.get(`/seller/${JWT.userId}/bookings`);
-            const filterRes = res?.data.filter(e=> e.accommodation_id === parseInt(data.idDacha))
+            const filterRes = res?.data.bookings.filter(e=> e.accommodation_id === parseInt(data.idDacha))
             setDataEvents(filterRes);
             data.setEvents(filterRes)
         } catch (e) {
@@ -65,7 +65,6 @@ const Calendar = (data) => {
     };
 
     const handleEventClick = (selected) => {
-        console.log(selected.event)
         Modal.confirm({
             title: 'Delete Event',
             content: `Are you sure you want to delete the event '${selected.event.title}'?
@@ -84,7 +83,6 @@ const Calendar = (data) => {
             },
         });
     };
-    console.log(dataEvents)
     return (
         <>
             <FullCalendar

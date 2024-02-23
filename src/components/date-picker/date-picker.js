@@ -6,7 +6,7 @@ const DatePicker = (props) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
   const [isClearing, setIsClearing] = useState(false);
-  console.log(selectedDates )
+
   const year = new Date().getFullYear(); // Current year
   const month = Number(props.month);
 

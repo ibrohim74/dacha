@@ -37,12 +37,12 @@ const RequestsAnnouncement = () => {
             }
         })
     }
-    const fetchData = async () => {
+    const fetchData =  async () => {
         const requestResponse = await GetRequestAPI();
         const announcementResponse = await GetAnnouncementAPI();
-
         if (requestResponse?.status === 200) {
-            setRequests(requestResponse.data);
+            setRequests(requestResponse.data.requests);
+
         }
 
         if (announcementResponse?.status === 200) {
@@ -118,14 +118,16 @@ const RequestsAnnouncement = () => {
                                             <h1>{dachaItem?.title}</h1>
                                             <p>С {formatDate(item?.start_day)} - до {formatDate(item?.end_day)} </p>
                                         </div>
+                                        {item.request_id} asd
                                     </div>
                                     <div className={styles.req_footer}>
                                         <div className={styles.requestAccept}
-                                             onClick={e => acceptRequest(item?.booking_id)}>
+                                             onClick={() => acceptRequest(item?.request_id)}>
+
                                             <Icons.AcceptIcon/>
                                         </div>
                                         <div className={styles.requestDeny}
-                                             onClick={e => denyRequest(item?.booking_id)}>
+                                             onClick={()=> denyRequest(item?.request_id)}>
                                             <Icons.DenyIcon/>
                                         </div>
                                     </div>

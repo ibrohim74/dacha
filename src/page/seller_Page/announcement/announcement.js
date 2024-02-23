@@ -6,7 +6,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import styles from "./assets/create_ann.module.css";
 import { Badge } from "antd";
 import { useNavigate } from "react-router-dom";
-import AnnouncementItemPage from "./announcementItemPage";
+import Announcement_Item_Page from "./announcement_Item_Page";
 import {
   ANNOUNCEMENT_ITEM_PAGE,
   CABINET,
@@ -36,10 +36,15 @@ const Announcement = () => {
     });
 
     // Notification datani olish
-    GetRequestAPI().then(r =>{
-      setNotification(r.data)
-    })
-  }, []); // useEffect faqat bir marta ishga tushirilsin, shuning uchun bo'sh massiv uzaytirilgan
+
+  }, []);
+  useEffect(() => {
+    GetRequestAPI().then(response => {
+
+      setNotification(response.data.requests);
+    });
+  }, []);
+
 
   if (loading) {
     return <div>Loading...</div>; // Yoki yuklash belgisini chiqaramiz
@@ -59,12 +64,11 @@ const Announcement = () => {
         </div>
         {announcementData &&
             announcementData.map((item, index) => {
-              // Notificationlarni filter qilish
-              const filterReq = notification.filter(e => e.accommodation_id === item.id);
-              console.log(filterReq);
+              const filterReq =notification && notification.filter(e => e.accommodation_id === item.id);
+
               const itemWithRoute = {
                 ...item,
-                notifications: filterReq.length,
+                notifications: filterReq?.length,
                 route: `${CABINET + ANNOUNCEMENT_ITEM_PAGE}`,
               };
               return <ItemCard {...itemWithRoute} key={index}/>;

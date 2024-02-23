@@ -30,7 +30,7 @@ import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/creat
 import ScheduleSeller from "../../page/seller_Page/schedule/scheduleSeller";
 import UpdateHostel from "../../page/seller_Page/hostel/hostelPage/component/updateHostel";
 import Policy from "../../page/policy/policy";
-import AnnouncementItemPage from "../../page/seller_Page/announcement/announcementItemPage";
+import Announcement_Item_Page from "../../page/seller_Page/announcement/announcement_Item_Page";
 
 import Villas from "../../page/villas/villas";
 import Item_Page from "../../page/item_Page/item_Page";
@@ -129,7 +129,7 @@ export const Seller = [
     path: SCHEDULE,
   },
   {
-    Component: <AnnouncementItemPage />,
+    Component: <Announcement_Item_Page />,
     path: ANNOUNCEMENT_ITEM_PAGE,
   },
   {
