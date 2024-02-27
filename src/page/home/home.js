@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {
-    LOGIN_ROUTE,
+    LOGIN_ROUTE, PLACE,
     REGISTER_ROUT,
     VILLAS_ROUTE,
 } from "../../processes/utils/consts";
@@ -11,6 +11,7 @@ import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
 import {GetAllDacha, GetAllHostel} from "./API/homeAPI";
+import HostelCard from "../../components/hostel-card/hostel_card";
 
 const Home = () => {
     const [dachas, setDachas] = useState([]);
@@ -47,9 +48,9 @@ const Home = () => {
             <div className={`${styles["categories"]} ${styles["container-md"]}`}>
                 <div className={styles["title-large"]}>Категории</div>
                 <div className={styles["grid-tabs"]}>
-                    <div className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}>
+                    <Link to={PLACE} className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}>
                         <div className={styles["title-large"]}>Карта</div>
-                    </div>
+                    </Link>
                     <Link className={styles["grid-tab"]} to={VILLAS_ROUTE}>
                         <div className={styles["title-large"]}>Жильё</div>
                         <div className={styles["tab-description"]}>(дачи,отели,тд.)</div>
@@ -103,7 +104,7 @@ const Home = () => {
                 </div>
                 <div className={styles["hotels-grid"]}>
                     {hostel.map((hotel) => (
-                        <ItemCard key={hotel.id} {...hotel} />
+                        <HostelCard key={hotel.id} {...hotel} />
                     ))}
                 </div>
             </div>

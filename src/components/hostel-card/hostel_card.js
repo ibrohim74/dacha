@@ -1,23 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import styles from "./item-card.module.css";
+import styles from "./hostel-card.module.css";
 import {Icons} from "../../assets/icons/icons";
 import Score from "../score/score";
-import {PRODUCT_ROUTE} from "../../processes/utils/consts";
-import {$host} from "../../processes/http/http";
+import {PRODUCT_HOSTEL_ROUTE, PRODUCT_ROUTE} from "../../processes/utils/consts";
 
-const ItemCard = (props) => {
-    let route = props.route ? props.route : PRODUCT_ROUTE;
+const HostelCard = (props) => {
+    console.log(props)
+    let route = props.route ? props.route : PRODUCT_HOSTEL_ROUTE;
     let randomScore = +(Math.random() * 4 + 1).toFixed(1);
     const [itemImgs, setItemImgs] = useState([]);
 
     const navigate = useNavigate();
     const handleClick = () => {
-        const path = route.replace(":id", props.id);
+        const path = PRODUCT_HOSTEL_ROUTE.replace(":id", props.id);
         navigate(path);
-        // console.log(path)
     };
-    console.log(props)
     useEffect(() => {
         const images = props?.photos_path?.split("\n").filter(Boolean);
         setItemImgs(images);
@@ -59,4 +57,4 @@ const ItemCard = (props) => {
     );
 };
 
-export default ItemCard;
+export default HostelCard;

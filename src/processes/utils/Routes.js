@@ -15,7 +15,7 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
-  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER,
+  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER, PLACE,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -36,6 +36,8 @@ import Villas from "../../page/villas/villas";
 import Item_Page from "../../page/item_Page/item_Page";
 import RequestsAnnouncement from "../../page/seller_Page/announcement/requests_Announcement";
 import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
+import HostelItemPage from "../../page/item_Page/hosetl_item_page/hostel_item_page";
+import Place from "../../page/place/place";
 export const Public =  [
   {
     Component: <Home/>,
@@ -60,6 +62,14 @@ export const Public =  [
   {
     Component: <Item_Page />,
     path: PRODUCT_ROUTE,
+  },
+  {
+    Component: <HostelItemPage />,
+    path: PRODUCT_ROUTE,
+  },
+  {
+    Component: <Place />,
+    path: PLACE,
   },
 ];
 

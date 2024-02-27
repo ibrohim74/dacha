@@ -40,3 +40,12 @@
     bottom: 10px ;
     height: 5%;
 }
+.leaveReview_item{
+    margin: 10px 0;
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px black solid;}
+.leaveReview_Content{
+    display: flex;
+    width: 100%;
+}

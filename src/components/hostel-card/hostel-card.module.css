@@ -1,0 +1,67 @@
+.item-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px; /* adjust as needed */
+  height: 20px; /* adjust as needed */
+  padding: 5px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.item-card > svg,
+.item-card > img {
+  width: 100%;
+  max-width: 220px;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+.item-card:hover > svg,
+.item-card:hover > img {
+  filter: brightness(105%);
+}
+
+.item-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score {
+  display: flex;
+  gap: 1px;
+}
+
+.price {
+  color: #525252;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25rem; /* 166.667% */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}

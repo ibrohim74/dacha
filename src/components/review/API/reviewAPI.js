@@ -30,3 +30,26 @@ export const GetReviewByDachaId = async (id , pageNumber)=>{
         console.log(e)
     }
 }
+export const GetReviewByUserId = async ()=>{
+    try {
+        const JWT = jwtDecode(localStorage.getItem('token'))
+        const res = await  $host.get(`user/${JWT.userId}/reviews`)
+        return  res
+    }catch (e){
+        console.log(e)
+    }
+}
+
+export const ReviewUpdate = async (data)=>{
+    try {
+        const res = await $authHost.put(`/reviews/${data.id}` , {
+            title:data.title,
+            body: data.body,
+            rating:data.rating
+        })
+        return res
+    }catch (e){
+        console.log(e)
+    return e
+    }
+}

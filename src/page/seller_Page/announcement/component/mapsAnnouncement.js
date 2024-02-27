@@ -17,11 +17,6 @@ import "leaflet/dist/leaflet.css";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
-const params = {
-  q: "",
-  format: "json",
-  addressdetails: "addressdetails",
-};
 
 const customMarkerIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",

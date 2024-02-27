@@ -4,7 +4,9 @@ export const LOGIN_ROUTE = "/login";
 export const REGISTER_ROUT = "/registration";
 export const VILLAS_ROUTE = "/villas";
 export const PRODUCT_ROUTE = "/product-page/:id";
+export const PRODUCT_HOSTEL_ROUTE = "/hostel/:id";
 export const POLICY = "/policy";
+export const PLACE = '/place'
 // Dashboard
 export const CABINET = "/cabinet/";
 export const PROFILE = "profile";
