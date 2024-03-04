@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   MapContainer,
   Marker,
@@ -32,7 +32,7 @@ const MapsAnnouncement = (props) => {
   const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState([]);
   const [clicked, setClicked] = useState(false);
-
+  const mapRef = useRef(null);
   const search = async () => {
     const params = {
       q: searchText,
@@ -83,11 +83,18 @@ const MapsAnnouncement = (props) => {
     // map.flyTo(selectPosition?.lat, selectPosition?.lon, map.getZoom())
   }, [searchText, selectPosition, clicked]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && selectPosition && selectPosition.lat && selectPosition.lon) {
+      map.flyTo([selectPosition.lat, selectPosition.lon], map.getZoom());
+    }
+  }, [selectPosition]);
   return (
     <>
       <MapContainer
         zoom={9}
-        center={{ lat: 41.34557, lng: 69.284599 }}
+        ref={mapRef}
+        center={selectPosition && selectPosition.lat && selectPosition.lon ? [selectPosition.lat, selectPosition.lon] : { lat: 41.34557, lng: 69.284599 }}
         style={{
           width: "100%",
           height: "200px",

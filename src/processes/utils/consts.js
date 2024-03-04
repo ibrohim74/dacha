@@ -14,7 +14,12 @@ export const CHANGE_PASS_TOP = "change_pass";
 
 // User Routes
 export const REQUEST_USER = "announcement_user";
+
+
 // Admin Routes
+export const PLACE_ADMIN = 'place_admin'
+
+
 
 // Seller Routes
 export const ANNOUNCEMENT = "announcement";

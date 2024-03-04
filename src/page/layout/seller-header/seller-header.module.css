@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: "Rubik", sans-serif;
+
 }
 
 .header-left {
@@ -132,9 +133,9 @@
   border-radius: 8px;
   border: 1.5px solid #000;
   background: #f8f8f8;
-  z-index: 10;
   user-select: none;
   cursor: unset;
+  z-index:9999;
 }
 
 .account-menu > div {
@@ -162,6 +163,7 @@
   font-weight: 500;
   line-height: 1.25rem; /* 142.857% */
   letter-spacing: 2px;
+
 }
 
 /*helpers*/
