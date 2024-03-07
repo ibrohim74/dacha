@@ -15,7 +15,11 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
-  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER, PLACE, PLACE_ADMIN,
+  PRODUCT_ROUTE,
+  REQUEST_ANNOUNCEMENT,
+  REQUEST_USER,
+  PLACE,
+  PLACE_ADMIN,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";
@@ -39,9 +43,9 @@ import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
 import HostelItemPage from "../../page/item_Page/hosetl_item_page/hostel_item_page";
 import Place from "../../page/place/place";
 import PlaceAdmin from "../../page/admin/placeMap/placeAdmin";
-export const Public =  [
+export const Public = [
   {
-    Component: <Home/>,
+    Component: <Home />,
     path: HOME_ROUTE,
   },
   {

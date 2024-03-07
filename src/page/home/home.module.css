@@ -180,3 +180,19 @@
 a {
   all: unset;
 }
+
+@media (max-width: 360px) {
+  .title-large {
+    font-size: 1rem;
+  }
+
+  .categories {
+    gap: 1.5rem;
+  }
+
+  .grid-tabs {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50% 1fr 1fr;
+    gap: 10px;
+  }
+}

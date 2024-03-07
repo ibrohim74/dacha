@@ -15,6 +15,8 @@ import { ReactComponent as Pencil } from "./pencil.svg";
 import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as AcceptIcon } from "./accept.svg";
 import { ReactComponent as DenyIcon } from "./deny.svg";
+import { ReactComponent as MenuLogo } from "./menu_logo.svg";
+import { ReactComponent as Hamburger } from "./hamburger.svg";
 
 export const Icons = {
   Logo,
@@ -34,4 +36,6 @@ export const Icons = {
   Pencil,
   AcceptIcon,
   DenyIcon,
+  MenuLogo,
+  Hamburger,
 };

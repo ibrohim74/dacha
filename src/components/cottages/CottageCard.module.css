@@ -1,0 +1,92 @@
+.cottage-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 22px 30px 22px 22px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  gap: 35px;
+}
+
+.cottage-img {
+  border-radius: 16px;
+  width: 220px;
+  height: 220px;
+}
+
+.cottage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cottage-info h4 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.cottage-inner-wrapper {
+  width: 70%;
+}
+
+.cottage-upper-part,
+.cottage-lower-part {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.cottage-rate {
+  width: 27px;
+  height: 27px;
+  border-radius: 3px;
+  background-color: var(--brand-color-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cottage-infobox {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.cottage-infobox p {
+  font-size: 12px;
+}
+
+.cottage-ratings {
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.cottage-ratings-nums {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 5px;
+}
+
+.cottage-ratings-nums p {
+  font-size: 10px;
+}
+
+.cottage-prices p {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cottage-btn {
+  background-color: var(--brand-color-1);
+  font-weight: 600;
+  width: 97px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}

@@ -5,21 +5,60 @@ body,
 #root,
 .App,
 .content {
-    height: 100%;
-    width: 100%;
-    font-family: "Source Sans Pro", sans-serif;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+  padding: 0;
 }
-.container{
-    margin: 0 auto;
-    padding: 0 15px;
-    max-width: 1400px;
+
+:root {
+  --brand-color-1: #d9d9d9;
+  --brand-color-2: #fff;
+  --brand-color-3: #cacaca;
+  --accent-color: #f8f8f8;
+  --font-color-main: #363940;
+  --font-color: #1f1f1f;
 }
-.layout-app{
-    display: flex;
-    position: relative;
+
+html {
+  box-sizing: border-box;
 }
-.css-1j1s727 , .css-jtrkzm{
-    height: 100vh;
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1400px;
+}
+.layout-app {
+  display: flex;
+  position: relative;
+}
+.css-1j1s727,
+.css-jtrkzm {
+  height: 100vh;
+}
+
+.swiper-slide {
+  width: 925px !important;
+  background: none !important;
+  height: 10rem !important;
+  padding: 0 !important;
+}
+
+.swiper-wrapper {
+  height: 10rem !important;
+  gap: 1rem;
+}
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  left: 44%;
+  bottom: 12px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--brand-color-2);
 }
