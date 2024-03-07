@@ -74,6 +74,7 @@ const LeaveReviews = (props) => {
             <Button type="primary" onClick={showModal}>
                 оставить отзыв
             </Button>
+
             <Button type="dashed" onClick={myModal} style={{ marginTop: "20px" }}>
                 мои отзывы
             </Button>

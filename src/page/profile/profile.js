@@ -9,6 +9,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { sendProfile_data } from "./API";
 import { Icons } from "../../assets/icons/icons";
 import EditInput from "../../components/edit-input/edit-input";
+import ChangePass from "../../components/change_pass";
 
 const Profile = () => {
   const [CurrentUser, setCurrentUser] = useState();
@@ -16,13 +17,14 @@ const Profile = () => {
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [changePass, setChangePass] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
   const handleChange = async (file) => {
     setLoadingImg(true);
     try {
       const res = await $authHost.post(
         `/upload/user/${JWT.userId}`,
-        { file: file.file.originFileObj },
+        [{file: file.file.originFileObj}],
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -79,19 +81,14 @@ const Profile = () => {
   }, []);
   const handleSend = () => {
     sendProfile_data(initialValues).then((r) => {
-      if (r === 200) {
+      if (r?.status === 200) {
         message.success("Update");
         setTimeout(() => {
           window.location.href = window.location.href;
         }, 1500);
-      } else {
-        message.error(
-          r.map((err) => {
-            return <p style={{ width: "400px" }}>{err.msg}</p>;
-          })
-        );
       }
-    });
+    }).catch(e=>{
+      console.log(e)});
   };
 
   const uploadButton = (
@@ -117,9 +114,6 @@ const Profile = () => {
       </div>
     </button>
   );
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState(CurrentUser?.firstName);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -180,16 +174,7 @@ const Profile = () => {
           />
         </div>
       </div>
-      <div className={styles["input"]}>
-        <label htmlFor="email">Email:</label>
-        <EditInput
-          className={styles["text-input"]}
-          value={CurrentUser?.email}
-          onChange={(e) =>
-            setInitialValues({ ...initialValues, email: e.target.value })
-          }
-        />
-      </div>
+
       <div className={styles["input"]}>
         <label htmlFor="Username">Username:</label>
         <EditInput
@@ -216,6 +201,18 @@ const Profile = () => {
 
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
+            type="submit"
+            variant="contained"
+            onClick={()=> {
+              setChangePass(!changePass)
+            }}
+            size={"large"}
+            style={{ backgroundColor: "#505050" , marginRight:"15px"}}
+        >
+          Change Password
+        </Button>
+
+        <Button
           type="submit"
           variant="contained"
           onClick={handleSend}
@@ -225,6 +222,11 @@ const Profile = () => {
           Update
         </Button>
       </Box>
+      <Box display="flex" justifyContent="end" mt="20px">
+
+      </Box>
+
+      {changePass && <ChangePass/>}
     </Box>
   );
 };
