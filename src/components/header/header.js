@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  LOGIN_ROUTE,
-  REGISTER_ROUT,
-  HOME_ROUTE,
-} from "../../processes/utils/consts";
+import { HOME_ROUTE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $host } from "../../processes/http/http";
 import styles from "./header.module.css";
 import Sidebar from "../sidebar/Sidebar";
+import { CloseOutlined } from "@ant-design/icons";
+import Button from "../Button/Button";
 
-const Header = () => {
+const Header = ({ villasHeader = false }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
@@ -74,16 +72,12 @@ const Header = () => {
 
   return (
     <>
-      <div className={`${styles["Header"]} ${styles["container-md"]}`}>
+      <div className={`${styles["header"]} ${styles["container-md"]}`}>
         <div className={styles["header-left"]}>
           <Link className={styles["header-logo"]} to={HOME_ROUTE}>
             <Icons.Logo />
-            <div>Travid</div>
+            <p>Travid</p>
           </Link>
-          <form className={styles["header-searchbar"]} onSubmit={handleSearch}>
-            <Icons.Magnifier />
-            <input type="text" name="search" placeholder="Найти" />
-          </form>
         </div>
         <div className={styles["header-right"]}>
           <Icons.Language className={styles["language-btn"]} />
@@ -98,64 +92,29 @@ const Header = () => {
           {isLoggedIn() ? (
             <>
               <Icons.Bell className={styles["notification-btn"]} />
-              {/* <div ref={accButtonRef} onClick={handleShowSidebar}>
-                {currentUser.username}
-              </div> */}
-
-              <Icons.Hamburger
-                className={styles["notification-btn"]}
-                onClick={handleShowSidebar}
-              />
+              {showSidebar ? (
+                <CloseOutlined
+                  className={styles["sidebar-btn"]}
+                  onClick={handleShowSidebar}
+                />
+              ) : (
+                <Icons.Hamburger
+                  className={styles["sidebar-btn"]}
+                  onClick={handleShowSidebar}
+                />
+              )}
               {showSidebar && (
                 <Sidebar
                   ref={accMenuRef}
                   onLogOut={removeToken}
                   user={currentUser}
+                  isLoggedIn={isLoggedIn()}
+                  isOpen={showSidebar}
                 />
               )}
             </>
           ) : (
-            <>
-              <div className={styles["auth-routes"]}>
-                <div>
-                  <Link to={LOGIN_ROUTE} className={styles["auth-btn"]}>
-                    sign in
-                  </Link>
-                </div>
-                <div>
-                  <Link to={REGISTER_ROUT} className={styles["auth-btn"]}>
-                    sign up
-                  </Link>
-                </div>
-              </div>
-
-              <nav
-                className={
-                  styles[`${showSidebar ? "mobile_nav_active" : "mobile_nav"}`]
-                }
-              >
-                <ul className={styles["mobile-nav-menu"]}>
-                  <li className={styles["mobile-nav-link"]}>
-                    <Link
-                      to={LOGIN_ROUTE}
-                      className={styles["auth-btn"]}
-                      onClick={closeSidebar}
-                    >
-                      Sign in
-                    </Link>
-                  </li>
-                  <li className={styles["mobile-nav-link"]}>
-                    <Link
-                      to={REGISTER_ROUT}
-                      className={styles["auth-btn"]}
-                      onClick={closeSidebar}
-                    >
-                      Sign up
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            </>
+            <Button type="secondary">Войти</Button>
           )}
         </div>
       </div>

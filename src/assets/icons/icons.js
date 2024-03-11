@@ -17,6 +17,7 @@ import { ReactComponent as AcceptIcon } from "./accept.svg";
 import { ReactComponent as DenyIcon } from "./deny.svg";
 import { ReactComponent as MenuLogo } from "./menu_logo.svg";
 import { ReactComponent as Hamburger } from "./hamburger.svg";
+import { ReactComponent as Search } from "./search.svg";
 
 export const Icons = {
   Logo,
@@ -38,4 +39,5 @@ export const Icons = {
   DenyIcon,
   MenuLogo,
   Hamburger,
+  Search,
 };

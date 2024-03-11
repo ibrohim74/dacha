@@ -14,7 +14,8 @@ import Header from "../../components/header/header";
 import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
 import HostelCard from "../../components/hostel-card/hostel_card";
 import CityCards from "../../components/city-card/CityCards";
-import CottageCard from "../../components/cottages/CottageCard";
+import Form from "../../components/form/Form";
+import HeroBox from "../../components/HeroBox/HeroBox";
 
 const Home = () => {
   const [dachas, setDachas] = useState([]);
@@ -38,16 +39,11 @@ const Home = () => {
   }, [buttonAllHotel]);
 
   return (
-    <div className={styles["Home"]}>
-      {/* <div>
-        <Link to={LOGIN_ROUTE}>Login</Link> <br />
-        <Link to={REGISTER_ROUT}>Registration</Link>
-      </div> */}
-
+    <div className={styles["home"]}>
       <Header />
 
-      <div className={`${styles["categories"]} ${styles["container-md"]}`}> 
-        <CityCards />
+      <div className={`${styles["categories"]} ${styles["container-md"]}`}>
+        <HeroBox />
 
         <div className={styles["title-large"]}>Категории</div>
         <div className={styles["grid-tabs"]}>

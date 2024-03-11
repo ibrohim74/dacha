@@ -19,6 +19,7 @@ import {
   FilterItems,
   GetItems,
 } from "../../processes/utils/items-operations";
+import CottageCard from "../../components/cottages/CottageCard";
 
 const Villas = () => {
   const location = useLocation();
@@ -66,9 +67,8 @@ const Villas = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const url = searchTerm
-          ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas?title=${searchTerm}`
-          : "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas";
+        const url =
+          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas";
         const response = await axios.get(url);
         setProducts(response.data);
       } catch (error) {
@@ -77,15 +77,23 @@ const Villas = () => {
     };
 
     fetchProducts();
-  }, [searchTerm]);
+  }, []);
 
   console.log(products);
 
   return (
     <div className={styles["Villas"]}>
-      <Header />
+      <Header villasHeader={true} />
 
-      <div className={`${styles["grid-container"]} ${styles["container-md"]}`}>
+      <div className={styles["container-md"]}>
+        <div className={styles["villas-flex"]}>
+          {products.map((cottage) => (
+            <CottageCard cottage={cottage} key={cottage.id} />
+          ))}
+        </div>
+      </div>
+
+      {/* <div className={`${styles["grid-container"]} ${styles["container-md"]}`}>
         <div className={styles["filter"]}>
           <div>
             <label>Выберите тип:</label>
@@ -145,14 +153,14 @@ const Villas = () => {
           </div>
         </div>
         <div className={styles["villas-grid"]}>
-          {/* {filteredItems.map((item) => (
+          {filteredItems.map((item) => (
             <ItemCard {...item} />
-          ))} */}
+          ))}
           {products.map((product) => (
             <ItemCard {...product} />
           ))}
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </div>

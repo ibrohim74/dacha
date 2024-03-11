@@ -103,6 +103,13 @@
   max-width: 220px;
 }
 
+.villas-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: center;
+}
+
 /**/
 
 .filter {
