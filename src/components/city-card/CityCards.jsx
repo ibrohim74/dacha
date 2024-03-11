@@ -10,9 +10,7 @@ import { Pagination } from "swiper/modules";
 export default function CityCards() {
   return (
     <Swiper
-      // pagination={true}
-      // modules={[Pagination]}
-      className="mySwiper"
+      className={styles["swiper-layout"]}
       slidesPerGroup={1}
     >
       <SwiperSlide className={styles["swiper-slide"]}>

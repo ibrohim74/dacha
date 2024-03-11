@@ -6,12 +6,9 @@ import {
   REGISTER_ROUT,
   HOME_ROUTE,
 } from "../../processes/utils/consts";
-import { Icons } from "../../assets/icons/icons";
 import styles from "./villas.module.css";
-import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
-import DatePicker from "../../components/date-picker/date-picker";
-import Header from "../../components/header/header";
+import Header from "../../components/header/Header";
 // test json
 import data from "../../assets/test-items.json";
 import {
@@ -20,6 +17,9 @@ import {
   GetItems,
 } from "../../processes/utils/items-operations";
 import CottageCard from "../../components/cottages/CottageCard";
+import Form from "../../components/form/Form";
+import DatePicker from "../../components/date-picker/date-picker";
+import Filter from "../../components/filter/Filter";
 
 const Villas = () => {
   const location = useLocation();
@@ -82,85 +82,23 @@ const Villas = () => {
   console.log(products);
 
   return (
-    <div className={styles["Villas"]}>
-      <Header villasHeader={true} />
+    <div className={styles["container-md"]}>
+      <Header />
 
-      <div className={styles["container-md"]}>
-        <div className={styles["villas-flex"]}>
-          {products.map((cottage) => (
-            <CottageCard cottage={cottage} key={cottage.id} />
-          ))}
-        </div>
+      <div className={styles["form-wrapper"]}>
+        <Form />
       </div>
 
-      {/* <div className={`${styles["grid-container"]} ${styles["container-md"]}`}>
-        <div className={styles["filter"]}>
-          <div>
-            <label>Выберите тип:</label>
-            <select value={selectedType} onChange={handleTypeChange}>
-              <option value={0}>Дачи</option>
-              <option value={1}>Отели</option>
-              <option value={2}>Рестораны</option>
-            </select>
-          </div>
-          <div>
-            <label>Сортировать по:</label>
-            <select value={selectedSort} onChange={handleSortChange}>
-              <option value={0}>Цена</option>
-              <option value={1}>Оценка</option>
-            </select>
-          </div>
-          <div>
-            <label>Выберите город:</label>
-            <select>
-              <option>Ташкент</option>
-            </select>
-          </div>
-          <div>
-            <label>Выберите регион:</label>
-            <select>
-              <option>Любой</option>
-            </select>
-          </div>
-          <div>
-            <label>Свободние дни</label>
-            <div className={styles["label-sc"]}>Месяц</div>
-            <select value={selectedMonth} onChange={handleMonthChange}>
-              {Array.from({ length: 12 }, (_, i) => (
-                <option key={i} value={i}>
-                  {new Date(2000, i + 1, 0).toLocaleString("default", {
-                    month: "long",
-                  })}
-                </option>
-              ))}
-            </select>
-            <div className={styles["label-sc"]}>Выберите даты</div>
-            <DatePicker month={selectedMonth} />
-          </div>
-          <div className={styles["checkboxes"]}>
-            <div>
-              <input type="checkbox" id="filter1" />
-              <label htmlFor="filter1">Фильтр</label>
-            </div>
-            <div>
-              <input type="checkbox" id="filter2" />
-              <label htmlFor="filter2">Фильтр</label>
-            </div>
-            <div>
-              <input type="checkbox" id="filter3" />
-              <label htmlFor="filter3">Фильтр</label>
-            </div>
+      <div className={styles["container-md"]}>
+        <div className={styles["catalogue-layout"]}>
+          <Filter />
+          <div className={styles["catalogue-items"]}>
+            {products.map((cottage) => (
+              <CottageCard cottage={cottage} key={cottage.id} />
+            ))}
           </div>
         </div>
-        <div className={styles["villas-grid"]}>
-          {filteredItems.map((item) => (
-            <ItemCard {...item} />
-          ))}
-          {products.map((product) => (
-            <ItemCard {...product} />
-          ))}
-        </div>
-      </div> */}
+      </div>
 
       <Footer />
     </div>

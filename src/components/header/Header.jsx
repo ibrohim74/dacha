@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { HOME_ROUTE } from "../../processes/utils/consts";
+import { HOME_ROUTE, LOGIN_ROUTE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $host } from "../../processes/http/http";
-import styles from "./header.module.css";
 import Sidebar from "../sidebar/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
-import Button from "../Button/Button";
+import Button from "../button/Button";
+import styles from "./Header.module.css";
 
 const Header = ({ villasHeader = false }) => {
   const navigate = useNavigate();
@@ -114,7 +114,9 @@ const Header = ({ villasHeader = false }) => {
               )}
             </>
           ) : (
-            <Button type="secondary">Войти</Button>
+            <Button type="secondary" onClick={() => navigate(LOGIN_ROUTE)}>
+              Войти
+            </Button>
           )}
         </div>
       </div>

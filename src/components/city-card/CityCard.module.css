@@ -1,6 +1,11 @@
 .swiper-slide {
   width: 0 !important;
 }
+
+.swiper-layout {
+  border-top: 1px #ddd solid;
+}
+
 .city-card {
   width: 100%;
   height: 15.6rem;
