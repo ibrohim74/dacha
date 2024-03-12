@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
 
-.Villas {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1440px;
+.container-md {
+  margin: 0 auto;
+  max-width: 1200px;
+}
 
-  font-family: "Rubik", sans-serif;
+.form-wrapper {
+  width: 100%;
+  border-radius: 20px;
+  padding-top: 40px;
+  background-color: var(--brand-color-2);
 }
 
 .topbar {
@@ -103,6 +107,13 @@
   max-width: 220px;
 }
 
+.villas-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: center;
+}
+
 /**/
 
 .filter {
@@ -172,12 +183,6 @@
 
 /*helpers*/
 
-.container-md {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 940px;
-}
-
 .title-large {
   color: var(--Text, #363940);
   font-feature-settings: "clig" off, "liga" off;
@@ -205,4 +210,17 @@ input[type="checkbox"] {
   height: 20px;
   margin-right: 5px;
   cursor: pointer;
+}
+
+.catalogue-layout {
+  display: flex;
+  align-items: start;
+  gap: 26px;
+  margin-top: 26px;
+}
+
+.catalogue-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -21,7 +21,7 @@ import {
   PLACE,
   PLACE_ADMIN, FORGOT_PASSWORD,
 } from "./consts";
-import Home from "../../page/home/home";
+import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
 import Registration from "../../page/auth/registration";
 import LayoutCabinet from "../../page/layout/layoutCabinet";

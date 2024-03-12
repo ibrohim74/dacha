@@ -1,58 +1,67 @@
 import { useState } from "react";
 import StarRating from "../starRating/StarRating";
 import styles from "./CottageCard.module.css";
+import { useNavigate } from "react-router-dom";
+import { PRODUCT_ROUTE } from "../../processes/utils/consts";
 
-//should limit the descr part for this card to avoid exessive overflow
-
-export default function CottageCard() {
+export default function CottageCard({ cottage }) {
   const [userRating, setUserRating] = useState("");
+
+  const {
+    id,
+    info,
+    reviews_number,
+    rating,
+    photos_path,
+    price,
+    title,
+    price_type,
+    location_name,
+  } = cottage;
+
+  const navigate = useNavigate();
+  const handleCottageClick = () => {
+    const path = PRODUCT_ROUTE.replace(":id", id);
+    navigate(path);
+  };
 
   return (
     <div className={styles["cottage-wrapper"]}>
-      <img
-        src={require("../../assets/cottage_placeholder.png")}
-        alt="cottage image placeholder"
-        className={styles["cottage-img"]}
-      />
+      <div className={styles["cottage-img"]} onClick={handleCottageClick}>
+        <img
+          src={
+            photos_path.length
+              ? photos_path
+              : require("../../assets/cottage_placeholder.png")
+          }
+          alt="cottage image placeholder"
+        />
+      </div>
       <div className={styles["cottage-inner-wrapper"]}>
         <div className={styles["cottage-upper-part"]}>
           <div className={styles["cottage-info"]}>
-            <h4 className={styles["cottage-title"]}>Cottage in Kerhonkson</h4>
+            <h4 className={styles["cottage-title"]}>{title}</h4>
 
             <div className={styles["cottage-infobox"]}>
-              <p>Адрес:</p>
-              <p>Ташкент, Узбекистан</p>
-            </div>
-
-            <div className={styles["cottage-infobox"]}>
-              <p>Описание:</p>
-              <p>actual descr</p>
+              <p>{location_name}</p>
+              <p>{info}</p>
             </div>
           </div>
 
           <div className={styles["cottage-ratings"]}>
-            <div className={styles["cottage-ratings-nums"]}>
-              <StarRating onSetRating={setUserRating} />
-              <p>2032 отзывов</p>
-            </div>
-            <div className={styles["cottage-rate"]}>4.1</div>
+            <StarRating onSetRating={setUserRating} />
+            <div className={styles["cottage-rate"]}>{rating.toFixed(1)}</div>
+            <p>{reviews_number} отзывов</p>
           </div>
         </div>
 
         <div className={styles["cottage-lower-part"]}>
-          <div>tags</div>
-
           <div className={styles["cottage-prices"]}>
-            <p>Цена:</p>
-            <p>5 600 000 UZS</p>
-            <p>за ночь</p>
+            <p className={styles["cottage-price-type"]}>{price_type}</p>
+            <p>{price} UZS</p>
           </div>
         </div>
-
-        <button className={styles["cottage-btn"]}>Подробнее</button>
       </div>
     </div>
   );
 }
-
-function Tag({ content, color }) {}

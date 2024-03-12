@@ -1,0 +1,137 @@
+.filter-box {
+  border-radius: 12px;
+  background-color: var(--surface-color);
+  padding: 12px 24px;
+  font-size: 12px;
+  color: var(--font-color-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.filter-box:hover {
+  background-color: var(--brand-color-1);
+}
+
+.filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 30px;
+}
+
+.filter-container {
+  width: 480px;
+  min-height: 1000px;
+  background-color: var(--brand-color-2);
+  padding: 30px 26px 26px;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-item-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+
+.filter-item-box label {
+  font-size: 16px;
+  color: var(--font-color-1);
+}
+
+.filter-item-location-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--surface-color);
+  padding: 14px 13px;
+  border-radius: 10px;
+}
+
+.filter-location-input {
+  border: none;
+  outline: none;
+  padding: 14px 0;
+  width: 70%;
+  height: 100%;
+  background-color: var(--surface-color);
+  font-size: 20px;
+  color: var(--font-color-1);
+  font-weight: 600;
+}
+
+.filter-location-input::placeholder {
+  font-size: 20px;
+  color: var(--font-color-1);
+  font-weight: 600;
+}
+
+.filter-location-output {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #bababa;
+  font-size: 16px;
+}
+
+.filter-location-output svg {
+  fill: #bababa;
+}
+
+.boxes-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-range {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.filter-range-slider {
+  width: 70%;
+}
+
+.filter-tabs {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  list-style-type: none;
+  border-radius: 10px;
+  padding: 4px;
+  background-color: var(--surface-color);
+}
+
+.filter-tabs li {
+  width: 50%;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.filter-tab-active {
+  background-color: var(--brand-color-2);
+  border-radius: 10px;
+  color: var(--font-black);
+}
+
+.filter-tab-inactive {
+  color: var(--font-color-2);
+}

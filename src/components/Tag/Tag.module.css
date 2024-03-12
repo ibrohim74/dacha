@@ -1,0 +1,6 @@
+.tag {
+  background-color: var(--brand-color-3);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+}

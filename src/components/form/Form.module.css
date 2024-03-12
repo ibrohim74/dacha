@@ -1,0 +1,43 @@
+.form {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 75px 35px 75px;
+  gap: 12px;
+}
+
+.form-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.form-input-wrapper label {
+  font-size: 14px;
+  color: var(--font-black);
+  margin-bottom: 1rem;
+}
+
+.form-input,
+.datepicker-box input {
+  padding: 10px 15px;
+  outline: none;
+  border: none;
+  color: var(--font-color-main);
+  background-color: var(--bg-color);
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.1;
+  height: 45px;
+  width: 160px;
+}
+
+.form-input-location {
+  width: 370px;
+}
+
+.datepicker-box {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 12px;
+}

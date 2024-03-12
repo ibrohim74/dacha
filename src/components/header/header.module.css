@@ -1,15 +1,15 @@
-.Header {
+.header {
   margin-top: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 0;
 }
 
 .header-left {
-  min-width: 60%;
   display: flex;
   justify-content: space-between;
-  box-sizing: border-box;
+  gap: 1.5rem;
 }
 
 .header-logo {
@@ -21,39 +21,39 @@
   color: #1f1f1f;
   cursor: pointer;
 }
-.header-logo > div {
+
+.header-logo > p {
   text-align: right;
   font-feature-settings: "clig" off, "liga" off;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.25rem; /* 125% */
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 110%;
   letter-spacing: 2px;
 }
 
-.header-searchbar {
-  min-width: 50%;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 5px;
-  border-radius: 18px;
-  border: 2px solid #000;
-  background: transparent;
-  box-sizing: border-box;
-}
-.header-searchbar > input {
-  all: unset;
-  color: #000;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.25rem;
+.header-logo svg {
+  width: 44px;
+  height: 44px;
 }
 
-.header-searchbar > input::placeholder {
-  letter-spacing: 4px;
-  opacity: 0.5;
+.header-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--brand-color-2);
+  border-radius: 10px;
+  padding: 10px 40.5px;
+}
+
+.header-profile-pic {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.header-profile p {
+  font-size: 16px;
 }
 
 .header-right,
@@ -90,6 +90,11 @@
   width: 26px;
   height: 26px;
 }
+.sidebar-btn > svg {
+  width: 30px;
+  height: 30px;
+}
+
 .notification-btn:hover {
   animation: giggle 1s ease-in-out;
 }
@@ -116,7 +121,7 @@
 .container-md {
   margin-left: auto;
   margin-right: auto;
-  max-width: 940px;
+  max-width: 1200px;
 }
 
 /* animations */

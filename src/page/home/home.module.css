@@ -1,4 +1,4 @@
-.Home {
+.home {
   margin-left: auto;
   margin-right: auto;
   max-width: 1440px;
@@ -62,47 +62,6 @@
   gap: 18px;
 }
 
-/**/
-
-.categories {
-  margin-top: 44px;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-}
-
-.grid-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px; /* Adjust as needed */
-}
-.grid-tab {
-  padding: 16px;
-  border-radius: 20px;
-  background: #cacaca;
-  aspect-ratio: 1;
-  cursor: pointer;
-
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  justify-content: space-between;
-
-  transition: filter 0.3s ease;
-}
-.grid-tab:hover {
-  filter: brightness(105%);
-}
-.grid-tab.grid-tab-large {
-  aspect-ratio: auto;
-  grid-column: span 2;
-}
-.grid-tab .tab-description {
-  text-align: end;
-}
-
-/**/
-
 .villas,
 .hotels {
   margin-top: 137px;
@@ -152,7 +111,7 @@
 .container-md {
   margin-left: auto;
   margin-right: auto;
-  max-width: 940px;
+  max-width: 1200px;
 }
 
 .title-large {

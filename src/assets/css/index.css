@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body,
 #root,
@@ -8,8 +14,6 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
-  margin: 0;
-  padding: 0;
 }
 
 :root {
@@ -19,10 +23,25 @@ body,
   --accent-color: #f8f8f8;
   --font-color-main: #363940;
   --font-color: #1f1f1f;
+  --font-color-1: #292d32;
+  --font-color-2: #bababa;
+  --font-black: #000;
+  --bg-color: #f7f8f9;
+  --surface-color: #eeeff5;
 }
 
 html {
-  box-sizing: border-box;
+  background-color: var(--bg-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .container {
@@ -40,14 +59,14 @@ html {
 }
 
 .swiper-slide {
-  width: 925px !important;
+  width: 1180px !important;
   background: none !important;
-  height: 10rem !important;
+  height: 16rem !important;
   padding: 0 !important;
 }
 
 .swiper-wrapper {
-  height: 10rem !important;
+  height: 16rem !important;
   gap: 1rem;
 }
 
@@ -61,4 +80,28 @@ html {
 
 .swiper-pagination-bullet-active {
   background-color: var(--brand-color-2);
+}
+
+.react-datepicker__input-container {
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker__calendar-icon {
+  padding: 0 !important;
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 10px 15px !important;
+  border: none;
+  outline: none;
+}
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+  right: 5px;
+  color: var(--font-color-main);
+}
+
+.react-datepicker-popper {
+  z-index: 8;
 }

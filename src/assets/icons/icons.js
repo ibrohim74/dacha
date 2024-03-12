@@ -17,6 +17,17 @@ import { ReactComponent as AcceptIcon } from "./accept.svg";
 import { ReactComponent as DenyIcon } from "./deny.svg";
 import { ReactComponent as MenuLogo } from "./menu_logo.svg";
 import { ReactComponent as Hamburger } from "./hamburger.svg";
+import { ReactComponent as Search } from "./search.svg";
+import { ReactComponent as Star } from "./star.svg";
+import { ReactComponent as Profile } from "./profile-sm.svg";
+import { ReactComponent as ChatIcon } from "./chat-icon.svg";
+import { ReactComponent as Logout } from "./logout.svg";
+import { ReactComponent as Wallet } from "./wallet.svg";
+import { ReactComponent as Notification } from "./notifications.svg";
+import { ReactComponent as ChevronRight } from "./ChevronRight.svg";
+import { ReactComponent as English } from "./eng.svg";
+import { ReactComponent as Ozbek } from "./uz.svg";
+import { ReactComponent as Russian } from "./ru.svg";
 
 export const Icons = {
   Logo,
@@ -38,4 +49,15 @@ export const Icons = {
   DenyIcon,
   MenuLogo,
   Hamburger,
+  Search,
+  Star,
+  Profile,
+  ChatIcon,
+  Logout,
+  Wallet,
+  Notification,
+  ChevronRight,
+  English,
+  Ozbek,
+  Russian,
 };

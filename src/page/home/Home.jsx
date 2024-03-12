@@ -10,11 +10,11 @@ import { Icons } from "../../assets/icons/icons";
 import styles from "./home.module.css";
 import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
-import Header from "../../components/header/header";
+import Header from "../../components/header/Header";
 import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
 import HostelCard from "../../components/hostel-card/hostel_card";
-import CityCards from "../../components/city-card/CityCards";
-import CottageCard from "../../components/cottages/CottageCard";
+import HeroBox from "../../components/HeroBox/HeroBox";
+import Categories from "../../components/categories/Categories";
 
 const Home = () => {
   const [dachas, setDachas] = useState([]);
@@ -39,39 +39,12 @@ const Home = () => {
   }, [buttonAllHotel]);
 
   return (
-    <div className={styles["Home"]}>
-      {/* <div>
-        <Link to={LOGIN_ROUTE}>Login</Link> <br />
-        <Link to={REGISTER_ROUT}>Registration</Link>
-      </div> */}
-
+    <div className={styles["home"]}>
       <Header />
 
-      <div className={`${styles["categories"]} ${styles["container-md"]}`}> 
-        <CityCards />
-
-        <div className={styles["title-large"]}>Категории</div>
-        <div className={styles["grid-tabs"]}>
-          <Link
-            to={PLACE}
-            className={`${styles["grid-tab"]} ${styles["grid-tab-large"]}`}
-          >
-            <div className={styles["title-large"]}>Карта</div>
-          </Link>
-          <Link className={styles["grid-tab"]} to={VILLAS_ROUTE}>
-            <div className={styles["title-large"]}>Жильё</div>
-            <div className={styles["tab-description"]}>(дачи,отели,тд.)</div>
-          </Link>
-          <div className={styles["grid-tab"]}>
-            <div className={styles["title-large"]}>Еда</div>
-          </div>
-          <div className={styles["grid-tab"]}>
-            <div className={styles["title-large"]}>Развлечение</div>
-          </div>
-          <div className={styles["grid-tab"]}>
-            <div className={styles["title-large"]}>Скоро</div>
-          </div>
-        </div>
+      <div className={styles["container-md"]}>
+        <HeroBox />
+        <Categories />
       </div>
 
       <div className={`${styles["villas"]} ${styles["container-md"]}`}>
