@@ -15,7 +15,11 @@ import {
   UPDATE_ANNOUNCEMENT,
   UPDATE_HOSTEL,
   VILLAS_ROUTE,
-  PRODUCT_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER, PLACE, PLACE_ADMIN, FORGOT_PASSWORD,
+  PRODUCT_ROUTE,
+  REQUEST_ANNOUNCEMENT,
+  REQUEST_USER,
+  PLACE,
+  PLACE_ADMIN, FORGOT_PASSWORD,
 } from "./consts";
 import Home from "../../page/home/home";
 import Login from "../../page/auth/login";

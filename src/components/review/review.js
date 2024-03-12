@@ -12,7 +12,6 @@ import 'swiper/css/pagination';
 import Score from "../score/score";
 const Review = (props) => {
     const [reviews , setReviews] = useState([])
-    console.log(props)
     useEffect(()=>{
         if (props.dachaId){
             GetReviewByDachaId(parseInt(props.dachaId)).then(r => {

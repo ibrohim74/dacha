@@ -6,7 +6,6 @@ import Score from "../score/score";
 import {PRODUCT_HOSTEL_ROUTE, PRODUCT_ROUTE} from "../../processes/utils/consts";
 
 const HostelCard = (props) => {
-    console.log(props)
     let route = props.route ? props.route : PRODUCT_HOSTEL_ROUTE;
     let randomScore = +(Math.random() * 4 + 1).toFixed(1);
     const [itemImgs, setItemImgs] = useState([]);

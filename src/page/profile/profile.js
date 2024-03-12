@@ -24,7 +24,7 @@ const Profile = () => {
     try {
       const res = await $authHost.post(
         `/upload/user/${JWT.userId}`,
-        [{file: file.file.originFileObj}],
+          {file:file.file.originFileObj},
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -34,7 +34,7 @@ const Profile = () => {
       );
       if (res?.status === 200) {
         setLoadingImg(false);
-        // window.location.reload();
+        window.location.reload();
       } else {
         message.error("rasim xato");
       }

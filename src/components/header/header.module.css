@@ -56,7 +56,8 @@
   opacity: 0.5;
 }
 
-.header-right {
+.header-right,
+.auth-routes {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -93,41 +94,6 @@
   animation: giggle 1s ease-in-out;
 }
 
-.account-menu {
-  position: absolute;
-  margin-top: 16rem;
-  padding: 10px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 90px;
-
-  border-radius: 8px;
-  border: 2px solid #000;
-  background: #f8f8f8;
-  z-index: 1;
-  user-select: none;
-  cursor: unset;
-}
-
-.account-menu > div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.menu-btn {
-  all: unset;
-  color: #1f1f1f;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem; /* 142.857% */
-  letter-spacing: 2px;
-
-  cursor: pointer;
-}
-
 .account-menu div {
   color: #1f1f1f;
   font-feature-settings: "clig" off, "liga" off;
@@ -135,6 +101,14 @@
   font-weight: 500;
   line-height: 1.25rem; /* 142.857% */
   letter-spacing: 2px;
+}
+
+.mobile_nav {
+  display: none;
+}
+
+.mobile-menu-btn {
+  display: none;
 }
 
 /*helpers*/
@@ -177,5 +151,80 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+/* responsiveness */
+@media (max-width: 360px) {
+  .Header {
+    flex-direction: column-reverse;
+    align-items: start;
+    gap: 1rem;
+    margin: 3rem 1rem 0;
+  }
+
+  .header-logo,
+  .language-btn,
+  .auth-routes {
+    display: none;
+  }
+
+  .header-left {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #6b6b6b;
+  }
+
+  .mobile-menu-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .mobile_nav {
+    position: absolute;
+    display: flex;
+    width: 80%;
+    height: 100vh;
+    top: 0;
+    right: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+
+  .mobile_nav_active {
+    position: fixed;
+    display: flex;
+    background: #d9d9d9;
+    width: 80%;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    opacity: 0.9;
+    transition: all 0.5s ease;
+    border-radius: 8px 0 0 8px;
+    z-index: 1;
+  }
+  .mobile-nav-menu {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .auth-btn {
+    font-size: 1.2rem;
   }
 }

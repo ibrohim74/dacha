@@ -98,7 +98,7 @@ const CalendarRequests = (data) => {
                     const filterReq = r.data.bookings.filter(e => e.accommodation_id === parseInt(data.idDacha));
                     setBooking(filterReq);
                 }
-            })
+            })       
             .catch(error => console.error('Error fetching seller bookings:', error));
 
         getClientRequest();

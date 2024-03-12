@@ -3,7 +3,6 @@ import {$authHost} from "../../../processes/http/http";
 export const CreateRequestAPI = async (data)=>{
     try {
         const res = await $authHost.post('/create_request', data)
-        console.log(res)
         return res
     }catch (e){
         console.log(e)
@@ -25,7 +24,6 @@ export const GetSellerBookingItemPageAPI = async (accommodation_id)=>{
     try {
 
         const res = await $authHost.get(`/dacha/${accommodation_id}/bookings`)
-        console.log(res)
         return res
     }catch (e){
         if (e === 401){
