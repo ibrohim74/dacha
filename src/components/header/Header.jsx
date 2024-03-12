@@ -8,6 +8,7 @@ import Sidebar from "../sidebar/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
 import Button from "../button/Button";
 import styles from "./Header.module.css";
+import LangDropdown from "../lang-dropdown/LangDropdown";
 
 const Header = ({ villasHeader = false }) => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const Header = ({ villasHeader = false }) => {
           </Link>
         </div>
         <div className={styles["header-right"]}>
-          <Icons.Language className={styles["language-btn"]} />
+          <LangDropdown />
 
           <button
             className={styles["mobile-menu-btn"]}
@@ -91,18 +92,21 @@ const Header = ({ villasHeader = false }) => {
 
           {isLoggedIn() ? (
             <>
-              <Icons.Bell className={styles["notification-btn"]} />
-              {showSidebar ? (
-                <CloseOutlined
-                  className={styles["sidebar-btn"]}
-                  onClick={handleShowSidebar}
+              <div
+                className={styles["header-profile"]}
+                onClick={handleShowSidebar}
+              >
+                <img
+                  src={
+                    currentUser.profilePic
+                      ? currentUser.profilePic
+                      : require("../../assets/profile_placeholder.jpg")
+                  }
+                  alt="profile avatar placeholder"
+                  className={styles["header-profile-pic"]}
                 />
-              ) : (
-                <Icons.Hamburger
-                  className={styles["sidebar-btn"]}
-                  onClick={handleShowSidebar}
-                />
-              )}
+                <p>{currentUser.username}</p>
+              </div>
               {showSidebar && (
                 <Sidebar
                   ref={accMenuRef}

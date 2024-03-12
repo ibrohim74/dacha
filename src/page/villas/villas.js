@@ -20,6 +20,7 @@ import CottageCard from "../../components/cottages/CottageCard";
 import Form from "../../components/form/Form";
 import DatePicker from "../../components/date-picker/date-picker";
 import Filter from "../../components/filter/Filter";
+import Button from "../../components/button/Button";
 
 const Villas = () => {
   const location = useLocation();
@@ -89,14 +90,13 @@ const Villas = () => {
         <Form />
       </div>
 
-      <div className={styles["container-md"]}>
-        <div className={styles["catalogue-layout"]}>
-          <Filter />
-          <div className={styles["catalogue-items"]}>
-            {products.map((cottage) => (
-              <CottageCard cottage={cottage} key={cottage.id} />
-            ))}
-          </div>
+      <div className={styles["catalogue-layout"]}>
+        <Filter />
+        <div className={styles["catalogue-items"]}>
+          {products.map((cottage) => (
+            <CottageCard cottage={cottage} key={cottage.id} />
+          ))}
+          <Button type="full-width-white">Смотреть больше</Button>
         </div>
       </div>
 

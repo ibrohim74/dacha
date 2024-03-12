@@ -8,6 +8,11 @@ import { Slider } from "antd";
 export default function Filter() {
   const [minVal, setMinVal] = useState("25,000");
   const [maxVal, setMaxVal] = useState("500,000");
+  const [activeTab, setActiveTab] = useState("hotels");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   const handleRangeChange = () => {
     setMinVal(minVal);
@@ -31,6 +36,28 @@ export default function Filter() {
         </div>
 
         {/* tabs: hotels / cottages */}
+        <ul className={styles["filter-tabs"]}>
+          <li
+            className={
+              activeTab === "hotels"
+                ? styles["filter-tab-active"]
+                : styles["filter-tab-inactive"]
+            }
+            onClick={() => handleTabClick("hotels")}
+          >
+            Отели
+          </li>
+          <li
+            className={
+              activeTab === "cottages"
+                ? styles["filter-tab-active"]
+                : styles["filter-tab-inactive"]
+            }
+            onClick={() => handleTabClick("cottages")}
+          >
+            Дачи
+          </li>
+        </ul>
 
         {/* price range */}
 
@@ -42,6 +69,7 @@ export default function Filter() {
               range
               min={minVal}
               max={maxVal}
+              defaultValue={[minVal, maxVal]}
               className={styles["filter-range-slider"]}
               onChange={handleRangeChange}
               tooltip={{ formatter: null }}
@@ -92,7 +120,7 @@ export default function Filter() {
         </div>
       </div>
       {/* clear all button */}
-      <Button type="secondary">Очистить все</Button>
+      <Button type="full-width-gray">Очистить все</Button>
     </div>
   );
 }

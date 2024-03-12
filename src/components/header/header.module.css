@@ -36,6 +36,26 @@
   height: 44px;
 }
 
+.header-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--brand-color-2);
+  border-radius: 10px;
+  padding: 10px 40.5px;
+}
+
+.header-profile-pic {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.header-profile p {
+  font-size: 16px;
+}
+
 .header-right,
 .auth-routes {
   display: flex;

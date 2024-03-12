@@ -5,14 +5,10 @@ import styles from "./CityCard.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
 
 export default function CityCards() {
   return (
-    <Swiper
-      className={styles["swiper-layout"]}
-      slidesPerGroup={1}
-    >
+    <Swiper className={styles["swiper-layout"]} slidesPerGroup={1}>
       <SwiperSlide className={styles["swiper-slide"]}>
         <CityCard
           title="Бухара"

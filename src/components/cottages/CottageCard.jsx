@@ -14,7 +14,6 @@ export default function CottageCard({ cottage }) {
     reviews_number,
     rating,
     photos_path,
-    tags,
     price,
     title,
     price_type,
@@ -28,8 +27,8 @@ export default function CottageCard({ cottage }) {
   };
 
   return (
-    <div className={styles["cottage-wrapper"]} onClick={handleCottageClick}>
-      <div className={styles["cottage-img"]}>
+    <div className={styles["cottage-wrapper"]}>
+      <div className={styles["cottage-img"]} onClick={handleCottageClick}>
         <img
           src={
             photos_path.length

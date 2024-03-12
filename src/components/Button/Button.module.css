@@ -35,3 +35,21 @@
   background-color: #333;
   transition: 0.5s all ease;
 }
+
+.full-width-gray {
+  width: 100%;
+  border-radius: 10px;
+  height: 62px;
+  color: var(--font-black);
+  font-weight: 600;
+  background-color: var(--bg-color);
+}
+
+.full-width-white {
+  width: 100%;
+  border-radius: 10px;
+  height: 62px;
+  color: var(--font-black);
+  font-weight: 600;
+  background-color: var(--brand-color-2);
+}
