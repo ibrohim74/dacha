@@ -8,11 +8,11 @@ import {
 } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 
-export default function Sidebar({ onLogOut, ref, user, isLoggedIn, isOpen }) {
+export default function Sidebar({ onLogOut, user }) {
   const { profilePic, username, phone } = user;
 
   return (
-    <div ref={ref} className={styles["sidebar"]}>
+    <div className={styles["sidebar"]}>
       <div className={styles["sidebar-profile"]}>
         <img
           src={

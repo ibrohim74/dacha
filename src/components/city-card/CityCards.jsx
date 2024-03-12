@@ -12,7 +12,7 @@ export default function CityCards() {
       <SwiperSlide className={styles["swiper-slide"]}>
         <CityCard
           title="Бухара"
-          descr="Bukhara is an ancient Uzbek city through which the Great Silk Road (a trade road linking East and West) passed. In the Middle Ages, the city was a major center of Islamic theology and culture."
+          descr="Бухара - древний узбекский город, через который проходил Великий шелковый путь (торговая дорога, соединявшая Восток и Запад). В средние века город был крупным центром исламской теологии и культуры."
         />
       </SwiperSlide>
       <SwiperSlide>

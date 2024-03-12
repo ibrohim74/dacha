@@ -5,7 +5,6 @@ import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
-import { CloseOutlined } from "@ant-design/icons";
 import Button from "../button/Button";
 import styles from "./Header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
@@ -109,11 +108,9 @@ const Header = ({ villasHeader = false }) => {
               </div>
               {showSidebar && (
                 <Sidebar
-                  ref={accMenuRef}
+                  // ref={accMenuRef}
                   onLogOut={removeToken}
                   user={currentUser}
-                  isLoggedIn={isLoggedIn()}
-                  isOpen={showSidebar}
                 />
               )}
             </>

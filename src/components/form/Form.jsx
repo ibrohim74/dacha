@@ -11,11 +11,11 @@ export default function Form() {
   return (
     <form className={styles["form"]}>
       <div className={styles["form-input-wrapper"]}>
-        <label htmlFor="destination">Location</label>
+        <label htmlFor="destination">Локация</label>
         <input
           type="text"
           id="destination"
-          placeholder="Where?"
+          placeholder="Куда?"
           className={`${styles["form-input"]} ${styles["form-input-location"]}`}
           required
         />
@@ -23,7 +23,7 @@ export default function Form() {
 
       <div className={styles["datepicker-box"]}>
         <div className={styles["form-input-wrapper"]}>
-          <label htmlFor="checkin">Check in</label>
+          <label htmlFor="checkin">Заезд</label>
           <DatePicker
             id="checkin"
             showIcon={true}
@@ -36,7 +36,7 @@ export default function Form() {
         </div>
 
         <div className={styles["form-input-wrapper"]}>
-          <label htmlFor="checkout">Check out</label>
+          <label htmlFor="checkout">Выезд</label>
           <DatePicker
             id="checkout"
             showIcon
@@ -50,7 +50,7 @@ export default function Form() {
       </div>
 
       <div className={styles["form-input-wrapper"]}>
-        <label htmlFor="guests">Guests</label>
+        <label htmlFor="guests">Гости</label>
         <input
           id="guests"
           type="number"
@@ -61,7 +61,7 @@ export default function Form() {
         />
       </div>
 
-      <Button type="primary">Search</Button>
+      <Button type="primary">Поиск</Button>
     </form>
   );
 }

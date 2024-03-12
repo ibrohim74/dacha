@@ -22,7 +22,6 @@ export default function Filter() {
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-wrapper"]}>
-        {/* search input */}
         <div className={styles["filter-item-location-box"]}>
           <input
             type="text"
@@ -35,7 +34,6 @@ export default function Filter() {
           </div>
         </div>
 
-        {/* tabs: hotels / cottages */}
         <ul className={styles["filter-tabs"]}>
           <li
             className={
@@ -58,8 +56,6 @@ export default function Filter() {
             Дачи
           </li>
         </ul>
-
-        {/* price range */}
 
         <div className={styles["filter-item-box"]}>
           <label htmlFor="priceRange">Цена</label>
@@ -100,7 +96,6 @@ export default function Filter() {
           </div>
         </div>
 
-        {/* utilities */}
         <div className={styles["filter-item-box"]}>
           <label htmlFor="">Удобства</label>
           <div className={styles["boxes-wrapper"]}>
@@ -109,7 +104,6 @@ export default function Filter() {
           </div>
         </div>
 
-        {/* distance */}
         <div className={styles["filter-item-box"]}>
           <label htmlFor="">Расстояние до центра</label>
           <div className={styles["boxes-wrapper"]}>
@@ -119,7 +113,6 @@ export default function Filter() {
           </div>
         </div>
       </div>
-      {/* clear all button */}
       <Button type="full-width-gray">Очистить все</Button>
     </div>
   );

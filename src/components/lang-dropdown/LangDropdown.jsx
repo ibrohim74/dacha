@@ -23,11 +23,8 @@ const items = [
 export default function LangDropdown() {
   const [selectedLanguage, setSelectedLanguage] = useState(items[0].icon);
 
-  console.log(selectedLanguage);
   const handleLanguageChange = (value) => {
     setSelectedLanguage(items[value.key].icon);
-    console.log(value);
-    console.log(selectedLanguage);
   };
 
   return (

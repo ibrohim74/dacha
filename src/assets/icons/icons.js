@@ -28,6 +28,8 @@ import { ReactComponent as ChevronRight } from "./ChevronRight.svg";
 import { ReactComponent as English } from "./eng.svg";
 import { ReactComponent as Ozbek } from "./uz.svg";
 import { ReactComponent as Russian } from "./ru.svg";
+import { ReactComponent as ArrowRight } from "./arrow-right.svg";
+import { ReactComponent as LocationPin } from "./locationPin.svg";
 
 export const Icons = {
   Logo,
@@ -60,4 +62,6 @@ export const Icons = {
   English,
   Ozbek,
   Russian,
+  ArrowRight,
+  LocationPin,
 };
