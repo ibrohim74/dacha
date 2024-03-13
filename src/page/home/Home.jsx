@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  LOGIN_ROUTE,
-  PLACE,
-  REGISTER_ROUT,
-  VILLAS_ROUTE,
-} from "../../processes/utils/consts";
-import { Icons } from "../../assets/icons/icons";
+import { VILLAS_ROUTE } from "../../processes/utils/consts";
 import styles from "./home.module.css";
-import ItemCard from "../../components/item-card/item-card";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/Header";
 import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
-import HostelCard from "../../components/hostel-card/hostel_card";
-import HeroBox from "../../components/HeroBox/HeroBox";
+import HeroBox from "../../components/heroBox/HeroBox";
 import Categories from "../../components/categories/Categories";
+import CataloguePreview from "../../components/catalogue-preview/CataloguePreview";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [dachas, setDachas] = useState([]);
   const [hostel, setHostel] = useState([]);
   const [buttonAllDach, setButtonAllDach] = useState(1);
   const [buttonAllHotel, setButtonAllHotel] = useState(1);
-               
+  const { t } = useTranslation();
+
   useEffect(() => {
     GetAllDacha(buttonAllDach).then((r) => {
-      console.log(r)
       if (r?.status === 200) {
         setDachas(r.data);
       }
@@ -45,54 +38,12 @@ const Home = () => {
       <div className={styles["container-md"]}>
         <HeroBox />
         <Categories />
-      </div>
-
-      <div className={`${styles["villas"]} ${styles["container-md"]}`}>
-        <div className={styles["villas-top"]}>
-          <div className={styles["title-large"]}>Дачи</div>
-          {dachas.length <= 15 ? (
-            <>
-              {buttonAllDach > 1 && (
-                <div className={styles["allBtn"]}>
-                  <div onClick={() => setButtonAllDach(buttonAllDach - 1)}>
-                    Nazad
-                  </div>
-                  <Icons.ChevronR />
-                </div>
-              )}
-              {dachas.length >= 15 && (
-                <div className={styles["allBtn"]}>
-                  <div onClick={() => setButtonAllDach(buttonAllDach + 1)}>
-                    Все
-                  </div>
-                  <Icons.ChevronR />
-                </div>
-              )}
-            </>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className={styles["villas-grid"]}>
-          {dachas.map((villa) => (
-            <ItemCard key={villa.id} {...villa} />
-          ))}
-        </div>
-      </div>
-
-      <div className={`${styles["hotels"]} ${styles["container-md"]}`}>
-        <div className={styles["hotels-top"]}>
-          <div className={styles["title-large"]}>Отели</div>
-          <div className={styles["allBtn"]}>
-            <div>Все</div>
-            <Icons.ChevronR />
-          </div>
-        </div>
-        <div className={styles["hotels-grid"]}>
-          {hostel.map((hotel) => (
-            <HostelCard key={hotel.id} {...hotel} />
-          ))}
-        </div>
+        <CataloguePreview
+          items={dachas}
+          route={VILLAS_ROUTE}
+          title={t("cottages_title")}
+        />
+        <CataloguePreview items={hostel} route={""} title={t("hotels_title")} />
       </div>
 
       <Footer />

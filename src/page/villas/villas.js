@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-import {
-  LOGIN_ROUTE,
-  REGISTER_ROUT,
-  HOME_ROUTE,
-} from "../../processes/utils/consts";
+
 import styles from "./villas.module.css";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/Header";
@@ -18,9 +14,8 @@ import {
 } from "../../processes/utils/items-operations";
 import CottageCard from "../../components/cottages/CottageCard";
 import Form from "../../components/form/Form";
-import DatePicker from "../../components/date-picker/date-picker";
 import Filter from "../../components/filter/Filter";
-import Button from "../../components/Button/Button";
+import Button from "../../components/button/Button";
 
 const Villas = () => {
   const location = useLocation();

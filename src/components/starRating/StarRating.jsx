@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "./StarRating.module.css";
 
 const containerStyle = {
   display: "flex",
@@ -16,10 +15,9 @@ export default function StarRating({
   color = "#F4DC09",
   size = 18,
   className = "",
-  defaultRating = 0,
+  rating,
   onSetRating,
 }) {
-  const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
 
   function handleRating(rating) {

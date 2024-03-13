@@ -5,26 +5,28 @@ import styles from "./CityCard.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useTranslation } from "react-i18next";
 
 export default function CityCards() {
+  const { t } = useTranslation();
   return (
     <Swiper className={styles["swiper-layout"]} slidesPerGroup={1}>
       <SwiperSlide className={styles["swiper-slide"]}>
         <CityCard
-          title="Бухара"
-          descr="Bukhara is an ancient Uzbek city through which the Great Silk Road (a trade road linking East and West) passed. In the Middle Ages, the city was a major center of Islamic theology and culture."
+          title={t("city_card_city_bukhara")}
+          descr={t("city_card_descr_bukhara")}
         />
       </SwiperSlide>
       <SwiperSlide>
         <CityCard
-          title="Самарканд"
-          descr="Древний узбекский город, через который пролегал Великий шелковый путь."
+          title={t("city_card_city_samarkand")}
+          descr={t("city_card_descr_samarkand")}
         />
       </SwiperSlide>
       <SwiperSlide>
         <CityCard
-          title="Хива"
-          descr="Древний узбекский город, через который пролегал Великий шелковый путь."
+          title={t("city_card_city_khiva")}
+          descr={t("city_card_descr_khiva")}
         />
       </SwiperSlide>
     </Swiper>

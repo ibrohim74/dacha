@@ -7,12 +7,14 @@ import {
   REGISTER_ROUT,
 } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
+import { useTranslation } from "react-i18next";
 
-export default function Sidebar({ onLogOut, ref, user, isLoggedIn, isOpen }) {
+export default function Sidebar({ onLogOut, user }) {
   const { profilePic, username, phone } = user;
+  const { t } = useTranslation();
 
   return (
-    <div ref={ref} className={styles["sidebar"]}>
+    <div className={styles["sidebar"]}>
       <div className={styles["sidebar-profile"]}>
         <img
           src={
@@ -30,7 +32,7 @@ export default function Sidebar({ onLogOut, ref, user, isLoggedIn, isOpen }) {
         <Link className={styles["sidebar-link"]} to={`${CABINET}${PROFILE}`}>
           <Icons.Profile />
           <div className={styles["sidebar-link-item"]}>
-            Профиль
+            {t("sidebar_profile")}
             <Icons.ChevronRight />
           </div>
         </Link>
@@ -38,21 +40,21 @@ export default function Sidebar({ onLogOut, ref, user, isLoggedIn, isOpen }) {
         <Link className={styles["sidebar-link"]}>
           <Icons.Wallet />
           <div className={styles["sidebar-link-item"]}>
-            Способ оплаты
+            {t("sidebar_payments")}
             <Icons.ChevronRight />
           </div>
         </Link>
         <Link className={styles["sidebar-link"]}>
           <Icons.Notification />
           <div className={styles["sidebar-link-item"]}>
-            Мои бронирования
+            {t("sidebar_bookings")}
             <Icons.ChevronRight />
           </div>
         </Link>
         <Link className={styles["sidebar-link"]}>
           <Icons.ChatIcon />
           <div className={styles["sidebar-link-item"]}>
-            Избранные
+            {t("sidebar_fav")}
             <Icons.ChevronRight />
           </div>
         </Link>
@@ -60,7 +62,7 @@ export default function Sidebar({ onLogOut, ref, user, isLoggedIn, isOpen }) {
         <Link className={styles["sidebar-link"]} onClick={onLogOut}>
           <Icons.Logout />
           <div className={styles["sidebar-link-item"]}>
-            Выйти
+            {t("sidebar_logout")}
             <Icons.ChevronRight />
           </div>
         </Link>
