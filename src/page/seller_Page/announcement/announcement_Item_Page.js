@@ -210,7 +210,7 @@ const Announcement_Item_Page = () => {
 
                         <div style={{margin:"10px 0"}}>
                             <label htmlFor="floors">
-                                Площадь :
+                                Площадь                                                                                                                             :
                             </label>
                             <EditInput
                                 key={dachaData?.id}

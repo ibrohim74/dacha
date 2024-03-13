@@ -2,7 +2,7 @@ import StarRating from "../starRating/StarRating";
 import styles from "./CataloguePreview.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../assets/icons/icons";
-import Button from "../button/Button";
+import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
 
 export default function CataloguePreview({ items, route, title }) {
