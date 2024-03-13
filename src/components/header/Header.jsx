@@ -8,11 +8,13 @@ import Sidebar from "../sidebar/Sidebar";
 import Button from "../button/Button";
 import styles from "./Header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
+import { useTranslation } from "react-i18next";
 
 const Header = ({ villasHeader = false }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
+  const { t } = useTranslation();
 
   const accMenuRef = useRef();
   const accButtonRef = useRef();
@@ -116,7 +118,7 @@ const Header = ({ villasHeader = false }) => {
             </>
           ) : (
             <Button type="secondary" onClick={() => navigate(LOGIN_ROUTE)}>
-              Войти
+              {t("login_btn")}
             </Button>
           )}
         </div>

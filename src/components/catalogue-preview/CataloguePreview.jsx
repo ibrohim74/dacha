@@ -3,10 +3,12 @@ import styles from "./CataloguePreview.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../assets/icons/icons";
 import Button from "../button/Button";
+import { useTranslation } from "react-i18next";
 
 export default function CataloguePreview({ items, route, title }) {
   const slicedItems = items.slice(0, 3);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className={styles["cards-preview"]}>
@@ -17,7 +19,7 @@ export default function CataloguePreview({ items, route, title }) {
           className={styles["cards-preview-link"]}
           onClick={() => navigate(route)}
         >
-          <Link>Смотреть все</Link>
+          <Link>{t("view_all")}</Link>
           <Icons.ArrowRight />
         </div>
       </div>
@@ -36,7 +38,7 @@ export default function CataloguePreview({ items, route, title }) {
       </div>
 
       <Button type="primary" onClick={() => navigate(route)}>
-        Смотреть еще
+        {t("view_more")}
       </Button>
     </div>
   );
