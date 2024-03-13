@@ -37,43 +37,55 @@ const Registration = () => {
 
 
     const isStrongPassword = (pass) => {
-        if (pass.length >= 8) {
-            if (/[A-Z]/.test(pass)) {
-                if (/[a-z]/.test(pass)) {
-                    if (/\d/.test(pass)) {
-                        if (/[!@#$%^&*(),.?":{}|<>]/.test(pass)) {
-                            return true;
-                        } else {
-                            message.error("simvol yoki belgi bolishi kerak");
-                        }
-                    } else {
-                        message.error(
-                            "Kamida bitta raqam bo'lishi va  simvol yoki belgi bolishi kerak"
-                        );
-                    }
-                } else {
-                    message.error(
-                        "Kamida bitta kichik harf bolishi va raqam , simvol yoki belgi bolishi kerak"
-                    );
-                }
-            } else {
-                message.error(
-                    "Kamida bitta katta harf bolishi va kichik xarif , raqam , simvol yoki belgi bolishi kerak "
-                );
-            }
-        } else {
-            message.error(
-                "parol 8 tadan kam bolmasligi va katta xarif , kichik xarif , raqam , simvol yoki belgi bolishi kerak"
-            );
-            return false;
+        var protect = 0;
+
+        if(pass.length < 8) {
+            return "Слабый";
+        }
+
+        //a,s,d,f
+        var small = "([a-z]+)";
+        if(pass.match(small)) {
+            protect++;
+        }
+
+        //A,B,C,D
+        var big = "([A-Z]+)";
+        if(pass.match(big)) {
+            protect++;
+        }
+        //1,2,3,4,5 ... 0
+        var numb = "([0-9]+)";
+        if(pass.match(numb)) {
+            protect++;
+        }
+        //!@#$
+        var vv = /\W/;
+        if(pass.match(vv)) {
+            protect++;
+        }
+
+        if(protect === 2) {
+            return "Средний";
+        }
+        if(protect === 3) {
+
+            return "Хороший";
+        }
+        if(protect === 4) {
+
+            return "Высокий";
         }
     };
+    const pass = isStrongPassword(initialState?.password)
 
     const handleSend = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const pass = isStrongPassword(initialState.password)
+        console.log(pass)
         setLoading(true)
         if (initialState?.email && emailRegex.test(initialState.email)) {
-            if (isStrongPassword(initialState.password)) {
+            if (pass === "Средний" || pass === "Хороший"|| pass === "Высокий") {
                 if (initialState.password === confirmPass.passConfirm) {
                     if (confirmPass.checkBox) {
                         setStep1(false);
@@ -101,6 +113,7 @@ const Registration = () => {
                     setLoading(false)
                 }
             } else {
+                message.error('parol slabiy')
                 setLoading(false)
             }
         } else {
@@ -233,6 +246,7 @@ const Registration = () => {
                                 setInitialState({...initialState, password: e.target.value})
                             }
                         />
+                        {initialState.password && pass}
                     </div>
 
                     <div className={style.regInput}>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import StarRating from "../starRating/StarRating";
 import styles from "./CottageCard.module.css";
-import Tag from "../tag/Tag";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../../processes/utils/consts";
 

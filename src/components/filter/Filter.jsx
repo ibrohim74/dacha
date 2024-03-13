@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Filter.module.css";
 import { Icons } from "../../assets/icons/icons";
 import { LocationOnOutlined } from "@mui/icons-material";
-import Button from "../button/Button";
+import Button from "../Button/Button";
 import { Slider } from "antd";
 import { useTranslation } from "react-i18next";
 

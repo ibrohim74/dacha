@@ -56,7 +56,7 @@ const PlaceAdmin = () => {
                         searchText={searchText}
                         listPlace={listPlace}
                         setListPlace={setListPlace}
-                        zoom={9}
+                        zoom={15}
                         lat_long={[41.34557, 69.284599]}
                     />
                 </div>

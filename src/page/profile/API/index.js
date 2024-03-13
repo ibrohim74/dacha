@@ -5,12 +5,14 @@ import { jwtDecode } from "jwt-decode";
 
 
 export const sendProfile_data = async (data)=>{
-    const JWT =  jwtDecode(localStorage.getItem('token'))
+    console.log(data)
     try {
-        const res = await $authHost.put('user/'+JWT.userId , data )
+        const JWT =  jwtDecode(localStorage.getItem('token'))
+        const res = await $authHost.put('user/'+JWT.userId , {data} )
 
-        return res.status
+        return res
     }catch (e){
-        return e.response.data.detail
+        console.log(e)
+        return e
     }
 }

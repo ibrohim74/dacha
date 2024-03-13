@@ -19,15 +19,15 @@ import {
   REQUEST_ANNOUNCEMENT,
   REQUEST_USER,
   PLACE,
-  PLACE_ADMIN,
+  PLACE_ADMIN, FORGOT_PASSWORD,
 } from "./consts";
+import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
 import Registration from "../../page/auth/registration";
 import LayoutCabinet from "../../page/layout/layoutCabinet";
 import Profile from "../../page/profile/profile";
 import Announcement from "../../page/seller_Page/announcement/announcement";
 import Create_announcement from "../../page/seller_Page/announcement/create_announcement";
-import Change_pass_TopBar from "../../components/change_pass_TopBar";
 import Hostel from "../../page/seller_Page/hostel/hostel";
 import CreateRoom from "../../page/seller_Page/hostel/hostelPage/component/createRoom";
 import ScheduleSeller from "../../page/seller_Page/schedule/scheduleSeller";
@@ -42,10 +42,11 @@ import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
 import HostelItemPage from "../../page/item_Page/hosetl_item_page/hostel_item_page";
 import Place from "../../page/place/place";
 import PlaceAdmin from "../../page/admin/placeMap/placeAdmin";
-import Home from "../../page/home/Home";
-export const Public = [
+import ForgotPassword from "../../page/auth/forgot_password";
+import ChangePass from "../../components/change_pass";
+export const Public =  [
   {
-    Component: <Home />,
+    Component: <Home/>,
     path: HOME_ROUTE,
   },
   {
@@ -76,6 +77,10 @@ export const Public = [
     Component: <Place />,
     path: PLACE,
   },
+  {
+    Component: <ForgotPassword />,
+    path: FORGOT_PASSWORD,
+  },
 ];
 
 export const Layout = [
@@ -95,7 +100,7 @@ export const Admin = [
     path: PLACE_ADMIN,
   },
   {
-    Component: <Change_pass_TopBar />,
+    Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
   },
 ];
@@ -109,7 +114,7 @@ export const Users = [
     path: REQUEST_USER,
   },
   {
-    Component: <Change_pass_TopBar />,
+    Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
   },
 ];
@@ -128,7 +133,7 @@ export const Seller = [
   },
 
   {
-    Component: <Change_pass_TopBar />,
+    Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
   },
   {
@@ -162,7 +167,7 @@ export const Moderate = [
     path: PROFILE,
   },
   {
-    Component: <Change_pass_TopBar />,
+    Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
   },
 ];

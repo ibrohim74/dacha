@@ -3,7 +3,7 @@ import style from './style/registration.module.css'
 import './style/login.css'
 import {message, Select} from "antd";
 import {Link} from "react-router-dom";
-import {CABINET, POLICY, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
+import {CABINET, FORGOT_PASSWORD, HOME_ROUTE, POLICY, PROFILE, REGISTER_ROUT} from "../../processes/utils/consts";
 import {Icons} from "../../assets/icons/icons";
 import {LoginAPI} from "./API";
 import {LoadingOutlined} from "@ant-design/icons";
@@ -19,7 +19,7 @@ const Login = () => {
         if (initialState?.email && initialState?.password) {
             LoginAPI(initialState).then(r => {
                 if (r === localStorage.getItem('token')) {
-                    window.location.assign(CABINET + PROFILE)
+                    window.location.assign(HOME_ROUTE)
                     setIsLoading(false)
                 } else {
                     message.error('error')
@@ -41,10 +41,10 @@ const Login = () => {
                 <span className={style.subTitleReg}>Войти в учётный запись</span>
                 <div autoComplete={'new-login'} className={style.regContent}>
                     <div className={style.regInput}>
-                        <label htmlFor="email">Почта</label>
+                        <label htmlFor="username">имя пользователя</label>
                         <input
-                            type="email"
-                            id="email"
+                            type="text"
+                            id="username"
                             autoComplete={'new-email'}
                             value={initialState?.email}
                             onChange={(e) =>
@@ -65,7 +65,9 @@ const Login = () => {
                             }
                         />
                     </div>
-                    <span className={style.subTitleReg} style={{cursor: "pointer"}}>Забыли пароль ?</span>
+                   <Link
+                   to={FORGOT_PASSWORD}
+                   > <span className={style.subTitleReg} style={{cursor: "pointer"}}>Забыли пароль ?</span></Link>
                     {isLoading ?
                         <div className={style.regButton}>
                             <LoadingOutlined/>

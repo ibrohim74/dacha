@@ -45,26 +45,28 @@ const customMarkerIcon = new L.Icon({
 });
 
 const Item_Page = () => {
-  const [product, setProduct] = useState([]);
-  const [SimilarDachas, setSimilarDachas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [SliderData, setSliderData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [api, contextHolder] = notification.useNotification();
-  const [errorNotification, setErrorNotification] = useState("");
-  const [bookingData, setBookingData] = useState([]);
-  const JWT = localStorage.getItem("token")
-    ? jwtDecode(localStorage.getItem("token"))
-    : null;
-  const { id } = useParams();
-  const { RangePicker } = DatePicker;
-  const [initialState, setInitialState] = useState({
-    requested_price: 0,
-    customer_id: parseInt(JWT?.userId),
-    accommodation_id: parseInt(id),
-    accommodation_type: "dacha",
-  });
+    const [product, setProduct] = useState([]);
+    const [SimilarDachas , setSimilarDachas] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [SliderData, setSliderData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
+    const [errorNotification, setErrorNotification] = useState('')
+    const [bookingData , setBookingData] = useState([])
+    const JWT = localStorage.getItem("token")
+        ? jwtDecode(localStorage.getItem("token"))
+        : null;
+    const {id} = useParams();
+    const {RangePicker} = DatePicker;
+    const [initialState, setInitialState] = useState({
+        requested_price:0,
+        accommodation_id: parseInt(id),
+        accommodation_type:'dacha',
+        adults:1,
+        contacts:'',
+        children:0
+    })
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -76,14 +78,14 @@ const Item_Page = () => {
         const response = await GetSellerBookingItemPageAPI(id);
         const data = response.data;
         const filteredData = data?.filter(
-          (booking) => booking.accommodation_id === parseInt(id)
-        );
-        setBookingData(filteredData);
-      }
-    } catch (error) {
-      console.error("Sotuvchi bron ma'lumotlarini olishda xato:", error);
-    }
-  };
+          (booking) => booking.accommodation_id === parseInt(id));
+                setBookingData(filteredData);
+                console.log(response)
+            }
+        } catch (error) {
+            console.error("Sotuvchi bron ma'lumotlarini olishda xato:", error);
+        }
+    };
 
   useEffect(() => {
     GetDachaAPI(id).then((r) => {
@@ -94,7 +96,7 @@ const Item_Page = () => {
       }
     });
     GetAllDacha(1).then((r) => {
-      if (r.status === 200) {
+      if (r?.status === 200) {
         setSimilarDachas(r.data);
       }
     });
@@ -254,7 +256,15 @@ const Item_Page = () => {
             }}
           />
         </div>
-        <div>
+        <div className={'input'}>
+                    <label htmlFor="adults">Adults</label>
+                    <Input type="number" value={initialState.adults} onChange={e=>setInitialState({...initialState, adults:parseInt(e.target.value) })}/>
+                    <label htmlFor="Children">Children</label>
+                    <Input type="number" value={initialState.children} onChange={e=>setInitialState({...initialState, children:parseInt( e.target.value)})}/>
+                    <label htmlFor="Children">Contact</label>
+                    <Input type="text" value={initialState.contacts} onChange={e=>setInitialState({...initialState, contacts: e.target.value})}/>
+                </div>
+                <div>
           <p style={{ fontSize: 16 }}>
             продавец установил цену {product?.price} {product?.price_type} за 1
             день{" "}
@@ -287,9 +297,9 @@ const Item_Page = () => {
               </div>
             )}
 
-            <div>{`${product.price} ${product.type}`}/день</div>
-          </div>
-        </div>
+                        <div>{`${product.price} ${product.price_type}`}/день</div>
+                    </div>
+                </div>
 
         <div className={styles["info-details"]}>
           <div className={styles["title-md"]}>Подробности</div>
@@ -348,14 +358,14 @@ const Item_Page = () => {
         <div className={styles["title-md"]}>Похожие</div>
         <div className={styles["similars-grid"]}>
           {SimilarDachas.slice(0, 4).map((villa) => (
-            <ItemCard {...villa} />
+            <ItemCard {...villa}  key={villa.id}/>
           ))}
         </div>
       </div>
 
-      <Footer />
-    </div>
-  );
+            <Footer/>
+        </div>
+    );
 };
 
 export default Item_Page;

@@ -22,7 +22,6 @@ export const GetDachaAPI = async (id)=>{
 
     try {
         const res = await $authHost.get(`/dacha/${id}`)
-        console.log(res)
         return res.data
     }catch (e){
         console.log(e)
