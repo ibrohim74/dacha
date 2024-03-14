@@ -11,3 +11,4 @@ export default function Button({ children, type, onClick }) {
     </button>
   );
 }
+s;

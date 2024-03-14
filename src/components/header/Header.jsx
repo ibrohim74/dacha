@@ -10,6 +10,7 @@ import Button from "../button/Button";
 import styles from "./Header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
+import Logo from "../logo/Logo";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -102,11 +103,14 @@ const Header = () => {
     <>
       <div className={`${styles["header"]} ${styles["container-md"]}`}>
         <div className={styles["header-left"]}>
-          <Link className={styles["header-logo"]} to={HOME_ROUTE}>
-            <Icons.Logo />
-            <p>Travid</p>
-          </Link>
+          <Logo />
         </div>
+
+        <div className={styles["header-search-part"]}>
+          <Icons.HeaderSearch />
+          <input type="text" className={styles["header-search"]} />
+        </div>
+
         <div className={styles["header-right"]}>
           <LangDropdown />
 
@@ -119,11 +123,6 @@ const Header = () => {
 
           {isLoggedIn() ? (
             <>
-              {currentUser && (
-                <Badge count={userRequest.length} showZero>
-                  <Icons.Bell className={styles["notification-btn"]} />
-                </Badge>
-              )}
               <div
                 className={styles["header-profile"]}
                 onClick={handleShowSidebar}

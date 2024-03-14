@@ -13,39 +13,60 @@ export default function CityCards() {
     <Swiper className={styles["swiper-layout"]} slidesPerGroup={1}>
       <SwiperSlide className={styles["swiper-slide"]}>
         <CityCard
+          title={t("geolocation_request")}
+          descr={t("geolocation_request_descr")}
+          img={require("../../assets/geolocation_request.png")}
+          weather={{ weatherDeg: "", weatherDescr: "" }}
+        />
+      </SwiperSlide>
+      <SwiperSlide className={styles["swiper-slide"]}>
+        <CityCard
           title={t("city_card_city_bukhara")}
           descr={t("city_card_descr_bukhara")}
+          img={require("../../assets/citycard-image.png")}
+          weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
       </SwiperSlide>
       <SwiperSlide>
         <CityCard
           title={t("city_card_city_samarkand")}
           descr={t("city_card_descr_samarkand")}
+          img={require("../../assets/citycard-image.png")}
+          weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
       </SwiperSlide>
       <SwiperSlide>
         <CityCard
           title={t("city_card_city_khiva")}
           descr={t("city_card_descr_khiva")}
+          img={require("../../assets/citycard-image.png")}
+          weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
       </SwiperSlide>
     </Swiper>
   );
 }
 
-function CityCard({ title, descr }) {
+function CityCard({ title, descr, img, weather }) {
+  const { t } = useTranslation();
+  const { weatherDeg, weatherDescr } = weather;
+
   return (
     <div className={styles["city-card"]}>
       <div className={styles["city-card-info"]}>
         <h4>{title}</h4>
         <p>{descr}</p>
       </div>
-      <img
-        src={require("../../assets/citycard-image.png")}
-        alt="city-card"
-        className={styles["city-card-img"]}
-      />
-      {/* <div className={styles["city-card-weather-box"]}>{weather}&deg;</div> */}
+      <img src={img} alt="city-card" className={styles["city-card-img"]} />
+      {weatherDeg && weatherDescr && (
+        <div className={styles["city-card-weather-box"]}>
+          <p>{t("weather")}</p>
+          <div>
+            {weatherDeg}&deg;
+            {weatherDescr}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

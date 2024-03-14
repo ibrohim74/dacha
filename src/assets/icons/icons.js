@@ -9,8 +9,8 @@ import { ReactComponent as StarFull } from "./starFull.svg";
 import { ReactComponent as StarEmpty } from "./starEmpty.svg";
 import { ReactComponent as StarHalf } from "./starHalf.svg";
 import { ReactComponent as Chat } from "./chat.svg";
-import { ReactComponent as AppStore } from "./appStore.svg";
-import { ReactComponent as GooglePlay } from "./googlePlay.svg";
+import { ReactComponent as AppStore } from "./app_store.svg";
+import { ReactComponent as GooglePlay } from "./google_play.svg";
 import { ReactComponent as Pencil } from "./pencil.svg";
 import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as AcceptIcon } from "./accept.svg";
@@ -30,6 +30,12 @@ import { ReactComponent as Ozbek } from "./uz.svg";
 import { ReactComponent as Russian } from "./ru.svg";
 import { ReactComponent as ArrowRight } from "./arrow-right.svg";
 import { ReactComponent as LocationPin } from "./locationPin.svg";
+import { ReactComponent as HeaderSearch } from "./header-search.svg";
+import { ReactComponent as Map } from "./map.svg";
+import { ReactComponent as Food } from "./food.svg";
+import { ReactComponent as Housing } from "./housing.svg";
+import { ReactComponent as Entertainment } from "./entertainment.svg";
+import { ReactComponent as Folder } from "./folder.svg";
 
 export const Icons = {
   Logo,
@@ -64,4 +70,10 @@ export const Icons = {
   Russian,
   ArrowRight,
   LocationPin,
+  HeaderSearch,
+  Map,
+  Food,
+  Housing,
+  Entertainment,
+  Folder,
 };

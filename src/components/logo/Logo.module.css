@@ -1,0 +1,23 @@
+.header-logo {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #1f1f1f;
+  cursor: pointer;
+}
+
+.header-logo > p {
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: 2px;
+}
+
+.header-logo svg {
+  width: 44px;
+  height: 44px;
+}
