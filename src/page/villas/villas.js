@@ -15,7 +15,7 @@ import {
 import CottageCard from "../../components/cottages/CottageCard";
 import Form from "../../components/form/Form";
 import Filter from "../../components/filter/Filter";
-import Button from "../../components/button/Button";
+import Button from "../../components/Button/Button";
 
 const Villas = () => {
   const location = useLocation();

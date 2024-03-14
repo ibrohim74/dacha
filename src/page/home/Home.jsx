@@ -4,7 +4,7 @@ import styles from "./home.module.css";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/Header";
 import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
-import HeroBox from "../../components/heroBox/HeroBox";
+import HeroBox from "../../components/HeroBox/HeroBox";
 import Categories from "../../components/categories/Categories";
 import CataloguePreview from "../../components/catalogue-preview/CataloguePreview";
 import { useTranslation } from "react-i18next";

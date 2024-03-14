@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Icons } from "../../assets/icons/icons";
 
 const EditInput = (props) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(props.value);
-
+  const [value, setValue] = useState(props?.value);
   const handleChange = (e) => {
     setValue(e.target.value);
     if (props.onChange) {
@@ -29,6 +28,8 @@ const EditInput = (props) => {
           onBlur={() => setIsEditing(false)}
           style={{ width: "100%" }}
           autoFocus
+          type={props?.type ? props.type : 'text'}
+
         />
       )}
     </div>

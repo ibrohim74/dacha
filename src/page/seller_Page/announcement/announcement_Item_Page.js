@@ -19,6 +19,8 @@ import {transformation} from "leaflet/dist/leaflet-src.esm";
 import {MapContainer, Marker, TileLayer} from "react-leaflet";
 import Calendar_Requests from "./component/Calendar_Requests";
 import Review from "../../../components/review/review";
+import EditInput from "../../../components/edit-input/edit-input";
+import {Icons} from "../../../assets/icons/icons";
 
 const Announcement_Item_Page = () => {
     const [dachaData, setDachaData] = useState();
@@ -27,12 +29,13 @@ const Announcement_Item_Page = () => {
         latitude: null,
         longitude: null,
         type: 'dacha',
-        price_type:'',
-        title: '',
+        price_type: '',
+        // title: '',
         price: '',
         info: '',
         area: '',
         floors: '',
+        rating:0,
         minimum_book_days: '',
         minimum_preorder_days: '',
         rooms_number: '',
@@ -41,6 +44,7 @@ const Announcement_Item_Page = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [selectPosition, setSelectPosition] = useState(null);
     const [events, setEvents] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
     const {Option} = Select;
     const {id} = useParams();
     const handleSend = () => {
@@ -49,11 +53,12 @@ const Announcement_Item_Page = () => {
                 if (initialState.floors &&
                     initialState.area && initialState.rooms_number
                     && initialState.minimum_book_days && initialState.minimum_preorder_days) {
-                    UpdateDachaAPI(id,initialState).then(r => {
+                    UpdateDachaAPI(id, initialState).then(r => {
                         if (r?.status === 200) {
                             message.success('success')
                             window.location.reload()
-                        } if (r?.response?.status === 401) {
+                        }
+                        if (r?.response?.status === 401) {
                             localStorage.clear()
                             window.location.assign('/')
                         }
@@ -69,10 +74,10 @@ const Announcement_Item_Page = () => {
             message.error('barcha malumotlarni toldiring')
         }
     };
-    const handleDelete = () =>{
+    const handleDelete = () => {
         DeleteDachaAPI(id).then(r => {
-            if (r.status === 200){
-                window.location.assign(CABINET+ANNOUNCEMENT)
+            if (r.status === 200) {
+                window.location.assign(CABINET + ANNOUNCEMENT)
             }
         })
     }
@@ -89,6 +94,7 @@ const Announcement_Item_Page = () => {
 
     useEffect(() => {
         GetDachaAPI(id).then((r) => {
+            console.log(r)
             setDachaData(r);
             setTypePrice(r?.price_type);
             setInitialState({
@@ -101,7 +107,8 @@ const Announcement_Item_Page = () => {
                 minimum_preorder_days: r?.minimum_preorder_days,
                 rooms_number: r?.rooms_number,
                 type: r?.type,
-                price_type:r?.price_type
+                price_type: r?.price_type,
+                rating:r?.rating
             });
             setSelectPosition({
                 lat: r?.latitude,
@@ -119,7 +126,7 @@ const Announcement_Item_Page = () => {
             longitude: parseFloat(selectPosition?.lon),
         });
     }, [selectPosition]);
-
+    console.log(initialState)
     return (
         <div className={styles["Item-Page"]}>
             <AnnItemAddPhoto dachaId={id} dacha={dachaData}
@@ -129,22 +136,40 @@ const Announcement_Item_Page = () => {
                 <div className={`${styles["item-info"]} ${styles["container-md"]}`}>
                     <div className={styles["info-header"]}>
                         <div className={styles["header-left"]}>
-                            <div className={styles["name"]}>
-                                <Input
-                                value={initialState?.title}
-                                onChange={(e) => setInitialState({...initialState, title: e.target.value})}
-                            /></div>
+
+
+                            <div className={styles["name "]}>
+
+                                <EditInput
+                                    key={dachaData?.id}
+                                    className={styles["text-input"]}
+                                    value={dachaData?.title && dachaData.title}
+                                    onChange={(e) =>
+                                        setInitialState({ ...initialState, title: e.target.value })
+                                    }
+                                />
+                            </div>
+
                             <div>
-                                <Score score={3.5} className={styles["score"]}/>
+                                <Score score={initialState?.rating} showzero className={styles["score"]}/>
                             </div>
                         </div>
-                        <div className={styles["header-right"]}>
-                            <div>
+                        <div className={styles["header-right "]}  style={{flexDirection:'row'}}>
+
+                            {!isEditing ? (
+                                <>
+                                    <span style={{ color: "black" }}>{dachaData?.price}{dachaData?.price_type}</span>
+                                    <Icons.Pencil
+                                        style={{ width: "20px", cursor: "pointer" }}
+                                        onClick={() => setIsEditing(true)}
+                                    />
+                                </>
+                            ) : (
                                 <Input
                                     addonAfter={selectAfter}
                                     value={initialState?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                                    type={'text'}
-                                    stayl={{width:100}}
+                                    type={'number'}
+
                                     onChange={(e) => {
                                         const cleanedValue = e.target.value.replace(/\s/g, '');
                                         setInitialState({
@@ -161,45 +186,111 @@ const Announcement_Item_Page = () => {
                                         }
                                     }}
                                 />
-                            </div>
+                            )}
+
                         </div>
                     </div>
-                         <div className={styles["info-details"]}>
+                    <div className={styles["info-details"]}>
                         <div className={styles["title-md"]}>Подробности</div>
-                        <Tag style={{fontSize: '16px', margin: '10px'}} className={styles.antTag}>Этажность :
-                            <input
-                                value={initialState?.floors}
+
+                        <div style={{margin:"10px 0"}}>
+                            <label htmlFor="floors">
+                                Этажность :
+                            </label>
+                            <EditInput
+                                key={dachaData?.id}
+                                value={dachaData?.floors}
                                 type={'number'}
+                                className={styles['text-input']}
                                 onChange={(e) => setInitialState({...initialState, floors: e.target.value})}
+
                             />
-                        </Tag>
-                        <Tag style={{fontSize: '16px', margin: '10px'}} className={styles.antTag}>Площадь :
-                            <input
+                        </div>         
+
+
+                        <div style={{margin:"10px 0"}}>
+                            <label htmlFor="floors">
+                                Площадь                                                                                                                             :
+                            </label>
+                            <EditInput
+                                key={dachaData?.id}
                                 type={'number'}
-                            value={initialState?.area}
-                            onChange={(e) => setInitialState({...initialState, area: e.target.value})}
-                        /></Tag>
-                        <Tag style={{fontSize: '16px', margin: '10px'}} className={styles.antTag}>количество комнат :
-                            <input
-                                value={initialState?.rooms_number}
+                                className={styles['text-input']}
+                                value={dachaData?.area}
+                                onChange={(e) => setInitialState({...initialState, area: e.target.value})}
+                            />
+                        </div>
+
+                        <div style={{margin:"10px 0"}}>
+                            <label htmlFor="floors">
+                                количество комнат :
+                            </label>
+                            <EditInput
+                                key={dachaData?.id}
+                                className={styles['text-input']}
+                                value={dachaData?.rooms_number}
                                 type={'number'}
                                 onChange={(e) => setInitialState({...initialState, rooms_number: e.target.value})}
                             />
-                        </Tag>
-                        <Tag style={{fontSize: '16px', margin: '10px'}}>местоположение : {initialState?.location_name}</Tag>
+                        </div>
+
+                        <div style={{margin:"10px 0"}}>
+                            <label htmlFor="floors">
+                                minimum_book_days
+                            </label>
+                            <EditInput
+                                key={dachaData?.id}
+                                className={styles['text-input']}
+                                value={dachaData?.minimum_book_days}
+                                type={'number'}
+                                onChange={(e) => setInitialState({...initialState, minimum_book_days: e.target.value})}
+                            />
+                        </div>
+
+                        <div style={{margin:"10px 0"}}>
+                            <label htmlFor="floors">
+                                minimum_preorder_days
+
+                            </label>
+                            <EditInput
+                                key={dachaData?.id}
+                                className={styles['text-input']}
+                                value={dachaData?.minimum_preorder_days}
+                                type={'number'}
+                                onChange={(e) => setInitialState({...initialState, minimum_preorder_days: e.target.value})}
+                            />
+                        </div>
+
+
+                        <Tag style={{fontSize: '16px', margin: '10px'}}>местоположение
+                            : {initialState?.location_name}</Tag>
                     </div>
                     <div className={styles["info-description"]}>
                         <div className={styles["title-md"]}>Описание</div>
-                        <div className={styles["description-text"]}>
-                            <TextArea
-                                style={{width:"100%" , border:'none'}}
-                                value={initialState?.info}
-                                onChange={(e) => setInitialState({...initialState, info: e.target.value})}
-                                autoSize={{
-                                    minRows: 3,
-                                    maxRows: 5,
-                                }}
-                            />
+                        <div className={styles["description-text"]} style={{position:'relative'}}>
+
+                            {!isEditing ? (
+                                <>
+                                    <span style={{ color: "black" }}>{dachaData?.info}</span>
+                                    <Icons.Pencil
+                                        style={{ width: "20px", cursor: "pointer", position:"absolute" , right:'20px' , top:0}}
+                                        onClick={() => setIsEditing(true)}
+                                    />
+                                </>
+                            ) : (
+                                <TextArea
+                                    style={{width: "100%", border: 'none'}}
+                                    value={initialState?.info}
+                                    onChange={(e) => setInitialState({...initialState, info: e.target.value})}
+                                    autoSize={{
+                                        minRows: 3,
+                                        maxRows: 5,
+                                    }}
+                                />
+                            )}
+
+
+
                         </div>
                     </div>
 
@@ -207,14 +298,15 @@ const Announcement_Item_Page = () => {
                         <div className={styles["title-md"]}>Локация</div>
                         <MapsAnnouncement setSelectPosition={setSelectPosition} selectPosition={selectPosition}/>
                     </div>
-                    <div style={{display:'flex' , justifyContent:"center" ,alignItems:"center" , marginBottom:"60px"}}>
+                    <div
+                        style={{display: 'flex', justifyContent: "center", alignItems: "center", marginBottom: "60px"}}>
                         {isLoading ? (
                             <Button
                                 type="submit"
                                 color="secondary"
                                 variant="contained"
                                 size={'large'}
-                                style={{ background: '#4CCEAC'}}
+                                style={{background: '#4CCEAC'}}
                                 disabled={true}
                             >
                                 <LoadingOutlined/>
@@ -230,14 +322,14 @@ const Announcement_Item_Page = () => {
                             >
                                 Update
                             </Button>
-                        )} 
+                        )}
                         {isLoading ? (
                             <Button
                                 type="submit"
                                 color="error"
                                 variant="contained"
                                 size={'large'}
-                                style={{marginLeft:'20px'}}
+                                style={{marginLeft: '20px'}}
                                 disabled={true}
                             >
                                 <LoadingOutlined/>
@@ -248,7 +340,7 @@ const Announcement_Item_Page = () => {
                                 color={'error'}
                                 variant="contained"
                                 size={'large'}
-                                style={{marginLeft:'20px'}}
+                                style={{marginLeft: '20px'}}
                                 onClick={handleDelete}
                             >
                                 Delete
@@ -256,7 +348,7 @@ const Announcement_Item_Page = () => {
                         )}
                     </div>
                     <Box>
-                        <Box flex="1 1 100%" >
+                        <Box flex="1 1 100%">
                             <Calendar idDacha={id} setEvents={setEvents} events={events}/>
                         </Box>
 
@@ -266,16 +358,12 @@ const Announcement_Item_Page = () => {
                     </Box>
 
 
-
-                        <div className={styles["info-reviews"]}>
-                            <div className={styles["title-md"]}>Отзывы</div>
-                            <Review dachaId={id}/>
-                        </div>
+                    <div className={styles["info-reviews"]}>
+                        <div className={styles["title-md"]}>Отзывы</div>
+                        <Review dachaId={id}/>
+                    </div>
 
                 </div>
-
-
-
 
 
             </Box>
@@ -286,4 +374,3 @@ const Announcement_Item_Page = () => {
 export default Announcement_Item_Page;
 
 
-         
