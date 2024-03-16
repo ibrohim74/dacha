@@ -7,8 +7,7 @@ import { Slider } from "antd";
 import { useTranslation } from "react-i18next";
 
 export default function Filter() {
-  const [minVal, setMinVal] = useState("25,000");
-  const [maxVal, setMaxVal] = useState("500,000");
+  const [rangeValues, setRangeValues] = useState([25000, 500000]);
   const [activeTab, setActiveTab] = useState("hotels");
   const { t } = useTranslation();
 
@@ -16,9 +15,13 @@ export default function Filter() {
     setActiveTab(tab);
   };
 
-  const handleRangeChange = () => {
-    setMinVal(minVal);
-    setMaxVal(maxVal);
+  const handleRangeChange = (values) => {
+    setRangeValues(values);
+  };
+
+  const numberFormatter = (value) => {
+    // Function to format numbers for display
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Add spaces every 3 digits
   };
 
   return (
@@ -62,17 +65,17 @@ export default function Filter() {
         <div className={styles["filter-item-box"]}>
           <label htmlFor="priceRange">{t("filter_price")}</label>
           <div className={styles["filter-range"]}>
-            <FilterBox>{minVal}</FilterBox>
+            <FilterBox>{numberFormatter(rangeValues[0])}</FilterBox>
             <Slider
               range
-              min={minVal}
-              max={maxVal}
-              defaultValue={[minVal, maxVal]}
+              min={25000}
+              max={500000}
+              defaultValue={rangeValues}
               className={styles["filter-range-slider"]}
               onChange={handleRangeChange}
               tooltip={{ formatter: null }}
             />
-            <FilterBox>{maxVal}</FilterBox>
+            <FilterBox>{numberFormatter(rangeValues[1])}</FilterBox>
           </div>
         </div>
 
@@ -120,5 +123,9 @@ export default function Filter() {
 }
 
 function FilterBox({ children }) {
-  return <div className={styles["filter-box"]}>{children}</div>;
+  return (
+    <div className={styles["filter-box"]}>
+      <span>{children}</span>
+    </div>
+  );
 }

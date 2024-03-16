@@ -7,8 +7,7 @@ export default function Button({ children, type, onClick }) {
       className={`${styles["btn"]} ${styles[`${type}`]}`}
       onClick={onClick}
     >
-      {children}
+      <span>{children}</span>
     </button>
   );
 }
-s;

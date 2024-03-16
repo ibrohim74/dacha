@@ -1,4 +1,4 @@
-.header-logo {
+.logo {
   all: unset;
   display: flex;
   justify-content: center;
@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-.header-logo > p {
+.logo > p {
   text-align: right;
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1.5rem;
@@ -17,7 +17,18 @@
   letter-spacing: 2px;
 }
 
-.header-logo svg {
+.logo svg {
   width: 44px;
   height: 44px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .logo svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logo > p {
+    font-size: 24px;
+  }
 }

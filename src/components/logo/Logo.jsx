@@ -6,7 +6,7 @@ import styles from "./Logo.module.css";
 
 export default function Logo() {
   return (
-    <Link className={styles["header-logo"]} to={HOME_ROUTE}>
+    <Link className={styles["logo"]} to={HOME_ROUTE}>
       <Icons.Logo />
       <p>Travid</p>
     </Link>

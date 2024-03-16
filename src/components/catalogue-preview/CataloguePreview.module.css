@@ -92,3 +92,19 @@
 .cards-preview-link:hover {
   gap: 10px;
 }
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .cards-preview-wrapper {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .card-infobox {
+    flex-direction: column;
+    gap: 0.5rem;
+    height: unset;
+  }
+}

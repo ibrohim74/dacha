@@ -27,7 +27,7 @@ export default function CityCards() {
           weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
       </SwiperSlide>
-      <SwiperSlide>
+      {/* <SwiperSlide>
         <CityCard
           title={t("city_card_city_samarkand")}
           descr={t("city_card_descr_samarkand")}
@@ -42,7 +42,7 @@ export default function CityCards() {
           img={require("../../assets/citycard-image.png")}
           weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
-      </SwiperSlide>
+      </SwiperSlide> */}
     </Swiper>
   );
 }

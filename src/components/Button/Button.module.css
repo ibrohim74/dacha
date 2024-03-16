@@ -53,3 +53,9 @@
   font-weight: 600;
   background-color: var(--brand-color-2);
 }
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .btn {
+    align-self: center;
+  }
+}

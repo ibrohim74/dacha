@@ -28,3 +28,17 @@
 .category-link-wrapper:last-child {
   opacity: 0.6;
 }
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .categories-wrapper {
+    flex-direction: column;
+  }
+
+  .category-link-wrapper {
+    width: 100%;
+  }
+
+  .category p {
+    font-size: 16px;
+  }
+}

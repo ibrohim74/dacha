@@ -5,14 +5,15 @@ import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
-import { Badge } from "antd";
 import Button from "../Button/Button";
+// import styles from "./Header.module.css";
 import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
 import Logo from "../logo/Logo";
+import SearchInput from "../searchInput/SearchInput";
 
-const Header = () => {
+const Header = ({ elementsRef }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
@@ -104,22 +105,18 @@ const Header = () => {
       <div className={`${styles["header"]} ${styles["container-md"]}`}>
         <div className={styles["header-left"]}>
           <Logo />
-        </div>
-
-        <div className={styles["header-search-part"]}>
-          <Icons.HeaderSearch />
-          <input type="text" className={styles["header-search"]} />
+          <SearchInput elementsRef={elementsRef} />
         </div>
 
         <div className={styles["header-right"]}>
           <LangDropdown />
 
-          <button
+          {/* <button
             className={styles["mobile-menu-btn"]}
             onClick={handleShowSidebar}
           >
             <Icons.MenuLogo />
-          </button>
+          </button> */}
 
           {isLoggedIn() ? (
             <>

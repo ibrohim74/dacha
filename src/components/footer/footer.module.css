@@ -22,7 +22,7 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
-  gap: 10.5rem;
+  gap: 9rem;
   padding-bottom: 6rem;
   border-bottom: 1px solid var(--font-color-2);
 }
@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  width: 25%;
 }
 
 .footer-brand-motto {
@@ -39,8 +40,15 @@
   width: 80%;
 }
 
-.footer-menu {
+.footer-menus {
   width: 33%;
+  display: flex;
+  align-items: start;
+  gap: 10rem;
+}
+
+.footer-menu {
+  width: 50%;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -97,4 +105,47 @@
 
 .footer-copyright p {
   font-size: 15px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .footer {
+    padding: 30px 0 32px;
+  }
+
+  .footer-main-wrapper {
+    flex-direction: column;
+    padding: 0 2rem 2rem;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    width: 100%;
+  }
+
+  .footer-menus {
+    width: 100%;
+    gap: 2rem;
+  }
+
+  .footer-menu h4,
+  .footer-app-links h4 {
+    margin-bottom: 18px;
+  }
+
+  .footer-brand-motto {
+    font-size: 16px;
+  }
+
+  .footer-app-links-wrapper {
+    flex-direction: row;
+    gap: 9px;
+  }
+
+  .footer-app-link {
+    padding: 8px;
+  }
+
+  .footer-copyright {
+    padding: 2rem;
+  }
 }

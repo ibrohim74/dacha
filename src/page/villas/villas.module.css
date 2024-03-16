@@ -1,10 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
-
-.container-md {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
 .form-wrapper {
   width: 100%;
   border-radius: 20px;
@@ -12,7 +5,26 @@
   background-color: var(--brand-color-2);
 }
 
-.topbar {
+.catalogue-layout {
+  display: flex;
+  align-items: start;
+  gap: 26px;
+  margin-top: 26px;
+}
+
+.catalogue-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .catalogue-layout {
+    flex-direction: column;
+  }
+}
+
+/* .topbar {
   margin-top: 70px;
   display: flex;
   justify-content: space-between;
@@ -40,7 +52,7 @@
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 1.25rem; /* 125% */
+  line-height: 1.25rem; 
   letter-spacing: 2px;
 }
 
@@ -114,7 +126,6 @@
   align-items: center;
 }
 
-/**/
 
 .filter {
   right: calc((100vw - 940px) / 2 + 757px);
@@ -134,7 +145,7 @@
 .filter select {
   all: unset;
   width: 100%;
-  border-bottom: 1px solid; /* Adjust color as needed */
+  border-bottom: 1px solid; 
   margin-top: 20px;
   padding-bottom: 4px;
   appearance: none;
@@ -152,7 +163,7 @@
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 1.25rem; /* 125% */
+  line-height: 1.25rem; 
   letter-spacing: 2px;
 }
 
@@ -162,7 +173,7 @@
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.25rem; /* 125% */
+  line-height: 1.25rem;
   letter-spacing: 2px;
   opacity: 0.5;
 }
@@ -181,16 +192,15 @@
   cursor: pointer;
 }
 
-/*helpers*/
 
 .title-large {
   color: var(--Text, #363940);
   font-feature-settings: "clig" off, "liga" off;
-  /* H1 */
+  
   font-size: 2.25rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 2.6875rem; /* 119.444% */
+  line-height: 2.6875rem;
 }
 
 .flex {
@@ -223,4 +233,4 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
+} */

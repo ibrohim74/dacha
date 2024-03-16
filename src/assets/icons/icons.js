@@ -36,6 +36,7 @@ import { ReactComponent as Food } from "./food.svg";
 import { ReactComponent as Housing } from "./housing.svg";
 import { ReactComponent as Entertainment } from "./entertainment.svg";
 import { ReactComponent as Folder } from "./folder.svg";
+import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
 
 export const Icons = {
   Logo,
@@ -76,4 +77,5 @@ export const Icons = {
   Housing,
   Entertainment,
   Folder,
+  SidebarArrow,
 };
