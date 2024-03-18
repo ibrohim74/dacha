@@ -44,32 +44,6 @@ const Profile = () => {
     }
   };
 
-  const getPhoto = async () => {
-    setLoadingImg(true);
-    try {
-      const res = await $authHost.get(`/media/users/${JWT.userId}`, {
-        responseType: "arraybuffer",
-      });
-      if (res?.status === 200){
-        const imageData = res.data;
-        const base64Image = btoa(
-            new Uint8Array(imageData).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ""
-            )
-        );
-        const dataUrl = `data:image/jpeg;base64,${base64Image}`;
-        setImgProfile(dataUrl);
-        setLoadingImg(false);
-      }
-      setLoadingImg(false);
-    } catch (e) {
-      setLoadingImg(false);
-      console.log(e);
-    }
-  };
-
-
   const getUser = async () => {
     const res = await $host.get("user/" + JWT.userId);
     setCurrentUser(res.data);
@@ -77,7 +51,6 @@ const Profile = () => {
   };
   useEffect(() => {
     getUser();
-    getPhoto();
   }, []);
   const handleSend = () => {
     sendProfile_data(initialValues).then((r) => {
@@ -118,6 +91,7 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  console.log(CurrentUser)
   return (
     <Box className={`${styles["profileBox"]} ${styles["container-md"]}`}>
       {/* <Header_adminPage title="PROFILE" subtitle="Update profile" /> */}
@@ -134,9 +108,9 @@ const Profile = () => {
             showUploadList={false}
             onChange={handleChange}
           >
-            {imgProfile ? (
+            {CurrentUser?.image_path ? (
               <img
-                src={imgProfile}
+                src={`https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net${CurrentUser.image_path}`}
                 alt="avatar"
                 style={{
                   width: "90%",
