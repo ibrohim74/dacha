@@ -84,7 +84,7 @@ const Profile = () => {
       if (r?.status === 200) {
         message.success("Update");
         setTimeout(() => {
-          window.location.href = window.location.href;
+          window.location.reload()
         }, 1500);
       }
     }).catch(e=>{

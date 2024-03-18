@@ -11,10 +11,13 @@ import { useNavigate } from "react-router-dom";
 import { ANNOUNCEMENT, CABINET } from "../../../processes/utils/consts";
 
 const CreateAnnouncement = () => {
-  const [inputLeft, setInputLeft] = useState(null);
+  const [inputLeft, setInputLeft] = useState({
+    price:0
+  });
   const [initialState, setInitialState] = useState({
     type: "dacha",
     tags: "string",
+    price:0
   });
   console.log(initialState)
   const [loading, setLoading] = useState(false);

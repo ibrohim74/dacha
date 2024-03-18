@@ -23,7 +23,7 @@ const UserRequestPage = () => {
 
     useEffect(() => {
         GetUserBooking().then(r => {
-            if (r.status === 200) {
+            if (r?.status === 200) {
                 setBooking(r.data.bookings);
                 setDachasIdList(r.data.bookings.map((item) => item.accommodation_id));
             }

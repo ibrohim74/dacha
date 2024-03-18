@@ -29,8 +29,7 @@ const BookingUser = (props) => {
     }, {}));
     return (
         <div>
-            {
-                uniqueBooking?.map((item, index) => {
+            {booking.length > 0 ? uniqueBooking?.map((item, index) => {
                     const itemDacha = props.dachasList.find(dacha => dacha.id === item.accommodation_id);
                     if (itemDacha) {
                         const currentPhotoUrls = props.dachaImg[index]?.[0] || "";
@@ -71,9 +70,9 @@ const BookingUser = (props) => {
                             </div>
                         );
                     } else {
-                        return null; // Agar itemDacha topilmasa, null qaytarib chiqamiz
+                        return null;
                     }
-                })
+                }) : 'нет информации'
             }
 
         </div>

@@ -31,7 +31,7 @@ const Announcement_Item_Page = () => {
         type: 'dacha',
         price_type: '',
         // title: '',
-        price: '',
+        price: 0,
         info: '',
         area: '',
         floors: '',
@@ -165,16 +165,18 @@ const Announcement_Item_Page = () => {
                                     />
                                 </>
                             ) : (
-                                <Input
+                                <Input  
+                                    placeholder="Цена*"
                                     addonAfter={selectAfter}
-                                    value={initialState?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-                                    type={'number'}
-
+                                    value={initialState?.price
+                                        ?.toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                                    type={"text"}
                                     onChange={(e) => {
-                                        const cleanedValue = e.target.value.replace(/\s/g, '');
+                                        const cleanedValue = e.target.value.replace(/\s/g, "");
                                         setInitialState({
                                             ...initialState,
-                                            price: cleanedValue !== '' ? parseInt(cleanedValue) : 0,
+                                            price: cleanedValue !== "" ? parseInt(cleanedValue) : 0,
                                         });
                                     }}
                                     onBlur={() => {

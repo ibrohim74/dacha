@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { HOME_ROUTE, LOGIN_ROUTE } from "../../processes/utils/consts";
+import {CABINET, HOME_ROUTE, LOGIN_ROUTE, REQUEST_ANNOUNCEMENT, REQUEST_USER} from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
@@ -11,7 +11,7 @@ import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
 
-const Header = () => {
+const Header = (props) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
@@ -45,6 +45,7 @@ const Header = () => {
   const removeToken = () => {
     localStorage.removeItem("token");
     setShowSidebar(false); // This will cause the component to re-render
+    window.location.assign(HOME_ROUTE)
   };
 
   const handleClickOutside = (event) => {
@@ -97,10 +98,9 @@ const Header = () => {
   useEffect(() => {
     getRequestsUser();
   }, [currentUser.role]);
-
   return (
     <>
-      <div className={`${styles["header"]} ${styles["container-md"]}`}>
+      <div className={`${styles["header"]} ${styles["container-md"]}`} style={props.props_style && props.props_style.headerSeller}>
         <div className={styles["header-left"]}>
           <Link className={styles["header-logo"]} to={HOME_ROUTE}>
             <Icons.Logo />
@@ -119,10 +119,19 @@ const Header = () => {
 
           {isLoggedIn() ? (
             <>
-              {currentUser && (
-                <Badge count={userRequest.length} showZero>
-                  <Icons.Bell className={styles["notification-btn"]} />
-                </Badge>
+              {currentUser.role === 'seller' && (
+                  <Link to={CABINET+REQUEST_ANNOUNCEMENT}>
+                    <Badge count={userRequest.length} showZero>
+                      <Icons.Bell className={styles["notification-btn"]} />
+                    </Badge>
+                  </Link>
+              )}
+              {currentUser.role === 'user' && (
+                  <Link to={CABINET+REQUEST_USER}>
+                    <Badge count={userRequest.length} showZero>
+                      <Icons.Bell className={styles["notification-btn"]} />
+                    </Badge>
+                  </Link>
               )}
               <div
                 className={styles["header-profile"]}
@@ -130,8 +139,8 @@ const Header = () => {
               >
                 <img
                   src={
-                    currentUser.profilePic
-                      ? currentUser.profilePic
+                    currentUser?.image_path
+                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net${currentUser.image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"
