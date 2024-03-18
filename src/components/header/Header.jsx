@@ -5,13 +5,16 @@ import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
-import { Badge } from "antd";
 import Button from "../Button/Button";
+// import styles from "./Header.module.css";
 import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
+import Logo from "../logo/Logo";
+import SearchInput from "../searchInput/SearchInput";
+import {Badge} from "antd";
 
-const Header = (props) => {
+const Header = (props,{ elementsRef }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
@@ -98,38 +101,38 @@ const Header = (props) => {
   useEffect(() => {
     getRequestsUser();
   }, [currentUser.role]);
+
   return (
     <>
       <div className={`${styles["header"]} ${styles["container-md"]}`} style={props.props_style && props.props_style.headerSeller}>
         <div className={styles["header-left"]}>
-          <Link className={styles["header-logo"]} to={HOME_ROUTE}>
-            <Icons.Logo />
-            <p>Travid</p>
-          </Link>
+          <Logo />
+          <SearchInput elementsRef={elementsRef} />
         </div>
+
         <div className={styles["header-right"]}>
           <LangDropdown />
 
-          <button
+          {/* <button
             className={styles["mobile-menu-btn"]}
             onClick={handleShowSidebar}
           >
             <Icons.MenuLogo />
-          </button>
+          </button> */}
 
           {isLoggedIn() ? (
             <>
               {currentUser.role === 'seller' && (
-                  <Link to={CABINET+REQUEST_ANNOUNCEMENT}>
-                    <Badge count={userRequest.length} showZero>
-                      <Icons.Bell className={styles["notification-btn"]} />
+                  <Link to={CABINET+REQUEST_ANNOUNCEMENT} style={{width:'25px' , height:'25px'}}>
+                    <Badge count={userRequest.length} showZero style={{width:'100%' , height:'100%'}}>
+                      <Icons.Bell className={styles["notification-btn"]} style={{width:'100%' , height:'100%'}}/>
                     </Badge>
                   </Link>
               )}
               {currentUser.role === 'user' && (
-                  <Link to={CABINET+REQUEST_USER}>
-                    <Badge count={userRequest.length} showZero>
-                      <Icons.Bell className={styles["notification-btn"]} />
+                  <Link to={CABINET+REQUEST_USER } style={{width:'25px' , height:'25px'}}>
+                    <Badge count={userRequest.length} showZero style={{width:'100%' , height:'100%'}}>
+                      <Icons.Bell className={styles["notification-btn"]} style={{width:'100%' , height:'100%'}} />
                     </Badge>
                   </Link>
               )}

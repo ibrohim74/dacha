@@ -106,3 +106,14 @@
   border: none;
   outline: none;
 }
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .cottage-wrapper {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .cottage-inner-wrapper {
+    width: 100%;
+  }
+}

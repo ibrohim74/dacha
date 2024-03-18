@@ -26,6 +26,7 @@
   flex-direction: column;
   align-items: start;
   justify-content: start;
+  gap: 12px;
   margin-bottom: 4.5rem;
 }
 
@@ -38,17 +39,56 @@
   font-size: 14px;
   color: var(--font-color-main);
   text-align: start;
+  width: 60%;
 }
 
 .city-card-weather-box {
-  background-color: var(--brand-color-2);
-  border-radius: 12px;
-  height: 42px;
-  width: 100px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  position: absolute;
+  top: 45%;
+  right: 10%;
   font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 3rem;
+}
+
+.city-card-weather-box p {
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .city-card {
+    flex-direction: column;
+    justify-content: unset;
+    height: 20rem;
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .city-card-info {
+    margin-bottom: 0;
+  }
+
+  .city-card-info h4 {
+    font-size: 28px;
+  }
+
+  .city-card-info p {
+    width: 100%;
+  }
+
+  .city-card-img {
+    width: 300px;
+    height: 170px;
+  }
+
+  .city-card-weather-box {
+    top: 59%;
+    right: 32%;
+    font-size: 14px;
+  }
+
+  .city-card-weather-box p {
+    font-weight: 600;
+  }
 }

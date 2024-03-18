@@ -1,28 +1,83 @@
 import React from "react";
 import { Icons } from "../../assets/icons/icons";
 import styles from "./footer.module.css";
+import Logo from "../logo/Logo";
+import { useTranslation } from "react-i18next";
+import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const date = new Date();
+
   return (
-    <div className={`${styles["footer"]} ${styles["container-md"]}`}>
-      <div className={styles["footer-top"]}>
-        <div className={styles["chat-icon"]}>
-          <Icons.Chat />
-        </div>
-      </div>
-      <div className={styles["footer-bottom"]}>
-        <div>
-          <div className={styles["footer-text"]}>В приложени ещё удобнее</div>
-          <div className={`${styles["footer-text"]} ${styles["btn"]}`}>
-            О компании
+    <footer className={styles["footer"]}>
+      <div
+        className={`${styles["container-md"]} ${styles["footer-inner-wrapper"]} `}
+      >
+        <div className={styles["footer-main-wrapper"]}>
+          <div className={styles["footer-brand"]}>
+            <Logo />
+            <p className={styles["footer-brand-motto"]}>{t("footer_motto")}</p>
+          </div>
+
+          <div className={styles["footer-menus"]}>
+            <ul className={styles["footer-menu"]}>
+              <h4>{t("footer_about")}</h4>
+              <li>
+                <NavLink>{t("footer_about_us")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_features")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_news")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_careers")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_faq")}</NavLink>
+              </li>
+            </ul>
+
+            <ul className={styles["footer-menu"]}>
+              <h4>{t("footer_support")}</h4>
+              <li>
+                <NavLink>{t("footer_account")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_support_center")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_feedback")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_contact")}</NavLink>
+              </li>
+              <li>
+                <NavLink>{t("footer_accessibility")}</NavLink>
+              </li>
+            </ul>
+          </div>
+          <div className={styles["footer-app-links"]}>
+            <h4>{t("footer_get_app")}</h4>
+            <div className={styles["footer-app-links-wrapper"]}>
+              <Link to="" className={styles["footer-app-link"]}>
+                <Icons.AppStore />
+              </Link>
+              <Link to="" className={styles["footer-app-link"]}>
+                <Icons.GooglePlay />
+              </Link>
+            </div>
           </div>
         </div>
-        <div>
-          <Icons.AppStore className={styles["btn"]} />
-          <Icons.GooglePlay className={styles["btn"]} />
+        <div className={styles["footer-copyright"]}>
+          <p>
+            {t("footer_copyright")} {date.getFullYear()} {t("footer_reserved")}
+          </p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

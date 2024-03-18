@@ -9,31 +9,8 @@
 .header-left {
   display: flex;
   justify-content: space-between;
+  width: 70%;
   gap: 1.5rem;
-}
-
-.header-logo {
-  all: unset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  color: #1f1f1f;
-  cursor: pointer;
-}
-
-.header-logo > p {
-  text-align: right;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 110%;
-  letter-spacing: 2px;
-}
-
-.header-logo svg {
-  width: 44px;
-  height: 44px;
 }
 
 .header-profile {
@@ -66,17 +43,6 @@
 .header-right > * {
   cursor: pointer;
 }
-.auth-btn {
-  all: unset;
-  color: #1f1f1f;
-  text-align: right;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
 
 .language-btn {
   width: 26px;
@@ -86,26 +52,9 @@
   animation: focus 0.5s ease-in-out;
 }
 
-.notification-btn {
-  width: 26px;
-  height: 26px;
-}
 .sidebar-btn > svg {
   width: 30px;
   height: 30px;
-}
-
-.notification-btn:hover {
-  animation: giggle 1s ease-in-out;
-}
-
-.account-menu div {
-  color: #1f1f1f;
-  font-feature-settings: "clig" off, "liga" off;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem; /* 142.857% */
-  letter-spacing: 2px;
 }
 
 .mobile_nav {
@@ -160,24 +109,22 @@
 }
 
 /* responsiveness */
-@media (max-width: 360px) {
-  .Header {
-    flex-direction: column-reverse;
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .header {
     align-items: start;
+    flex-direction: column;
     gap: 1rem;
     margin: 3rem 1rem 0;
   }
 
-  .header-logo,
-  .language-btn,
-  .auth-routes {
-    display: none;
+  .header-left {
+    width: 100%;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .header-left {
-    align-items: start;
-    flex-direction: column;
-    gap: 0.5rem;
+  .header-right {
+    align-self: flex-end;
   }
 
   .mobile-menu-btn {

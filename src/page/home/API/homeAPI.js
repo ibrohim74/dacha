@@ -4,7 +4,6 @@ export const GetAllDacha =async (page)=>{
     try {
         const res =await $authHost.get('dachas' ,{params:{page:page}})
         console.log(res)
-        setTimeout(()=>{})
        return res
     }catch (e){
         console.log(e)

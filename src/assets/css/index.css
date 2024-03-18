@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,7 +11,7 @@ body,
 .content {
   height: 100%;
   width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 :root {
@@ -34,6 +32,11 @@ html {
   background-color: var(--bg-color);
 }
 
+a {
+  text-decoration: none;
+  all: unset;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -41,7 +44,7 @@ input::-webkit-inner-spin-button {
 }
 
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .container {
@@ -105,3 +108,28 @@ input[type="number"] {
 .react-datepicker-popper {
   z-index: 8;
 }
+
+.highlight {
+  background-color: yellow;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .react-datepicker-wrapper {
+    width: 100% !important;
+  }
+
+  .swiper-slide {
+    width: 100% !important;
+    height: 20rem !important;
+  }
+
+  .swiper-wrapper {
+    height: 20rem !important;
+  }
+}
+
+/* @media (min-width: 428px) {
+  .swiper-slide {
+    width: 400px !important;
+  }
+} */

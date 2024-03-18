@@ -1,42 +1,76 @@
 import styles from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
-import {
-  CABINET,
-  LOGIN_ROUTE,
-  PROFILE,
-  REGISTER_ROUT, REQUEST_USER,
-} from "../../processes/utils/consts";
+import { jwtDecode } from "jwt-decode";
+import { CABINET, PROFILE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 export default function Sidebar({ onLogOut, user }) {
-  const { image_path, username, phone } = user;
+  const { username, phone } = user;
+  const [imgProfile, setImgProfile] = useState();
+  const [loadingImg, setLoadingImg] = useState(false);
+  const JWT = jwtDecode(localStorage.getItem("token"));
   const { t } = useTranslation();
-  console.log(user)
+  console.log(user);
+
+  useEffect(() => {
+    const getPhoto = async () => {
+      setLoadingImg(true);
+      try {
+        const res = await $authHost.get(`/media/users/${JWT.userId}`, {
+          responseType: "arraybuffer",
+        });
+        if (res?.status === 200) {
+          const imageData = res.data;
+          const base64Image = btoa(
+            new Uint8Array(imageData).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
+          );
+          const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+          setImgProfile(dataUrl);
+          setLoadingImg(false);
+        }
+        setLoadingImg(false);
+      } catch (e) {
+        setLoadingImg(false);
+        console.log(e);
+      }
+    };
+    getPhoto();
+  }, []);
+
   return (
-    <div className={styles["sidebar"]}>
-      <div className={styles["sidebar-profile"]}>
-        <img
-          src={
-            image_path
-              ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net${image_path}`
-              : require("../../assets/profile_placeholder.jpg")
-          }
-          alt="profile avatar placeholder"
-        />
-        <h4>{username}</h4>
-        <p>{phone ? phone : ""}</p>
+    <div className={styles["sidebar-container"]}>
+      <div className={styles["sidebar-arrow"]}>
+        <Icons.SidebarArrow />
       </div>
 
-      <div className={styles["sidebar-links-wrap"]}>
-        <Link className={styles["sidebar-link"]} to={`${CABINET}${PROFILE}`}>
-          <Icons.Profile />
-          <div className={styles["sidebar-link-item"]}>
-            {t("sidebar_profile")}
-            <Icons.ChevronRight />
-          </div>
-        </Link>
-        {user?.role === 'user' && (<>
+      <div className={styles["sidebar"]}>
+        <div className={styles["sidebar-profile"]}>
+          <img
+            src={
+              imgProfile
+                ? imgProfile
+                : require("../../assets/profile_placeholder.jpg")
+            }
+            alt="profile avatar placeholder"
+          />
+          <h4>{username}</h4>
+          <p>{phone ? phone : ""}</p>
+        </div>
+
+        <div className={styles["sidebar-links-wrap"]}>
+          <Link className={styles["sidebar-link"]} to={`${CABINET}${PROFILE}`}>
+            <Icons.Profile />
+            <div className={styles["sidebar-link-item"]}>
+              {t("sidebar_profile")}
+              <Icons.ChevronRight />
+            </div>
+          </Link>
+
           <Link className={styles["sidebar-link"]}>
             <Icons.Wallet />
             <div className={styles["sidebar-link-item"]}>
@@ -44,7 +78,7 @@ export default function Sidebar({ onLogOut, user }) {
               <Icons.ChevronRight />
             </div>
           </Link>
-          <Link className={styles["sidebar-link"]} to={CABINET+REQUEST_USER}>
+          <Link className={styles["sidebar-link"]}>
             <Icons.Notification />
             <div className={styles["sidebar-link-item"]}>
               {t("sidebar_bookings")}
@@ -58,16 +92,15 @@ export default function Sidebar({ onLogOut, user }) {
               <Icons.ChevronRight />
             </div>
           </Link>
-        </>)}
 
-
-        <Link className={styles["sidebar-link"]} onClick={onLogOut}>
-          <Icons.Logout />
-          <div className={styles["sidebar-link-item"]}>
-            {t("sidebar_logout")}
-            <Icons.ChevronRight />
-          </div>
-        </Link>
+          <Link className={styles["sidebar-link"]} onClick={onLogOut}>
+            <Icons.Logout />
+            <div className={styles["sidebar-link-item"]}>
+              {t("sidebar_logout")}
+              <Icons.ChevronRight />
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

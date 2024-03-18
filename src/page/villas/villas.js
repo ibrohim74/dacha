@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-
 import styles from "./villas.module.css";
-import Footer from "../../components/footer/footer";
-import Header from "../../components/header/Header";
 // test json
 import data from "../../assets/test-items.json";
 import {
@@ -16,8 +13,10 @@ import CottageCard from "../../components/cottages/CottageCard";
 import Form from "../../components/form/Form";
 import Filter from "../../components/filter/Filter";
 import Button from "../../components/Button/Button";
+import AppLayout from "../../components/appLayout/AppLayout";
 
 const Villas = () => {
+  const elementsRef = useRef(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get("search");
@@ -78,9 +77,7 @@ const Villas = () => {
   console.log(products);
 
   return (
-    <div className={styles["container-md"]}>
-      <Header />
-
+    <AppLayout elementsRef={elementsRef}>
       <div className={styles["form-wrapper"]}>
         <Form />
       </div>
@@ -94,9 +91,7 @@ const Villas = () => {
           <Button type="full-width-white">Смотреть больше</Button>
         </div>
       </div>
-
-      <Footer />
-    </div>
+    </AppLayout>
   );
 };
 
