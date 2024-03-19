@@ -20,7 +20,7 @@ const Calendar = (data) => {
         try {
             const JWT = jwtDecode(localStorage.getItem('token'));
             const res = await $authHost.get(`/seller/${JWT.userId}/bookings`);
-            const filterRes = res?.data.bookings.filter(e=> e.accommodation_id === parseInt(data.idDacha))
+            const filterRes = res?.data.filter(e=> e.accommodation_id === parseInt(data.idDacha))
             setDataEvents(filterRes);
             data.setEvents(filterRes)
         } catch (e) {
@@ -37,7 +37,7 @@ const Calendar = (data) => {
             const formattedData = await Promise.all(dataEvents?.map(async (event) => {
                 const user = await GetUserById(event?.customer_id);
                 return {
-                    id: event?.booking_id,
+                    id: event?.id,
                     title: user.username,
                     start: new Date(event?.start_day),
                     end: new Date(event?.end_day),

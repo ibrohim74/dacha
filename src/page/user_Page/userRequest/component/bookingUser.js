@@ -10,9 +10,10 @@ const BookingUser = (props) => {
     const { dachasIdList, setDachasIdList } = props;
     useEffect(() => {
         GetUserBooking().then(r => {
+            console.log(r)
             if (r.status === 200) {
-                setBooking(r?.data?.bookings);
-                setDachasIdList(r?.data?.bookings?.map((item) => item.accommodation_id));
+                setBooking(r?.data);
+                setDachasIdList(r?.data?.map((item) => item.accommodation_id));
             } else {
                 console.error("getUserRequest:", r.data);
             }

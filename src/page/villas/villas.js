@@ -14,6 +14,7 @@ import Form from "../../components/form/Form";
 import Filter from "../../components/filter/Filter";
 import Button from "../../components/Button/Button";
 import AppLayout from "../../components/appLayout/AppLayout";
+import {GetAllDacha} from "../home/API/homeAPI";
 
 const Villas = () => {
   const elementsRef = useRef(null);
@@ -26,6 +27,7 @@ const Villas = () => {
   const [selectedSort, setSelectedSort] = useState(0); // sorts: 0 = "price", 1 = "score"
   const [filteredItems, setFilteredItems] = useState([]); // Use state for filteredItems
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
 
   // Map type and sort to actual values
   const typeMap = ["villa", "hotel", "restaurant"];
@@ -57,24 +59,18 @@ const Villas = () => {
   //test operations on test-items.json
   const allItemIds = data.items.map((item) => item.id);
 
-  // working with actual db:
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const url =
-          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas";
-        const response = await axios.get(url);
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      }
-    };
+    GetAllDacha(page)
+        .then(r => {
+          setProducts(r.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  }, [page]);
 
-    fetchProducts();
-  }, []);
 
-  console.log(products);
 
   return (
     <AppLayout elementsRef={elementsRef}>
@@ -88,7 +84,7 @@ const Villas = () => {
           {products.map((cottage) => (
             <CottageCard cottage={cottage} key={cottage.id} />
           ))}
-          <Button type="full-width-white">Смотреть больше</Button>
+          <Button type="full-width-white" onClick={() => setPage(page + 1)}>Смотреть больше</Button>
         </div>
       </div>
     </AppLayout>

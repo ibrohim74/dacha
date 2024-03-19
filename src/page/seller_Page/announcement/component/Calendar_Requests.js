@@ -15,7 +15,7 @@ const CalendarRequests = (data) => {
     const [request, setRequest] = useState([]);
     const [booking, setBooking] = useState([]);
     const [bookingClient, setBookingClient] = useState([]);
-
+    console.log(data)
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const options = { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' };
@@ -83,8 +83,9 @@ const CalendarRequests = (data) => {
     useEffect(() => {
         GetRequestAPI()
             .then(r => {
+                console.log(r)
                 if (r.status === 200) {
-                    const filterReq = r.data.requests.filter(e => e.accommodation_id === parseInt(data.idDacha));
+                    const filterReq = r.data.filter(e => e.accommodation_id === parseInt(data.idDacha));
                     setRequest(filterReq);
                     console.log(r)
                 }
@@ -95,7 +96,7 @@ const CalendarRequests = (data) => {
             .then(r => {
                 console.log(r)
                 if (r.status === 200) {
-                    const filterReq = r.data.bookings.filter(e => e.accommodation_id === parseInt(data.idDacha));
+                    const filterReq = r.data.filter(e => e.accommodation_id === parseInt(data.idDacha));
                     setBooking(filterReq);
                 }
             })       
@@ -104,7 +105,7 @@ const CalendarRequests = (data) => {
         getClientRequest();
         getClientBooking();
     }, [data?.events]);
-
+    console.log(booking)
     return (
         <div>
             <Box>
@@ -163,10 +164,10 @@ const CalendarRequests = (data) => {
                                 </div>
                             </div>
                             <div className={styles.req_footer}>
-                                <div className={styles.requestAccept} onClick={() => acceptRequest(item?.booking_id)}>
+                                <div className={styles.requestAccept} onClick={() => acceptRequest(item?.id)}>
                                     <Icons.AcceptIcon />
                                 </div>
-                                <div className={styles.requestDeny} onClick={() => denyRequest(item?.booking_id)}>
+                                <div className={styles.requestDeny} onClick={() => denyRequest(item?.id)}>
                                     <Icons.DenyIcon />
                                 </div>
                             </div>

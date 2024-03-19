@@ -19,10 +19,30 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
     const getFileSizeInMB = (file) => {
         return file.size / (1024 * 1024);
     };
+    const onFileSelect = async (e) => {
+        const files = e.target.files;
+        if (files?.length === 0) return;
+
+        if (images?.length + files?.length > MAX_IMAGES_COUNT) {
+            message.error(`Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
+            return;
+        }
+
+        for (let i = 0; i < files?.length; i++) {
+            if (files[i].type.split('/')[0] !== 'image') continue;
+            const fileSizeInMB = getFileSizeInMB(files[i]);
+            if (fileSizeInMB <= MAX_FILE_SIZE_IN_MB) {
+                await uploadPhotoToServer(files[i]);
+            } else {
+                message.error(`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
+            }
+        }
+    };
+
     const uploadPhotoToServer = async (file) => {
         setLoadingFile(true);
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('files', file);
 
         try {
             const response = await $authHost.post(`/dacha/${dachaId}/upload_photo`, formData, {
@@ -40,12 +60,12 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
                     name: `img`,
                     url: "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" + response.data?.file_path
                 }
-            ])
+            ]);
             if (response?.status === 200){
                 message.success('Rasmlar muvaffaqiyatli yuklandi');
-                window.location.reload()}
-            // Fetch updated images from the server
-            fetchImagesFromServer();
+                fetchImagesFromServer();
+                setInterval(()=>{window.location.reload()},3000  )
+            }
         } catch (error) {
             console.error('Error uploading photo to server:', error);
             // Handle the error
@@ -53,6 +73,8 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
             setLoadingFile(false);
         }
     };
+
+
     const fetchImagesFromServer = async () => {
         setDachaImg(dacha?.photos_path.split('\n').filter(Boolean));
 
@@ -74,25 +96,7 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
     useEffect(() => {
         fetchImagesFromServer()
     }, [dacha]);
-    const onFileSelect = async (e) => {
-        const files = e.target.files;
-        if (files?.length === 0) return;
 
-        if (images?.length + files?.length > MAX_IMAGES_COUNT) {
-            message.error(`Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
-            return;
-        }
-
-        for (let i = 0; i < files?.length; i++) {
-            if (files[i].type.split('/')[0] !== 'image') continue;
-            const fileSizeInMB = getFileSizeInMB(files[i]);
-            if (fileSizeInMB <= MAX_FILE_SIZE_IN_MB) {
-                await uploadPhotoToServer(files[i]);
-            } else {
-                message.error(`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
-            }
-        }
-    };
     const deleteImage = (image, index) => {
         const urlWithoutPrefix = image.replace("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net", "");
         DeleteDachaPhotoAPI(urlWithoutPrefix).then(r => {
