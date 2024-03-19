@@ -22,12 +22,14 @@ const Home = () => {
   const { t } = useTranslation();
   const elementsRef = useRef(null);
 
+
   useEffect(() => {
     GetAllDacha(buttonAllDach).then((r) => {
       if (r?.status === 200) {
         setDachas(r.data);
       }
     });
+
   }, [buttonAllDach]);
   useEffect(() => {
     GetAllHostel(buttonAllHotel).then((r) => {

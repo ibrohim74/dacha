@@ -1,17 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE } from "../../processes/utils/consts";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  CABINET,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  REQUEST_ANNOUNCEMENT,
+  REQUEST_USER,
+} from "../../processes/utils/consts";
+import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
 import Button from "../Button/Button";
+// import styles from "./Header.module.css";
 import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
 import Logo from "../logo/Logo";
 import SearchInput from "../searchInput/SearchInput";
+import { Badge } from "antd";
 
-const Header = ({ elementsRef }) => {
+const Header = (props, { elementsRef }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
@@ -45,6 +54,7 @@ const Header = ({ elementsRef }) => {
   const removeToken = () => {
     localStorage.removeItem("token");
     setShowSidebar(false); // This will cause the component to re-render
+    window.location.assign(HOME_ROUTE);
   };
 
   const handleClickOutside = (event) => {
@@ -100,7 +110,10 @@ const Header = ({ elementsRef }) => {
 
   return (
     <>
-      <div className={`${styles["header"]} ${styles["container-md"]}`}>
+      <div
+        className={`${styles["header"]} ${styles["container-md"]}`}
+        style={props.props_style && props.props_style.headerSeller}
+      >
         <div className={styles["header-left"]}>
           <Logo />
           <SearchInput elementsRef={elementsRef} />
@@ -111,14 +124,48 @@ const Header = ({ elementsRef }) => {
 
           {isLoggedIn() ? (
             <>
+              {currentUser.role === "seller" && (
+                <Link
+                  to={CABINET + REQUEST_ANNOUNCEMENT}
+                  style={{ width: "25px", height: "25px" }}
+                >
+                  <Badge
+                    count={userRequest.length}
+                    showZero
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <Icons.Bell
+                      className={styles["notification-btn"]}
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  </Badge>
+                </Link>
+              )}
+              {currentUser.role === "user" && (
+                <Link
+                  to={CABINET + REQUEST_USER}
+                  style={{ width: "25px", height: "25px" }}
+                >
+                  <Badge
+                    count={userRequest.length}
+                    showZero
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <Icons.Bell
+                      className={styles["notification-btn"]}
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  </Badge>
+                </Link>
+              )}
               <div
                 className={styles["header-profile"]}
                 onClick={handleShowSidebar}
               >
                 <img
                   src={
-                    currentUser.profilePic
-                      ? currentUser.profilePic
+                    currentUser?.image_path
+                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net${currentUser.image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"
