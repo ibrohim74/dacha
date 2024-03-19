@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { HOME_ROUTE, LOGIN_ROUTE } from "../../processes/utils/consts";
-import { Icons } from "../../assets/icons/icons";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE } from "../../processes/utils/consts";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
 import Button from "../Button/Button";
-// import styles from "./Header.module.css";
 import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
@@ -110,13 +108,6 @@ const Header = ({ elementsRef }) => {
 
         <div className={styles["header-right"]}>
           <LangDropdown />
-
-          {/* <button
-            className={styles["mobile-menu-btn"]}
-            onClick={handleShowSidebar}
-          >
-            <Icons.MenuLogo />
-          </button> */}
 
           {isLoggedIn() ? (
             <>

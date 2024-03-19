@@ -128,8 +128,9 @@ input[type="number"] {
   }
 }
 
-/* @media (min-width: 428px) {
+@media only screen and (min-width: 561px) and (max-width: 835px) {
   .swiper-slide {
-    width: 400px !important;
+    width: 100% !important;
+    /* height: 20rem !important; */
   }
-} */
+}

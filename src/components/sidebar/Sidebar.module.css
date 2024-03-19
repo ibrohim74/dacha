@@ -88,9 +88,17 @@
 }
 
 @media only screen and (min-width: 360px) and (max-width: 560px) {
-  .sidebar {
+  .sidebar-container {
     width: 75%;
-    top: 29%;
+    top: 28%;
     right: 10%;
+  }
+}
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .sidebar-container {
+    width: 40%;
+    top: 15%;
+    right: 5%;
   }
 }

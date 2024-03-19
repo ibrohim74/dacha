@@ -19,7 +19,10 @@ import {
   REQUEST_ANNOUNCEMENT,
   REQUEST_USER,
   PLACE,
-  PLACE_ADMIN, FORGOT_PASSWORD,
+  PLACE_ADMIN,
+  FORGOT_PASSWORD,
+  COTTAGES_CATALOGUE_ROUTE,
+  HOTELS_CATALOGUE_ROUTE,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
@@ -44,9 +47,11 @@ import Place from "../../page/place/place";
 import PlaceAdmin from "../../page/admin/placeMap/placeAdmin";
 import ForgotPassword from "../../page/auth/forgot_password";
 import ChangePass from "../../components/change_pass";
-export const Public =  [
+import CottagesCatalogue from "../../page/catalogues/CottagesCatalogue";
+import HotelsCatalogue from "../../page/catalogues/HotelsCatalogue";
+export const Public = [
   {
-    Component: <Home/>,
+    Component: <Home />,
     path: HOME_ROUTE,
   },
   {
@@ -64,6 +69,14 @@ export const Public =  [
   {
     Component: <Villas />,
     path: VILLAS_ROUTE,
+  },
+  {
+    Component: <CottagesCatalogue />,
+    path: COTTAGES_CATALOGUE_ROUTE,
+  },
+  {
+    Component: <HotelsCatalogue />,
+    path: HOTELS_CATALOGUE_ROUTE,
   },
   {
     Component: <Item_Page />,
@@ -136,10 +149,10 @@ export const Seller = [
     Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
   },
-  {
-    Component: <Hostel />,
-    path: HOSTEL,
-  },
+  // {
+  //   Component: <Hostel />,
+  //   path: HOSTEL,
+  // },
   {
     Component: <UpdateHostel />,
     path: UPDATE_HOSTEL,

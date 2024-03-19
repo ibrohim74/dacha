@@ -116,4 +116,22 @@
   .cottage-inner-wrapper {
     width: 100%;
   }
+
+  .cottage-img {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .cottage-wrapper {
+    flex-direction: column;
+  }
+
+  .cottage-inner-wrapper {
+    width: 100%;
+  }
+
+  .cottage-img {
+    width: 100%;
+  }
 }
