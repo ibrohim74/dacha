@@ -92,3 +92,21 @@
     font-weight: 600;
   }
 }
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .city-card {
+    gap: 0;
+  }
+
+  .city-card-info h4 {
+    font-size: 32px;
+  }
+
+  .city-card-info p {
+    width: 100%;
+  }
+
+  .city-card-img {
+    width: 60%;
+  }
+}

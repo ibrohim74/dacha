@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../assets/icons/icons";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export default function CataloguePreview({ items, route, title }) {
   const slicedItems = items.slice(0, 3);
@@ -45,6 +46,7 @@ export default function CataloguePreview({ items, route, title }) {
 }
 
 function CataloguePreviewCard({ title, location, price, image, rating }) {
+  const [userRating, setUserRating] = useState("");
   const MAX_LOCATION_LENGTH = 40;
 
   const handleClick = () => {};
@@ -71,7 +73,7 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
           <p className={styles["card-info-price"]}>{price}</p>
         </div>
 
-        <StarRating rating={rating} />
+        <StarRating onSetRating={setUserRating} />
       </div>
     </div>
   );

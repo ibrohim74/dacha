@@ -108,3 +108,17 @@
     height: unset;
   }
 }
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .cards-preview-wrapper {
+    align-items: start;
+  }
+
+  .card-infobox {
+    width: 100%;
+    flex-direction: column;
+    height: unset;
+    gap: 1rem;
+    padding: 8px 16px;
+  }
+}

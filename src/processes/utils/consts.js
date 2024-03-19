@@ -8,6 +8,9 @@ export const PRODUCT_HOSTEL_ROUTE = "/hostel/:id";
 export const POLICY = "/policy";
 export const PLACE = "/place";
 export const FORGOT_PASSWORD = "/ForgotPassword";
+export const HOTELS_CATALOGUE_ROUTE = "/hotels_catalogue";
+export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
+
 // Dashboard
 export const CABINET = "/cabinet/";
 export const PROFILE = "profile";
@@ -23,7 +26,7 @@ export const PLACE_ADMIN = "place_admin";
 export const ANNOUNCEMENT = "announcement";
 export const CREATE_ANNOUNCEMENT = "create_announcement";
 export const UPDATE_ANNOUNCEMENT = "update_announcement";
-export const HOSTEL = "hostel";
+export const HOSTEL = "/hostel";
 export const UPDATE_HOSTEL = "update_hostel";
 export const CREATE_ROOM = "create_room";
 export const SCHEDULE = "schedule";

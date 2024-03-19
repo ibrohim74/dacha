@@ -180,3 +180,12 @@
     font-size: 1.2rem;
   }
 }
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .container-md {
+    max-width: 90%;
+  }
+  .header-left {
+    width: 55%;
+  }
+}

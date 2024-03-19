@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { VILLAS_ROUTE } from "../../processes/utils/consts";
+import {
+  COTTAGES_CATALOGUE_ROUTE,
+  HOSTEL,
+  HOTELS_CATALOGUE_ROUTE,
+  VILLAS_ROUTE,
+} from "../../processes/utils/consts";
 import styles from "./home.module.css";
 import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
 import HeroBox from "../../components/HeroBox/HeroBox";
@@ -7,6 +12,7 @@ import Categories from "../../components/categories/Categories";
 import CataloguePreview from "../../components/catalogue-preview/CataloguePreview";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../components/appLayout/AppLayout";
+import { BookingCard } from "../../components/bookings/Bookings";
 
 const Home = () => {
   const [dachas, setDachas] = useState([]);
@@ -40,10 +46,14 @@ const Home = () => {
 
       <CataloguePreview
         items={dachas}
-        route={VILLAS_ROUTE}
+        route={COTTAGES_CATALOGUE_ROUTE}
         title={t("cottages_title")}
       />
-      <CataloguePreview items={hostel} route={""} title={t("hotels_title")} />
+      <CataloguePreview
+        items={hostel}
+        route={HOTELS_CATALOGUE_ROUTE}
+        title={t("hotels_title")}
+      />
     </AppLayout>
   );
 };

@@ -4,6 +4,7 @@ import styles from "./footer.module.css";
 import Logo from "../logo/Logo";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
+import LangDropdown from "../lang-dropdown/LangDropdown";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -18,44 +19,30 @@ const Footer = () => {
           <div className={styles["footer-brand"]}>
             <Logo />
             <p className={styles["footer-brand-motto"]}>{t("footer_motto")}</p>
+            <LangDropdown onlyIcon={false} />
           </div>
 
           <div className={styles["footer-menus"]}>
             <ul className={styles["footer-menu"]}>
-              <h4>{t("footer_about")}</h4>
+              <h4>{t("footer_about_us")}</h4>
+              <li>
+                <NavLink>{t("footer_adds")}</NavLink>
+              </li>
               <li>
                 <NavLink>{t("footer_about_us")}</NavLink>
               </li>
               <li>
-                <NavLink>{t("footer_features")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_news")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_careers")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_faq")}</NavLink>
+                <NavLink>{t("footer_map")}</NavLink>
               </li>
             </ul>
 
             <ul className={styles["footer-menu"]}>
-              <h4>{t("footer_support")}</h4>
+              <h4>{t("footer_cooperation")}</h4>
               <li>
-                <NavLink>{t("footer_account")}</NavLink>
+                <NavLink>{t("footer_cooperation_hotels")}</NavLink>
               </li>
               <li>
-                <NavLink>{t("footer_support_center")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_feedback")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_contact")}</NavLink>
-              </li>
-              <li>
-                <NavLink>{t("footer_accessibility")}</NavLink>
+                <NavLink>{t("footer_cooperation_cottages")}</NavLink>
               </li>
             </ul>
           </div>

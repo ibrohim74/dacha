@@ -42,3 +42,18 @@
     font-size: 16px;
   }
 }
+
+/* @media only screen and (min-width: 561px) and (max-width: 835px) {
+  .categories-wrapper {
+    padding: 0 1rem;
+    gap: 16px;
+  }
+
+  .category-link-wrapper {
+    width: 30%;
+  }
+
+  .category {
+    gap: 20px;
+  }
+} */

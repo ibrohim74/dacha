@@ -1,0 +1,46 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 528px;
+  height: 636px;
+  transform: translate(-50%, -50%);
+  background-color: var(--brand-color-2);
+  border-radius: 8px;
+  box-shadow: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
+  transition: all 0.5s;
+  border-radius: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  transition: all 0.5s;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem;
+  border-bottom: 2px solid var(--surface-color);
+}
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modal-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--font-color-1);
+  font-size: 16px;
+  cursor: pointer;
+}

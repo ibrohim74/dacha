@@ -1,0 +1,108 @@
+.booking-modal {
+  padding: 1.5rem;
+}
+
+.booking-card {
+  width: 486px;
+  height: 261ph;
+  border-radius: 20px;
+  border: 2px solid var(--surface-color);
+  padding: 1rem;
+  margin-top: 16px;
+}
+
+.booking-card h4 {
+  font-size: 18px;
+  color: var(--font-color-1);
+  margin-bottom: 12px;
+}
+
+.booking-card-address {
+  display: flex;
+  align-items: center;
+  color: var(--font-color-2);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.booking-card-address svg {
+  fill: var(--font-color-2);
+}
+
+.booking-card-price-box span {
+  color: var(--font-color-2);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.booking-card-price,
+.booking-card-info > p {
+  font-size: 16px;
+  color: var(--font-color-1);
+  font-weight: 700;
+}
+
+.booking-card-info {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.booking-status {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  margin-top: 14px;
+}
+
+.booking-status span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.booking-status span p {
+  font-size: 14px;
+}
+
+.pending {
+  background-color: var(--surface-color);
+}
+
+.rejected {
+  background-color: #ffefef;
+}
+
+.approved {
+  background-color: rgba(21, 204, 105, 0.1);
+}
+
+.booking-rejected,
+.booking-accepted-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: var(--surface-color);
+  padding: 12px;
+  color: var(--font-color-1);
+  font-size: 14px;
+  margin-top: 14px;
+}
+
+.booking-rejected {
+  width: 100%;
+  gap: 16px;
+}
+
+.booking-rejected p {
+  font-size: 12px;
+}
+
+.bookings-no-data {
+  font-size: 18px;
+  color: var(--font-color-2);
+  text-align: center;
+  margin: 2rem;
+}

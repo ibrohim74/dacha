@@ -1,0 +1,31 @@
+.form-wrapper {
+  width: 100%;
+  border-radius: 20px;
+  padding-top: 40px;
+  background-color: var(--brand-color-2);
+}
+
+.catalogue-layout {
+  display: flex;
+  align-items: start;
+  gap: 26px;
+  margin-top: 26px;
+}
+
+.catalogue-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 560px) {
+  .catalogue-layout {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 561px) and (max-width: 835px) {
+  .catalogue-items {
+    width: 55%;
+  }
+}
