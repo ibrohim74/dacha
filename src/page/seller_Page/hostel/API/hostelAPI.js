@@ -5,7 +5,7 @@ import login from "../../../auth/login";
 
 export const CreateHostelAPI = async (data) => {
     try {
-        const res = await axios.post('https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/hotel_create', data, {
+        const res = await axios.post('https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/hotel_create', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -100,7 +100,7 @@ export const GetCurrentRoom = async (id)=>{
 
 export const PostPhotoRoom = async (idRoom, file) => {
     try {
-        const res = await $authHost.post(`/room/${idRoom}/upload_photo`, {file: file}, {
+        const res = await $authHost.post(`api/room/${idRoom}/upload_photo`, {file: file}, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${localStorage.getItem('token')}`,

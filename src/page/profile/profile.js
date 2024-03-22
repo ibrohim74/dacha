@@ -26,7 +26,7 @@ const Profile = () => {
         try {
             message.info('загружается', 10)
             const res = await $authHost.post(
-                `/upload/user/${JWT.userId}`,
+                `api/upload/user/${JWT.userId}`,
                 { file: file.file.originFileObj },
                 {
                     headers: {

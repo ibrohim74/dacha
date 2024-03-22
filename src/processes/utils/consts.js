@@ -23,6 +23,7 @@ export const REQUEST_USER = "announcement_user";
 export const PLACE_ADMIN = "place_admin";
 
 // Seller Routes
+export const SELLER_DASHBOARD = "seller_dashboard";
 export const ANNOUNCEMENT = "announcement";
 export const CREATE_ANNOUNCEMENT = "create_announcement";
 export const UPDATE_ANNOUNCEMENT = "update_announcement";

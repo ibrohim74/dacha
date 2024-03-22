@@ -1,13 +1,13 @@
 import styles from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { CABINET, PROFILE } from "../../processes/utils/consts";
+import {CABINET, PROFILE, SELLER_DASHBOARD} from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import Bookings from "../bookings/Bookings";
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 export default function Sidebar({ onLogOut, user }) {
   const { username, phone } = user;
   const [imgProfile, setImgProfile] = useState();
@@ -66,6 +66,18 @@ export default function Sidebar({ onLogOut, user }) {
           </div>
 
           <div className={styles["sidebar-links-wrap"]}>
+            {user?.role === 'seller' && (
+                <Link
+                    className={styles["sidebar-link"]}
+                    to={`${CABINET}${SELLER_DASHBOARD}`}
+                >
+                  <DashboardIcon/>
+                  <div className={styles["sidebar-link-item"]}>
+                    {t("dashboard")}
+                    <Icons.ChevronRight />
+                  </div>
+                </Link>
+            )}
             <Link
               className={styles["sidebar-link"]}
               to={`${CABINET}${PROFILE}`}

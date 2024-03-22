@@ -37,6 +37,7 @@ import { ReactComponent as Housing } from "./housing.svg";
 import { ReactComponent as Entertainment } from "./entertainment.svg";
 import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
+import { ReactComponent as Moderate } from "./moderate.svg";
 
 export const Icons = {
   Logo,
@@ -78,4 +79,5 @@ export const Icons = {
   Entertainment,
   Folder,
   SidebarArrow,
+  Moderate
 };

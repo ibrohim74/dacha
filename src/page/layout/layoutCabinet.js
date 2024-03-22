@@ -15,6 +15,7 @@ import SellerHeader from "./seller-header/seller-header";
 import Header from "../../components/header/Header";
 import styles from "./seller-header/seller-header.module.css";
 import {ANNOUNCEMENT, CABINET, HOSTEL, REQUEST_ANNOUNCEMENT} from "../../processes/utils/consts";
+import Breadcrumb_dashboard from "../../components/breadcrumb_dashboard/breadcrumb_dashboard";
 
 const headerSeller ={
   marginTop:0
@@ -72,36 +73,37 @@ const LayoutCabinet = () => {
         <main className="content">
           {/* <Topbar/> */}
           <Header props_style={{headerSeller: headerSeller}}/>
-          {CurrentUser?.role === 'seller' &&
-              <div className={styles["header-tabs"]}>
-            <Link
-                className={`${styles["header-tab"]} ${
-                    activeTab === 0 && styles["active"]
-                }`}
-                onClick={() => handleClickTab(0)}
-                to={CABINET + ANNOUNCEMENT}
-            >
-              Мои объявления
-            </Link>
-                <Link
-                className={`${styles["header-tab"]} ${
-                    activeTab === 1 && styles["active"]
-                }`}
-                onClick={() => handleClickTab(1)}
-                to={CABINET + HOSTEL}
-            >
-                  Гостиница
-            </Link>
-            <Link
-                className={`${styles["header-tab"]} ${
-                    activeTab === 2 && styles["active"]
-                }`}
-                onClick={() => handleClickTab(2)}
-                to={CABINET+REQUEST_ANNOUNCEMENT}
-            >
-              Запросы
-            </Link>
-          </div>}
+          {CurrentUser?.role === 'seller' && <Breadcrumb_dashboard/>}
+          {/*{CurrentUser?.role === 'seller' &&*/}
+          {/*    <div className={styles["header-tabs"]}>*/}
+          {/*  <Link*/}
+          {/*      className={`${styles["header-tab"]} ${*/}
+          {/*          activeTab === 0 && styles["active"]*/}
+          {/*      }`}*/}
+          {/*      onClick={() => handleClickTab(0)}*/}
+          {/*      to={CABINET + ANNOUNCEMENT}*/}
+          {/*  >*/}
+          {/*    Мои объявления*/}
+          {/*  </Link>*/}
+          {/*      <Link*/}
+          {/*      className={`${styles["header-tab"]} ${*/}
+          {/*          activeTab === 1 && styles["active"]*/}
+          {/*      }`}*/}
+          {/*      onClick={() => handleClickTab(1)}*/}
+          {/*      to={CABINET + HOSTEL}*/}
+          {/*  >*/}
+          {/*        Гостиница*/}
+          {/*  </Link>*/}
+          {/*  <Link*/}
+          {/*      className={`${styles["header-tab"]} ${*/}
+          {/*          activeTab === 2 && styles["active"]*/}
+          {/*      }`}*/}
+          {/*      onClick={() => handleClickTab(2)}*/}
+          {/*      to={CABINET+REQUEST_ANNOUNCEMENT}*/}
+          {/*  >*/}
+          {/*    Запросы*/}
+          {/*  </Link>*/}
+          {/*</div>}*/}
 
           <Routes>
             {CurrentUser?.role === "user" &&

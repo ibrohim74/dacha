@@ -8,7 +8,7 @@ export default function CottagesCatalogue() {
     const fetchCottages = async () => {
       try {
         const url =
-          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/dachas";
+          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/dachas";
         const response = await axios.get(url);
         setProducts(response.data);
       } catch (error) {

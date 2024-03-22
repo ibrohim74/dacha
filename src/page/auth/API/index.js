@@ -24,21 +24,16 @@ export const CheckRegistrationCodeAPI = async (code, email) => {
   }
 };
 
-export const RegistrationAPI = async (user, token) => {
+export const RegistrationAPI = async (user) => {
   try {
-    const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/register", user, {
-      headers: { Authorization: `Bearer ${token}` },
+    const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/register", user, {
+      headers:{Authorization:`Bearer ${localStorage.getItem('token')}` }
     });
-    localStorage.setItem("token", res.data.access_token);
     console.log(res)
     return res;
   } catch (e) {
     console.log(e)
-    if (e.message === "Network Error") {
-      return "Serverda xatolik yuzaga keldi bir ozdan so'ng yana bir bor urunib ko'ring";
-    } else {
-      return e.response.data;
-    }
+    return e
   }
 };
 
