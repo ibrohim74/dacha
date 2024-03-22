@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { GetUserBooking } from "../../page/user_Page/userRequest/api/user_requestAPI";
 import { useTranslation } from "react-i18next";
+import AppLayout from "../appLayout/AppLayout";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState([]);
@@ -32,42 +33,45 @@ export default function Bookings() {
   console.log(bookings.length);
 
   return (
-    <div className={styles["booking-modal"]}>
-      <Tabs
-        firstTab={t("booking_first_tab")}
-        secondTab={t("booking_second_tab")}
-        content={{
-          firstTab: (
-            <>
-              {bookings.length > 0 && (
-                <>
-                  {bookings.map((booking) => (
-                    <BookingCard booking={booking} key={booking.id} />
-                  ))}
-                </>
-              )}
-              {bookings.length === 0 && (
-                <p className={styles["bookings-no-data"]}>
-                  You don't have any current bookings.
-                </p>
-              )}
-            </>
-          ),
+    <AppLayout>
+      <div className={styles["booking-page"]}>
+        <Tabs
+          firstTab={t("booking_first_tab")}
+          secondTab={t("booking_second_tab")}
+          type="page-tabs"
+          content={{
+            firstTab: (
+              <>
+                {bookings.length > 0 && (
+                  <>
+                    {bookings.map((booking) => (
+                      <BookingCard booking={booking} key={booking.id} />
+                    ))}
+                  </>
+                )}
+                {bookings.length === 0 && (
+                  <p className={styles["bookings-no-data"]}>
+                    You don't have any current bookings.
+                  </p>
+                )}
+              </>
+            ),
 
-          secondTab: (
-            <>
-              <p className={styles["bookings-no-data"]}>
-                You don't have any data in your history.
-              </p>
-            </>
-          ),
-        }}
-      />
-    </div>
+            secondTab: (
+              <>
+                <p className={styles["bookings-no-data"]}>
+                  You don't have any data in your history.
+                </p>
+              </>
+            ),
+          }}
+        />
+      </div>
+    </AppLayout>
   );
 }
 
-export const BookingCard = ({ booking }) => {
+const BookingCard = ({ booking }) => {
   const { title, status, address, final_price, adults, phone_number } = booking;
   return (
     <div className={styles["booking-card"]}>
@@ -135,3 +139,7 @@ const BookingStatus = ({ status }) => {
     </div>
   );
 };
+
+const EmptyBookingTab = () => {};
+
+const BookingTabs = () => {};

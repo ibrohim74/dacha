@@ -10,6 +10,7 @@ export const PLACE = "/place";
 export const FORGOT_PASSWORD = "/ForgotPassword";
 export const HOTELS_CATALOGUE_ROUTE = "/hotels_catalogue";
 export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
+export const BOOKING_ROUTE = "/bookings";
 
 // Dashboard
 export const CABINET = "/cabinet/";

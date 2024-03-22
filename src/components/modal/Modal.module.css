@@ -3,7 +3,6 @@
   top: 50%;
   left: 50%;
   width: 528px;
-  height: 636px;
   transform: translate(-50%, -50%);
   background-color: var(--brand-color-2);
   border-radius: 8px;

@@ -8,6 +8,10 @@
   background-color: var(--surface-color);
 }
 
+.page-tabs {
+  background-color: unset;
+}
+
 .tabs li {
   width: 50%;
   padding: 8px 0;
@@ -25,4 +29,8 @@
 
 .tab-inactive {
   color: var(--font-color-2);
+}
+
+.tab-content {
+  background-color: var(--brand-color-2);
 }

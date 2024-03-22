@@ -37,6 +37,9 @@ import { ReactComponent as Housing } from "./housing.svg";
 import { ReactComponent as Entertainment } from "./entertainment.svg";
 import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
+import { ReactComponent as Remove } from "./remove.svg";
+import { ReactComponent as Card } from "./card.svg";
+import { ReactComponent as EmptyPagePlaceholder } from "./empty_page_paceholder.svg";
 
 export const Icons = {
   Logo,
@@ -78,4 +81,7 @@ export const Icons = {
   Entertainment,
   Folder,
   SidebarArrow,
+  Remove,
+  Card,
+  EmptyPagePlaceholder,
 };

@@ -1,12 +1,13 @@
 import styles from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { CABINET, PROFILE } from "../../processes/utils/consts";
+import { BOOKING_ROUTE, CABINET, PROFILE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import Bookings from "../bookings/Bookings";
+import PaymentMethods from "../payment-methods/PaymentMethods";
 
 export default function Sidebar({ onLogOut, user }) {
   const { username, phone } = user;
@@ -77,22 +78,23 @@ export default function Sidebar({ onLogOut, user }) {
               </div>
             </Link>
 
-            <Link className={styles["sidebar-link"]}>
-              <Icons.Wallet />
-              <div className={styles["sidebar-link-item"]}>
-                {t("sidebar_payments")}
-                <Icons.ChevronRight />
-              </div>
-            </Link>
-            <Modal.Open opens="bookings">
+            <Modal.Open opens="payment-methods">
               <Link className={styles["sidebar-link"]}>
-                <Icons.Notification />
+                <Icons.Wallet />
                 <div className={styles["sidebar-link-item"]}>
-                  {t("sidebar_bookings")}
+                  {t("sidebar_payments")}
                   <Icons.ChevronRight />
                 </div>
               </Link>
             </Modal.Open>
+
+            <Link to={BOOKING_ROUTE} className={styles["sidebar-link"]}>
+              <Icons.Notification />
+              <div className={styles["sidebar-link-item"]}>
+                {t("sidebar_bookings")}
+                <Icons.ChevronRight />
+              </div>
+            </Link>
             <Link className={styles["sidebar-link"]}>
               <Icons.ChatIcon />
               <div className={styles["sidebar-link-item"]}>
@@ -112,8 +114,8 @@ export default function Sidebar({ onLogOut, user }) {
         </div>
       </div>
 
-      <Modal.Window name="bookings" title="My bookings">
-        <Bookings />
+      <Modal.Window name="payment-methods" title={t("sidebar_payments")}>
+        <PaymentMethods />
       </Modal.Window>
     </Modal>
   );

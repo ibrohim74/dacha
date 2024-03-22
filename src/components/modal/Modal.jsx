@@ -6,10 +6,8 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import Button from "../Button/Button";
 import styles from "./Modal.module.css";
 import { CloseOutlined, XOutlined } from "@ant-design/icons";
-import { X } from "@mui/icons-material";
 
 const ModalContext = createContext();
 
@@ -34,7 +32,8 @@ function Open({ children, opens: opensWindowName }) {
 function Window({ children, name, title }) {
   const { openName, close } = useContext(ModalContext);
 
-  const ref = useOutsideClick(close);
+  //   const ref = useOutsideClick(close);
+  const ref = useOutsideClick({ handler: close });
 
   if (name !== openName) return null;
 

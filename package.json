@@ -34,6 +34,7 @@
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
+    "react-verification-input": "^4.1.1",
     "sharp": "^0.33.2",
     "swiper": "^11.0.6",
     "web-vitals": "^2.1.4",

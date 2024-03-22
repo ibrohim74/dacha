@@ -1,0 +1,155 @@
+.payment-modal {
+  padding: 1.5rem;
+}
+
+.payment-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.credit-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 10px 10px;
+  border: 2px solid var(--surface-color);
+  border-radius: 12px;
+}
+
+.credit-card-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.credit-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #f7f8f9;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.credit-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+}
+
+.credit-card-number {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--font-color-1);
+}
+
+.credit-card-exp {
+  font-size: 14px;
+  color: var(--font-color-2);
+}
+
+.credit-card-remove {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* .credit-card-remove svg path:hover {
+  stroke: red;
+} */
+
+.credit-card-not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.credit-card-not-found p {
+  font-size: 16px;
+  color: var(--font-color-2);
+}
+
+.credit-card-add {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.credit-card-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credit-card-label {
+  color: var(--font-color-1);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.credit-card-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--bg-color);
+  height: 44px;
+  background-color: var(--bg-color);
+  font-family: "Montserrat";
+  letter-spacing: 1 px;
+}
+
+.credit-card-input:focus {
+  outline: 1px solid var(--font-color-1);
+  color: var(--font-color-1);
+}
+
+.credit-card-verification {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.credit-card-confirmation p,
+.credit-card-verification p {
+  font-size: 14px;
+  color: var(--font-color-1);
+  margin-top: 16px;
+}
+
+.credit-card-confirmation > span {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--font-color-1);
+  margin-top: 12px;
+  padding: 4px;
+}
+
+.character {
+  width: 56px;
+  height: 60px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 8px;
+  color: var(--font-color-1);
+  background-color: var(--bg-color);
+  /* box-shadow: 0 2px 0 #e4e2f5; */
+}
+
+.character-selected {
+  outline: 1px solid var(--font-color-1);
+}

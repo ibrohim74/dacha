@@ -13,6 +13,11 @@
   justify-content: center;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .primary {
   color: var(--brand-color-2);
   background-color: #333;
@@ -52,6 +57,13 @@
   color: var(--font-black);
   font-weight: 600;
   background-color: var(--brand-color-2);
+}
+
+.full-width-primary {
+  width: 100%;
+  color: var(--brand-color-2);
+  background-color: #333;
+  transition: 0.5s all ease;
 }
 
 @media only screen and (min-width: 360px) and (max-width: 560px) {

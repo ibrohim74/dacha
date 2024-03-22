@@ -23,6 +23,7 @@ import {
   FORGOT_PASSWORD,
   COTTAGES_CATALOGUE_ROUTE,
   HOTELS_CATALOGUE_ROUTE,
+  BOOKING_ROUTE,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
@@ -49,6 +50,7 @@ import ForgotPassword from "../../page/auth/forgot_password";
 import ChangePass from "../../components/change_pass";
 import CottagesCatalogue from "../../page/catalogues/CottagesCatalogue";
 import HotelsCatalogue from "../../page/catalogues/HotelsCatalogue";
+import Bookings from "../../components/bookings/Bookings";
 export const Public = [
   {
     Component: <Home />,
@@ -93,6 +95,10 @@ export const Public = [
   {
     Component: <ForgotPassword />,
     path: FORGOT_PASSWORD,
+  },
+  {
+    Component: <Bookings />,
+    path: BOOKING_ROUTE,
   },
 ];
 
