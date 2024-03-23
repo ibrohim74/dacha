@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-.titleDashboard{
+.titleDashboard {
     font-family: "Montserrat", sans-serif;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.titleDashboard__Left{
+
+.titleDashboard__Left {
     width: 70%;
     font-size: 30px;
     font-weight: 600;
@@ -15,14 +16,94 @@
     align-items: center;
     height: 100%;
 }
-.titleDashboard__Right{
+
+.titleDashboard__Right {
     width: 30%;
-    font-size: 15px ;
+    font-size: 15px;
 }
-.titleDashboard__Moderate{
+
+.titleDashboard__Moderate {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    margin-top: 10px    ;
+    margin-top: 10px;
+}
+
+.sellerDashboard__stats {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 65px;
+}
+
+.sellerDashboard__stats > div {
+    margin: 10px;
+}
+
+.sellerDashboard__stats__requests {
+    background: #fff;
+    margin-top: 100px;
+}
+
+.sellerDashboard__stats__requests__tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f8f9;
+}
+.sellerDashboard__stats__requests__tabs_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 33.34%;
+    border-radius: 16px 16px  0px  0px;
+    background: transparent;
+    cursor: pointer;
+}
+.sellerDashboard__stats__requests__tabs_button.active{
+    background: white;
+}
+.sellerDashboard__stats__requests__tabs_button_cotteg_hotel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 33.34%;
+    border-radius: 16px 16px  0px  0px;
+    background: transparent;
+    cursor: pointer;
+}
+.sellerDashboard__stats__requests__tabs_button_cotteg_hotel.active{
+    background: white;
+}
+.sellerDashboard__stats__requests__content {
+    margin-top: 30px;
+    padding: 20px;
+}
+.sellerDashboard__stats__cotteg_hotels{
+    background: #fff;
+    margin-top: 100px;
+}
+@media screen and (max-width: 750px) {
+    .titleDashboard {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .titleDashboard__Left {
+        width: 100%;
+        font-size: 25px;
+    }
+
+    .titleDashboard__Right {
+        width: 100%;
+    }
+
+    .sellerDashboard__stats {
+        width: 100%;
+        flex-direction: column;
+
+    }
 }

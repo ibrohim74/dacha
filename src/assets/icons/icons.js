@@ -38,6 +38,12 @@ import { ReactComponent as Entertainment } from "./entertainment.svg";
 import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
 import { ReactComponent as Moderate } from "./moderate.svg";
+import { ReactComponent as Seller_dashboard_request_tab } from "./seller_dashboard_request_tab.svg";
+import { ReactComponent as Seller_dashboard_request_tab_disbl } from "./seller_dashboard_request_tab_disbl.svg";
+import { ReactComponent as Month } from "./month.svg";
+import { ReactComponent as Request_people } from "./request_people.svg";
+import { ReactComponent as LocationIconSellerDashboard } from "./locationIconSellerDashboard.svg";
+import { ReactComponent as Dots } from "./dots.svg";
 
 export const Icons = {
   Logo,
@@ -79,5 +85,11 @@ export const Icons = {
   Entertainment,
   Folder,
   SidebarArrow,
-  Moderate
+  Moderate,
+  Seller_dashboard_request_tab,
+  Seller_dashboard_request_tab_disbl,
+  Month,
+  Request_people,
+  LocationIconSellerDashboard,
+  Dots,
 };

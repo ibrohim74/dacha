@@ -42,7 +42,7 @@ const RequestUser = (props) => {
                                     {currentPhotoUrl ? (
                                         <img
                                             key={currentPhotoUrl}
-                                            src={"https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" + currentPhotoUrl}
+                                            src={"https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api" + currentPhotoUrl}
                                             alt="Dacha"
                                             width="100%"
                                             height="100%"
