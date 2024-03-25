@@ -19,31 +19,40 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [changePass, setChangePass] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
-  const handleChange = async (file) => {
-    setLoadingImg(true);
-    try {
-      const res = await $authHost.post(
-        `/upload/user/${JWT.userId}`,
-          {file:file.file.originFileObj},
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (res?.status === 200) {
-        setLoadingImg(false);
-        window.location.reload();
-      } else {
-        message.error("rasim xato");
-      }
-    } catch (e) {
-      setLoadingImg(false);
-      console.log(e);
-    }
-  };
 
+    const handleChange = async (file) => {
+        setLoadingImg(true);
+
+        try {
+            message.info('загружается', 10)
+            const res = await $authHost.post(
+                `api/upload/user/${JWT.userId}`,
+                { file: file.file.originFileObj },
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+            if (res?.status === 200) {
+                setLoadingImg(false);
+                message.success('загружен', 5);
+                // Intervalni boshqaruvchi identifikatorni saqlash
+                const timer = setInterval(() => {
+                    window.location.reload(true);
+                }, 3000);
+            } else {
+                setLoadingImg(false);
+                message.error("rasim xato");
+            }
+        } catch (e) {
+            setLoadingImg(false);
+            console.log(e);
+        }
+    };
+
+                                                                                                                                            
   const getUser = async () => {
     const res = await $host.get("user/" + JWT.userId);
     setCurrentUser(res.data);

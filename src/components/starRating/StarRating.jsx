@@ -19,7 +19,7 @@ export default function StarRating({
   onSetRating,
 }) {
   const [tempRating, setTempRating] = useState(0);
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState(rating);
 
   function handleRating(rate) {
     setRate(rate);

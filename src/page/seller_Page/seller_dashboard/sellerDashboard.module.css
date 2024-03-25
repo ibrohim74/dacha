@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.titleDashboard{
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.titleDashboard__Left{
+    width: 70%;
+    font-size: 30px;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+.titleDashboard__Right{
+    width: 30%;
+    font-size: 15px ;
+}
+.titleDashboard__Moderate{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px    ;
+}

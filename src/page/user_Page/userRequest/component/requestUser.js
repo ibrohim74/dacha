@@ -13,7 +13,7 @@ const RequestUser = (props) => {
             .then(response => {
                 console.log(response)
                 if (response.status === 200) {
-                    const data = response.data.requests || [];
+                    const data = response.data || [];
                     setRequests(data);
                     setDachasIdList(data.map(item => item.accommodation_id));
                 } else {

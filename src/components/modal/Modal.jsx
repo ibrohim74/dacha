@@ -40,12 +40,20 @@ function Window({ children, name, title }) {
   return createPortal(
     <div className={styles["modal-overlay"]}>
       <div className={styles["modal"]} ref={ref}>
-        <div className={styles["modal-header"]}>
-          <h3>{title}</h3>
-          <button className={styles["modal-btn"]} onClick={close}>
-            <CloseOutlined />
-          </button>
-        </div>
+        {title ? (
+          <div className={styles["modal-header"]}>
+            <h3>{title}</h3>
+            <button className={styles["modal-btn"]} onClick={close}>
+              <CloseOutlined />
+            </button>
+          </div>
+        ) : (
+          <div className={styles["modal-header-without-title"]}>
+            <button className={styles["modal-btn"]} onClick={close}>
+              <CloseOutlined />
+            </button>
+          </div>
+        )}
         <div>{cloneElement(children, { onCloseModal: close })}</div>
       </div>
     </div>,

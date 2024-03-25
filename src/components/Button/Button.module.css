@@ -33,6 +33,19 @@
 .secondary {
   color: var(--font-color);
   background-color: var(--surface-color);
+  font-weight: 600;
+}
+
+.red {
+  color: #ff4141;
+  background-color: #ffefef;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.red:hover {
+  background-color: #ff4141;
+  color: #ffefef;
 }
 
 .secondary:hover {

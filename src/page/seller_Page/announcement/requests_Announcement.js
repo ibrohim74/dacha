@@ -103,7 +103,6 @@ const RequestsAnnouncement = () => {
       getClient();
 
   }, [requests]);
-
   return (
     <Box className={styles["containerReq"]}>
       {requests?.length >= 0 &&
@@ -157,13 +156,13 @@ const RequestsAnnouncement = () => {
                         <div className={styles["req_footer"]}>
                           <div
                               className={styles["requestAccept"]}
-                              onClick={() => acceptRequest(item?.request_id)}
+                              onClick={() => acceptRequest(item?.id)}
                           >
                             <Icons.AcceptIcon />
                           </div>
                           <div
                               className={styles["requestDeny"]}
-                              onClick={() => denyRequest(item?.request_id)}
+                              onClick={() => denyRequest(item?.id)}
                           >
                             <Icons.DenyIcon />
                           </div>

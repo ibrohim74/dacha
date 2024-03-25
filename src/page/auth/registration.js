@@ -16,6 +16,7 @@ import Reg_step2 from "./component/reg_step2";
 import './style/login.css'
 import {CheckEmail, CheckEmailAPI, CheckRegistrationCodeAPI, RegistrationAPI} from "./API";
 import {LoadingOutlined} from "@ant-design/icons";
+import axios from "axios";
 
 const Registration = () => {
     const [initialState, setInitialState] = useState({
@@ -127,7 +128,8 @@ const Registration = () => {
             if (checkCode?.code) {
                 CheckRegistrationCodeAPI(checkCode.code, initialState.email).then(r => {
                     if (r?.status === 200) {
-                        setToken(r.data.token)
+                        setToken(r.data?.access_token)
+                        localStorage.setItem('token' , r.data?.access_token)
                         setStep3(true)
                         setStep1(false)
                         setStep2(false)
@@ -144,51 +146,34 @@ const Registration = () => {
             message.error('email pochtangizga kelgan xabarni yozing')}
         }
     }
-    const handleSendStep3 = () => {
-        setLoading(true)
-        if (initialState.username) {
-            if (initialState.firstName) {
-                if (initialState.lastName) {
-                    if (token) {
-                        RegistrationAPI(initialState, token).then(r => {
-                            if (r?.status === 200) {
-                                setLoading(false)
-                                if (initialState.role === 'user') {
-                                    window.location.assign(CABINET + PROFILE)
-                                }
-                                if (initialState.role === 'seller') {
-                                    window.location.assign(CABINET + ANNOUNCEMENT)
-                                }
-                            } else {
-                                // message.error()
-                                message.error(r?.detail)
-                                setLoading(false)
-                                setStep3(true)
-                                setStep1(false)
-                                setStep2(false)
-                            }
-                        })       
-                    } else {
-                        setLoading(false)
-                        message.error('registratsiyada xatolik yuzaga keldi qaytadan urunib koring')
-                    }
-                } else {
-                    setLoading(false)
-                    message.error('lastname')
-                }
-            } else {
-                setLoading(false)
-                message.error('firstName')
+    const handleSendStep3 =  async () => {
+        setLoading(true);
+        if (initialState.username && initialState.firstName && initialState.lastName) {
+            const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/register", initialState, {
+                headers:{Authorization:`Bearer ${localStorage.getItem('token')}` }
+            });
+
+            if (res?.status === 200) {
+                setLoading(false);
+                window.location.assign(LOGIN_ROUTE)
+            }else {
+                console.log(res)
+                setLoading(false);
+                setStep3(true);
+                setStep1(false);
+                setStep2(false);
             }
+
         } else {
-            setLoading(false)
-            message.error('username')
+            setLoading(false);
+            message.error('Please fill in all fields');
         }
-    }
+    };
+
     const handleTypeUser = (val) => {
         setInitialState({...initialState, role: val})
     }
-    console.log(initialState)
+
     return (
         <div className={style.regContainer}>
             <div className={style.regBox}>

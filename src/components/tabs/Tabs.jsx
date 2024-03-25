@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Tabs.module.css";
 
-export default function Tabs({ firstTab, secondTab, content, type }) {
+export default function Tabs({ firstTab, secondTab, content }) {
   const [activeTab, setActiveTab] = useState(firstTab);
 
   const handleTabClick = (tab) => {
@@ -13,7 +13,7 @@ export default function Tabs({ firstTab, secondTab, content, type }) {
 
   return (
     <>
-      <ul className={`${styles["tabs"]} ${styles[type]}`}>
+      <ul className={`${styles["tabs"]} }`}>
         <li
           className={
             activeTab === firstTab

@@ -24,6 +24,7 @@ import {
   COTTAGES_CATALOGUE_ROUTE,
   HOTELS_CATALOGUE_ROUTE,
   BOOKING_ROUTE,
+  SELLER_DASHBOARD,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
@@ -51,6 +52,15 @@ import ChangePass from "../../components/change_pass";
 import CottagesCatalogue from "../../page/catalogues/CottagesCatalogue";
 import HotelsCatalogue from "../../page/catalogues/HotelsCatalogue";
 import Bookings from "../../components/bookings/Bookings";
+import SellerDashboard from "../../page/seller_Page/seller_dashboard/sellerDashboard";
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  PieChartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import React from "react";
+
 export const Public = [
   {
     Component: <Home />,
@@ -139,33 +149,47 @@ export const Users = [
 ];
 export const Seller = [
   {
+    Component: <SellerDashboard />,
+    path: SELLER_DASHBOARD,
+    title: "Панель приборов",
+    icon: <PieChartOutlined />,
+  },
+  {
     Component: <Profile />,
     path: PROFILE,
+    title: "Личный кабинет",
+    icon: <UserOutlined />,
   },
   {
     Component: <Announcement />,
     path: ANNOUNCEMENT,
+    title: "Объявление",
   },
   {
     Component: <Create_announcement />,
     path: CREATE_ANNOUNCEMENT,
+    title: "Создание обьявления",
   },
 
   {
     Component: <ChangePass />,
     path: CHANGE_PASS_TOP,
+    title: "Изменить пароль",
   },
-  // {
-  //   Component: <Hostel />,
-  //   path: HOSTEL,
-  // },
+  {
+    Component: <Hostel />,
+    path: HOSTEL,
+    title: "Гостиница",
+  },
   {
     Component: <UpdateHostel />,
     path: UPDATE_HOSTEL,
+    title: "Обновить отель",
   },
   {
     Component: <CreateRoom />,
     path: CREATE_ROOM,
+    title: "Создать комнату",
   },
   {
     Component: <ScheduleSeller />,
@@ -174,10 +198,12 @@ export const Seller = [
   {
     Component: <Announcement_Item_Page />,
     path: ANNOUNCEMENT_ITEM_PAGE,
+    title: "страница объявления",
   },
   {
     Component: <RequestsAnnouncement />,
     path: REQUEST_ANNOUNCEMENT,
+    title: "Запросы",
   },
 ];
 export const Moderate = [

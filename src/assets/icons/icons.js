@@ -40,6 +40,10 @@ import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
 import { ReactComponent as Remove } from "./remove.svg";
 import { ReactComponent as Card } from "./card.svg";
 import { ReactComponent as EmptyPagePlaceholder } from "./empty_page_paceholder.svg";
+import { ReactComponent as Moderate } from "./moderate.svg";
+import { ReactComponent as Notes } from "./notes.svg";
+import { ReactComponent as Completed } from "./completed.svg";
+import { ReactComponent as RedLogout } from "./redlogout.svg";
 
 export const Icons = {
   Logo,
@@ -84,4 +88,8 @@ export const Icons = {
   Remove,
   Card,
   EmptyPagePlaceholder,
+  Moderate,
+  Notes,
+  Completed,
+  RedLogout,
 };
