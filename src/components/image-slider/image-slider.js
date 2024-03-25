@@ -39,7 +39,7 @@ const ImageSlider = ({ slides , className, styles }) => {
           >
             {index === current && (
               <img
-                src={'https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net'+slide}
+                src={'https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api'+slide}
                 alt="travel image"
                 className={styles["image"]}
               />

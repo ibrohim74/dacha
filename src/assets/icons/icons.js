@@ -41,6 +41,12 @@ import { ReactComponent as Remove } from "./remove.svg";
 import { ReactComponent as Card } from "./card.svg";
 import { ReactComponent as EmptyPagePlaceholder } from "./empty_page_paceholder.svg";
 import { ReactComponent as Moderate } from "./moderate.svg";
+import { ReactComponent as Seller_dashboard_request_tab } from "./seller_dashboard_request_tab.svg";
+import { ReactComponent as Seller_dashboard_request_tab_disbl } from "./seller_dashboard_request_tab_disbl.svg";
+import { ReactComponent as Month } from "./month.svg";
+import { ReactComponent as Request_people } from "./request_people.svg";
+import { ReactComponent as LocationIconSellerDashboard } from "./locationIconSellerDashboard.svg";
+import { ReactComponent as Dots } from "./dots.svg";
 import { ReactComponent as Notes } from "./notes.svg";
 import { ReactComponent as Completed } from "./completed.svg";
 import { ReactComponent as RedLogout } from "./redlogout.svg";
@@ -85,6 +91,13 @@ export const Icons = {
   Entertainment,
   Folder,
   SidebarArrow,
+  Moderate,
+  Seller_dashboard_request_tab,
+  Seller_dashboard_request_tab_disbl,
+  Month,
+  Request_people,
+  LocationIconSellerDashboard,
+  Dots,
   Remove,
   Card,
   EmptyPagePlaceholder,

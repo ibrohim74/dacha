@@ -40,7 +40,7 @@ const BookingUser = (props) => {
                                     <div className={styles.imgReq} style={{ width: "100%" }}>
                                         {currentPhotoUrls.length > 0 ? (
                                                 <img key={currentPhotoUrls.length}
-                                                     src={"https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" + currentPhotoUrls}
+                                                     src={"https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api" + currentPhotoUrls}
                                                      alt="Dacha"
                                                      width={"100%"}
                                                      height={"100%"}

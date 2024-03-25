@@ -165,7 +165,7 @@ const Header = (props, { elementsRef }) => {
                 <img
                   src={
                     currentUser?.image_path
-                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net${currentUser.image_path}`
+                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${currentUser.image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"

@@ -58,7 +58,7 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
                 ...prevState,
                 {
                     name: `img`,
-                    url: "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" + response.data?.file_path
+                    url: "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api" + response.data?.file_path
                 }
             ]);
             if (response?.status === 200){
@@ -81,7 +81,7 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
         if (dachaImg?.length >= 1) {
             const newImages = dachaImg.map((item, index) => ({
                 name: `img${index + 1}`,
-                url: "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" + item
+                url: "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api" + item
             }));
 
 
@@ -98,7 +98,7 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
     }, [dacha]);
 
     const deleteImage = (image, index) => {
-        const urlWithoutPrefix = image.replace("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net", "");
+        const urlWithoutPrefix = image.replace("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api", "");
         DeleteDachaPhotoAPI(urlWithoutPrefix).then(r => {
             if (r.status === 200) {
                 setImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -154,7 +154,7 @@ const AnnItemAddPhoto = ({dacha, dachaId, className, styles}) => {
                             {index === current && (
                                 <>
                                     <img
-                                        src={'https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net' + slide}
+                                        src={'https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api' + slide}
                                         alt="travel image"
                                         className={styles["image"]}
                                     />

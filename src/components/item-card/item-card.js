@@ -30,7 +30,7 @@ const ItemCard = (props) => {
                 {itemImgs?.length > 0 ? (
                     <img
                         src={
-                            "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net" +
+                            "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api" +
                             itemImgs[0]
                         }
                         width={"100%"}
