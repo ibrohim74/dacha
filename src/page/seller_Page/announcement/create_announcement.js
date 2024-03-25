@@ -17,7 +17,8 @@ const CreateAnnouncement = () => {
   const [initialState, setInitialState] = useState({
     type: "dacha",
     tags: "string",
-    price:0
+    price:0,
+    cancellable:false
   });
   console.log(initialState)
   const [loading, setLoading] = useState(false);
@@ -79,7 +80,6 @@ const CreateAnnouncement = () => {
   }, [inputLeft]);
   return (
     <Box m={"20px"} className={styles["container-md"]}>
-      {/* <Header_adminPage title="Create" subtitle="Create announcement" /> */}
       <div className={styles["create-calendar-box"]}>
         <Create_InputLeft inputLeft={inputLeft} setInputLeft={setInputLeft} />
         <div className={styles["calendar-map"]}>
@@ -148,6 +148,19 @@ const CreateAnnouncement = () => {
                 setInitialState({
                   ...initialState,
                   minimum_preorder_days: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className={styles["input"]} style={{ marginTop: "10px" , alignItems:"center" , display:"flex" , justifyContent:"space-around"}}>
+             <label htmlFor="phone">разрешить отмену бронирования</label>
+            <Input
+              placeholder="разрешить отмену бронирования"
+              type={"checkbox"}
+              onChange={(e) =>
+                setInitialState({
+                  ...initialState,
+                  cancellable: !initialState.cancellable,
                 })
               }
             />

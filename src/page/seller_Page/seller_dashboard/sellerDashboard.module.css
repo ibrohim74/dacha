@@ -81,6 +81,28 @@
 .sellerDashboard__stats__requests__content {
     margin-top: 30px;
     padding: 20px;
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x:hidden ;
+}
+
+.sellerDashboard__stats__requests__content::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+.sellerDashboard__stats__requests__content::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+.sellerDashboard__stats__requests__content::-webkit-scrollbar-thumb {
+    background: #F7F8F9;
+}
+
+/* Handle on hover */
+.sellerDashboard__stats__requests__content::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 .sellerDashboard__stats__cotteg_hotels{
     background: #fff;

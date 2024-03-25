@@ -44,6 +44,10 @@ import { ReactComponent as Month } from "./month.svg";
 import { ReactComponent as Request_people } from "./request_people.svg";
 import { ReactComponent as LocationIconSellerDashboard } from "./locationIconSellerDashboard.svg";
 import { ReactComponent as Dots } from "./dots.svg";
+import { ReactComponent as NoDocuments } from "./NoDocuments.svg";
+import { ReactComponent as DenyRed } from "./denyRed.svg";
+import { ReactComponent as SuccessGreen } from "./successGreen.svg";
+import { ReactComponent as DefolteSuccess } from "./defoltSuccess.svg";
 
 export const Icons = {
   Logo,
@@ -92,4 +96,8 @@ export const Icons = {
   Request_people,
   LocationIconSellerDashboard,
   Dots,
+  NoDocuments,
+  DenyRed,
+  SuccessGreen,
+  DefolteSuccess
 };
