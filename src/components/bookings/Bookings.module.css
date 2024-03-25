@@ -114,20 +114,6 @@
   font-size: 12px;
 }
 
-.bookings-no-data {
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.bookings-no-data p {
-  font-size: 18px;
-  text-align: center;
-  color: var(--font-color-2);
-}
-
 .booking-button {
   display: flex;
   align-items: center;

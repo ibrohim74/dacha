@@ -6,6 +6,7 @@ import {
   PROFILE,
   SELLER_DASHBOARD,
   BOOKING_ROUTE,
+  FAVORITES,
 } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
@@ -112,7 +113,7 @@ export default function Sidebar({ onLogOut, user }) {
                 <Icons.ChevronRight />
               </div>
             </Link>
-            <Link className={styles["sidebar-link"]}>
+            <Link to={FAVORITES} className={styles["sidebar-link"]}>
               <Icons.ChatIcon />
               <div className={styles["sidebar-link-item"]}>
                 {t("sidebar_fav")}

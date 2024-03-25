@@ -9,7 +9,7 @@ import {
 import { GetUserBooking } from "../../page/user_Page/userRequest/api/user_requestAPI";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../appLayout/AppLayout";
-import FullPageTabs from "../full-page-tabs/FullPageTabs";
+import FullPageTabs, { EmptyTab } from "../full-page-tabs/FullPageTabs";
 import { Icons } from "../../assets/icons/icons";
 import Button from "../Button/Button";
 import Modal from "../modal/Modal";
@@ -55,31 +55,29 @@ export default function Bookings() {
                     ))}
                   </div>
                 ) : (
-                  <EmptyBookingTab
-                    placeholderText={t("booking_empty_placeholder")}
-                  />
+                  <EmptyTab placeholderText={t("booking_empty_placeholder")} />
                 ),
-                // <div className={styles["booking-tab"]}>
-                //   <BookingCard
-                //     booking={{
-                //       title: "Hyde Park",
-                //       status: "completed",
-                //       address: "Ташкент, Яккасарайский район",
-                //       final_price: "500000",
-                //       adults: "5",
-                //       phone_number: "998901411111",
-                //       review: {
-                //         text: "very good",
-                //         rating: "2",
-                //       },
-                //     }}
-                //   />
-                // </div>
+              // <div className={styles["booking-tab"]}>
+              //   <BookingCard
+              //     booking={{
+              //       title: "Hyde Park",
+              //       status: "completed",
+              //       address: "Ташкент, Яккасарайский район",
+              //       final_price: "500000",
+              //       adults: "5",
+              //       phone_number: "998901411111",
+              //       review: {
+              //         text: "very good",
+              //         rating: "2",
+              //       },
+              //     }}
+              //   />
+              // </div>
             },
             {
               label: t("booking_second_tab"),
               content: (
-                <EmptyBookingTab
+                <EmptyTab
                   placeholderText={t("booking_no_history_placeholder")}
                 />
               ),
@@ -204,15 +202,6 @@ const BookingStatus = ({ status }) => {
           </>
         )}
       </span>
-    </div>
-  );
-};
-
-const EmptyBookingTab = ({ placeholderText }) => {
-  return (
-    <div className={styles["bookings-no-data"]}>
-      <Icons.EmptyPagePlaceholder />
-      <p>{placeholderText}</p>
     </div>
   );
 };

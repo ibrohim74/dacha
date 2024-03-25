@@ -19,6 +19,7 @@ export const CHANGE_PASS_TOP = "change_pass";
 
 // User Routes
 export const REQUEST_USER = "announcement_user";
+export const FAVORITES = "/favorites";
 
 // Admin Routes
 export const PLACE_ADMIN = "place_admin";

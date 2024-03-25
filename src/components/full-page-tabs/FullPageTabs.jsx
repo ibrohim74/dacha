@@ -39,3 +39,12 @@ export default function FullPageTabs({ tabs }) {
     </>
   );
 }
+
+export const EmptyTab = ({ placeholderText }) => {
+  return (
+    <div className={styles["no-data"]}>
+      <Icons.EmptyPagePlaceholder />
+      <p>{placeholderText}</p>
+    </div>
+  );
+};

@@ -25,6 +25,7 @@ import {
   HOTELS_CATALOGUE_ROUTE,
   BOOKING_ROUTE,
   SELLER_DASHBOARD,
+  FAVORITES,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/login";
@@ -60,6 +61,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import React from "react";
+import Favorites from "../../components/favorites/Favorites";
 
 export const Public = [
   {
@@ -109,6 +111,10 @@ export const Public = [
   {
     Component: <Bookings />,
     path: BOOKING_ROUTE,
+  },
+  {
+    Component: <Favorites />,
+    path: FAVORITES,
   },
 ];
 
