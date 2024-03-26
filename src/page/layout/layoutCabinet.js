@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Link, Route, Routes, useLocation} from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import {
   Admin,
   Layout,
@@ -14,13 +14,17 @@ import { ColorModeContext, useMode } from "../../components/theme";
 import SellerHeader from "./seller-header/seller-header";
 import Header from "../../components/header/Header";
 import styles from "./seller-header/seller-header.module.css";
-import {ANNOUNCEMENT, CABINET, HOSTEL, REQUEST_ANNOUNCEMENT} from "../../processes/utils/consts";
+import {
+  ANNOUNCEMENT,
+  CABINET,
+  HOSTEL,
+  REQUEST_ANNOUNCEMENT,
+} from "../../processes/utils/consts";
 import Breadcrumb_dashboard from "../../components/breadcrumb_dashboard/breadcrumb_dashboard";
 
-const headerSeller ={
-  marginTop:0
-}
-
+const headerSeller = {
+  marginTop: 0,
+};
 
 const LayoutCabinet = () => {
   const [theme, colorMode] = useMode();
@@ -29,7 +33,6 @@ const LayoutCabinet = () => {
   const [CurrentUser, setCurrentUser] = useState();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(null);
-
 
   function handleClickTab(value) {
     setActiveTab(value);
@@ -51,7 +54,7 @@ const LayoutCabinet = () => {
         default:
           setActiveTab(0);
       }
-    }; 
+    };
     setActiveTabFromLocation();
   }, [location]);
   useEffect(() => {
@@ -59,7 +62,6 @@ const LayoutCabinet = () => {
       try {
         const res = await $host.get("user/" + JWT.userId);
         setCurrentUser(res.data);
-
       } catch (e) {
         console.log(e);
       }
@@ -72,8 +74,8 @@ const LayoutCabinet = () => {
       <div className={"layout-app"}>
         <main className="content">
           {/* <Topbar/> */}
-          <Header props_style={{headerSeller: headerSeller}}/>
-          {CurrentUser?.role === 'seller' && <Breadcrumb_dashboard/>}
+          {/* <Header props_style={{headerSeller: headerSeller}}/> */}
+          {CurrentUser?.role === "seller" && <Breadcrumb_dashboard />}
           {/*{CurrentUser?.role === 'seller' &&*/}
           {/*    <div className={styles["header-tabs"]}>*/}
           {/*  <Link*/}

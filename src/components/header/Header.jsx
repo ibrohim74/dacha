@@ -174,7 +174,11 @@ const Header = (props, { elementsRef }) => {
                 <p>{currentUser.username}</p>
               </div>
               {showSidebar && (
-                <Sidebar onLogOut={removeToken} user={currentUser} />
+                <Sidebar
+                  onLogOut={removeToken}
+                  user={currentUser}
+                  close={() => setShowSidebar(false)}
+                />
               )}
             </>
           ) : (

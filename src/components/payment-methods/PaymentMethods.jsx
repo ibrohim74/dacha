@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import VerificationInput from "react-verification-input";
 import { useTranslation } from "react-i18next";
 import { cc_format, formatExpDate } from "./helpers";
+import Modal from "../modal/Modal";
 
 export default function PaymentMethods() {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ export default function PaymentMethods() {
 
   const handleAddCard = () => {
     setPaymentState((prevState) => ({ ...prevState, addingCard: true }));
+    console.log(paymentState.addingCard);
   };
 
   const handleSaveCard = () => {
@@ -53,45 +55,36 @@ export default function PaymentMethods() {
     }));
   };
 
-  const renderContent = () => {
-    if (paymentState.hasCards) {
-      return <PaymentCard />;
-    } else if (!paymentState.addingCard) {
-      return (
-        <>
-          <PaymentCardsNotFound onAddCard={handleAddCard} />
-        </>
-      );
-    } else if (paymentState.addingCard) {
-      return <AddPaymentCard onSaveCardDetails={handleSaveCard} />;
-    } else if (paymentState.addingCard && paymentState.confirmationStep) {
-      return <CreditCardConfirmation />;
-    }
-  };
+  return (
+    <Modal>
+      <div className={styles["payment-section"]}>
+        <h3>{t("my_cards")}</h3>
+        <div className={styles["payment-section-content"]}>
+          {paymentState.hasCards && <PaymentCard />}
+          {/* // need to add a wrapper and map payment cards in there + add card btn */}
 
-  return <div className={styles["payment-modal"]}>{renderContent()}</div>;
+          {!paymentState.hasCards && <PaymentCardsNotFound />}
+
+          {paymentState.addingCard && paymentState.confirmationStep && (
+            <CreditCardConfirmation />
+          )}
+
+          <Modal.Open opens="addcard">
+            <Button type="primary" onClick={handleAddCard}>
+              {t("add_card")}
+            </Button>
+          </Modal.Open>
+        </div>
+      </div>
+
+      <Modal.Window name="addcard" title={t("add_card")}>
+        <AddPaymentCard onSaveCardDetails={handleSaveCard} />
+      </Modal.Window>
+    </Modal>
+  );
 }
 
 const PaymentCard = () => {
-  const formatCardNumber = (number) => {
-    if (!number || number.length !== 16) {
-      return "";
-    }
-
-    // Capture the first 6 digits
-    const firstSix = number.slice(0, 6);
-    // Capture the last 4 digits
-    const lastFour = number.slice(12);
-    // Replace the middle 6 digits with the same number of asterisks
-    const middle = "*".repeat(6);
-
-    return `${firstSix} ${middle} ${lastFour}`;
-  };
-
-  const formattedCardNumber = formatCardNumber("1414141425252525");
-
-  console.log(formattedCardNumber);
-
   return (
     <div className={styles["credit-card"]}>
       <div className={styles["credit-card-wrapper"]}>
@@ -114,15 +107,12 @@ const PaymentCard = () => {
   );
 };
 
-const PaymentCardsNotFound = ({ onAddCard }) => {
+const PaymentCardsNotFound = () => {
   const { t } = useTranslation();
   return (
     <div className={styles["credit-card-not-found"]}>
+      <Icons.EmptyPagePlaceholder />
       <p>{t("no_cards_found")}</p>
-
-      <Button type="full-width-primary" onClick={onAddCard}>
-        {t("add_card")}
-      </Button>
     </div>
   );
 };

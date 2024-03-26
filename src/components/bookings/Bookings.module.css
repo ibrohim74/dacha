@@ -101,7 +101,7 @@
 
 .booking-accepted-number {
   font-size: 16px;
-  color: #a6a6a6;
+  color: var(--font-color-3);
   font-weight: 700;
 }
 
@@ -155,13 +155,13 @@
 
 .booking-rating-item textarea::placeholder {
   font-size: 14px;
-  color: #a6a6a6;
+  color: var(--font-color-3);
   font-family: "Montserrat";
 }
 
 .booking-rating-item > p {
   font-size: 12px;
-  color: #a6a6a6;
+  color: var(--font-color-3);
 }
 
 .booking-rating-btn {
@@ -204,7 +204,7 @@
 .early-departure-penalty {
   font-size: 14px;
   text-align: center;
-  color: #a6a6a6;
+  color: var(--font-color-3);
 }
 
 .early-departure-btns {
