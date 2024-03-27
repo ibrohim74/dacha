@@ -3,7 +3,6 @@
   top: 50%;
   left: 50%;
   width: 528px;
-  height: 636px;
   transform: translate(-50%, -50%);
   background-color: var(--brand-color-2);
   border-radius: 8px;
@@ -32,6 +31,15 @@
   padding: 1.5rem;
   border-bottom: 2px solid var(--surface-color);
 }
+
+.modal-header-without-title {
+  padding: 1rem 1rem 0 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
 .modal-header h3 {
   font-size: 20px;
   font-weight: 700;

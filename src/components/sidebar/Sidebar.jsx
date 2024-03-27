@@ -1,13 +1,20 @@
 import styles from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import {CABINET, PROFILE, SELLER_DASHBOARD} from "../../processes/utils/consts";
+import {
+  CABINET,
+  PROFILE,
+  SELLER_DASHBOARD,
+  BOOKING_ROUTE,
+  FAVORITES,
+} from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import Bookings from "../bookings/Bookings";
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PaymentMethods from "../payment-methods/PaymentMethods";
 export default function Sidebar({ onLogOut, user }) {
   const { username, phone } = user;
   const [imgProfile, setImgProfile] = useState();
@@ -66,17 +73,17 @@ export default function Sidebar({ onLogOut, user }) {
           </div>
 
           <div className={styles["sidebar-links-wrap"]}>
-            {user?.role === 'seller' && (
-                <Link
-                    className={styles["sidebar-link"]}
-                    to={`${CABINET}${SELLER_DASHBOARD}`}
-                >
-                  <DashboardIcon/>
-                  <div className={styles["sidebar-link-item"]}>
-                    {t("dashboard")}
-                    <Icons.ChevronRight />
-                  </div>
-                </Link>
+            {user?.role === "seller" && (
+              <Link
+                className={styles["sidebar-link"]}
+                to={`${CABINET}${SELLER_DASHBOARD}`}
+              >
+                <DashboardIcon />
+                <div className={styles["sidebar-link-item"]}>
+                  {t("dashboard")}
+                  <Icons.ChevronRight />
+                </div>
+              </Link>
             )}
             <Link
               className={styles["sidebar-link"]}
@@ -89,23 +96,24 @@ export default function Sidebar({ onLogOut, user }) {
               </div>
             </Link>
 
-            <Link className={styles["sidebar-link"]}>
-              <Icons.Wallet />
-              <div className={styles["sidebar-link-item"]}>
-                {t("sidebar_payments")}
-                <Icons.ChevronRight />
-              </div>
-            </Link>
-            <Modal.Open opens="bookings">
+            <Modal.Open opens="payment-methods">
               <Link className={styles["sidebar-link"]}>
-                <Icons.Notification />
+                <Icons.Wallet />
                 <div className={styles["sidebar-link-item"]}>
-                  {t("sidebar_bookings")}
+                  {t("sidebar_payments")}
                   <Icons.ChevronRight />
                 </div>
               </Link>
             </Modal.Open>
-            <Link className={styles["sidebar-link"]}>
+
+            <Link to={BOOKING_ROUTE} className={styles["sidebar-link"]}>
+              <Icons.Notification />
+              <div className={styles["sidebar-link-item"]}>
+                {t("sidebar_bookings")}
+                <Icons.ChevronRight />
+              </div>
+            </Link>
+            <Link to={FAVORITES} className={styles["sidebar-link"]}>
               <Icons.ChatIcon />
               <div className={styles["sidebar-link-item"]}>
                 {t("sidebar_fav")}
@@ -124,8 +132,8 @@ export default function Sidebar({ onLogOut, user }) {
         </div>
       </div>
 
-      <Modal.Window name="bookings" title="My bookings">
-        <Bookings />
+      <Modal.Window name="payment-methods" title={t("sidebar_payments")}>
+        <PaymentMethods />
       </Modal.Window>
     </Modal>
   );

@@ -71,6 +71,7 @@ const Profile = () => {
                 console.log(e);
             }
         }else {
+            setLoadingImg(false)
             notifications.error({
                 key:fileSizeInMB,
                 message: `ошибка`,

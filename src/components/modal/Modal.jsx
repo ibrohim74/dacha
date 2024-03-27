@@ -6,10 +6,8 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import Button from "../Button/Button";
 import styles from "./Modal.module.css";
 import { CloseOutlined, XOutlined } from "@ant-design/icons";
-import { X } from "@mui/icons-material";
 
 const ModalContext = createContext();
 
@@ -34,19 +32,28 @@ function Open({ children, opens: opensWindowName }) {
 function Window({ children, name, title }) {
   const { openName, close } = useContext(ModalContext);
 
-  const ref = useOutsideClick(close);
+  //   const ref = useOutsideClick(close);
+  const ref = useOutsideClick({ handler: close });
 
   if (name !== openName) return null;
 
   return createPortal(
     <div className={styles["modal-overlay"]}>
       <div className={styles["modal"]} ref={ref}>
-        <div className={styles["modal-header"]}>
-          <h3>{title}</h3>
-          <button className={styles["modal-btn"]} onClick={close}>
-            <CloseOutlined />
-          </button>
-        </div>
+        {title ? (
+          <div className={styles["modal-header"]}>
+            <h3>{title}</h3>
+            <button className={styles["modal-btn"]} onClick={close}>
+              <CloseOutlined />
+            </button>
+          </div>
+        ) : (
+          <div className={styles["modal-header-without-title"]}>
+            <button className={styles["modal-btn"]} onClick={close}>
+              <CloseOutlined />
+            </button>
+          </div>
+        )}
         <div>{cloneElement(children, { onCloseModal: close })}</div>
       </div>
     </div>,

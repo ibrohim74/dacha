@@ -26,3 +26,7 @@
 .tab-inactive {
   color: var(--font-color-2);
 }
+
+.tab-content {
+  background-color: var(--brand-color-2);
+}

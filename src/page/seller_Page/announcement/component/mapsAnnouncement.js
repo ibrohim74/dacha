@@ -95,7 +95,9 @@ const MapsAnnouncement = (props) => {
         zoom={9}
         ref={mapRef}
         center={selectPosition && selectPosition.lat && selectPosition.lon ? [selectPosition.lat, selectPosition.lon] : { lat: 41.34557, lng: 69.284599 }}
-        style={{
+        style={
+        props.mapStyle ? props.mapStyle :
+        {
           width: "100%",
           height: "200px",
           overflow: "hidden",

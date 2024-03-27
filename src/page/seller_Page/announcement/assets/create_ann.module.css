@@ -1,293 +1,340 @@
-.fc-theme-standard .fc-popover-header,
-.fc-theme-standard .fc-list-day-cushion {
-  background: #70d8bd;
-}
-.fc-popover-body {
-  background: #141b2d;
-}
-.fc-list-event:hover {
-  background: #1f1fff;
-}
-.ant-input-group-addon {
-  border-radius: 0 !important;
-}
-.ant-select-selector {
-  background: white;
-  color: black !important;
-}
-.ant-select-arrow {
-  color: #70d8bd !important;
-}
-/* .ant-select-focused {
-  background: #70d8bd !important;
-} */
-.input-2-row {
-  margin-top: 0 !important;
-  width: 49% !important;
-}
-.box-2-input {
-  margin-bottom: 30px;
-  display: flex;
-  height: 40px;
-  justify-content: space-between;
-  gap: 30px;
-}
-.input input::placeholder,
-.input textarea::placeholder {
-  color: rgb(0, 47, 52) !important;
-  opacity: 0.6;
-}
-.input {
-  margin-bottom: 30px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.create_ann_photo_box {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    height: 300px;
+    border: 3px solid #EEEFF5;
+    border-radius: 20px;
+    padding: 16px;
 }
 
-.card {
-  padding: 10px;
-  border-radius: 5px;
-  overflow: hidden;
+.create_ann_photo {
+    width: 114px;
+    height: 88px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 16px;
 }
 
-.card p {
-  font-weight: bold;
-  color: #0086fe;
+.create_ann_photo button {
+    position: absolute;
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    background: #FFEFF9;
+    cursor: pointer;
+    display: none;
+
 }
 
-.card .drag-area {
-  height: 150px;
-  border-radius: 5px;
-  border: 2px dashed #70d8bd;
-  color: #70d8bd;
-  /*background: #f4f3f9;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  -webkit-user-select: none;
-  margin-top: 10px;
-  flex-wrap: wrap;
+.create_ann_photo:hover button {
+    display: block;
 }
 
-.card .select {
-  color: black;
-  margin-left: 5px;
-  cursor: pointer;
-  transition: 0.4s;
+.create_ann_photo img {
+    position: absolute;
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+    object-fit: cover;
 }
 
-.card .select:hover {
-  opacity: 0.6;
+.create_ann_photo_select_box {
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
 
-.card .container-inputLeft {
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-
-  overflow-y: auto;
-  margin-top: 10px;
+.create_ann_photo_box input {
+    display: none
 }
 
-.card .container-inputLeft .image {
-  width: 100px;
-  margin-right: 5px;
-  height: 100px;
-  position: relative;
-  margin-bottom: 8px;
+.create_ann_photo_select_box_item {
+    border: 2px #EEEFF5 solid;
+
+    border-radius: 10px;
+    width: 228px;
+    height: 88px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
 }
 
-.card .container-inputLeft .image img {
-  width: 100%;
-  object-fit: cover;
-  height: 100%;
-  border-radius: 5px;
+.create_ann_photo_select_box_item p:nth-child(1) {
+    font-size: 12px;
 }
 
-.delete {
-  position: absolute !important;
-  top: 1px;
-  right: 2px;
-  font-size: 20px;
-  cursor: pointer;
+.create_ann_photo_select_box_item p:nth-child(2) {
+    font-size: 12px;
+    color: #A6A6A6;
 }
 
-.card input,
-.card .drag-area .on-drop,
-.card .drag-area.dragover .visible {
-  display: none;
-}
-.delete {
-  z-index: 999;
-  color: red;
-}
-.browse-btn {
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #70d8bd;
-}
-.create-calendar-box {
-  margin-top: 44px;
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  width: 100%;
-}
-.calendar-map,
-.calendar-input {
-  width: 100%;
-}
-.splide__slide {
-  width: 150px !important;
-  height: 150px !important;
-}
-.splide {
-  width: 80%;
-  overflow: hidden;
-}
-.splide__slide img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-.splide__arrows {
-  display: none;
+.create_ann_line_lang {
+    width: 343px;
+    height: 37px;
+    background: #EEEFF5;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 4px;
 }
 
-.ann-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  height: 100%;
-  width: 100%;
-}
-.ann-box-item {
-  display: flex;
-  width: 70%;
-  height: 150px;
-  background: #1f2a40;
-  margin: 10px;
-  padding: 2px 3px;
-  overflow: hidden;
-}
-.ann-box-photo {
-  width: 50%;
-  height: 100%;
-  border: 3px dashed #70d8bd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.ann-box-info {
-  width: 100%;
-  height: 100%;
-  margin-left: 10px;
-  position: relative;
-}
-.ann-box-footer {
-  width: 77%;
-  height: 20%;
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  right: 10px;
-  margin-top: 5px;
-}
-.ann-item-title {
-  width: 100%;
-  height: 73%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-}
-.ann-box-footer Button {
-  margin: 0 0 0 10px;
-  width: 100px;
-  height: 100%;
-}
-.ann-item-title h1,
-p {
-  font-size: 25px;
-  line-height: 1.2;
-  margin: 0;
+.create_ann_line_uzb {
+    background: #fff;
+    width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-.defBlockAnn {
-  width: 220px;
-  height: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #cacaca;
-  cursor: pointer;
+.create_ann_line_ru {
+    background: transparent;
+    width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-.announcement-grid {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.create_ann_line_title {
+    margin-top: 10px;
+    display: flex;
 }
+
+.create_ann_line_title_left {
+    width: 48%;
+    margin-right: 25px;
+}
+
+.create_ann_line_title_right {
+    width: 48%;
+}
+
+.create_ann_input {
+    margin: 15px 0;
+}
+
+.create_ann_input p {
+    color: #292D32;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.create_ann_input input, .create_ann_input textarea, .create_ann_input select, .create_ann_input option {
+    width: 100%;
+    background: #EEEFF5;
+    padding: 12px 16px 12px 16px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+
+}
+
+.create_ann_input input::placeholder, .create_ann_input textarea::placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+}
+
+.create_ann_input textarea {
+    resize: none;
+    width: 100%;
+    height: 90px;
+}
+
+.create_ann_line_price_periud {
+    display: flex;
+
+}
+
+.create_ann_subTitle {
+    font-size: 25px;
+    font-weight: 700;
+    margin: 34px 0;
+}
+
+.create_ann_list_comfort_btn {
+    height: 46px;
+    width: 103px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.create_ann_list_comfort_btn p {
+    color: #292D32;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.create_ann_list_comfort {
+    margin: 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.create_ann_list_comfort_checkbox {
+    display: flex;
+    width: 48%;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.create_ann_list_comfort button {
+    width: 80%;
+    background: #292D32;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 16px 40px 16px 40px;
+    margin-top: 16px;
+}
+
+.create_ann_list_comfort p {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.create_ann_line_adults {
+    display: flex
+}
+
+.create_ann_line_adults_left, .create_ann_line_adults_right {
+    width: 48%;
+    display: flex;
+
+}
+
+.create_ann_line_adults_left h1, .create_ann_line_adults_right h1 {
+    color: #292D32;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.create_ann_contact {
+    display: flex;
+    width: 100%;
+}
+
+.create_ann_contact .create_ann_input {
+    width: 30%;
+}
+.create_ann_contact .create_ann_input input{
+    font-size: 14px;
+    color: #000;
+
+}
+.create_ann_contact .create_ann_input.activeTel input{
+    background: #fff;
+    border: 2px #15CC69 solid;
+}
+
+.create_ann_contact .create_ann_input:nth-child(2){
+    margin-left: 40px;
+}
+
+
+.create_ann_save_line{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.create_ann_save_line_item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 69px;
+}
+.create_ann_save_line_item_delete{
+    display: flex;
+    background: #FFEFEF;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    cursor: pointer;
+}
+.create_ann_save_line_item_save{
+    display: flex;
+    background: #292D32;
+    width: 295px;
+    height: 44px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
 
 @media screen and (max-width: 750px) {
-  .create-calendar-box {
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-  }
-  .ann-box-item {
-    width: 100%;
-    margin: 10px 0;
-    flex-direction: column;
-    height: 290px;
-  }
-  .ann-box-photo {
-    width: 100%;
-  }
-  .ann-box-info {
-    margin: 0;
-  }
-  .card .drag-area {
-    width: 80%;
-  }
-  .calendar-map,
-  .calendar-input {
-    width: 100%;
-  }
-  .input-2-row {
-    width: 100% !important;
-    float: start;
-  }
-  .box-2-input {
-    flex-direction: column;
-  }
-}
+    .create_ann_photo {
+        margin: 3px;
+        width: 95px;
 
-/* helpers */
+    }
 
-.container-md {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 940px;
-}
+    .create_ann_line_title_left {
+        width: 100%;
+        margin-right: 0;
+    }
 
-.calendar-input input,
-.calendar-input textarea,
-.create-calendar-box input,
-.create-calendar-box textarea {
-  min-height: 2.5rem;
-  background-color: #d9d9d9 !important;
-  border: none !important;
-  border-radius: 0 !important;
+    .create_ann_line_title_right {
+        width: 100%;
+    }
+
+    .create_ann_line_title_right .create_ann_input:nth-child(1) {
+        margin-top: 0;
+    }
+
+    .create_ann_line_title {
+        flex-direction: column;
+    }
+    .create_ann_line_lang{
+        width: 100%;
+    }
+    .create_ann_line_adults{
+        flex-direction: column;
+    }
+    .create_ann_line_adults_left{
+        margin-bottom: 16px;
+    }
+    .create_ann_contact{
+        flex-direction: column;
+    }
+    .create_ann_contact .create_ann_input{
+        margin-left: 0!important;
+        width: 100%;
+    }
 }

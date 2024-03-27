@@ -13,6 +13,11 @@
   justify-content: center;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .primary {
   color: var(--brand-color-2);
   background-color: #333;
@@ -28,6 +33,19 @@
 .secondary {
   color: var(--font-color);
   background-color: var(--surface-color);
+  font-weight: 600;
+}
+
+.red {
+  color: #ff4141;
+  background-color: #ffefef;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.red:hover {
+  background-color: #ff4141;
+  color: #ffefef;
 }
 
 .secondary:hover {
@@ -52,6 +70,13 @@
   color: var(--font-black);
   font-weight: 600;
   background-color: var(--brand-color-2);
+}
+
+.full-width-primary {
+  width: 100%;
+  color: var(--brand-color-2);
+  background-color: #333;
+  transition: 0.5s all ease;
 }
 
 @media only screen and (min-width: 360px) and (max-width: 560px) {

@@ -70,6 +70,7 @@ const SellerNewRequests = () => {
                 setPhotoUrls(images);
             }
         } catch (error) {
+            setIsLoading(false);
             console.log("Error fetching data:", error);
         } finally {
             setIsLoading(false);
@@ -80,17 +81,7 @@ const SellerNewRequests = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const sellerBooking = async () => {
-            try {
-                const JWT = jwtDecode(localStorage.getItem("token"));
-                const res = await $authHost.get(`/seller/${JWT?.userId}/bookings`);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        sellerBooking();
-    }, []);
+
 
     const getClient = async () => {
         try {
@@ -109,7 +100,7 @@ const SellerNewRequests = () => {
         getClient();
     }, [requests]);
 
-    console.log(requests)
+
     return (
         <div>
             {requests?.length >0 ?

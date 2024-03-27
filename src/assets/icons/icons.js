@@ -37,6 +37,9 @@ import { ReactComponent as Housing } from "./housing.svg";
 import { ReactComponent as Entertainment } from "./entertainment.svg";
 import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
+import { ReactComponent as Remove } from "./remove.svg";
+import { ReactComponent as Card } from "./card.svg";
+import { ReactComponent as EmptyPagePlaceholder } from "./deleteImgIcon.svg";
 import { ReactComponent as Moderate } from "./moderate.svg";
 import { ReactComponent as Seller_dashboard_request_tab } from "./seller_dashboard_request_tab.svg";
 import { ReactComponent as Seller_dashboard_request_tab_disbl } from "./seller_dashboard_request_tab_disbl.svg";
@@ -48,6 +51,10 @@ import { ReactComponent as NoDocuments } from "./NoDocuments.svg";
 import { ReactComponent as DenyRed } from "./denyRed.svg";
 import { ReactComponent as SuccessGreen } from "./successGreen.svg";
 import { ReactComponent as DefolteSuccess } from "./defoltSuccess.svg";
+import { ReactComponent as Notes } from "./notes.svg";
+import { ReactComponent as Completed } from "./completed.svg";
+import { ReactComponent as RedLogout } from "./redlogout.svg";
+import { ReactComponent as DeleteImgIcon } from "./deleteImgIcon.svg";
 
 export const Icons = {
   Logo,
@@ -99,5 +106,12 @@ export const Icons = {
   NoDocuments,
   DenyRed,
   SuccessGreen,
-  DefolteSuccess
+  DefolteSuccess,
+  Remove,
+  Card,
+  EmptyPagePlaceholder,
+  Notes,
+  Completed,
+  RedLogout,
+  DeleteImgIcon
 };

@@ -13,7 +13,7 @@ export default function Tabs({ firstTab, secondTab, content }) {
 
   return (
     <>
-      <ul className={styles["tabs"]}>
+      <ul className={`${styles["tabs"]} }`}>
         <li
           className={
             activeTab === firstTab

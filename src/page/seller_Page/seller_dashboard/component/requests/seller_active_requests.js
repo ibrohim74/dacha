@@ -43,6 +43,7 @@ const SellerActiveRequests = () => {
             }
 
             const announcementResponse = await GetAnnouncementAPI();
+            console.log(announcementResponse)
             if (announcementResponse?.data) {
                 setDacha(announcementResponse.data);
                 const images = announcementResponse.data.map((item) =>
@@ -69,7 +70,7 @@ const SellerActiveRequests = () => {
 
                 // Filter out only the bookings with status "awaiting"
                 const awaitingBookings = res.data.filter(item => item.status === "awaiting");
-
+                console.log(awaitingBookings)
                 setSellerBooking(awaitingBookings);
             } catch (e) {
                 console.log(e);
@@ -94,8 +95,7 @@ const SellerActiveRequests = () => {
     useEffect(() => {
         getClient();
     }, [requests]);
-
-
+    console.log(dacha)
     return (
         <div>
             {sellerBookings?.length > 0 ?
@@ -103,6 +103,7 @@ const SellerActiveRequests = () => {
                     return (
                         <div key={item.accommodation_id}>
                             {dacha.map((dachaItem, index) => {
+
                                 if (item.accommodation_id === dachaItem.id) {
                                     const currentPhotoUrl = photoUrls[index];
                                     const currentClient = client.find(
@@ -163,8 +164,8 @@ const SellerActiveRequests = () => {
                                             </div>
                                         </div>
                                     );
-                                }
-                                return null;
+                                }else {
+                                    console.log('asd')}
                             })}
                         </div>
                     );

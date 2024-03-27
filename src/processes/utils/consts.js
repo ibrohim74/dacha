@@ -10,6 +10,7 @@ export const PLACE = "/place";
 export const FORGOT_PASSWORD = "/ForgotPassword";
 export const HOTELS_CATALOGUE_ROUTE = "/hotels_catalogue";
 export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
+export const BOOKING_ROUTE = "/bookings";
 
 // Dashboard
 export const CABINET = "/cabinet/";
@@ -18,6 +19,7 @@ export const CHANGE_PASS_TOP = "change_pass";
 
 // User Routes
 export const REQUEST_USER = "announcement_user";
+export const FAVORITES = "/favorites";
 
 // Admin Routes
 export const PLACE_ADMIN = "place_admin";
