@@ -56,6 +56,7 @@ import { ReactComponent as Completed } from "./completed.svg";
 import { ReactComponent as RedLogout } from "./redlogout.svg";
 import { ReactComponent as DeleteImgIcon } from "./deleteImgIcon.svg";
 import { ReactComponent as QuestionMark } from "./quetionmark.svg";
+import { ReactComponent as Calendar } from "./calendar.svg";
 
 export const Icons = {
   Logo,
@@ -115,5 +116,6 @@ export const Icons = {
   Completed,
   RedLogout,
   QuestionMark,
-  DeleteImgIcon
+  DeleteImgIcon,
+  Calendar
 };

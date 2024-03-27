@@ -32,7 +32,6 @@ const SellerStoryRequests = () => {
     };
 
 
-
     const fetchData = async () => {
         setIsLoading(true);
         try {
@@ -90,14 +89,14 @@ const SellerStoryRequests = () => {
         getClient();
     }, [requests]);
 
-    const combinedList = [ ...sellerBookings];
+    const combinedList = [...sellerBookings];
 
     // Sorting combined list by date (example sorting criteria)
     combinedList.sort((a, b) => new Date(a.start_day) - new Date(b.start_day));
-
+    console.log(combinedList)
     return (
         <div>
-            {combinedList?.length > 0 && combinedList.map((item) => {
+            {combinedList?.length > 0 ? combinedList.map((item) => {
                 const dachaItem = dacha.find(d => d.id === item.accommodation_id);
                 if (!dachaItem) return null;
                 const currentPhotoUrl = photoUrls.find((_, index) => dachaItem.id === item.accommodation_id);
@@ -152,7 +151,8 @@ const SellerStoryRequests = () => {
                             <div
                                 className={style.sellerDashboard__active_request_item_column_3_buttons}>
                                 {item.status === "finished" &&
-                                    <div className={style.sellerDashboard__status_item} style={{border: "1px solid #15CC69" ,background:'rgba(21,204,105,0.05)'}}>
+                                    <div className={style.sellerDashboard__status_item}
+                                         style={{border: "1px solid #15CC69", background: 'rgba(21,204,105,0.05)'}}>
                                         <Icons.SuccessGreen/>
                                         <p style={{color: '#15CC69'}}>Завершен</p>
                                     </div>
@@ -164,12 +164,16 @@ const SellerStoryRequests = () => {
                                     </div>
                                 }
                                 {item.status === "awaiting" &&
-                                    <div className={style.sellerDashboard__status_item} style={{border: "1px solid rgb(255, 255, 0)" ,background:'rgba(255,255,0,0.09)'}}>
+                                    <div className={style.sellerDashboard__status_item} style={{
+                                        border: "1px solid rgb(255, 255, 0)",
+                                        background: 'rgba(255,255,0,0.09)'
+                                    }}>
                                         <p style={{color: 'rgb(38,38,3)'}}>в ожидании</p>
                                     </div>
                                 }
                                 {item.status === "cancelled" &&
-                                    <div className={style.sellerDashboard__status_item} style={{border: "1px solid #FF4141" ,background:'rgba(255,65,65,0.05)'}}>
+                                    <div className={style.sellerDashboard__status_item}
+                                         style={{border: "1px solid #FF4141", background: 'rgba(255,65,65,0.05)'}}>
                                         <Icons.DenyRed/>
                                         <p style={{color: '#FF4141'}}>отменен</p>
                                     </div>
@@ -178,7 +182,11 @@ const SellerStoryRequests = () => {
                         </div>
                     </div>
                 );
-            })}
+            }) : <div className={style.SellerDashboardNoData}>
+                <Icons.NoDocuments/>
+                <p>На данный момент ничего нету</p>
+            </div>
+            }
         </div>
     );
 };

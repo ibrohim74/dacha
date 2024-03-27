@@ -296,8 +296,43 @@
     font-weight: 700;
 }
 
+.create_ann_line_work_day{
+    width: 100%;
+    padding: 8px 12px 8px 12px;
+    border: solid #F7F8F9;
+    border-width: 1px 2px 2px 2px;
+    border-radius: 12px;
 
+    display: flex;
+}
+.create_ann_line_work_day_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+}
+.create_ann_line_work_day_elements{
+    margin-left: 12px;
+    width: 80%;
 
+}
+.create_ann_line_work_day_elements h1{
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.create_ann_line_work_day_days{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.create_ann_line_work_day_days_item{
+    background: #F7F8F9;
+    padding: 4px 6px 4px 6px;
+    border-radius: 20px;
+    cursor: pointer;
+}
 @media screen and (max-width: 750px) {
     .create_ann_photo {
         margin: 3px;

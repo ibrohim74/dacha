@@ -6,7 +6,7 @@ export const CreateAnnouncementAPI = async (data) =>{
         const res = await $authHost.post('/create_dacha' , data)
         return res
     }catch (e){
-        console.log(e)
+       return e
     }
 }
 export const GetAnnouncementAPI = async ()=>{

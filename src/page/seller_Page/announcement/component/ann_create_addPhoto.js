@@ -13,8 +13,6 @@ const AnnCreateAddPhoto = (props) => {
     const MAX_FILE_SIZE_IN_MB = 50;
     const MAX_IMAGES_COUNT = 8;
 
-    console.log(images);
-
     const getFileSizeInMB = (file) => {
         return file.size / (1024 * 1024);
     };
@@ -28,7 +26,8 @@ const AnnCreateAddPhoto = (props) => {
         if (files.length === 0) return;
 
         if (images.length + files.length > MAX_IMAGES_COUNT) {
-            message.error(`Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
+            message.error(props?.lang ? `Вы не можете загрузить более ${MAX_IMAGES_COUNT} изображений.`:
+                `Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
             return;
         }
 
@@ -43,11 +42,13 @@ const AnnCreateAddPhoto = (props) => {
                 // Rasmni saqlash
                 setImages(prevImages => [...prevImages, { url: imageUrl, file: files[i] }]);
             } else {
-                message.error(`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
+                message.error(props.lang ?
+                    `Размер файла превышает указанный предел: ${fileSizeInMB.toFixed(2)} MB`
+                    :`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
             }
         }
 
-        message.success('Rasmlar muvaffaqiyatli yuklandi');
+        message.success(props.lang ? "Изображения успешно загружены" :'Rasmlar muvaffaqiyatli yuklandi');
     };
 
     const deleteImage = (index) => {
@@ -74,7 +75,8 @@ const AnnCreateAddPhoto = (props) => {
         if (files.length === 0) return;
 
         if (images.length + files.length > MAX_IMAGES_COUNT) {
-            message.error(`Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
+            message.error(props?.lang ? `Вы не можете загрузить более ${MAX_IMAGES_COUNT} изображений.`:
+                `Siz ${MAX_IMAGES_COUNT} dan ko'p rasm yuklab bo'lmaysiz`);
             return;
         }
 
@@ -89,11 +91,13 @@ const AnnCreateAddPhoto = (props) => {
                 // Rasmni saqlash
                 setImages(prevImages => [...prevImages, { url: imageUrl, file: files[i] }]);
             } else {
-                message.error(`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
+                message.error(props.lang ?
+                    `Размер файла превышает указанный предел: ${fileSizeInMB.toFixed(2)} MB`
+                    :`Fayl hajmi belgilangan chegardan katta: ${fileSizeInMB.toFixed(2)} MB`);
             }
         }
 
-        message.success('Rasmlar muvaffaqiyatli yuklandi');
+        message.success(props.lang ? "Изображения успешно загружены" :'Rasmlar muvaffaqiyatli yuklandi');
     };
 
     return (
@@ -123,13 +127,13 @@ const AnnCreateAddPhoto = (props) => {
                                 >
                                     {isDragging ? (
                                         <span className="select" style={{ color: '#70d8bd' }}>
-                                            принесите картинку сюда
+                                            {props?.lang ? "принесите картинку сюда":"rasmni shu yerga olib keling"}
                                         </span>
                                     ) : (
                                         <>
                                             <span className="select browse-btn" role={'button'}>
-                                                <p>Добавить фото продукта</p>
-                                                <p>*Минимум 5 фото</p>
+                                                <p>{props.lang ? "Добавить фото продукта" : "Mahsulot fotosuratini qo'shing"}</p>
+                                                <p>{props.lang ? "*Минимум 5 фото" : "* Kamida 5 ta fotosurat"}</p>
                                             </span>
                                         </>
                                     )}

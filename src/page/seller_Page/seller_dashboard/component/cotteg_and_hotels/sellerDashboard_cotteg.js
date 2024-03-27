@@ -76,10 +76,9 @@ const SellerDashboardCotteg = ({id}) => {
             ),
         },
     ];
-
     return (
         <div style={{width: '100%', height: "100%", position: "relative"}}>
-            {announcementData &&
+            {announcementData.length > 0 ?
                 announcementData.map((item, index) => {
                     return (
                         <div key={index} className={style.sellerDashboard_cotteg_hotels_item}>
@@ -109,11 +108,16 @@ const SellerDashboardCotteg = ({id}) => {
                             </div>
                         </div>
                     );
-                })}
+                }) : <div className={style.SellerDashboardNoData}>
+                    <Icons.NoDocuments/>
+                    <p>На данный момент ничего нету</p>
+                </div>}
+            <div className={style.sellerDashboard_cotteg_create_box}>
+                <Link className={style.sellerDashboard_cotteg_create} to={CABINET + CREATE_ANNOUNCEMENT}>
+                    <p>Создать</p>
+                </Link>
+            </div>
 
-            <Link className={style.sellerDashboard_cotteg_create} to={CABINET+CREATE_ANNOUNCEMENT}>
-                <p>Создать</p>
-            </Link>
         </div>
     );
 };
