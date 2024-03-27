@@ -8,7 +8,7 @@ export default function Button({ children, type, onClick, disabled = false }) {
       onClick={onClick}
       disabled={disabled}
     >
-      <span>{children}</span>
+      {children}
     </button>
   );
 }

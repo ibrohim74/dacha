@@ -15,7 +15,9 @@ import Modal from "../modal/Modal";
 import Bookings from "../bookings/Bookings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PaymentMethods from "../payment-methods/PaymentMethods";
-export default function Sidebar({ onLogOut, user }) {
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+
+export default function Sidebar({ onLogOut, user, close }) {
   const { username, phone } = user;
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
@@ -51,9 +53,11 @@ export default function Sidebar({ onLogOut, user }) {
     getPhoto();
   }, []);
 
+  const ref = useOutsideClick({ handler: close });
+
   return (
     <Modal>
-      <div className={styles["sidebar-container"]}>
+      <div className={styles["sidebar-container"]} ref={ref}>
         <div className={styles["sidebar-arrow"]}>
           <Icons.SidebarArrow />
         </div>
@@ -96,7 +100,7 @@ export default function Sidebar({ onLogOut, user }) {
               </div>
             </Link>
 
-            <Modal.Open opens="payment-methods">
+            {/* <Modal.Open opens="payment-methods">
               <Link className={styles["sidebar-link"]}>
                 <Icons.Wallet />
                 <div className={styles["sidebar-link-item"]}>
@@ -104,7 +108,7 @@ export default function Sidebar({ onLogOut, user }) {
                   <Icons.ChevronRight />
                 </div>
               </Link>
-            </Modal.Open>
+            </Modal.Open> */}
 
             <Link to={BOOKING_ROUTE} className={styles["sidebar-link"]}>
               <Icons.Notification />
@@ -120,14 +124,21 @@ export default function Sidebar({ onLogOut, user }) {
                 <Icons.ChevronRight />
               </div>
             </Link>
-
+            <Link to={""} className={styles["sidebar-link"]}>
+              <Icons.QuestionMark />
+              <div className={styles["sidebar-link-item"]}>
+                {t("sidebar_support")}
+                <Icons.ChevronRight />
+              </div>
+            </Link>
+            {/* 
             <Link className={styles["sidebar-link"]} onClick={onLogOut}>
               <Icons.Logout />
               <div className={styles["sidebar-link-item"]}>
                 {t("sidebar_logout")}
                 <Icons.ChevronRight />
               </div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

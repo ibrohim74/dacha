@@ -2,6 +2,24 @@
   padding: 1.5rem;
 }
 
+.payment-section {
+  background-color: var(--brand-color-2);
+  border-radius: 20px;
+  margin-top: 60px;
+}
+
+.payment-section h3 {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--surface-color);
+}
+
+.payment-section-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .payment-cards {
   display: flex;
   flex-direction: column;
@@ -80,6 +98,7 @@
 }
 
 .credit-card-add {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 10px;

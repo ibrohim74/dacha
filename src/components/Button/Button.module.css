@@ -11,6 +11,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+}
+
+.btn svg path {
+  width: 20px;
+  height: 20px;
 }
 
 .btn:disabled {
@@ -77,6 +83,31 @@
   color: var(--brand-color-2);
   background-color: #333;
   transition: 0.5s all ease;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+}
+
+.icon-red {
+  width: 44px;
+  height: 44px;
+  color: #ff4141;
+  background-color: #ffefef;
+  transition: all 0.5s ease;
+}
+
+.icon-red svg path {
+  stroke: #ff4141;
+}
+
+.icon-red:hover {
+  background-color: #ff4141;
+}
+
+.icon-red:hover svg path {
+  stroke: #ffefef;
 }
 
 @media only screen and (min-width: 360px) and (max-width: 560px) {
