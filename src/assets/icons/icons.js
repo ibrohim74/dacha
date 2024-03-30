@@ -39,7 +39,7 @@ import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
 import { ReactComponent as Remove } from "./remove.svg";
 import { ReactComponent as Card } from "./card.svg";
-import { ReactComponent as EmptyPagePlaceholder } from "./empty_page_paceholder.svg";
+import { ReactComponent as EmptyPagePlaceholder } from "./deleteImgIcon.svg";
 import { ReactComponent as Moderate } from "./moderate.svg";
 import { ReactComponent as Seller_dashboard_request_tab } from "./seller_dashboard_request_tab.svg";
 import { ReactComponent as Seller_dashboard_request_tab_disbl } from "./seller_dashboard_request_tab_disbl.svg";
@@ -47,10 +47,16 @@ import { ReactComponent as Month } from "./month.svg";
 import { ReactComponent as Request_people } from "./request_people.svg";
 import { ReactComponent as LocationIconSellerDashboard } from "./locationIconSellerDashboard.svg";
 import { ReactComponent as Dots } from "./dots.svg";
+import { ReactComponent as NoDocuments } from "./NoDocuments.svg";
+import { ReactComponent as DenyRed } from "./denyRed.svg";
+import { ReactComponent as SuccessGreen } from "./successGreen.svg";
+import { ReactComponent as DefolteSuccess } from "./defoltSuccess.svg";
 import { ReactComponent as Notes } from "./notes.svg";
 import { ReactComponent as Completed } from "./completed.svg";
 import { ReactComponent as RedLogout } from "./redlogout.svg";
+import { ReactComponent as DeleteImgIcon } from "./deleteImgIcon.svg";
 import { ReactComponent as QuestionMark } from "./quetionmark.svg";
+import { ReactComponent as Calendar } from "./calendar.svg";
 import { ReactComponent as WiFi } from "./wifi.svg";
 import { ReactComponent as Person } from "./person.svg";
 
@@ -101,14 +107,19 @@ export const Icons = {
   Request_people,
   LocationIconSellerDashboard,
   Dots,
+  NoDocuments,
+  DenyRed,
+  SuccessGreen,
+  DefolteSuccess,
   Remove,
   Card,
   EmptyPagePlaceholder,
-  Moderate,
   Notes,
   Completed,
   RedLogout,
   QuestionMark,
+  DeleteImgIcon,
+  Calendar
   WiFi,
   Person,
 };

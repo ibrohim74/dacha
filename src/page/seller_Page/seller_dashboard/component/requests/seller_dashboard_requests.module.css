@@ -11,6 +11,7 @@
     align-items: flex-start;
     flex-direction: column;
     height: 230px;
+    margin: 10px 0;
 }
 
 .sellerDashboard__new_request_item_column_1 {
@@ -153,4 +154,29 @@
     color: #A6A6A6;
     font-size: 16px;
     font-weight: 700;
+}
+.SellerDashboardNoData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+}
+.SellerDashboardNoData p{
+    font-size: 16px;
+    font-weight: 400  ;
+    color: #A6A6A6;
+}
+.sellerDashboard__status_item{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #70d8bd;
+    padding: 4px 12px 4px 12px;
+    border-radius: 10px;
+}
+.sellerDashboard__status_item p{
+    font-size: 16px;
+    font-weight: 500;
 }

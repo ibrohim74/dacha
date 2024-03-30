@@ -60,6 +60,7 @@ export default function ProfileImage({ currentUser }) {
         console.log(e);
       }
     } else {
+      setLoadingImg(false);
       notifications.error({
         key: fileSizeInMB,
         message: `ошибка`,

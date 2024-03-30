@@ -32,23 +32,7 @@ const SellerActiveRequests = () => {
     };
 
 
-    const acceptRequest = (id) => {
-        AcceptRequestAPI(id).then((r) => {
-            if (r?.status === 200) {
-                message.success("success");
-                window.location.reload();
-            }
-        });
-    };
 
-    const denyRequest = (id) => {
-        DenyRequestAPI(id).then((r) => {
-            if (r?.status === 200) {
-                message.success("success");
-                window.location.reload();
-            }
-        });
-    };
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -59,6 +43,7 @@ const SellerActiveRequests = () => {
             }
 
             const announcementResponse = await GetAnnouncementAPI();
+            console.log(announcementResponse)
             if (announcementResponse?.data) {
                 setDacha(announcementResponse.data);
                 const images = announcementResponse.data.map((item) =>
@@ -82,14 +67,18 @@ const SellerActiveRequests = () => {
             try {
                 const JWT = jwtDecode(localStorage.getItem("token"));
                 const res = await $authHost.get(`/seller/${JWT?.userId}/bookings`);
-                setSellerBooking(res.data)
+
+                // Filter out only the bookings with status "awaiting"
+                const awaitingBookings = res.data.filter(item => item.status === "awaiting");
+                console.log(awaitingBookings)
+                setSellerBooking(awaitingBookings);
             } catch (e) {
                 console.log(e);
             }
         };
         sellerBooking();
     }, []);
-    console.log(sellerBookings)
+
     const getClient = async () => {
         try {
             const clientData = [];
@@ -106,8 +95,7 @@ const SellerActiveRequests = () => {
     useEffect(() => {
         getClient();
     }, [requests]);
-
-
+    console.log(dacha)
     return (
         <div>
             {sellerBookings?.length > 0 ?
@@ -115,12 +103,13 @@ const SellerActiveRequests = () => {
                     return (
                         <div key={item.accommodation_id}>
                             {dacha.map((dachaItem, index) => {
+
                                 if (item.accommodation_id === dachaItem.id) {
                                     const currentPhotoUrl = photoUrls[index];
                                     const currentClient = client.find(
                                         (clientItem) => clientItem.id === item.customer_id
                                     );
-                                    console.log(currentClient);
+
                                     return (
                                         <div key={dachaItem.id} className={style.sellerDashboard__new_request_item}>
                                             <div className={style.sellerDashboard__new_request_item_column_1}>
@@ -139,7 +128,7 @@ const SellerActiveRequests = () => {
                                                 <div
                                                     className={style.sellerDashboard__new_request_item_column_title}>
                                                     <h1>{dachaItem?.title}</h1>
-                                                    <p>{currentClient?.username} (Хочет забронировать)</p>
+                                                    <p>{currentClient?.username} </p>
                                                 </div>
                                                 <div
                                                     className={style.sellerDashboard__new_request_item_column_rating}>
@@ -175,12 +164,15 @@ const SellerActiveRequests = () => {
                                             </div>
                                         </div>
                                     );
-                                }
-                                return null;
+                                }else {
+                                    console.log('asd')}
                             })}
                         </div>
                     );
-                }) : "нет данных"}
+                }) : <div className={style.SellerDashboardNoData}>
+                    <Icons.NoDocuments/>
+                    <p>На данный момент ничего нету</p>
+                </div>}
         </div>
     );
 };

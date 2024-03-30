@@ -1,43 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-.sellerDashboard_cotteg_hotels_item{
+.sellerDashboard_cotteg_hotels_item {
     font-family: "Montserrat", sans-serif;
     width: 100%;
     background: #F7F8F9;
     height: 146px;
     display: flex;
     padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
 }
-.sellerDashboard_cotteg_hotels_item_1{
+
+.sellerDashboard_cotteg_hotels_item_1 {
     width: 30%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
-.sellerDashboard_cotteg_hotels_item_1 h1{
+
+.sellerDashboard_cotteg_hotels_item_1 h1 {
     font-size: 32px;
     font-weight: 600;
 }
-.sellerDashboard_cotteg_hotels_item_2{
+
+.sellerDashboard_cotteg_hotels_item_2 {
     width: 33.33%;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
 }
-.sellerDashboard_cotteg_hotels_item_2 p{
+
+.sellerDashboard_cotteg_hotels_item_2 p {
     font-size: 18px;
     font-weight: 500;
 }
-.sellerDashboard_cotteg_hotels_item_3{
+
+.sellerDashboard_cotteg_hotels_item_3 {
     width: 33.33%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.sellerDashboard_cotteg_hotels_item_3 button{
+
+.sellerDashboard_cotteg_hotels_item_3 button {
     background: none;
     border: none;
     outline: none;
     cursor: pointer;
+}
+.SellerDashboardNoData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
+    width: 100%;
+}
+.SellerDashboardNoData p{
+    font-size: 16px;
+    font-weight: 400  ;
+    color: #A6A6A6;
+}
+.sellerDashboard_cotteg_create_box{
+    position: relative;
+    bottom: 30px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.sellerDashboard_cotteg_create {
+    background: #EEEFF5;
+    width: 200px;
+    height: 46px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sellerDashboard_cotteg_create p {
+    font-weight: 700;
+    font-size: 16px;
 }

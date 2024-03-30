@@ -55,8 +55,11 @@ const SellerNewRequests = () => {
         try {
             const requestResponse = await GetRequestAPI();
             if (requestResponse?.data) {
-                setRequests(requestResponse.data);
+                const awaitingRequests = requestResponse.data.filter(item => item.status === "awaiting");
+                setRequests(awaitingRequests);
+                console.log(requestResponse);
             }
+
 
             const announcementResponse = await GetAnnouncementAPI();
             if (announcementResponse?.data) {
@@ -67,6 +70,7 @@ const SellerNewRequests = () => {
                 setPhotoUrls(images);
             }
         } catch (error) {
+            setIsLoading(false);
             console.log("Error fetching data:", error);
         } finally {
             setIsLoading(false);
@@ -77,17 +81,7 @@ const SellerNewRequests = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const sellerBooking = async () => {
-            try {
-                const JWT = jwtDecode(localStorage.getItem("token"));
-                const res = await $authHost.get(`/seller/${JWT?.userId}/bookings`);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        sellerBooking();
-    }, []);
+
 
     const getClient = async () => {
         try {
@@ -111,77 +105,85 @@ const SellerNewRequests = () => {
         <div>
             {requests?.length >0 ?
                 requests.map((item) => {
-                    return (
-                        <div key={item.accommodation_id}>
-                            {dacha.map((dachaItem, index) => {
-                                if (item.accommodation_id === dachaItem.id) {
-                                    const currentPhotoUrl = photoUrls[index];
-                                    const currentClient = client.find(
-                                        (clientItem) => clientItem.id === item.customer_id
-                                    );
-                                    console.log(item);
-                                    return (
-                                        <div key={dachaItem.id} className={style.sellerDashboard__new_request_item}>
-                                            <div className={style.sellerDashboard__new_request_item_column_1}>
-                                                <div className={style.sellerDashboard__new_request_item_column_photo}>
-                                                    {currentPhotoUrl?.length > 0 ? <img
-                                                            src={`https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${currentPhotoUrl[0]}`}
-                                                            alt={dachaItem?.title}/>
-                                                        :
-                                                        <Icons.ImgPlcHolder
+                    console.log(item)
+                    if (item.status === "awaiting"){
+                        return (
+                            <div key={item.accommodation_id}>
+                                {dacha.map((dachaItem, index) => {
+                                    if (item.accommodation_id === dachaItem.id) {
+                                        const currentPhotoUrl = photoUrls[index];
+                                        const currentClient = client.find(
+                                            (clientItem) => clientItem.id === item.customer_id
+                                        );
 
-                                                            width={"100%"}
-                                                            height={"100%"}
-                                                        />
-                                                    }
+                                        return (
+                                            <div key={dachaItem.id} className={style.sellerDashboard__new_request_item}>
+                                                <div className={style.sellerDashboard__new_request_item_column_1}>
+                                                    <div className={style.sellerDashboard__new_request_item_column_photo}>
+                                                        {currentPhotoUrl?.length > 0 ? <img
+                                                                src={`https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${currentPhotoUrl[0]}`}
+                                                                alt={dachaItem?.title}/>
+                                                            :
+                                                            <Icons.ImgPlcHolder
+
+                                                                width={"100%"}
+                                                                height={"100%"}
+                                                            />
+                                                        }
+                                                    </div>
+                                                    <div
+                                                        className={style.sellerDashboard__new_request_item_column_title}>
+                                                        <h1>{dachaItem?.title}</h1>
+                                                        <p>{currentClient?.username} (Хочет забронировать)</p>
+                                                    </div>
+                                                    <div
+                                                        className={style.sellerDashboard__new_request_item_column_rating}>
+                                                        <Score score={dachaItem?.rating}/>
+                                                    </div>
                                                 </div>
-                                                <div
-                                                    className={style.sellerDashboard__new_request_item_column_title}>
-                                                    <h1>{dachaItem?.title}</h1>
-                                                    <p>{currentClient?.username} (Хочет забронировать)</p>
+
+                                                <div className={style.sellerDashboard__new_request_item_column_2}>
+                                                    <div className={style.sellerDashboard__new_request_item_column_2_day}>
+                                                        <p><Icons.Month/>{formatDate(item.start_day)}</p>
+                                                        <p><Icons.Month/>{formatDate(item.end_day)}</p>
+                                                    </div>
+                                                    <div
+                                                        className={style.sellerDashboard__new_request_item_column_2_people}>
+                                                        <Icons.Request_people/>
+                                                        2 Взрослых
+                                                    </div>
+                                                    <div
+                                                        style={{width:'130px'}}
+                                                        className={style.sellerDashboard__new_request_item_column_2_people}>
+                                                        <Icons.Request_people/>
+                                                        2 Дети
+                                                    </div>
                                                 </div>
-                                                <div
-                                                    className={style.sellerDashboard__new_request_item_column_rating}>
-                                                    <Score score={dachaItem?.rating}/>
+                                                <div className={style.sellerDashboard__new_request_item_column_3}>
+                                                    <div className={style.sellerDashboard__new_request_item_column_3_buttons}>
+                                                        <button onClick={()=>acceptRequest(item.id)}>Принять</button>
+                                                        <button onClick={()=>denyRequest(item.id)}>Отказать</button>
+                                                    </div>
+                                                    <div className={style.sellerDashboard__new_request_item_column_3_contact}>
+                                                        +998 90 230 23 23
+                                                    </div>
+
                                                 </div>
+
                                             </div>
+                                        );
+                                    }
+                                    return null;
+                                })}
+                            </div>
+                        );
+                    }else {
 
-                                            <div className={style.sellerDashboard__new_request_item_column_2}>
-                                                <div className={style.sellerDashboard__new_request_item_column_2_day}>
-                                                    <p><Icons.Month/>{formatDate(item.start_day)}</p>
-                                                    <p><Icons.Month/>{formatDate(item.end_day)}</p>
-                                                </div>
-                                                <div
-                                                    className={style.sellerDashboard__new_request_item_column_2_people}>
-                                                    <Icons.Request_people/>
-                                                    2 Взрослых
-                                                </div>
-                                                <div
-                                                    style={{width:'130px'}}
-                                                    className={style.sellerDashboard__new_request_item_column_2_people}>
-                                                    <Icons.Request_people/>
-                                                    2 Дети
-                                                </div>
-                                            </div>
-                                            <div className={style.sellerDashboard__new_request_item_column_3}>
-                                                <div className={style.sellerDashboard__new_request_item_column_3_buttons}>
-                                                    <button onClick={()=>acceptRequest(item.id)}>Принять</button>
-                                                    <button onClick={()=>denyRequest(item.id)}>Отказать</button>
-                                                </div>
-                                                <div className={style.sellerDashboard__new_request_item_column_3_contact}>
-                                                    +998 90 230 23 23
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </div>
-                    );
-                }) : "нет данных"}
+                    }
+                }) : <div className={style.SellerDashboardNoData}>
+                    <Icons.NoDocuments/>
+                    <p>На данный момент ничего нету</p>
+                </div>}
         </div>
     );
 

@@ -11,17 +11,10 @@ import SellerDashboard_cotteg from "./component/cotteg_and_hotels/sellerDashboar
 import SellerDashboard_hotels from "./component/cotteg_and_hotels/sellerDashboard_hotels";
 
 const SellerDashboard = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [activeTabCottage_Hotels, setActiveTabCottage_Hotels] = useState(0);
+    const [activeTab, setActiveTab] = useState(0);
+    const [activeTabCottage_Hotels, setActiveTabCottage_Hotels] = useState(0);
 
-  function handleClickTab(value) {
-    setActiveTab(value);
-  }
-  function handleClickTabCottage_Hotels(value) {
-    setActiveTabCottage_Hotels(value);
-  }
-
-  return (
+    return (
     <>
       <div className={container.container} style={{ marginTop: "50px" }}>
         <div className={style.titleDashboard}>
@@ -117,7 +110,7 @@ const SellerDashboard = () => {
               className={`${
                 style["sellerDashboard__stats__requests__tabs_button"]
               } ${activeTab === 0 && style["active"]}`}
-              onClick={() => handleClickTab(0)}
+              onClick={() => setActiveTab(0)}
             >
               {activeTab === 0 ? (
                 <Icons.Seller_dashboard_request_tab
@@ -134,7 +127,7 @@ const SellerDashboard = () => {
               className={`${
                 style["sellerDashboard__stats__requests__tabs_button"]
               } ${activeTab === 1 && style["active"]}`}
-              onClick={() => handleClickTab(1)}
+              onClick={() => setActiveTab(1)}
             >
               {activeTab === 1 ? (
                 <Icons.Seller_dashboard_request_tab
@@ -151,7 +144,7 @@ const SellerDashboard = () => {
               className={`${
                 style["sellerDashboard__stats__requests__tabs_button"]
               } ${activeTab === 2 && style["active"]}`}
-              onClick={() => handleClickTab(2)}
+              onClick={() => setActiveTab(2)}
             >
               {activeTab === 2 ? (
                 <Icons.Seller_dashboard_request_tab
@@ -184,7 +177,7 @@ const SellerDashboard = () => {
                   "sellerDashboard__stats__requests__tabs_button_cotteg_hotel"
                 ]
               } ${activeTabCottage_Hotels === 0 && style["active"]}`}
-              onClick={() => handleClickTabCottage_Hotels(0)}
+              onClick={() => setActiveTabCottage_Hotels(0)}
               style={{ width: "50%" }}
             >
               {activeTabCottage_Hotels === 0 ? (
@@ -204,7 +197,7 @@ const SellerDashboard = () => {
                   "sellerDashboard__stats__requests__tabs_button_cotteg_hotel"
                 ]
               } ${activeTabCottage_Hotels === 1 && style["active"]}`}
-              onClick={() => handleClickTabCottage_Hotels(1)}
+              onClick={() => setActiveTabCottage_Hotels(1)}
               style={{ width: "50%" }}
             >
               {activeTabCottage_Hotels === 1 ? (
