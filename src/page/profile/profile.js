@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
-import { Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 import Header_adminPage from "../../components/header_adminPage";
-import { Input, Upload, message, notification } from "antd";
+import { message, notification } from "antd";
 import styles from "./assets/profile.module.css";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { sendProfile_data } from "./API";
 import { Icons } from "../../assets/icons/icons";
 import EditInput from "../../components/edit-input/edit-input";
-import ChangePass from "../../components/change_pass";
 import AppLayout from "../../components/appLayout/AppLayout";
 import PageHeader from "../../components/page-header/PageHeader";
 import FullPageTabs from "../../components/full-page-tabs/FullPageTabs";
@@ -18,16 +17,18 @@ import Button from "../../components/Button/Button";
 import PaymentMethods from "../../components/payment-methods/PaymentMethods";
 import Modal from "../../components/modal/Modal";
 import Logout, { DeleteAccount } from "../../components/logout/Logout";
+import ProfileImage from "../../components/profile-image/ProfileImage";
+import ChangePassword from "../../components/change-password/ChangePassword";
 
 const Profile = () => {
   const [CurrentUser, setCurrentUser] = useState();
   const [initialValues, setInitialValues] = useState();
+  const [initialState, setInitialState] = useState({});
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [changePass, setChangePass] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
-  const MAX_FILE_SIZE_IN_MB = 3;
   const [notifications, contextHolder] = notification.useNotification();
 
   const [authOption, setAuthOption] = useState("phone");
@@ -36,65 +37,6 @@ const Profile = () => {
   const handleAuthOption = (isChecked, optionValue) => {
     if (isChecked) {
       setAuthOption(optionValue);
-    }
-  };
-
-  const getFileSizeInMB = (file) => {
-    return file.size / (1024 * 1024);
-  };
-
-  const handleChange = async (file) => {
-    setLoadingImg(true);
-    const fileSizeInMB = getFileSizeInMB(file.file);
-    if (fileSizeInMB <= MAX_FILE_SIZE_IN_MB) {
-      try {
-        notifications.info({
-          key: fileSizeInMB,
-          message: `загружается`,
-          duration: 10,
-        });
-
-        const res = await $authHost.post(
-          `upload/user/${JWT.userId}`,
-          { file: file.file.originFileObj },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        if (res?.status === 200) {
-          setLoadingImg(false);
-          notifications.success({
-            key: fileSizeInMB,
-            message: `загружен`,
-            description: "Страница обновится через 5 секунд.",
-            duration: 5,
-          });
-          setInterval(() => {
-            window.location.reload(true);
-          }, 3000);
-        } else {
-          setLoadingImg(false);
-          notifications.error({
-            key: fileSizeInMB,
-            message: `ошибка сервера`,
-            description: `попробуйте еще раз позже`,
-          });
-        }
-      } catch (e) {
-        setLoadingImg(false);
-        console.log(e);
-      }
-    } else {
-      notifications.error({
-        key: fileSizeInMB,
-        message: `ошибка`,
-        description: `размер файла не должен превышать 3 мб \n Размер вашего файла ${fileSizeInMB.toFixed(
-          2
-        )} МБ.`,
-      });
     }
   };
 
@@ -121,6 +63,36 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  const handleChangePassword = async () => {
+    if (initialState.old_password && initialState.new_password) {
+      if (
+        initialState.old_password.length >= 8 &&
+        initialState.new_password.length >= 8
+      ) {
+        try {
+          console.log(initialState);
+          const res = await $authHost.post(
+            `change_old_password/${JWT.userId}`,
+            { initialState }
+          );
+          if (res.status === 200) {
+            message.success(t("password_changed_msg"));
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          }
+        } catch (e) {
+          console.log(e);
+          message.error(t("password_incorrect"));
+        }
+      } else {
+        message.error(t("password_min_length_msg"));
+      }
+    } else {
+      message.error(t("all_inputs_required"));
+    }
   };
 
   const uploadButton = (
@@ -155,8 +127,8 @@ const Profile = () => {
   return (
     <AppLayout>
       <PageHeader
-        pageTitle="Profile"
-        pageSubtitle="Все ваши данные и настройки"
+        pageTitle={t("profile_title")}
+        pageSubtitle={t("profile_subtitle")}
       />
       <Modal>
         <FullPageTabs
@@ -167,30 +139,7 @@ const Profile = () => {
                 <Box className={styles["profile-tab"]}>
                   {contextHolder}
 
-                  {/* upload photo */}
-                  <div className={styles["input"]}>
-                    <Upload
-                      name="avatar"
-                      listType="picture-card"
-                      className={styles["avatar-uploader"]}
-                      showUploadList={false}
-                      onChange={handleChange}
-                    >
-                      {CurrentUser?.image_path ? (
-                        <img
-                          src={`https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${CurrentUser.image_path}`}
-                          alt="avatar"
-                          style={{
-                            width: "90%",
-                            height: "90%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        uploadButton
-                      )}
-                    </Upload>
-                  </div>
+                  <ProfileImage currentUser={CurrentUser} />
 
                   <div className={styles["profile-form"]}>
                     <div className={styles["profile-input-row"]}>
@@ -258,18 +207,7 @@ const Profile = () => {
                       </div>
                     </div>
 
-                    <div className={styles["profile-input-row"]}>
-                      <div className={styles["profile-input-box"]}>
-                        <label htmlFor="phone_number">
-                          {t("profile_password")}
-                        </label>
-                        <input
-                          className={styles["profile-input"]}
-                          value=""
-                          onChange={() => {}}
-                        />
-                      </div>
-                    </div>
+                    {changePassword && <ChangePassword />}
 
                     <div className={styles["profile-checkboxes"]}>
                       <label htmlFor="phone_number">{t("profile_auth")}</label>
@@ -292,7 +230,25 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <Button type="primary">{t("save")}</Button>
+                  <div className={styles["profile-change-btns"]}>
+                    <Button type="full-width-primary" onClick={handleSend}>
+                      {t("save")}
+                    </Button>
+                    <Button
+                      type="full-width-primary"
+                      onClick={
+                        changePassword
+                          ? handleChangePassword
+                          : () => {
+                              setChangePassword(!changePassword);
+                            }
+                      }
+                    >
+                      {changePassword
+                        ? "Применить изменения"
+                        : t("change_password_btn")}
+                    </Button>
+                  </div>
 
                   <div className={styles["profile-btns"]}>
                     <Modal.Open opens="logout">
@@ -309,37 +265,11 @@ const Profile = () => {
                       </Button>
                     </Modal.Open>
                   </div>
-
-                  {/* <Box display="flex" justifyContent="end" mt="20px">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={() => {
-                      setChangePass(!changePass);
-                    }}
-                    size={"large"}
-                    style={{ backgroundColor: "#505050", marginRight: "15px" }}
-                  >
-                    Change Password
-                  </Button>
-
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={handleSend}
-                    size={"large"}
-                    style={{ backgroundColor: "#505050" }}
-                  >
-                    Update
-                  </Button>
-                </Box>
-
-                {changePass && <ChangePass />} */}
                 </Box>
               ),
             },
             {
-              label: "Settings",
+              label: t("profile_second_tab"),
             },
           ]}
         />

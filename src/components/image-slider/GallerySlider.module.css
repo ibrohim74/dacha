@@ -1,0 +1,11 @@
+.original-class {
+  width: 100%;
+  height: 630px;
+  border-radius: 20px;
+}
+
+.thumbnail-class {
+  /* width: 90px;
+  height: 90px; */
+  border-radius: 10px;
+}

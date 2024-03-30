@@ -51,6 +51,8 @@ import { ReactComponent as Notes } from "./notes.svg";
 import { ReactComponent as Completed } from "./completed.svg";
 import { ReactComponent as RedLogout } from "./redlogout.svg";
 import { ReactComponent as QuestionMark } from "./quetionmark.svg";
+import { ReactComponent as WiFi } from "./wifi.svg";
+import { ReactComponent as Person } from "./person.svg";
 
 export const Icons = {
   Logo,
@@ -107,4 +109,6 @@ export const Icons = {
   Completed,
   RedLogout,
   QuestionMark,
+  WiFi,
+  Person,
 };

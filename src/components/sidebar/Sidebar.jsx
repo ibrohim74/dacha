@@ -95,20 +95,10 @@ export default function Sidebar({ onLogOut, user, close }) {
             >
               <Icons.Profile />
               <div className={styles["sidebar-link-item"]}>
-                {t("sidebar_profile")}
+                {t("profile_title")}
                 <Icons.ChevronRight />
               </div>
             </Link>
-
-            {/* <Modal.Open opens="payment-methods">
-              <Link className={styles["sidebar-link"]}>
-                <Icons.Wallet />
-                <div className={styles["sidebar-link-item"]}>
-                  {t("sidebar_payments")}
-                  <Icons.ChevronRight />
-                </div>
-              </Link>
-            </Modal.Open> */}
 
             <Link to={BOOKING_ROUTE} className={styles["sidebar-link"]}>
               <Icons.Notification />
@@ -131,14 +121,6 @@ export default function Sidebar({ onLogOut, user, close }) {
                 <Icons.ChevronRight />
               </div>
             </Link>
-            {/* 
-            <Link className={styles["sidebar-link"]} onClick={onLogOut}>
-              <Icons.Logout />
-              <div className={styles["sidebar-link-item"]}>
-                {t("sidebar_logout")}
-                <Icons.ChevronRight />
-              </div>
-            </Link> */}
           </div>
         </div>
       </div>

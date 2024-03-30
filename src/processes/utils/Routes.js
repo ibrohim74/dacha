@@ -42,14 +42,13 @@ import Policy from "../../page/policy/policy";
 import Announcement_Item_Page from "../../page/seller_Page/announcement/announcement_Item_Page";
 
 import Villas from "../../page/villas/villas";
-import Item_Page from "../../page/item_Page/item_Page";
+import ItemPage from "../../page/item_Page/item_Page";
 import RequestsAnnouncement from "../../page/seller_Page/announcement/requests_Announcement";
 import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
 import HostelItemPage from "../../page/item_Page/hosetl_item_page/hostel_item_page";
 import Place from "../../page/place/place";
 import PlaceAdmin from "../../page/admin/placeMap/placeAdmin";
 import ForgotPassword from "../../page/auth/forgot_password";
-import ChangePass from "../../components/change_pass";
 import CottagesCatalogue from "../../page/catalogues/CottagesCatalogue";
 import HotelsCatalogue from "../../page/catalogues/HotelsCatalogue";
 import Bookings from "../../components/bookings/Bookings";
@@ -62,6 +61,7 @@ import {
 } from "@ant-design/icons";
 import React from "react";
 import Favorites from "../../components/favorites/Favorites";
+import ChangePassword from "../../components/change-password/ChangePassword";
 
 export const Public = [
   {
@@ -93,7 +93,7 @@ export const Public = [
     path: HOTELS_CATALOGUE_ROUTE,
   },
   {
-    Component: <Item_Page />,
+    Component: <ItemPage />,
     path: PRODUCT_ROUTE,
   },
   {
@@ -135,7 +135,7 @@ export const Admin = [
     path: PLACE_ADMIN,
   },
   {
-    Component: <ChangePass />,
+    Component: <ChangePassword />,
     path: CHANGE_PASS_TOP,
   },
 ];
@@ -149,7 +149,7 @@ export const Users = [
     path: REQUEST_USER,
   },
   {
-    Component: <ChangePass />,
+    Component: <ChangePassword />,
     path: CHANGE_PASS_TOP,
   },
 ];
@@ -178,7 +178,7 @@ export const Seller = [
   },
 
   {
-    Component: <ChangePass />,
+    Component: <ChangePassword />,
     path: CHANGE_PASS_TOP,
     title: "Изменить пароль",
   },
@@ -218,7 +218,7 @@ export const Moderate = [
     path: PROFILE,
   },
   {
-    Component: <ChangePass />,
+    Component: <ChangePassword />,
     path: CHANGE_PASS_TOP,
   },
 ];

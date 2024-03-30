@@ -5,6 +5,10 @@
   gap: 12px;
 }
 
+.roomPicker {
+  padding: 0;
+}
+
 .form-input-wrapper {
   display: flex;
   flex-direction: column;

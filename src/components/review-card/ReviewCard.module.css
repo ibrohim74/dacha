@@ -1,0 +1,22 @@
+.review-card-wrapper {
+  background-color: var(--brand-color-2);
+  padding: 22px 28px;
+  width: 390px;
+  height: 260px;
+  border-radius: 20px;
+}
+
+.review-card-wrapper p {
+  font-weight: 400px;
+  font-size: 16px;
+  color: var(--font-color-1);
+  margin-top: 26px;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.review-card-wrapper span {
+  font-weight: 500px;
+  font-size: 16px;
+  color: var(--font-color-1);
+}

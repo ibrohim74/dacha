@@ -18,6 +18,18 @@
   gap: 20px;
 }
 
+.catalogue-items-empty {
+  background-color: var(--brand-color-2);
+  border-radius: 20px;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 @media only screen and (min-width: 360px) and (max-width: 560px) {
   .catalogue-layout {
     flex-direction: column;
