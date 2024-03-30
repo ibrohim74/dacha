@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import { Slider } from "antd";
 import { useTranslation } from "react-i18next";
 import Tabs from "../tabs/Tabs";
+import AccordionItem from "../accordion-item/AccordionItem";
 
 export default function Filter() {
   const [rangeValues, setRangeValues] = useState([25000, 500000]);
@@ -71,19 +72,11 @@ export default function Filter() {
                       <Icons.Star /> <span>3</span>
                     </FilterBox>
                     <FilterBox>
-                      <Icons.Star /> <span>5</span>
+                      <Icons.Star /> <span>4</span>
                     </FilterBox>
                     <FilterBox>
                       <Icons.Star /> <span>5</span>
                     </FilterBox>
-                  </div>
-                </div>
-
-                <div className={styles["filter-item-box"]}>
-                  <label htmlFor="">{t("filter_services")}</label>
-                  <div className={styles["boxes-wrapper"]}>
-                    <FilterBox>{t("filter_services_parking")}</FilterBox>
-                    <FilterBox>Wi-Fi</FilterBox>
                   </div>
                 </div>
 
@@ -94,6 +87,14 @@ export default function Filter() {
                     <FilterBox>&lt;10{t("km")}</FilterBox>
                     <FilterBox>&lt;15{t("km")}</FilterBox>
                   </div>
+                </div>
+
+                <div className={styles["filter-item-box"]}>
+                  <AccordionItem
+                    title={t("filter_services")}
+                    content="lorem impusum"
+                  />
+                  <AccordionItem title=" Питание" content="lorem impusum" />
                 </div>
               </>
             ),
@@ -107,9 +108,5 @@ export default function Filter() {
 }
 
 function FilterBox({ children }) {
-  return (
-    <div className={styles["filter-box"]}>
-      <span>{children}</span>
-    </div>
-  );
+  return <div className={styles["filter-box"]}>{children}</div>;
 }

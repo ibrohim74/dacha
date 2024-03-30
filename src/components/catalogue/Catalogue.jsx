@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import styles from "./Catalogue.module.css";
 import { useTranslation } from "react-i18next";
 import Form from "../form/Form";
+import { Icons } from "../../assets/icons/icons";
 
 export default function Catalogue({ products }) {
   const { t } = useTranslation();
@@ -19,12 +20,20 @@ export default function Catalogue({ products }) {
 
       <div className={styles["catalogue-layout"]}>
         <Filter />
-        <div className={styles["catalogue-items"]}>
-          {products.map((product) => (
-            <CottageCard cottage={product} key={product.id} />
-          ))}
-          <Button type="full-width-white">{t("view_more")}</Button>
-        </div>
+        {products.length ? (
+          <div className={styles["catalogue-items"]}>
+            {products.map((product) => (
+              <CottageCard cottage={product} key={product.id} />
+            ))}
+            <Button type="full-width-white">{t("view_more")}</Button>
+          </div>
+        ) :
+        <div className={styles["catalogue-items-empty"]}>
+            <Icons.EmptyPagePlaceholder />
+            <p>Try to reload</p>
+          </div>
+      }
+
       </div>
     </AppLayout>
   );

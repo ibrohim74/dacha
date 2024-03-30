@@ -57,6 +57,8 @@ import { ReactComponent as RedLogout } from "./redlogout.svg";
 import { ReactComponent as DeleteImgIcon } from "./deleteImgIcon.svg";
 import { ReactComponent as QuestionMark } from "./quetionmark.svg";
 import { ReactComponent as Calendar } from "./calendar.svg";
+import { ReactComponent as WiFi } from "./wifi.svg";
+import { ReactComponent as Person } from "./person.svg";
 
 export const Icons = {
   Logo,
@@ -118,4 +120,6 @@ export const Icons = {
   QuestionMark,
   DeleteImgIcon,
   Calendar
+  WiFi,
+  Person,
 };

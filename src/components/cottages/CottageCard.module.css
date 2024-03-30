@@ -28,6 +28,12 @@
   margin: 0;
   font-size: 18px;
   font-weight: 800;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.cottage-title:hover {
+  text-decoration: underline;
 }
 
 .cottage-inner-wrapper {

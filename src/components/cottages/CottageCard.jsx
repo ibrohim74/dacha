@@ -40,7 +40,12 @@ export default function CottageCard({ cottage }) {
       <div className={styles["cottage-inner-wrapper"]}>
         <div className={styles["cottage-upper-part"]}>
           <div className={styles["cottage-info"]}>
-            <h4 className={styles["cottage-title"]}>{title}</h4>
+            <h4
+              className={styles["cottage-title"]}
+              onClick={handleCottageClick}
+            >
+              {title}
+            </h4>
 
             <div className={styles["cottage-infobox"]}>
               <p>{location_name}</p>

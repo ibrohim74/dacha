@@ -30,7 +30,8 @@
   transition: 0.5s all ease;
 }
 
-.primary:hover {
+.primary:hover,
+.full-width-primary:hover {
   background-color: var(--brand-color-3);
   transition: 0.5s all ease;
   color: var(--font-color-main);
@@ -76,6 +77,16 @@
   color: var(--font-black);
   font-weight: 600;
   background-color: var(--brand-color-2);
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.full-width-white:hover {
+  background-color: #333;
+  color: var(--bg-color);
 }
 
 .full-width-primary {
@@ -88,6 +99,12 @@
 .icon {
   width: 44px;
   height: 44px;
+  background-color: var(--brand-color-2);
+  transition: all 0.5s ease;
+}
+
+.icon:hover svg path {
+  fill: #f4dc09;
 }
 
 .icon-red {

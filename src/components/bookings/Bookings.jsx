@@ -15,6 +15,7 @@ import Button from "../Button/Button";
 import Modal from "../modal/Modal";
 import StarRating from "../starRating/StarRating";
 import PageHeader from "../page-header/PageHeader";
+import Breadcrumb_dashboard from "../breadcrumb_dashboard/breadcrumb_dashboard";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState([]);
@@ -39,6 +40,7 @@ export default function Bookings() {
   return (
     <AppLayout>
       <div className={styles["booking-page"]}>
+        <Breadcrumb_dashboard />
         <PageHeader
           pageTitle={t("booking_title")}
           pageSubtitle={t("booking_subtitle")}

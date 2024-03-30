@@ -138,7 +138,8 @@
   font-size: 14px;
 }
 
-.profile-btns {
+.profile-btns,
+.profile-change-btns {
   width: 55%;
   display: flex;
   align-items: center;
@@ -148,4 +149,8 @@
 
 .profile-btns button svg path {
   stroke: #ff4141;
+}
+
+.profile-save {
+  width: 27%;
 }

@@ -12,7 +12,7 @@ export default function CottagesCatalogue() {
           "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/dachas";
         const response = await axios.get(url);
         setCottages(response.data);
-        console.log(cottages)
+        // console.log(cottages)
       } catch (error) {
         console.error("Failed to fetch products", error);
       }

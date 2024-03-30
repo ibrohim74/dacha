@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 export default function CataloguePreview({ items, route, title }) {
-  const slicedItems = items.slice(0, 3);
+  const slicedItems = items.slice(0, 6);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -25,22 +25,30 @@ export default function CataloguePreview({ items, route, title }) {
         </div>
       </div>
 
-      <div className={styles["cards-preview-wrapper"]}>
-        {slicedItems.map((item) => (
-          <CataloguePreviewCard
-            key={item.id}
-            title={item.title}
-            location={item.location_name}
-            price={item.price}
-            image={item.photos_path}
-            rating={item.rating}
-          />
-        ))}
-      </div>
-
-      <Button type="primary" onClick={() => navigate(route)}>
-        {t("view_more")}
-      </Button>
+      {slicedItems.length ? (
+        <div className={styles["cards-preview-container"]}>
+          <div className={styles["cards-preview-wrapper"]}>
+            {slicedItems.map((item) => (
+              <CataloguePreviewCard
+                key={item.id}
+                title={item.title}
+                location={item.location_name}
+                price={item.price}
+                image={item.photos_path}
+                rating={item.rating}
+              />
+            ))}
+          </div>
+          <Button type="primary" onClick={() => navigate(route)}>
+            {t("view_more")}
+          </Button>
+        </div>
+      ) : (
+        <div className={styles["card-preview-empty"]}>
+          <Icons.EmptyPagePlaceholder />
+          <p>Nothing is found</p>
+        </div>
+      )}
     </div>
   );
 }
