@@ -37,10 +37,12 @@ const SellerDashboardCotteg = ({id}) => {
     const handleDelete = (id) => {
         DeleteDachaAPI(id).then(r => {
             if (r.status === 200) {
-                window.location.assign(CABINET + SELLER_DASHBOARD)
+                const updatedAnnouncementData = announcementData.filter(item => item.id !== id);
+                setAnnouncementData(updatedAnnouncementData);
             }
         })
     }
+                                                                                  
 
     const renderDropdownItems = (itemId) => [
         {
@@ -113,9 +115,9 @@ const SellerDashboardCotteg = ({id}) => {
                     <p>На данный момент ничего нету</p>
                 </div>}
             <div className={style.sellerDashboard_cotteg_create_box}>
-                <Link className={style.sellerDashboard_cotteg_create} to={CABINET + CREATE_ANNOUNCEMENT}>
+                <a href={CABINET + CREATE_ANNOUNCEMENT} className={style.sellerDashboard_cotteg_create}>
                     <p>Создать</p>
-                </Link>
+                </a>
             </div>
 
         </div>

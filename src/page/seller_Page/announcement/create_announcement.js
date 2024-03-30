@@ -1,26 +1,24 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Checkbox, FormControlLabel} from "@mui/material";
-import Create_InputLeft from "./component/create_InputLeft";
+import {Box, Checkbox, FormControlLabel} from "@mui/material";
 import styles from "./assets/create_ann.module.css";
-import {Input, message, notification, Radio, Switch} from "antd";
-import {jwtDecode} from "jwt-decode";
+import { message, notification, Switch} from "antd";
 import {CreateAnnouncementAPI} from "./API/announcementAPI";
-import {LoadingOutlined} from "@ant-design/icons";
-import {useNavigate} from "react-router-dom";
-import {ANNOUNCEMENT, CABINET, SELLER_DASHBOARD} from "../../../processes/utils/consts";
+import { CABINET, SELLER_DASHBOARD} from "../../../processes/utils/consts";
 import AnnCreateAddPhoto from "./component/ann_create_addPhoto";
 import container from '../../../components/appLayout/AppLayout.module.css'
 import Modal from "../../../components/modal/Modal";
-import PaymentMethods from "../../../components/payment-methods/PaymentMethods";
 import MapsAnnouncement from "./component/mapsAnnouncement";
 import {Icons} from "../../../assets/icons/icons";
 import Footer from "../../../components/footer/footer";
+import {$authHost} from "../../../processes/http/http";
 
 const CreateAnnouncement = () => {
     const [selectPosition, setSelectPosition] = useState(null);
     const [initialState, setInitialState] = useState({
         type: "dacha",
-        tags: "tag",
+        tags: {
+
+        },
         price: 0,
         price_type: 'uzs',
         cancellable: false,
@@ -38,8 +36,6 @@ const CreateAnnouncement = () => {
     });
     const [loading, setLoading] = useState(false);
     const [arrayImages, setArrayImages] = useState([]);
-    const navigate = useNavigate();
-    const JWT = jwtDecode(localStorage.getItem("token"));
     const [lang, setLang] = useState(true)
     const [notifications, contextHolder] = notification.useNotification();
 
@@ -63,17 +59,30 @@ const CreateAnnouncement = () => {
                                                             notifications.success({
                                                                 message: lang ? "объект создан" : "ob'ekt yaratildi"
                                                             })
-                                                            setTimeout(() => {
+
+                                                            if (arrayImages.length > 0) {
+                                                                createPhotoForAnnouncement(r.data).then(r => {
+                                                                    if (r === 200) {
+                                                                        window.location.assign(CABINET + SELLER_DASHBOARD)
+                                                                    } else {
+                                                                        notifications.success({
+                                                                            message: lang ? "объект создан, но изображения не сохранены"
+                                                                                : "ob'ekt yaratildi lekin rasimlar saqlanmad"
+                                                                        })
+                                                                        setTimeout(() => {
+                                                                            window.location.assign(CABINET + SELLER_DASHBOARD)
+                                                                        }, 3000)
+                                                                    }
+                                                                })
+                                                            } else {
                                                                 window.location.assign(CABINET + SELLER_DASHBOARD)
-                                                            }, 5000)
+                                                            }
                                                         }
                                                     }).catch(err =>
                                                         notifications.success({
                                                             message: 'sdasdsad'
                                                         })
                                                     )
-
-
                                                 } else {
                                                     notifications.error({
                                                         message: lang ? "информация не заполнена" : "Ma'lumotlar to'ldirilmagan",
@@ -142,6 +151,29 @@ const CreateAnnouncement = () => {
         }
     }
 
+    const createPhotoForAnnouncement = async (dacha) => {
+        try {
+            for (let i = 0; i < arrayImages?.length; i++) {
+                const formData = new FormData();
+                formData.append('files', arrayImages[i]);
+                const response = await $authHost.post(`/dacha/${dacha.id}/upload_photo`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log('Server response:', response.data);
+            }
+            // If all images are successfully uploaded, show success message
+            message.success('Barcha rasmlar muvaffaqiyatli yuklandi');
+            return 200
+        } catch (error) {
+            console.error('Error uploading photo to server:', error);
+            // Handle the error
+            message.error('Error uploading photo to server');
+        }
+    };
+
+
     useEffect(() => {
         setInitialState({
             ...initialState,
@@ -156,7 +188,7 @@ const CreateAnnouncement = () => {
             {contextHolder}
             <div className={container.container} style={{background: '#fff', padding: "20px", borderRadius: "20px"}}>
                 <AnnCreateAddPhoto arrayImages={arrayImages} setArrayImages={setArrayImages}
-                    lang={lang}
+                                   lang={lang}
                 />
                 <div className={styles.create_ann_line_lang}>
                     <div className={styles.create_ann_line_ru}
@@ -201,6 +233,11 @@ const CreateAnnouncement = () => {
                             />
                         </div>
 
+
+                    </div>
+
+
+                    <div className={styles.create_ann_line_title_right}>
                         <div className={styles.create_ann_input}>
                             <p>{lang ? "Количество комнат" : "Xonalar soni"}</p>
                             <input type="number" placeholder={lang ? "Количество комнат" : "Xonalar soni"}
@@ -210,21 +247,6 @@ const CreateAnnouncement = () => {
                                        rooms_number: parseInt(e.target.value)
                                    })}
                             />
-                        </div>
-
-                    </div>
-
-
-                    <div className={styles.create_ann_line_title_right}>
-                        <div className={styles.create_ann_input}>
-                            <p>{lang ? "Основыне теги" : "Asosiy teglar"}</p>
-                            <select
-                                value={initialState?.tags}
-                                onChange={e => setInitialState({...initialState, tags: e.target.value})}>
-                                <option value="tag">Tag</option>
-                                <option value="tag2">Tag 2</option>
-                            </select>
-
                         </div>
                         <div className={styles.create_ann_input}>
                             <p>{lang ? "Дополнительно описание" : "Qo'shimcha tavsif"}</p>
@@ -247,6 +269,7 @@ const CreateAnnouncement = () => {
                                    })}
                             />
                         </div>
+
                     </div>
                 </div>
 
@@ -485,7 +508,7 @@ const CreateAnnouncement = () => {
                                 />} label="WI-FI"/>
                             </div>
 
-                            <button>{lang ? "Сохранить" :"Saqlash"}</button>
+                            <button>{lang ? "Сохранить" : "Saqlash"}</button>
                         </div>
                     </Modal.Window>
                 </Modal>
@@ -554,7 +577,8 @@ const CreateAnnouncement = () => {
                     <div className={styles.create_ann_save_line_item}>
                         <div className={styles.create_ann_save_line_item_delete}
                              onClick={() => {
-                                 window.location.assign(CABINET + SELLER_DASHBOARD)
+
+                                 window.location.href = CABINET + SELLER_DASHBOARD
                              }}
                         >
                             <Icons.DeleteImgIcon/>

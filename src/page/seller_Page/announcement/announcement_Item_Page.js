@@ -81,7 +81,7 @@ const Announcement_Item_Page = () => {
             }
         })
     }
-
+    console.log(dachaData)
     const priceType = (val) => {
         setInitialState({...initialState, price_type: val});
     };

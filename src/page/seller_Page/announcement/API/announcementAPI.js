@@ -4,8 +4,10 @@ import {jwtDecode} from "jwt-decode";
 export const CreateAnnouncementAPI = async (data) =>{
     try {
         const res = await $authHost.post('/create_dacha' , data)
+        console.log(res)
         return res
     }catch (e){
+        console.log(e)
        return e
     }
 }
@@ -102,5 +104,22 @@ export const DeleteBookingById = async (booking_id) =>{
     }catch (e){
         console.log(e)
         return e?.response?.status
+    }
+}
+export const UploadPhotoAnnouncement = async (files , id) =>{
+
+    console.log(files)
+    try {
+        const res = await $authHost.post(`/dacha/${id}/upload_photo`, {files}  , {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        console.log(res);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return e?.response?.status;
     }
 }
