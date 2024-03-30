@@ -39,7 +39,7 @@ import { ReactComponent as Folder } from "./folder.svg";
 import { ReactComponent as SidebarArrow } from "./sidebar-arrow.svg";
 import { ReactComponent as Remove } from "./remove.svg";
 import { ReactComponent as Card } from "./card.svg";
-import { ReactComponent as EmptyPagePlaceholder } from "./deleteImgIcon.svg";
+import { ReactComponent as EmptyPagePlaceholder } from "./NoDocuments.svg";
 import { ReactComponent as Moderate } from "./moderate.svg";
 import { ReactComponent as Seller_dashboard_request_tab } from "./seller_dashboard_request_tab.svg";
 import { ReactComponent as Seller_dashboard_request_tab_disbl } from "./seller_dashboard_request_tab_disbl.svg";
@@ -119,7 +119,7 @@ export const Icons = {
   RedLogout,
   QuestionMark,
   DeleteImgIcon,
-  Calendar
+  Calendar,
   WiFi,
   Person,
 };
