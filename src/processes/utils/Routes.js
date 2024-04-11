@@ -26,10 +26,12 @@ import {
   BOOKING_ROUTE,
   SELLER_DASHBOARD,
   FAVORITES,
+  REGISTER_CONFIRM_ROUTE,
+  REGISTRATION_SETUP,
 } from "./consts";
 import Home from "../../page/home/Home";
-import Login from "../../page/auth/login";
-import Registration from "../../page/auth/registration";
+import Login from "../../page/auth/Login/login";
+import Registration from "../../page/auth/Registration/registration";
 import LayoutCabinet from "../../page/layout/layoutCabinet";
 import Profile from "../../page/profile/profile";
 import Announcement from "../../page/seller_Page/announcement/announcement";
@@ -48,7 +50,7 @@ import UserRequestPage from "../../page/user_Page/userRequest/user_requestPage";
 import HostelItemPage from "../../page/item_Page/hosetl_item_page/hostel_item_page";
 import Place from "../../page/place/place";
 import PlaceAdmin from "../../page/admin/placeMap/placeAdmin";
-import ForgotPassword from "../../page/auth/forgot_password";
+import ForgotPassword from "../../page/auth/ForgotPassword/forgot_password";
 import CottagesCatalogue from "../../page/catalogues/CottagesCatalogue";
 import HotelsCatalogue from "../../page/catalogues/HotelsCatalogue";
 import Bookings from "../../components/bookings/Bookings";
@@ -62,6 +64,8 @@ import {
 import React from "react";
 import Favorites from "../../components/favorites/Favorites";
 import ChangePassword from "../../components/change-password/ChangePassword";
+import RegistrationConfirm from "../../page/auth/Registration/RegistrationConfirm";
+import RegistrationSetup from "../../page/auth/RegistrationSetup/RegistrationSetup";
 
 export const Public = [
   {
@@ -75,6 +79,14 @@ export const Public = [
   {
     Component: <Registration />,
     path: REGISTER_ROUT,
+  },
+  {
+    Component: <RegistrationConfirm />,
+    path: REGISTER_CONFIRM_ROUTE,
+  },
+  {
+    Component: <RegistrationSetup />,
+    path: REGISTRATION_SETUP,
   },
   {
     Component: <Policy />,

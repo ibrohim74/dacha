@@ -1,0 +1,32 @@
+.filter-tags {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.filter-item-tag {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--font-color-3);
+  cursor: pointer;
+}
+
+.filter-tag-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.filter-item-tag-wrapper label {
+  font-size: 12px;
+  color: var(--font-color-1);
+  font-weight: 400;
+}
+
+.checked {
+  border: 5px solid #006ffd;
+}

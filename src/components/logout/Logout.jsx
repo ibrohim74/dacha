@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./Logout.module.css";
 import Button from "../Button/Button";
 
-export default function Logout() {
+export default function Logout({ onLogout }) {
   const { t } = useTranslation();
   return (
     <div className={styles["logout-modal"]}>
@@ -17,7 +17,9 @@ export default function Logout() {
 
       <div className={styles["logout-btns"]}>
         <Button type="secondary">{t("cancel")}</Button>
-        <Button type="red">{t("logout")}</Button>
+        <Button type="red" onClick={onLogout}>
+          {t("logout")}
+        </Button>
       </div>
     </div>
   );

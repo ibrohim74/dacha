@@ -59,6 +59,7 @@ import { ReactComponent as QuestionMark } from "./quetionmark.svg";
 import { ReactComponent as Calendar } from "./calendar.svg";
 import { ReactComponent as WiFi } from "./wifi.svg";
 import { ReactComponent as Person } from "./person.svg";
+import { ReactComponent as NiceBackgroundBuilding } from "./nice-bg-icon.svg";
 
 export const Icons = {
   Logo,
@@ -122,4 +123,5 @@ export const Icons = {
   Calendar,
   WiFi,
   Person,
+  NiceBackgroundBuilding,
 };

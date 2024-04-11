@@ -19,13 +19,27 @@ import { useTranslation } from "react-i18next";
 import Logo from "../logo/Logo";
 import SearchInput from "../searchInput/SearchInput";
 import { Badge } from "antd";
+import { useSelector } from "react-redux";
+import { getUser } from "../../page/profile/API";
 
 const Header = (props, { elementsRef }) => {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState({ username: "" });
   const [showSidebar, setShowSidebar] = useState(false);
   const [userRequest, setUserRequest] = useState([]);
   const { t } = useTranslation();
+
+  const {
+    id,
+    username,
+    firstName,
+    lastName,
+    email,
+    phone_number,
+    image_path,
+    role,
+  } = useSelector((state) => state.auth.user);
+
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
   const accMenuRef = useRef();
   const accButtonRef = useRef();
@@ -33,27 +47,13 @@ const Header = (props, { elementsRef }) => {
   const handleShowSidebar = () => setShowSidebar(!showSidebar);
   const closeSidebar = () => setShowSidebar(false);
 
-  const JWT = localStorage.getItem("token")
-    ? jwtDecode(localStorage.getItem("token"))
-    : null;
-
   useEffect(() => {
-    if (JWT) {
-      const getUser = async () => {
-        try {
-          const res = await $host.get("user/" + JWT.userId);
-          setCurrentUser(res.data);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      getUser();
-    }
+    getUser();
   }, []);
 
   const removeToken = () => {
     localStorage.removeItem("token");
-    setShowSidebar(false); // This will cause the component to re-render
+    setShowSidebar(false);
     window.location.assign(HOME_ROUTE);
   };
 
@@ -74,10 +74,6 @@ const Header = (props, { elementsRef }) => {
     };
   }, []);
 
-  const isLoggedIn = () => {
-    return JWT != null;
-  };
-
   const handleSearch = (event) => {
     event.preventDefault();
     const searchTerm = event.target.elements.search.value;
@@ -85,17 +81,17 @@ const Header = (props, { elementsRef }) => {
   };
 
   const getRequestsUser = async () => {
-    if (currentUser?.role === "seller") {
+    if (role === "seller") {
       try {
-        const res = await $authHost.get(`/seller/${currentUser.id}/requests`);
+        const res = await $authHost.get(`/seller/${id}/requests`);
         console.log(res);
         setUserRequest(res?.data);
       } catch (e) {
         console.log(e);
       }
-    } else if (currentUser?.role === "user") {
+    } else if (role === "user") {
       try {
-        const res = await $authHost.get(`/customer/${currentUser.id}/requests`);
+        const res = await $authHost.get(`/customer/${id}/requests`);
         console.log(res);
         setUserRequest(res?.data);
       } catch (e) {
@@ -106,7 +102,7 @@ const Header = (props, { elementsRef }) => {
 
   useEffect(() => {
     getRequestsUser();
-  }, [currentUser.role]);
+  }, [role]);
 
   return (
     <>
@@ -122,9 +118,9 @@ const Header = (props, { elementsRef }) => {
         <div className={styles["header-right"]}>
           <LangDropdown />
 
-          {isLoggedIn() ? (
+          {isAuth ? (
             <>
-              {currentUser.role === "seller" && (
+              {role === "seller" && (
                 <Link
                   to={CABINET + REQUEST_ANNOUNCEMENT}
                   style={{ width: "25px", height: "25px" }}
@@ -141,7 +137,7 @@ const Header = (props, { elementsRef }) => {
                   </Badge>
                 </Link>
               )}
-              {currentUser.role === "user" && (
+              {role === "user" && (
                 <Link
                   to={CABINET + REQUEST_USER}
                   style={{ width: "25px", height: "25px" }}
@@ -164,19 +160,18 @@ const Header = (props, { elementsRef }) => {
               >
                 <img
                   src={
-                    currentUser?.image_path
-                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${currentUser.image_path}`
+                    image_path
+                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"
                   className={styles["header-profile-pic"]}
                 />
-                <p>{currentUser.username}</p>
+                <p>{username}</p>
               </div>
               {showSidebar && (
                 <Sidebar
-                  onLogOut={removeToken}
-                  user={currentUser}
+                  onLogout={removeToken}
                   close={() => setShowSidebar(false)}
                 />
               )}
