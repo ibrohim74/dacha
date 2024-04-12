@@ -8,7 +8,7 @@ export default function HotelsCatalogue() {
     const fetchHotels = async () => {
       try {
         const url =
-          "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/hotels";
+          "https://visitca.travel/api/hotels";
         const response = await axios.get(url);
         setHotels(response.data);
       } catch (error) {

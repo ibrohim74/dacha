@@ -78,6 +78,7 @@ const SellerDashboardCotteg = ({id}) => {
             ),
         },
     ];
+    console.log(announcementData)
     return (
         <div style={{width: '100%', height: "100%", position: "relative"}}>
             {announcementData.length > 0 ?
@@ -86,6 +87,7 @@ const SellerDashboardCotteg = ({id}) => {
                         <div key={index} className={style.sellerDashboard_cotteg_hotels_item}>
                             <div className={style.sellerDashboard_cotteg_hotels_item_1}>
                                 <h1>{item.title}</h1>
+                                <p>{item.id}</p>
                             </div>
                             <div className={style.sellerDashboard_cotteg_hotels_item_2}>
                                 <Icons.LocationIconSellerDashboard/>

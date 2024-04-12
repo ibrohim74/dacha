@@ -26,7 +26,7 @@ export const CheckRegistrationCodeAPI = async (code, email) => {
 
 export const RegistrationAPI = async (user) => {
   try {
-    const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/register", user, {
+    const res = await axios.post("https://visitca.travel/api/register", user, {
       headers:{Authorization:`Bearer ${localStorage.getItem('token')}` }
     });
     console.log(res)

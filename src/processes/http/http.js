@@ -5,7 +5,7 @@ import {message, notification} from "antd";
 
 let authToken = localStorage.getItem("token");
 
-const baseURL = "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/";
+const baseURL = "http://79.137.203.254/";
 
 const $host = axios.create({
     baseURL: baseURL
@@ -24,7 +24,7 @@ const RefreshToken = async () => {
     console.log(JWT);
     try {
         const response = await axios.post(
-            "https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/refresh_token",
+            "http://79.137.203.254/api/refresh_token",
             null,
             {
                 headers: {

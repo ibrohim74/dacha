@@ -149,7 +149,7 @@ const Registration = () => {
     const handleSendStep3 =  async () => {
         setLoading(true);
         if (initialState.username && initialState.firstName && initialState.lastName) {
-            const res = await axios.post("https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/register", initialState, {
+            const res = await axios.post("https://visitca.travel/api/register", initialState, {
                 headers:{Authorization:`Bearer ${localStorage.getItem('token')}` }
             });
 

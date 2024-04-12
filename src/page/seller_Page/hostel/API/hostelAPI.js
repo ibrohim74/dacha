@@ -5,7 +5,7 @@ import login from "../../../auth/login";
 
 export const CreateHostelAPI = async (data) => {
     try {
-        const res = await axios.post('https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api/hotel_create', data, {
+        const res = await axios.post('https://visitca.travel/api/hotel_create', data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
