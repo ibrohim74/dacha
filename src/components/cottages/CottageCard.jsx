@@ -3,9 +3,16 @@ import StarRating from "../starRating/StarRating";
 import styles from "./CottageCard.module.css";
 import { useNavigate } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../../processes/utils/consts";
+import { Icons } from "../../assets/icons/icons";
+import { useDispatch } from "react-redux";
+import { addFavourite } from "../favorites/favActions";
 
 export default function CottageCard({ cottage }) {
   const [userRating, setUserRating] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  console.log(cottage);
 
   const {
     id,
@@ -19,7 +26,14 @@ export default function CottageCard({ cottage }) {
     location_name,
   } = cottage;
 
-  const navigate = useNavigate();
+  const handleAddFavourites = (fav) => {
+    dispatch(addFavourite(fav));
+  };
+
+  const handleRemoveFromFavourite = (favId) => {
+    dispatch(removeFavourite(favId));
+  };
+
   const handleCottageClick = () => {
     const path = PRODUCT_ROUTE.replace(":id", id);
     navigate(path);
@@ -54,7 +68,7 @@ export default function CottageCard({ cottage }) {
           </div>
 
           <div className={styles["cottage-ratings"]}>
-            <StarRating onSetRating={setUserRating} />
+            <StarRating rating={rating} staticRating={true} />
             <div className={styles["cottage-rate"]}>{rating.toFixed(1)}</div>
             <p>{reviews_number} отзывов</p>
           </div>
@@ -64,6 +78,10 @@ export default function CottageCard({ cottage }) {
           <div className={styles["cottage-prices"]}>
             <p className={styles["cottage-price-type"]}>{price_type}</p>
             <p>{price} UZS</p>
+          </div>
+
+          <div className={styles["add-fav"]}>
+            <Icons.StarEmpty />
           </div>
         </div>
       </div>

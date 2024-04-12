@@ -63,16 +63,18 @@ input[type="number"] {
 }
 
 .swiper-slide {
-  width: 690px !important;
+  width: 336px !important;
   background: none !important;
-  height: 16rem !important;
+  /* height: 16rem !important; */
   padding: 0 !important;
 }
 
 .swiper-wrapper {
-  width: 1200px !important;
+  width: 1050px !important;
   height: 16rem !important;
   gap: 1rem;
+  /* overflow: hidden; */
+  margin: 0 4rem;
 }
 
 .swiper-pagination-fraction,
@@ -81,6 +83,26 @@ input[type="number"] {
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   left: 44%;
   bottom: 12px !important;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  content: "";
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  background-image: url(../icons/arrow-right.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--surface-color);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
+
+.swiper-button-prev {
+  transform: rotate(180deg);
 }
 
 .swiper-pagination-bullet-active {

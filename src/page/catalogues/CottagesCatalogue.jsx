@@ -8,8 +8,7 @@ export default function CottagesCatalogue() {
   useEffect(() => {
     const fetchCottages = async () => {
       try {
-        const url =
-          "https://visitca.travel/api/dachas";
+        const url = "https://visitca.travel/api/dachas";
         const response = await axios.get(url);
         setCottages(response.data);
         // console.log(cottages)

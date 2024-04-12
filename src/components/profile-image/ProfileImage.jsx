@@ -3,21 +3,42 @@ import styles from "./ProfileImage.module.css";
 import { jwtDecode } from "jwt-decode";
 import { $authHost } from "../../processes/http/http";
 import { Upload, message, notification } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading, setUserField } from "../../page/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
-export default function ProfileImage({ currentUser }) {
-  const JWT = jwtDecode(localStorage.getItem("token"));
-  const MAX_FILE_SIZE_IN_MB = 3;
-  const [loadingImg, setLoadingImg] = useState(false);
-  const [notifications, contextHolder] = notification.useNotification();
+const MAX_FILE_SIZE_IN_MB = 3;
+
+export default function ProfileImage({ image_path }) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not found in local storage");
+    return;
+  }
+
+  const JWT = jwtDecode(token);
+
+  const [notifications] = notification.useNotification();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const { t } = useTranslation();
+
+  // const { image_path } = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
+  // console.log(user);
+  // console.log(image_path);
+  // console.log(JWT.userId);
+  // console.log(JWT);
 
   const getFileSizeInMB = (file) => {
-    // console.log(file);
     return file.size / (1024 * 1024);
   };
 
   const handleChange = async (file) => {
-    setLoadingImg(true);
+    dispatch(setIsLoading(true));
+
     const fileSizeInMB = getFileSizeInMB(file.file);
+
     if (fileSizeInMB <= MAX_FILE_SIZE_IN_MB) {
       try {
         notifications.info({
@@ -37,7 +58,9 @@ export default function ProfileImage({ currentUser }) {
           }
         );
         if (res?.status === 200) {
-          setLoadingImg(false);
+          console.log(res.data.path);
+          dispatch(setIsLoading(false));
+          dispatch(setUserField({ field: "image_path", value: res.data.path }));
           notifications.success({
             key: fileSizeInMB,
             message: `загружен`,
@@ -48,7 +71,7 @@ export default function ProfileImage({ currentUser }) {
             window.location.reload(true);
           }, 3000);
         } else {
-          setLoadingImg(false);
+          dispatch(setIsLoading(false));
           notifications.error({
             key: fileSizeInMB,
             message: `ошибка сервера`,
@@ -56,11 +79,11 @@ export default function ProfileImage({ currentUser }) {
           });
         }
       } catch (e) {
-        setLoadingImg(false);
+        dispatch(setIsLoading(false));
         console.log(e);
       }
     } else {
-      setLoadingImg(false);
+      dispatch(setIsLoading(false));
       notifications.error({
         key: fileSizeInMB,
         message: `ошибка`,
@@ -79,16 +102,12 @@ export default function ProfileImage({ currentUser }) {
         showUploadList={false}
         onChange={handleChange}
       >
-        {currentUser?.image_path ? (
+        {image_path ? (
           <>
             <img
-              src={`https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${currentUser.image_path}`}
+              src={`https://visitca.travel/api/${user.image_path}`}
               alt="avatar"
-              style={{
-                width: "90%",
-                height: "90%",
-                objectFit: "cover",
-              }}
+              className={styles["profile-image"]}
             />
           </>
         ) : (
@@ -101,7 +120,9 @@ export default function ProfileImage({ currentUser }) {
           </>
         )}
       </Upload>
-      <label htmlFor="avatar">Добавить фото</label>
+      <label htmlFor="avatar">
+        {image_path ? t("profile_change_pic") : t("profile_add_pic")}
+      </label>
     </div>
   );
 }

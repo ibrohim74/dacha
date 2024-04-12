@@ -2,6 +2,8 @@
 export const HOME_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
 export const REGISTER_ROUT = "/registration";
+export const REGISTER_CONFIRM_ROUTE = "/registration-confirm";
+export const REGISTRATION_SETUP = "/registration-setup";
 export const VILLAS_ROUTE = "/villas";
 export const PRODUCT_ROUTE = "/product-page/:id";
 export const PRODUCT_HOSTEL_ROUTE = "/hostel/:id";

@@ -13,6 +13,8 @@ import CataloguePreview from "../../components/catalogue-preview/CataloguePrevie
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../components/appLayout/AppLayout";
 import { BookingCard } from "../../components/bookings/Bookings";
+import LocationRequest from "../../components/location-request/LocationRequest";
+import useUserLocation from "../../hooks/useUserLocation";
 
 const Home = () => {
   const [dachas, setDachas] = useState([]);
@@ -21,7 +23,7 @@ const Home = () => {
   const [buttonAllHotel, setButtonAllHotel] = useState(1);
   const { t } = useTranslation();
   const elementsRef = useRef(null);
-
+  const { userLocation } = useUserLocation();
 
   useEffect(() => {
     GetAllDacha(buttonAllDach).then((r) => {
@@ -29,7 +31,6 @@ const Home = () => {
         setDachas(r.data);
       }
     });
-
   }, [buttonAllDach]);
   useEffect(() => {
     GetAllHostel(buttonAllHotel).then((r) => {
@@ -40,21 +41,24 @@ const Home = () => {
   }, [buttonAllHotel]);
 
   return (
-    <AppLayout elementsRef={elementsRef}>
-      <HeroBox />
-      <Categories />
+    <>
+      <AppLayout elementsRef={elementsRef}>
+        <HeroBox />
+        <Categories />
 
-      <CataloguePreview
-        items={dachas}
-        route={COTTAGES_CATALOGUE_ROUTE}
-        title={t("cottages_title")}
-      />
-      <CataloguePreview
-        items={hostel}
-        route={HOTELS_CATALOGUE_ROUTE}
-        title={t("hotels_title")}
-      />
-    </AppLayout>
+        <CataloguePreview
+          items={dachas}
+          route={COTTAGES_CATALOGUE_ROUTE}
+          title={t("cottages_title")}
+        />
+        <CataloguePreview
+          items={hostel}
+          route={HOTELS_CATALOGUE_ROUTE}
+          title={t("hotels_title")}
+        />
+      </AppLayout>
+      {userLocation === null && <LocationRequest />}
+    </>
   );
 };
 

@@ -12,18 +12,18 @@ import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
-import Bookings from "../bookings/Bookings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PaymentMethods from "../payment-methods/PaymentMethods";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useSelector } from "react-redux";
 
-export default function Sidebar({ onLogOut, user, close }) {
-  const { username, phone } = user;
+export default function Sidebar({ close, onLogout }) {
+  const { username, phone, role } = useSelector((state) => state.auth.user);
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
   const { t } = useTranslation();
-  console.log(user);
+  console.log(username);
 
   useEffect(() => {
     const getPhoto = async () => {
@@ -77,7 +77,7 @@ export default function Sidebar({ onLogOut, user, close }) {
           </div>
 
           <div className={styles["sidebar-links-wrap"]}>
-            {user?.role === "seller" && (
+            {role === "seller" && (
               <Link
                 className={styles["sidebar-link"]}
                 to={`${CABINET}${SELLER_DASHBOARD}`}
@@ -120,6 +120,10 @@ export default function Sidebar({ onLogOut, user, close }) {
                 {t("sidebar_support")}
                 <Icons.ChevronRight />
               </div>
+            </Link>
+            <Link className={styles["sidebar-link"]} onClick={onLogout}>
+              <Icons.Logout />
+              <div className={styles["sidebar-link-item"]}>Выйти</div>
             </Link>
           </div>
         </div>

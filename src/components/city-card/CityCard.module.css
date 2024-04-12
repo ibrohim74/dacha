@@ -6,6 +6,59 @@
   border-top: 1px #ddd solid;
 }
 
+.cities-wrapper {
+  border-radius: 20px;
+  padding: 20px 12px;
+  background-color: var(--brand-color-2);
+}
+
+.preview-city-card {
+  width: 336px;
+  height: 210px;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.5s ease-in;
+}
+
+.preview-city-card span {
+  display: none;
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--brand-color-2);
+}
+
+.preview-city-card button {
+  display: none;
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--brand-color-2);
+  width: 90%;
+  padding: 7px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s ease-in;
+}
+
+.preview-city-card:hover span {
+  display: block;
+}
+
+.preview-city-card:hover button {
+  display: block;
+}
+
 .city-card {
   width: 100%;
   height: 15.6rem;

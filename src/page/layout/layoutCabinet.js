@@ -21,6 +21,8 @@ import {
   REQUEST_ANNOUNCEMENT,
 } from "../../processes/utils/consts";
 import Breadcrumb_dashboard from "../../components/breadcrumb_dashboard/breadcrumb_dashboard";
+import { getUser } from "../profile/API";
+import { useSelector } from "react-redux";
 
 const headerSeller = {
   marginTop: 0,
@@ -30,9 +32,16 @@ const LayoutCabinet = () => {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const JWT = jwtDecode(localStorage.getItem("token"));
-  const [CurrentUser, setCurrentUser] = useState();
+  // const [CurrentUser, setCurrentUser] = useState();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(null);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const { role } = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
   function handleClickTab(value) {
     setActiveTab(value);
@@ -57,26 +66,15 @@ const LayoutCabinet = () => {
     };
     setActiveTabFromLocation();
   }, [location]);
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await $host.get("user/" + JWT.userId);
-        setCurrentUser(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getUser();
-  }, []);
 
   return (
     <div>
       <div className={"layout-app"}>
         <main className="content">
           {/* <Topbar/> */}
-          <Header/> 
+          {/* <Header/>  */}
           {/* <Header props_style={{headerSeller: headerSeller}}/> */}
-          {CurrentUser?.role === "seller" && <Breadcrumb_dashboard />}
+          {role === "seller" && <Breadcrumb_dashboard />}
           {/*{CurrentUser?.role === 'seller' &&*/}
           {/*    <div className={styles["header-tabs"]}>*/}
           {/*  <Link*/}
@@ -109,19 +107,23 @@ const LayoutCabinet = () => {
           {/*</div>}*/}
 
           <Routes>
-            {CurrentUser?.role === "user" &&
+            {role === "user" &&
               Users.map(({ path, Component }) => (
-                <Route key={path} path={path} element={Component} />
+                <>
+                  {/* {console.log(path)}
+                  {console.log(Component)} */}
+                  <Route key={path} path={path} element={Component} />
+                </>
               ))}
-            {CurrentUser?.role === "seller" &&
+            {role === "seller" &&
               Seller.map(({ path, Component }) => (
                 <Route key={path} path={path} element={Component} />
               ))}
-            {CurrentUser?.role === "admin" &&
+            {role === "admin" &&
               Admin.map(({ path, Component }) => (
                 <Route key={path} path={path} element={Component} />
               ))}
-            {CurrentUser?.role === "moderate" &&
+            {role === "moderate" &&
               Moderate.map(({ path, Component }) => (
                 <Route key={path} path={path} element={Component} />
               ))}

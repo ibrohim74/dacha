@@ -6,7 +6,7 @@ import Header_adminPage from "../../components/header_adminPage";
 import { message, notification } from "antd";
 import styles from "./assets/profile.module.css";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { sendProfile_data } from "./API";
+import { getUser, logout, sendProfile_data } from "./API";
 import { Icons } from "../../assets/icons/icons";
 import EditInput from "../../components/edit-input/edit-input";
 import AppLayout from "../../components/appLayout/AppLayout";
@@ -19,17 +19,34 @@ import Modal from "../../components/modal/Modal";
 import Logout, { DeleteAccount } from "../../components/logout/Logout";
 import ProfileImage from "../../components/profile-image/ProfileImage";
 import ChangePassword from "../../components/change-password/ChangePassword";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserField } from "../auth/authSlice";
 
 const Profile = () => {
-  const [CurrentUser, setCurrentUser] = useState();
-  const [initialValues, setInitialValues] = useState();
-  const [initialState, setInitialState] = useState({});
-  const [imgProfile, setImgProfile] = useState();
-  const [loadingImg, setLoadingImg] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [changePassword, setChangePassword] = useState(false);
-  const JWT = jwtDecode(localStorage.getItem("token"));
+  const JWT = localStorage.getItem("token")
+    ? jwtDecode(localStorage.getItem("token"))
+    : null;
   const [notifications, contextHolder] = notification.useNotification();
+  const CurrentUser = {};
+  const [loadingImg, setLoadingImg] = useState(false);
+  const [initialState, setInitialState] = useState({});
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const dispatch = useDispatch();
+
+  const [changePassword, setChangePassword] = useState(false);
+  const [updatedProfileFields, setUpdatedProfileFields] = useState({});
+
+  const handleFieldEditing = (e, fieldname) => {
+    dispatch(setUserField({ field: fieldname, value: e.target.value }));
+    setUpdatedProfileFields({ field: fieldname, value: e.target.value });
+  };
+
+  const { username, firstName, lastName, email, phone_number, image_path } =
+    useSelector((state) => state.auth.user);
 
   const [authOption, setAuthOption] = useState("phone");
   const { t } = useTranslation();
@@ -40,21 +57,12 @@ const Profile = () => {
     }
   };
 
-  const getUser = async () => {
-    const res = await $host.get("user/" + JWT.userId);
-    setCurrentUser(res.data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   const handleSend = () => {
     sendProfile_data(initialValues)
       .then((r) => {
         if (r?.status === 200) {
           message.success("Update");
+
           setTimeout(() => {
             window.location.reload();
           }, 1500);
@@ -95,34 +103,7 @@ const Profile = () => {
     }
   };
 
-  const uploadButton = (
-    <button
-      style={{
-        border: 0,
-        background: "none",
-      }}
-      type="button"
-    >
-      {loadingImg ? (
-        <LoadingOutlined style={{ color: "black " }} />
-      ) : (
-        <PlusOutlined style={{ color: "black" }} />
-      )}
-      <div
-        style={{
-          marginTop: 8,
-          color: "black",
-        }}
-      >
-        Upload
-      </div>
-    </button>
-  );
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  console.log(CurrentUser);
+  // console.log(CurrentUser);
 
   return (
     <AppLayout>
@@ -139,7 +120,7 @@ const Profile = () => {
                 <Box className={styles["profile-tab"]}>
                   {contextHolder}
 
-                  <ProfileImage currentUser={CurrentUser} />
+                  <ProfileImage image_path={image_path} />
 
                   <div className={styles["profile-form"]}>
                     <div className={styles["profile-input-row"]}>
@@ -149,13 +130,10 @@ const Profile = () => {
                         </label>
                         <input
                           className={styles["profile-input"]}
-                          value={CurrentUser?.firstName}
-                          onChange={(e) =>
-                            setInitialValues({
-                              ...initialValues,
-                              firstName: e.target.value,
-                            })
-                          }
+                          value={firstName}
+                          onChange={(e) => {
+                            handleFieldEditing(e, "firstName");
+                          }}
                         />
                       </div>
 
@@ -165,13 +143,10 @@ const Profile = () => {
                         </label>
                         <input
                           className={styles["profile-input"]}
-                          value={CurrentUser?.lastName}
-                          onChange={(e) =>
-                            setInitialValues({
-                              ...initialValues,
-                              lastName: e.target.value,
-                            })
-                          }
+                          value={lastName}
+                          onChange={(e) => {
+                            handleFieldEditing(e, "lastName");
+                          }}
                         />
                       </div>
                     </div>
@@ -183,26 +158,20 @@ const Profile = () => {
                         </label>
                         <input
                           className={styles["profile-input"]}
-                          value={CurrentUser?.phone_number}
-                          onChange={(e) =>
-                            setInitialValues({
-                              ...initialValues,
-                              phone_number: e.target.value,
-                            })
-                          }
+                          value={phone_number}
+                          onChange={(e) => {
+                            handleFieldEditing(e, "phone_number");
+                          }}
                         />
                       </div>
                       <div className={styles["profile-input-box"]}>
                         <label htmlFor="email">{t("profile_form_email")}</label>
                         <input
                           className={styles["profile-input"]}
-                          value={CurrentUser?.email}
-                          onChange={(e) =>
-                            setInitialValues({
-                              ...initialValues,
-                              email: e.target.value,
-                            })
-                          }
+                          value={email}
+                          onChange={(e) => {
+                            handleFieldEditing(e, "email");
+                          }}
                         />
                       </div>
                     </div>
@@ -275,7 +244,7 @@ const Profile = () => {
         />
 
         <Modal.Window name="logout">
-          <Logout />
+          <Logout onLogOut={logout} />
         </Modal.Window>
         <Modal.Window name="deleteacc">
           <DeleteAccount />
