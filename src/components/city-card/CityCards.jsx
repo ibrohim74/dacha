@@ -44,9 +44,11 @@ export default function CityCards() {
   const { t } = useTranslation();
   const { userLocation } = useUserLocation();
 
+  const isEmptyLocation = Object.keys(userLocation).length === 0;
+
   return (
     <>
-      {userLocation === null && (
+      {isEmptyLocation && (
         <div className={styles["cities-wrapper"]}>
           <Swiper
             slidesPerGroup={2.8}
@@ -67,7 +69,7 @@ export default function CityCards() {
           </Swiper>
         </div>
       )}
-      {userLocation != null && (
+      {!isEmptyLocation && (
         <CityCard
           title={t("city_card_city_bukhara")}
           descr={t("city_card_descr_bukhara")}

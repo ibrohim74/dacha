@@ -25,6 +25,8 @@ const Home = () => {
   const elementsRef = useRef(null);
   const { userLocation } = useUserLocation();
 
+  const isEmptyLocation = Object.keys(userLocation).length === 0;
+
   useEffect(() => {
     getAllDacha(buttonAllDach).then((r) => {
       if (r?.status === 200) {
@@ -57,7 +59,7 @@ const Home = () => {
           title={t("hotels_title")}
         />
       </AppLayout>
-      {userLocation === null && <LocationRequest />}
+      {isEmptyLocation && <LocationRequest />}
     </>
   );
 };

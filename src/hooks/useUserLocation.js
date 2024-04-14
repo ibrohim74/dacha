@@ -1,15 +1,17 @@
 import { useState } from "react";
 
 function useUserLocation() {
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState({});
   const [error, setError] = useState(null);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ latitude, longitude });
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
         },
         (error) => {
           setError(error);
@@ -19,6 +21,7 @@ function useUserLocation() {
     } else {
       setError({ message: "Geolocation is not supported by this browser." });
     }
+    console.log(userLocation);
   };
 
   return { userLocation, error, getUserLocation };
