@@ -1,0 +1,38 @@
+.support-container {
+  padding: 1rem 20px;
+}
+
+.support-list {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+}
+
+.support-list-link {
+  width: 100%;
+  cursor: pointer;
+}
+
+.support-list-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.support-li-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.support-li-wrapper p {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--font-color-1);
+}
+
+.support-list-item > svg {
+  fill: var(--font-color-3);
+}

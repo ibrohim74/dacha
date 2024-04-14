@@ -1,66 +1,129 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthTemplate from "../AuthTemplate/AuthTemplate";
 import styles from "./ForgotPassword.module.css";
 import Button from "../../../components/Button/Button";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changePassword,
+  checkCodeAPI,
+  restoreUser,
+} from "../../../store/auth/authActions";
+import { setUserField } from "../../../store/auth/authSlice";
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const [selectedVerificationType, setSelectedVerificationType] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [confirmationCode, setConfirmationCode] = useState("");
+  const [newPassword, setNewPassword] = useState({});
+  // const verificationType = useSelector((state) => state.auth.verificationType);
+  const { email } = useSelector((state) => state.auth.user);
+  console.log(email);
+
+  console.log(localStorage.getItem("token"));
+
+  const handleRestoreUser = () => {
+    console.log(selectedVerificationType);
+    //check email by regex and phone number
+    dispatch(restoreUser(selectedVerificationType));
+    dispatch(setUserField({ field: "email", value: selectedVerificationType }));
+    setPasswordConfirm(true);
+  };
+
+  const handleChangePassword = async () => {
+    console.log("here");
+
+    checkCodeAPI(confirmationCode, email, "restore");
+    changePassword(
+      newPassword.new_password,
+      newPassword.new_confirmed_password
+    );
+  };
+
   return (
     <AuthTemplate>
       <div className={styles["forgot-password-wrapper"]}>
         <h4>{t("auth_password_recovery")}</h4>
-        <div className={styles["input-row"]}>
-          <label htmlFor="email">{t("auth_password_recovery_email")}</label>
-          <input
-            type="email"
-            id="email"
-            placeholder={t("auth_password_recovery_email_placecholder")}
-            required
-            onChange={(e) => {}}
-          />
-        </div>
+        {!passwordConfirm && (
+          <>
+            <div className={styles["input-row"]}>
+              <label htmlFor="email">{t("auth_password_recovery_email")}</label>
+              <input
+                type="email"
+                id="email"
+                placeholder={t("auth_password_recovery_email_placecholder")}
+                required
+                value={selectedVerificationType}
+                onChange={(e) => setSelectedVerificationType(e.target.value)}
+              />
+            </div>
+            <Button type="full-width-primary" onClick={handleRestoreUser}>
+              {t("send")}
+            </Button>
+          </>
+        )}
 
-        {/* <div className={styles["forgot-password-confirm"]}>
-          <p>
-            {t("auth_email_sent")} {t("auth_code_sent")}
-          </p>
-          <div className={styles["input-row"]}>
-            <label htmlFor="confirm-code">{t("auth_confirmation_code")}</label>
-            <input
-              type="number"
-              id="confirm-code"
-              placeholder={t("auth_confirmation_code_placeholder")}
-              required
-              onChange={(e) => {}}
-            />
-          </div>
+        {passwordConfirm && (
+          <>
+            <div className={styles["forgot-password-confirm"]}>
+              <p>
+                {t("auth_email_sent")} {t("auth_code_sent")}
+              </p>
+              <div className={styles["input-row"]}>
+                <label htmlFor="confirm-code">
+                  {t("auth_confirmation_code")}
+                </label>
+                <input
+                  type="number"
+                  id="confirm-code"
+                  placeholder={t("auth_confirmation_code_placeholder")}
+                  required
+                  onChange={(e) => setConfirmationCode(e.target.value)}
+                />
+              </div>
 
-          <div className={styles["input-row"]}>
-            <label htmlFor="new-password">{t("auth_new_password")}</label>
-            <input
-              type="password"
-              id="new-password"
-              placeholder={t("auth_new_password_placeholder")}
-              required
-              onChange={(e) => {}}
-            />
-          </div>
+              <div className={styles["input-row"]}>
+                <label htmlFor="new-password">{t("auth_new_password")}</label>
+                <input
+                  type="password"
+                  id="new-password"
+                  placeholder={t("auth_new_password_placeholder")}
+                  required
+                  onChange={(e) =>
+                    setNewPassword({
+                      ...newPassword,
+                      new_password: e.target.value,
+                    })
+                  }
+                />
+              </div>
 
-          <div className={styles["input-row"]}>
-            <label htmlFor="confirm-password">
-              {t("auth_new_password_confirm")}
-            </label>
-            <input
-              type="password"
-              id="confirm-password"
-              placeholder={t("auth_new_password_confirm_placeholder")}
-              required
-              onChange={(e) => {}}
-            />
-          </div>
-        </div> */}
-        <Button type="full-width-primary">{t("send")}</Button>
+              <div className={styles["input-row"]}>
+                <label htmlFor="confirm-password">
+                  {t("auth_new_password_confirm")}
+                </label>
+                <input
+                  type="password"
+                  id="confirm-password"
+                  placeholder={t("auth_new_password_confirm_placeholder")}
+                  required
+                  onChange={(e) =>
+                    setNewPassword({
+                      ...newPassword,
+                      new_confirmed_password: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <Button type="full-width-primary" onClick={handleChangePassword}>
+              {t("confirm")}
+            </Button>
+          </>
+        )}
       </div>
     </AuthTemplate>
   );

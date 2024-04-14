@@ -96,6 +96,13 @@
   transition: 0.5s all ease;
 }
 
+.white-and-red {
+  background-color: var(--brand-color-2);
+  color: #ff4141;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .icon {
   width: 44px;
   height: 44px;

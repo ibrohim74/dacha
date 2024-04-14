@@ -6,7 +6,7 @@ import {
   VILLAS_ROUTE,
 } from "../../processes/utils/consts";
 import styles from "./home.module.css";
-import { GetAllDacha, GetAllHostel } from "./API/homeAPI";
+import { getAllDacha, GetAllHostel } from "./API/homeAPI";
 import HeroBox from "../../components/HeroBox/HeroBox";
 import Categories from "../../components/categories/Categories";
 import CataloguePreview from "../../components/catalogue-preview/CataloguePreview";
@@ -26,7 +26,7 @@ const Home = () => {
   const { userLocation } = useUserLocation();
 
   useEffect(() => {
-    GetAllDacha(buttonAllDach).then((r) => {
+    getAllDacha(buttonAllDach).then((r) => {
       if (r?.status === 200) {
         setDachas(r.data);
       }

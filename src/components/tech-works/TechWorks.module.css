@@ -1,0 +1,33 @@
+.tech-works-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.tech-works-wrapper {
+  width: 412px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.tech-works-wrapper h2 {
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--font-color-1);
+  text-align: center;
+}
+
+.tech-works-wrapper p {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--font-color-1);
+  text-align: center;
+}
+
+.tech-works-btn {
+  width: 295px;
+}

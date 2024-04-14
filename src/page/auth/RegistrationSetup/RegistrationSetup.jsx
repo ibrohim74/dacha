@@ -3,8 +3,8 @@ import AuthTemplate from "../AuthTemplate/AuthTemplate";
 import Button from "../../../components/Button/Button";
 import styles from "./RegistrationSetup.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setNewUser, setUserField } from "../authSlice";
-import { registrationAPI } from "../API";
+import { setNewUser, setUserField } from "../../../store/auth/authSlice";
+import { registrationAPI } from "../../../store/auth/authActions";
 import { useNavigate } from "react-router";
 import { HOME_ROUTE } from "../../../processes/utils/consts";
 import { message } from "antd";
@@ -53,7 +53,9 @@ export default function RegistrationSetup() {
       <div className={styles["create-profile-setup"]}>
         <h4>{t("auth_profile_setup")}</h4>
 
-        <ProfileImage />
+        <div className={styles["create-profile-img"]}>
+          <ProfileImage />
+        </div>
 
         <div className={styles["create-profile-inputs"]}>
           <div className={styles["input-row"]}>

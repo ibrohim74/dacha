@@ -1,0 +1,40 @@
+.server-problems-container {
+  background-color: var(--brand-color-2);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.server-problems-wrapper {
+  background-color: #ff4141;
+  border: none;
+  border-radius: 10px;
+  width: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
+.server-problems-descr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.server-problems-text h4 {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brand-color-2);
+}
+
+.server-problems-text p {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--brand-color-2);
+}

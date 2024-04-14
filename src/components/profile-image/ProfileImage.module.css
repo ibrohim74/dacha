@@ -4,6 +4,8 @@
   align-items: start;
   gap: 12px;
   margin-bottom: 16px;
+  position: relative;
+  width: 100px;
 }
 
 .profile-image-uploader-wrapper label {
@@ -45,4 +47,23 @@
   color: white;
   background-color: black;
   display: inline-block;
+}
+
+.profile-add-image {
+  background-color: var(--font-color-1);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+}
+
+.profile-add-image svg {
+  fill: var(--brand-color-2);
+  width: 20px;
+  height: 17px;
 }

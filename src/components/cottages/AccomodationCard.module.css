@@ -1,4 +1,4 @@
-.cottage-wrapper {
+.accomodation-wrapper {
   display: flex;
   width: 100%;
   padding: 22px 30px 22px 22px;
@@ -7,24 +7,24 @@
   gap: 17px;
 }
 
-.cottage-img {
+.accomodation-img {
   border-radius: 16px;
   width: 300px;
   height: 216px;
   overflow: hidden;
 }
 
-.cottage-img img {
+.accomodation-img img {
   width: 100%;
 }
 
-.cottage-info {
+.accomodation-info {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.cottage-title {
+.accomodation-title {
   margin: 0;
   font-size: 18px;
   font-weight: 800;
@@ -32,57 +32,57 @@
   transition: all 0.5s ease;
 }
 
-.cottage-title:hover {
+.accomodation-title:hover {
   text-decoration: underline;
 }
 
-.cottage-inner-wrapper {
+.accomodation-inner-wrapper {
   width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.cottage-upper-part,
-.cottage-lower-part {
+.accomodation-upper-part,
+.accomodation-lower-part {
   display: flex;
   align-items: start;
   justify-content: space-between;
 }
 
-.cottage-lower-part {
+.accomodation-lower-part {
   align-items: flex-end;
 }
 
-.cottage-rate {
+.accomodation-rate {
   font-weight: 600;
   font-size: 16px;
 }
 
-.cottage-infobox {
+.accomodation-infobox {
   display: flex;
   align-items: start;
   flex-direction: column;
   gap: 8px;
 }
 
-.cottage-infobox p {
+.accomodation-infobox p {
   font-size: 14px;
   color: var(--font-color-2);
 }
 
-.cottage-ratings {
+.accomodation-ratings {
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 5px;
 }
 
-.cottage-ratings p {
+.accomodation-ratings p {
   font-size: 10px;
 }
 
-.cottage-prices {
+.accomodation-prices {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -90,17 +90,17 @@
   gap: 4px;
 }
 
-.cottage-prices p {
+.accomodation-prices p {
   font-size: 16px;
   font-weight: 600;
 }
 
-.cottage-price-type {
+.accomodation-price-type {
   font-size: 14px;
   color: var(--font-color-2);
 }
 
-.cottage-btn {
+.accomodation-btn {
   background-color: var(--brand-color-1);
   font-weight: 600;
   width: 97px;
@@ -130,30 +130,30 @@
 }
 
 @media only screen and (min-width: 360px) and (max-width: 560px) {
-  .cottage-wrapper {
+  .accomodation-wrapper {
     flex-direction: column;
     padding: 1rem;
   }
 
-  .cottage-inner-wrapper {
+  .accomodation-inner-wrapper {
     width: 100%;
   }
 
-  .cottage-img {
+  .accomodation-img {
     width: 100%;
   }
 }
 
 @media only screen and (min-width: 561px) and (max-width: 835px) {
-  .cottage-wrapper {
+  .accomodation-wrapper {
     flex-direction: column;
   }
 
-  .cottage-inner-wrapper {
+  .accomodation-inner-wrapper {
     width: 100%;
   }
 
-  .cottage-img {
+  .accomodation-img {
     width: 100%;
   }
 }

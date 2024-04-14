@@ -28,6 +28,10 @@ import {
   FAVORITES,
   REGISTER_CONFIRM_ROUTE,
   REGISTRATION_SETUP,
+  NOT_FOUND,
+  TECH_WORKS,
+  FAQ_ROUTE,
+  REQUESTS_ROUTE,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/Login/login";
@@ -66,6 +70,10 @@ import Favorites from "../../components/favorites/Favorites";
 import ChangePassword from "../../components/change-password/ChangePassword";
 import RegistrationConfirm from "../../page/auth/Registration/RegistrationConfirm";
 import RegistrationSetup from "../../page/auth/RegistrationSetup/RegistrationSetup";
+import NotFound from "../../components/not-found/NotFound";
+import TechWorks from "../../components/tech-works/TechWorks";
+import FAQ from "../../components/faq/FAQ";
+import Requests from "../../components/requests/Requests";
 
 export const Public = [
   {
@@ -127,6 +135,22 @@ export const Public = [
   {
     Component: <Favorites />,
     path: FAVORITES,
+  },
+  {
+    Component: <NotFound />,
+    path: NOT_FOUND,
+  },
+  {
+    Component: <TechWorks />,
+    path: TECH_WORKS,
+  },
+  {
+    Component: <FAQ />,
+    path: FAQ_ROUTE,
+  },
+  {
+    Component: <Requests />,
+    path: REQUESTS_ROUTE,
   },
 ];
 

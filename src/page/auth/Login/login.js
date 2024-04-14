@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./login.module.css";
 import {
@@ -11,19 +11,24 @@ import {
   PROFILE,
   REGISTER_ROUT,
 } from "../../../processes/utils/consts";
-import { Icons } from "../../../assets/icons/icons";
-import { loginAPI } from "../API";
-import { LoadingOutlined } from "@ant-design/icons";
+import { loginAPI } from "../../../store/auth/authActions";
 import AuthTemplate from "../AuthTemplate/AuthTemplate";
 import Button from "../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignedIn, setUserField } from "../authSlice";
+import {
+  setSignedIn,
+  setToken,
+  setUserField,
+} from "../../../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const { password, username } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  console.log(localStorage.getItem("token"));
 
   const handleUsernameChange = (e) => {
     dispatch(setUserField({ field: "username", value: e.target.value }));
@@ -39,13 +44,13 @@ const Login = () => {
 
   const handleSend = () => {
     setIsLoading(true);
-    // console.log(data);
-    // console.log(data.username);
     if (username && password) {
       loginAPI(data).then((res) => {
-        if (res === localStorage.getItem("token")) {
-          dispatch(setSignedIn(true));
-          window.location.assign(HOME_ROUTE);
+        console.log("login token", res);
+        if (res.status === 200) {
+          console.log(res);
+          dispatch(setSignedIn(res.data));
+          navigate(HOME_ROUTE);
         } else {
           message.error("Данные введены неверно");
           setIsLoading(false);

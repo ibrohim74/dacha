@@ -24,7 +24,7 @@ import {
   GetSellerBookingItemPageAPI,
 } from "./API/itemPageAPI";
 import { GetDachaAPI } from "../seller_Page/announcement/API/announcementAPI";
-import { GetAllDacha } from "../home/API/homeAPI";
+import { getAllDacha } from "../home/API/homeAPI";
 import Review from "../../components/review/review";
 import AppLayout from "../../components/appLayout/AppLayout";
 import StarRating from "../../components/starRating/StarRating";
@@ -32,12 +32,12 @@ import Button from "../../components/Button/Button";
 import BookingPlace from "../../components/bookings/BookingPlace";
 import RoomCard from "../../components/room-card/RoomCard";
 import ReviewCard from "../../components/review-card/ReviewCard";
-import CottageCard from "../../components/cottages/CottageCard";
 import SimilarItems from "../../components/similar-items/SimilarItems";
 import { SwiperSlide } from "swiper/react";
 import LocationOnMap from "../../components/location-on-map/LocationOnMap";
 import GallerySlider from "../../components/image-slider/GallerySlider";
 import { useTranslation } from "react-i18next";
+import AccomodationCard from "../../components/cottages/AccomodationCard";
 
 const customMarkerIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -104,7 +104,7 @@ const ItemPage = () => {
         console.log(SliderData);
       }
     });
-    GetAllDacha(1).then((r) => {
+    getAllDacha(1).then((r) => {
       if (r?.status === 200) {
         setSimilarDachas(r.data);
       }
@@ -284,7 +284,7 @@ const ItemPage = () => {
             <SimilarItems>
               {SimilarDachas.slice(0, 4).map((similarDacha) => (
                 <SwiperSlide style={{ width: "400px !important" }}>
-                  <CottageCard cottage={similarDacha} />
+                  <AccomodationCard accomodation={similarDacha} />
                 </SwiperSlide>
               ))}
             </SimilarItems>

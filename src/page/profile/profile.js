@@ -4,9 +4,12 @@ import { $authHost, $host } from "../../processes/http/http";
 import { Box } from "@mui/material";
 import Header_adminPage from "../../components/header_adminPage";
 import { message, notification } from "antd";
-import styles from "./assets/profile.module.css";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { getUser, logout, sendProfile_data } from "./API";
+import styles from "./profile.module.css";
+import {
+  getUser,
+  logout,
+  sendProfile_data,
+} from "../../store/profile/profileActions";
 import { Icons } from "../../assets/icons/icons";
 import EditInput from "../../components/edit-input/edit-input";
 import AppLayout from "../../components/appLayout/AppLayout";
@@ -20,14 +23,14 @@ import Logout, { DeleteAccount } from "../../components/logout/Logout";
 import ProfileImage from "../../components/profile-image/ProfileImage";
 import ChangePassword from "../../components/change-password/ChangePassword";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserField } from "../auth/authSlice";
+import { setUserField } from "../../store/auth/authSlice";
+import { changePassword } from "../../store/auth/authActions";
 
 const Profile = () => {
   const JWT = localStorage.getItem("token")
     ? jwtDecode(localStorage.getItem("token"))
     : null;
   const [notifications, contextHolder] = notification.useNotification();
-  const CurrentUser = {};
   const [loadingImg, setLoadingImg] = useState(false);
   const [initialState, setInitialState] = useState({});
 
@@ -74,33 +77,11 @@ const Profile = () => {
   };
 
   const handleChangePassword = async () => {
-    if (initialState.old_password && initialState.new_password) {
-      if (
-        initialState.old_password.length >= 8 &&
-        initialState.new_password.length >= 8
-      ) {
-        try {
-          console.log(initialState);
-          const res = await $authHost.post(
-            `change_old_password/${JWT.userId}`,
-            { initialState }
-          );
-          if (res.status === 200) {
-            message.success(t("password_changed_msg"));
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-          }
-        } catch (e) {
-          console.log(e);
-          message.error(t("password_incorrect"));
-        }
-      } else {
-        message.error(t("password_min_length_msg"));
-      }
-    } else {
-      message.error(t("all_inputs_required"));
-    }
+    await changePassword(
+      initialState.old_password,
+      initialState.new_password,
+      JWT.userId
+    );
   };
 
   // console.log(CurrentUser);
@@ -176,7 +157,12 @@ const Profile = () => {
                       </div>
                     </div>
 
-                    {changePassword && <ChangePassword />}
+                    {changePassword && (
+                      <ChangePassword
+                        passwords={initialState}
+                        onSetPasswords={setInitialState}
+                      />
+                    )}
 
                     <div className={styles["profile-checkboxes"]}>
                       <label htmlFor="phone_number">{t("profile_auth")}</label>

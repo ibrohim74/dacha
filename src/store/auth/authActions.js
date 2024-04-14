@@ -1,18 +1,9 @@
-import { $authHost, $host } from "../../../processes/http/http";
+import { $authHost, $host } from "../../processes/http/http";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { message } from "antd";
 
 let isWaiting = false;
-
-// export const checkEmailAPI = async (email) => {
-//   try {
-//     const res = await $host.post("check_email", { email: email });
-//     console.log(res);
-//     return res.status;
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
 
 export const checkEmailAPI = createAsyncThunk(
   "auth/checkEmail",
@@ -20,6 +11,7 @@ export const checkEmailAPI = createAsyncThunk(
     try {
       const response = await $host.post("check_email", { email });
       console.log(response);
+
       return response.status;
     } catch (error) {
       console.error("Error checking email:", error);
@@ -28,12 +20,27 @@ export const checkEmailAPI = createAsyncThunk(
   }
 );
 
-export const checkRegistrationCodeAPI = async (code, email) => {
+export const restoreUser = createAsyncThunk(
+  "auth/checkEmail",
+  async (email) => {
+    try {
+      const response = await $host.post("restore_user", { email });
+      console.log(response);
+
+      return response.status;
+    } catch (error) {
+      console.error("Error restoring user:", error);
+      return Promise.reject(error.message);
+    }
+  }
+);
+
+export const checkCodeAPI = async (code, email, type) => {
   try {
     const res = await $host.post("check_code", {
       code: code,
       email: email,
-      type: "register",
+      type: type,
     });
     console.log(res);
     return res;
@@ -43,23 +50,41 @@ export const checkRegistrationCodeAPI = async (code, email) => {
   }
 };
 
-// export const checkRegistrationCodeAPI = createAsyncThunk(
-//   "auth/checkConfirmationCode",
-//   async (code, email) => {
-//     try {
-//       const res = await $host.post("check_code", {
-//         code: code,
-//         email: email,
-//         type: "register",
-//       });
-//       console.log(res.data);
-//       return res.data;
-//     } catch (e) {
-//       console.log(e);
-//       return e?.response?.status || e.code;
-//     }
-//   }
-// );
+// export const changeOldPassword
+
+export const changePassword = async (newPassword, newConfirmedPassword) => {
+  if (newPassword == newConfirmedPassword) {
+    if (newPassword.length >= 8 && newConfirmedPassword.length >= 8) {
+      try {
+        // console.log(initialState);
+        const res = await $authHost.post(
+          `change_password`,
+          {
+            password: newPassword,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          message.success(t("password_changed_msg"));
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1500);
+        }
+      } catch (e) {
+        console.log(e);
+        message.error("password_incorrect");
+      }
+    } else {
+      message.error("password_min_length_msg");
+    }
+  } else {
+    message.error("all_inputs_required");
+  }
+};
 
 export const registrationAPI = async (user) => {
   console.log("user", user);
@@ -81,15 +106,15 @@ export const registrationAPI = async (user) => {
 };
 
 export const loginAPI = async (data) => {
-  console.log(data);
   try {
     const res = await $host.post("login", {
       login: data.username,
       password: data.password,
     });
     localStorage.setItem("token", res.data.access_token);
-    console.log(res.data.access_token);
-    return res.data.access_token;
+
+    console.log(res);
+    return res;
   } catch (e) {
     if (e.message === "Network Error") {
       return "Serverda xatolik yuzaga keldi bir ozdan so'ng yana bir bor urunib ko'ring";

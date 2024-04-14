@@ -1,23 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-// export const AuthState = {
-//     isLoading: boolean,
-//     error: string | null,
-//     isSignedIn: boolean,
-//     user: User | null,
-//     signupStep: "email" | "phone" | "confirmation" | null,
-//     confirmationCode: string,
-//   };
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addFavourite,
+  getFavourite,
+  removeFavourite,
+} from "../favs/favActions";
 
 const initialState = {
   isLoading: false,
   error: null,
   isAuthenticated: false,
-  verification: {
-    isVerifyingCode: false,
-    verificationError: null,
-    verificationType: "",
-  },
+  // verification: {
+  //   isVerifyingCode: false,
+  //   verificationError: null,
+  //   verificationType: "",
+  // },
   user: {
     id: null,
     firstName: "",
@@ -30,6 +26,7 @@ const initialState = {
     image_path: "",
     password: "",
     join_date: "",
+    favourites: [],
   },
   token: "",
 };
@@ -61,27 +58,42 @@ const authSlice = createSlice({
         role,
         image_path,
       } = action.payload;
-      state.user = {
-        ...state.user,
-        firstName,
-        username,
-        lastName,
-        join_date,
-        email,
-        id,
-        role,
-        image_path,
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          firstName,
+          username,
+          lastName,
+          join_date,
+          email,
+          id,
+          role,
+          image_path,
+        },
+        isAuthenticated: true,
       };
-      console.log(state.user);
-      state.isAuthenticated = true;
+      // console.log(state.user);
     },
     setIsLoading(state, action) {
       state.isLoading = action.payload;
     },
     setSignedIn(state, action) {
-      state.isSignedIn = action.payload;
-      state.user = action.payload ? action.payload : null;
+      const { access_token, user_id, role } = action.payload;
+      return {
+        ...state,
+        isSignedIn: true,
+        isAuthenticated: true,
+        user: {
+          ...state.user,
+          role: role,
+          id: user_id,
+        },
+        token: access_token,
+      };
     },
+    setRefreshToke(state, action) {},
     setToken(state, action) {
       state.isSignedIn = Boolean(action.payload);
       state.token = action.payload;
@@ -94,23 +106,52 @@ const authSlice = createSlice({
     setAuthenticated(state, action) {
       state.isAuthenticated = action.payload;
     },
+    setUserFav(state, action) {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favourites: action.payload,
+        },
+      };
+    },
   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(verifyRegistrationCode.pending, (state) => {
-  //         state.isVerifyingCode = true;
-  //         state.verificationError = null;
-  //       })
-  //       .addCase(verifyRegistrationCode.fulfilled, (state, action) => {
-  //         state.isVerifyingCode = false;
-  //         state.signupStep = "confirmed";
-  //         // Handle successful verification (e.g., navigate to next step)
-  //       })
-  //       .addCase(verifyRegistrationCode.rejected, (state, action) => {
-  //         state.isVerifyingCode = false;
-  //         state.verificationError = action.error.message || "Verification failed";
-  //       });
-  //   },
+  extraReducers: (builder) => {
+    builder.addCase(addFavourite.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      const { accommodation_id, accommodation_type } = action.payload;
+      const newFavourite = { accommodation_id, accommodation_type };
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favourites: [...state.user.favourites, newFavourite],
+        },
+      };
+    });
+    // builder.addCase(getFavourite.fulfilled, (state, action) => {
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       favourites: action.payload,
+    //     },
+    //   };
+    // });
+    builder.addCase(removeFavourite.fulfilled, (state, action) => {
+      const itemId = action.payload;
+      console.log(itemId);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          favourites: state.user.favourites.filter(
+            (item) => item.id !== itemId
+          ),
+        },
+      };
+    });
+  },
 });
 
 export const {
@@ -122,6 +163,7 @@ export const {
   setIsLoading,
   setToken,
   setNewUser,
+  setUserFav,
 } = authSlice.actions;
 
 export default authSlice.reducer;

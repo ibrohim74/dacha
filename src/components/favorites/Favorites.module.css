@@ -1,5 +1,9 @@
 .favs-tab {
   padding: 60px 32px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 26px;
 }
 
 .fav-card {
@@ -12,8 +16,8 @@
   gap: 3rem;
 }
 
-.fav-card h4 {
-  font-size: 32px;
+.fav-card-names h4 {
+  font-size: 26px;
   font-weight: 700;
   color: var(--font-color-1);
 }

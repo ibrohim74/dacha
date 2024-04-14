@@ -3,8 +3,8 @@ import AuthTemplate from "../AuthTemplate/AuthTemplate";
 import styles from "./Registration.module.css";
 import Button from "../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLoading, setToken } from "../authSlice";
-import { checkRegistrationCodeAPI } from "../API";
+import { setIsLoading, setToken } from "../../../store/auth/authSlice";
+import { checkCodeAPI } from "../../../store/auth/authActions";
 import { message } from "antd";
 import { useNavigate } from "react-router";
 import { REGISTRATION_SETUP } from "../../../processes/utils/consts";
@@ -22,17 +22,15 @@ export default function RegistrationConfirm() {
     dispatch(setIsLoading(true));
 
     if (confirmationCode) {
-      checkRegistrationCodeAPI(confirmationCode, email).then((res) => {
+      checkCodeAPI(confirmationCode, email, "register").then((res) => {
         if (res?.status === 200) {
-          console.log(res);
-          console.log(res.data);
-          console.log(res.data.access_token);
+          // console.log(res.data.access_token);
           dispatch(setToken(res.data?.access_token));
           localStorage.setItem("token", res.data?.access_token);
           navigate(REGISTRATION_SETUP);
         } else {
-          console.log(res);
-          console.log(res.data);
+          // console.log(res);
+          // console.log(res.data);
           message.error("smth is wrong in reg confirm");
         }
       });

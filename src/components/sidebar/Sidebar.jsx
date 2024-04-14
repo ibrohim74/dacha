@@ -16,42 +16,20 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PaymentMethods from "../payment-methods/PaymentMethods";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useSelector } from "react-redux";
+import Support from "../support/Support";
 
 export default function Sidebar({ close, onLogout }) {
-  const { username, phone, role } = useSelector((state) => state.auth.user);
+  const { username, phone, role, image_path } = useSelector(
+    (state) => state.auth.user
+  );
+
+  // console.log(image_path);
+
   const [imgProfile, setImgProfile] = useState();
   const [loadingImg, setLoadingImg] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
   const { t } = useTranslation();
-  console.log(username);
-
-  useEffect(() => {
-    const getPhoto = async () => {
-      setLoadingImg(true);
-      try {
-        const res = await $authHost.get(`/media/users/${JWT.userId}`, {
-          responseType: "arraybuffer",
-        });
-        if (res?.status === 200) {
-          const imageData = res.data;
-          const base64Image = btoa(
-            new Uint8Array(imageData).reduce(
-              (data, byte) => data + String.fromCharCode(byte),
-              ""
-            )
-          );
-          const dataUrl = `data:image/jpeg;base64,${base64Image}`;
-          setImgProfile(dataUrl);
-          setLoadingImg(false);
-        }
-        setLoadingImg(false);
-      } catch (e) {
-        setLoadingImg(false);
-        console.log(e);
-      }
-    };
-    getPhoto();
-  }, []);
+  // console.log(username);
 
   const ref = useOutsideClick({ handler: close });
 
@@ -66,8 +44,8 @@ export default function Sidebar({ close, onLogout }) {
           <div className={styles["sidebar-profile"]}>
             <img
               src={
-                imgProfile
-                  ? imgProfile
+                image_path
+                  ? `https://visitca.travel/api/${image_path}`
                   : require("../../assets/profile_placeholder.jpg")
               }
               alt="profile avatar placeholder"
@@ -84,7 +62,7 @@ export default function Sidebar({ close, onLogout }) {
               >
                 <DashboardIcon />
                 <div className={styles["sidebar-link-item"]}>
-                  {t("dashboard")}
+                  {t("sidebar_dashboard")}
                   <Icons.ChevronRight />
                 </div>
               </Link>
@@ -114,13 +92,15 @@ export default function Sidebar({ close, onLogout }) {
                 <Icons.ChevronRight />
               </div>
             </Link>
-            <Link to={""} className={styles["sidebar-link"]}>
-              <Icons.QuestionMark />
-              <div className={styles["sidebar-link-item"]}>
-                {t("sidebar_support")}
-                <Icons.ChevronRight />
-              </div>
-            </Link>
+            <Modal.Open opens="support">
+              <Link to={""} className={styles["sidebar-link"]}>
+                <Icons.QuestionMark />
+                <div className={styles["sidebar-link-item"]}>
+                  {t("sidebar_support")}
+                  <Icons.ChevronRight />
+                </div>
+              </Link>
+            </Modal.Open>
             <Link className={styles["sidebar-link"]} onClick={onLogout}>
               <Icons.Logout />
               <div className={styles["sidebar-link-item"]}>Выйти</div>
@@ -131,6 +111,10 @@ export default function Sidebar({ close, onLogout }) {
 
       <Modal.Window name="payment-methods" title={t("sidebar_payments")}>
         <PaymentMethods />
+      </Modal.Window>
+
+      <Modal.Window name="support" title={t("support_title")}>
+        <Support />
       </Modal.Window>
     </Modal>
   );

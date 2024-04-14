@@ -61,7 +61,7 @@ export default function CityCards() {
           >
             {citiesData.map((city) => (
               <SwiperSlide>
-                <PreviewCityCard city={city} />
+                <PreviewCityCard city={city} key={city.name} />
               </SwiperSlide>
             ))}
           </Swiper>

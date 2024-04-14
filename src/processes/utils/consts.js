@@ -13,6 +13,8 @@ export const FORGOT_PASSWORD = "/ForgotPassword";
 export const HOTELS_CATALOGUE_ROUTE = "/hotels_catalogue";
 export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
 export const BOOKING_ROUTE = "/bookings";
+export const FAQ_ROUTE = "/faq";
+export const REQUESTS_ROUTE = "/requests";
 
 // Dashboard
 export const CABINET = "/cabinet/";
@@ -38,6 +40,10 @@ export const SCHEDULE = "schedule";
 export const ANNOUNCEMENT_ITEM_PAGE = "announcement_item_page/:id";
 export const REQUEST_ANNOUNCEMENT = "announcement_request";
 // Moderate Routes
+
+//other
+export const NOT_FOUND = "not_found";
+export const TECH_WORKS = "tech_works";
 
 export const LANGUAGES = [
   { label: "English", code: "en" },

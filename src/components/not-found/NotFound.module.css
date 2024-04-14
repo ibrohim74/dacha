@@ -1,0 +1,40 @@
+.not-found-wrapper {
+  background-color: var(--bg-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-image: url("../../assets/icons/nice-bg-icon.svg");
+  background-repeat: no-repeat;
+  background-position-x: 45%;
+  background-position-y: 40%;
+  position: relative;
+}
+
+.not-found-wrapper h2 {
+  font-weight: 800;
+  color: var(--font-color-1);
+  font-size: 260px;
+  position: absolute;
+  top: 20%;
+  left: 22%;
+}
+
+.not-found-wrapper p {
+  font-weight: 500;
+  font-size: 18px;
+  color: #5d6a85;
+  position: absolute;
+  text-align: left;
+  bottom: 42%;
+  left: 22%;
+}
+
+.not-found-link {
+  width: 295px;
+  position: absolute;
+  left: 22%;
+  bottom: 35%;
+}

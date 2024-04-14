@@ -1,6 +1,6 @@
 import { $authHost, $host } from "../../../processes/http/http";
 
-export const GetAllDacha = async (page) => {
+export const getAllDacha = async (page) => {
   try {
     const res = await $authHost.get("dachas", { params: { page: page } });
     console.log(res);
@@ -9,6 +9,7 @@ export const GetAllDacha = async (page) => {
     console.log(e);
   }
 };
+
 export const GetAllHostel = async (page) => {
   try {
     const res = await $host.get("hotels", { params: { page: page } });

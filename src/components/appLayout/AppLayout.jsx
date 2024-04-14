@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Header from "../header/Header";
 import styles from "./AppLayout.module.css";
 import Footer from "../footer/footer";
-import LocationRequest from "../location-request/LocationRequest";
+import ServerProblems from "../server-problems/ServerProblems";
 
 export default function AppLayout({ children, elementsRef }) {
   return (
@@ -12,6 +12,7 @@ export default function AppLayout({ children, elementsRef }) {
         {children}
       </div>
       <Footer />
+      {/* <ServerProblems /> */}
     </div>
   );
 }

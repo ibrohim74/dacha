@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ChangePassword.module.css";
 import { useTranslation } from "react-i18next";
 
-const ChangePassword = () => {
+const ChangePassword = ({ passwords, onSetPasswords }) => {
   const { t } = useTranslation();
 
   return (
@@ -14,7 +14,7 @@ const ChangePassword = () => {
             className={styles["change-password-input"]}
             id="prev-password"
             onChange={(e) =>
-              setInitialState({ ...initialState, old_password: e.target.value })
+              onSetPasswords({ ...passwords, old_password: e.target.value })
             }
           />
         </div>
@@ -27,7 +27,7 @@ const ChangePassword = () => {
             className={styles["change-password-input"]}
             id="new-password"
             onChange={(e) =>
-              setInitialState({ ...initialState, new_password: e.target.value })
+              onSetPasswords({ ...passwords, new_password: e.target.value })
             }
           />
         </div>

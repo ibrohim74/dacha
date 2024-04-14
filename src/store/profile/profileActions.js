@@ -1,7 +1,8 @@
-import { $authHost, $host } from "../../../processes/http/http";
+import { $authHost, $host } from "../../processes/http/http";
 import { jwtDecode } from "jwt-decode";
-import store from "../../../store/store";
-import { setNewUser } from "../../auth/authSlice";
+import store from "../store";
+import { setNewUser } from "../auth/authSlice";
+import { HOME_ROUTE } from "../../processes/utils/consts";
 
 const JWT = localStorage.getItem("token")
   ? jwtDecode(localStorage.getItem("token"))
@@ -21,10 +22,11 @@ export const sendProfile_data = async (data) => {
 
 export const getUser = async () => {
   try {
-    // console.log(JWT);
+    console.log(JWT);
     // console.log(JWT.userId);
     const res = await $host.get("user/" + JWT.userId);
-    console.log(res.data);
+    // console.log(res);
+    // console.log(res.data);
     store.dispatch(setNewUser(res.data));
     // setCurrentUser(res.data);
   } catch (e) {

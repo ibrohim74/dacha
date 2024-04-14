@@ -21,7 +21,7 @@ import {
   REQUEST_ANNOUNCEMENT,
 } from "../../processes/utils/consts";
 import Breadcrumb_dashboard from "../../components/breadcrumb_dashboard/breadcrumb_dashboard";
-import { getUser } from "../profile/API";
+import { getUser } from "../../store/profile/profileActions";
 import { useSelector } from "react-redux";
 
 const headerSeller = {

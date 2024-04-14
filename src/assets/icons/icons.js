@@ -8,7 +8,6 @@ import { ReactComponent as ImgPlcHolder } from "./imgPlaceholder.svg";
 import { ReactComponent as StarFull } from "./starFull.svg";
 import { ReactComponent as StarEmpty } from "./starEmpty.svg";
 import { ReactComponent as StarHalf } from "./starHalf.svg";
-import { ReactComponent as Chat } from "./chat.svg";
 import { ReactComponent as AppStore } from "./app_store.svg";
 import { ReactComponent as GooglePlay } from "./google_play.svg";
 import { ReactComponent as Pencil } from "./pencil.svg";
@@ -60,6 +59,11 @@ import { ReactComponent as Calendar } from "./calendar.svg";
 import { ReactComponent as WiFi } from "./wifi.svg";
 import { ReactComponent as Person } from "./person.svg";
 import { ReactComponent as NiceBackgroundBuilding } from "./nice-bg-icon.svg";
+import { ReactComponent as CloudInTrouble } from "./cloud_in_trouble.svg";
+import { ReactComponent as FAQ } from "./faq.svg";
+import { ReactComponent as Chat } from "./chat.svg";
+import { ReactComponent as History } from "./history.svg";
+import { ReactComponent as Requests } from "./requests.svg";
 
 export const Icons = {
   Logo,
@@ -124,4 +128,8 @@ export const Icons = {
   WiFi,
   Person,
   NiceBackgroundBuilding,
+  CloudInTrouble,
+  FAQ,
+  History,
+  Requests,
 };

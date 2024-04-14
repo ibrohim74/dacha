@@ -4,8 +4,9 @@ import { jwtDecode } from "jwt-decode";
 import { $authHost } from "../../processes/http/http";
 import { Upload, message, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLoading, setUserField } from "../../page/auth/authSlice";
+import { setIsLoading, setUserField } from "../../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
+import { Add, Edit } from "@mui/icons-material";
 
 const MAX_FILE_SIZE_IN_MB = 3;
 
@@ -120,9 +121,9 @@ export default function ProfileImage({ image_path }) {
           </>
         )}
       </Upload>
-      <label htmlFor="avatar">
-        {image_path ? t("profile_change_pic") : t("profile_add_pic")}
-      </label>
+      <div className={styles["profile-add-image"]}>
+        {image_path ? <Edit /> : <Add />}
+      </div>
     </div>
   );
 }

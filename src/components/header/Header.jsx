@@ -19,14 +19,18 @@ import { useTranslation } from "react-i18next";
 import Logo from "../logo/Logo";
 import SearchInput from "../searchInput/SearchInput";
 import { Badge } from "antd";
-import { useSelector } from "react-redux";
-import { getUser } from "../../page/profile/API";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, logout } from "../../store/profile/profileActions";
+import { setSignedIn, setToken } from "../../store/auth/authSlice";
+import Modal from "../modal/Modal";
+import Notifications from "../notifications/Notifications";
 
 const Header = (props, { elementsRef }) => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
   const [userRequest, setUserRequest] = useState([]);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const {
     id,
@@ -48,14 +52,13 @@ const Header = (props, { elementsRef }) => {
   const closeSidebar = () => setShowSidebar(false);
 
   useEffect(() => {
-    getUser();
-  }, []);
-
-  const removeToken = () => {
-    localStorage.removeItem("token");
-    setShowSidebar(false);
-    window.location.assign(HOME_ROUTE);
-  };
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      dispatch(setToken(token));
+      getUser();
+    }
+  }, [dispatch]);
 
   const handleClickOutside = (event) => {
     if (
@@ -105,7 +108,7 @@ const Header = (props, { elementsRef }) => {
   }, [role]);
 
   return (
-    <>
+    <Modal>
       <div
         className={`${styles["header"]} ${styles["container-md"]}`}
         style={props.props_style && props.props_style.headerSeller}
@@ -121,38 +124,36 @@ const Header = (props, { elementsRef }) => {
           {isAuth ? (
             <>
               {role === "seller" && (
-                <Link
-                  to={CABINET + REQUEST_ANNOUNCEMENT}
-                  style={{ width: "25px", height: "25px" }}
-                >
-                  <Badge
-                    count={userRequest.length}
-                    showZero
-                    style={{ width: "100%", height: "100%" }}
-                  >
-                    <Icons.Bell
-                      className={styles["notification-btn"]}
+                <Modal.Open opens="notifications">
+                  <Link style={{ width: "25px", height: "25px" }}>
+                    <Badge
+                      count={userRequest.length}
+                      showZero
                       style={{ width: "100%", height: "100%" }}
-                    />
-                  </Badge>
-                </Link>
+                    >
+                      <Icons.Bell
+                        className={styles["notification-btn"]}
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </Badge>
+                  </Link>
+                </Modal.Open>
               )}
               {role === "user" && (
-                <Link
-                  to={CABINET + REQUEST_USER}
-                  style={{ width: "25px", height: "25px" }}
-                >
-                  <Badge
-                    count={userRequest.length}
-                    showZero
-                    style={{ width: "100%", height: "100%" }}
-                  >
-                    <Icons.Bell
-                      className={styles["notification-btn"]}
+                <Modal.Open opens="notifications">
+                  <Link style={{ width: "25px", height: "25px" }}>
+                    <Badge
+                      count={userRequest.length}
+                      showZero
                       style={{ width: "100%", height: "100%" }}
-                    />
-                  </Badge>
-                </Link>
+                    >
+                      <Icons.Bell
+                        className={styles["notification-btn"]}
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </Badge>
+                  </Link>
+                </Modal.Open>
               )}
               <div
                 className={styles["header-profile"]}
@@ -161,7 +162,7 @@ const Header = (props, { elementsRef }) => {
                 <img
                   src={
                     image_path
-                      ? `https://ip-45-137-148-81-100178.vps.hosted-by-mvps.net/api${image_path}`
+                      ? `https://visitca.travel/api/${image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"
@@ -171,7 +172,7 @@ const Header = (props, { elementsRef }) => {
               </div>
               {showSidebar && (
                 <Sidebar
-                  onLogout={removeToken}
+                  onLogout={() => logout()}
                   close={() => setShowSidebar(false)}
                 />
               )}
@@ -183,7 +184,11 @@ const Header = (props, { elementsRef }) => {
           )}
         </div>
       </div>
-    </>
+
+      <Modal.Window title={t("notifications_title")} name="notifications">
+        <Notifications />
+      </Modal.Window>
+    </Modal>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Icons } from "../../../assets/icons/icons";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ANNOUNCEMENT,
@@ -9,13 +8,13 @@ import {
   PROFILE,
 } from "../../../processes/utils/consts";
 import { message, Select } from "antd";
-import { checkEmailAPI } from "../API";
+import { checkEmailAPI } from "../../../store/auth/authActions";
 import AuthTemplate from "../AuthTemplate/AuthTemplate";
 import Tabs from "../../../components/tabs/Tabs";
 import styles from "./Registration.module.css";
 import Button from "../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserField } from "../authSlice";
+import { setUserField } from "../../../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
 
 const Registration = () => {

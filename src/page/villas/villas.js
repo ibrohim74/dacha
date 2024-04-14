@@ -9,12 +9,12 @@ import {
   FilterItems,
   GetItems,
 } from "../../processes/utils/items-operations";
-import CottageCard from "../../components/cottages/CottageCard";
 import Form from "../../components/form/Form";
 import Filter from "../../components/filter/Filter";
 import Button from "../../components/Button/Button";
 import AppLayout from "../../components/appLayout/AppLayout";
-import {GetAllDacha} from "../home/API/homeAPI";
+import { getAllDacha } from "../home/API/homeAPI";
+import AccomodationCard from "../../components/cottages/AccomodationCard";
 
 const Villas = () => {
   const elementsRef = useRef(null);
@@ -59,18 +59,16 @@ const Villas = () => {
   //test operations on test-items.json
   const allItemIds = data.items.map((item) => item.id);
 
-
   useEffect(() => {
-    GetAllDacha(page)
-        .then(r => {
-          setProducts(r.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    getAllDacha(page)
+      .then((r) => {
+        console.log(r);
+        setProducts(r.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [page]);
-
-
 
   return (
     <AppLayout elementsRef={elementsRef}>
@@ -81,10 +79,15 @@ const Villas = () => {
       <div className={styles["catalogue-layout"]}>
         <Filter />
         <div className={styles["catalogue-items"]}>
-          {products.map((cottage) => (
-            <CottageCard cottage={cottage} key={cottage.id} />
+          {products.map((accommodation) => (
+            <AccomodationCard
+              accommodation={accommodation}
+              key={accommodation.id}
+            />
           ))}
-          <Button type="full-width-white" onClick={() => setPage(page + 1)}>Смотреть больше</Button>
+          <Button type="full-width-white" onClick={() => setPage(page + 1)}>
+            Смотреть больше
+          </Button>
         </div>
       </div>
     </AppLayout>

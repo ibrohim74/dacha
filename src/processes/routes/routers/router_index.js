@@ -7,6 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { Admin, Layout, Public } from "../../utils/Routes";
+import { NOT_FOUND } from "../../utils/consts";
 
 const RouterIndex = () => {
   const token = localStorage.getItem("token");
@@ -21,7 +22,7 @@ const RouterIndex = () => {
             <Route key={path} path={`${path}/*`} element={Component} />
           ))
         ) : (
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={NOT_FOUND} />} />
         )}
       </Routes>
     </BrowserRouter>
