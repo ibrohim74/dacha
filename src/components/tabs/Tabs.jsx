@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Tabs.module.css";
 
-export default function Tabs({ firstTab, secondTab, content }) {
-  const [activeTab, setActiveTab] = useState(firstTab);
+export default function Tabs({ firstTab, secondTab, content, currentTab }) {
+  const [activeTab, setActiveTab] = useState(
+    currentTab ? currentTab : firstTab
+  );
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);

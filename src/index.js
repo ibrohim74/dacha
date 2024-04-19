@@ -6,13 +6,16 @@ import "./lang/i18n";
 import { LanguageProvider } from "./context/LangContext";
 import store from "../src/store/store";
 import { Provider } from "react-redux";
+import FilterProvider from "./context/CatalogueFilterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <LanguageProvider>
-        <App />
+        <FilterProvider>
+          <App />
+        </FilterProvider>
       </LanguageProvider>
     </Provider>
   </React.StrictMode>

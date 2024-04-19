@@ -1,17 +1,21 @@
-import { useState } from "react";
 import StarRating from "../starRating/StarRating";
 import styles from "./AccomodationCard.module.css";
 import { useNavigate } from "react-router-dom";
-import { PRODUCT_ROUTE } from "../../processes/utils/consts";
+import {
+  GOOGLE_STORAGE_URL,
+  PRODUCT_ROUTE,
+} from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavourite } from "../../store/favs/favActions";
+import { useTranslation } from "react-i18next";
 
 export default function AccomodationCard({ accommodation }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-  // console.log(accommodation);
+  console.log(accommodation);
 
   const {
     id,
@@ -23,7 +27,7 @@ export default function AccomodationCard({ accommodation }) {
     title,
     price_type,
     location_name,
-    accommodation_type,
+    type,
   } = accommodation;
 
   const handleAddFavourites = (id, type) => {
@@ -50,7 +54,7 @@ export default function AccomodationCard({ accommodation }) {
         <img
           src={
             photos_path.length
-              ? photos_path
+              ? `${GOOGLE_STORAGE_URL}${photos_path}`
               : require("../../assets/cottage_placeholder.png")
           }
           alt="accomodation image placeholder"
@@ -77,7 +81,16 @@ export default function AccomodationCard({ accommodation }) {
             <div className={styles["accomodation-rate"]}>
               {rating.toFixed(1)}
             </div>
-            <p>{reviews_number} отзывов</p>
+            <p>
+              {reviews_number} {t("reviews")}
+            </p>
+          </div>
+        </div>
+
+        <div className={styles["accommodation-tags"]}>
+          <div className={styles["accommodation-tag"]}>{t("tag_parking")}</div>
+          <div className={styles["accommodation-tag"]}>
+            {t("tag_breakfast")}
           </div>
         </div>
 
@@ -89,7 +102,7 @@ export default function AccomodationCard({ accommodation }) {
 
           <div
             className={styles["add-fav"]}
-            onClick={() => handleAddFavourites(id, accommodation_type)}
+            onClick={() => handleAddFavourites(id, type)}
           >
             <Icons.StarEmpty />
           </div>

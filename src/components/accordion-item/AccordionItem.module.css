@@ -12,7 +12,7 @@
   gap: 10px;
 
   color: var(--font-black);
-  font-weight: 500;
+  font-weight: 700;
   font-size: 16px;
 
   background-color: var(--brand-color-2);
@@ -28,7 +28,7 @@
 }
 
 .accordion-open-btn {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
@@ -49,4 +49,32 @@
   -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05); */
   transition: all 0.5s ease;
+}
+
+.accordion-arrow-up,
+.accordion-arrow-down {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion-arrow-up {
+  background-color: var(--font-color-1);
+}
+
+.accordion-arrow-up svg {
+  display: block;
+  fill: var(--brand-color-2);
+}
+
+.accordion-arrow-down {
+  background-color: var(--bg-color);
+}
+
+.accordion-arrow-down svg {
+  display: block;
+  fill: var(--font-color-1);
 }

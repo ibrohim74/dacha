@@ -21,7 +21,15 @@ export default function AccordionItem({ title, content }) {
         onClick={handleOpen}
       >
         {title}
-        {isOpen ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
+        {isOpen ? (
+          <div className={styles["accordion-arrow-up"]}>
+            <KeyboardArrowUpOutlined />
+          </div>
+        ) : (
+          <div className={styles["accordion-arrow-down"]}>
+            <KeyboardArrowDownOutlined />
+          </div>
+        )}
       </button>
 
       {isOpen && <div className={styles["accordion-content"]}>{content}</div>}

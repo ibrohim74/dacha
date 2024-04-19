@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Catalogue from "../../components/catalogue/Catalogue";
-import axios from "axios";
+import { useGetAllDachasQuery } from "../../servises/cottagesAPI";
 
 export default function CottagesCatalogue() {
-  const [cottages, setCottages] = useState([]);
+  const { data: cottages, error, isLoading } = useGetAllDachasQuery();
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    const fetchCottages = async () => {
-      try {
-        const url = "https://visitca.travel/api/dachas";
-        const response = await axios.get(url);
-        setCottages(response.data);
-        // console.log(cottages)
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      }
-    };
-
-    fetchCottages();
-  }, []);
-
-  return <Catalogue products={cottages} />;
+  return (
+    <Catalogue
+      products={cottages}
+      isLoading={isLoading}
+      currentTab={t("cottages_title")}
+    />
+  );
 }

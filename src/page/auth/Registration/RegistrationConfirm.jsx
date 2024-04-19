@@ -8,12 +8,15 @@ import { checkCodeAPI } from "../../../store/auth/authActions";
 import { message } from "antd";
 import { useNavigate } from "react-router";
 import { REGISTRATION_SETUP } from "../../../processes/utils/consts";
+import { useTranslation } from "react-i18next";
 
 export default function RegistrationConfirm() {
   //enter code and hit step2 function
   const [confirmationCode, setConfirmationCode] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const { email } = useSelector((state) => state.auth.user);
   // console.log(email);
@@ -42,23 +45,25 @@ export default function RegistrationConfirm() {
   return (
     <AuthTemplate>
       <div className={styles["registration-wrapper"]}>
-        <h4>Регистрация</h4>
-        <p>На почту {email} было выслано Сообщение с кодом</p>
+        <h4>{t("auth_registration_title")}</h4>
+        <p>
+          {t("auth_email_sent")} {email} {t("auth_code_sent")}
+        </p>
 
         <div className={styles["input-row"]}>
-          <label htmlFor="code">Подтверждающий код</label>
+          <label htmlFor="code">{t("auth_confirmation_code")}</label>
           <input
             type="text"
             id="code"
             onChange={(e) => {
               setConfirmationCode(e.target.value);
             }}
-            placeholder="Введите код"
+            placeholder={t("auth_confirmation_code_placeholder")}
           />
         </div>
         <div className={styles["registration-btn"]}>
           <Button type="full-width-primary" onClick={handleCheckVerification}>
-            Create
+            {t("create")}
           </Button>
         </div>
       </div>

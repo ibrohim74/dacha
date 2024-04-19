@@ -1,19 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  addFavourite,
-  getFavourite,
-  removeFavourite,
-} from "../favs/favActions";
 
 const initialState = {
   isLoading: false,
   error: null,
   isAuthenticated: false,
-  // verification: {
-  //   isVerifyingCode: false,
-  //   verificationError: null,
-  //   verificationType: "",
-  // },
+
   user: {
     id: null,
     firstName: "",
@@ -26,7 +17,6 @@ const initialState = {
     image_path: "",
     password: "",
     join_date: "",
-    favourites: [],
   },
   token: "",
 };
@@ -106,52 +96,8 @@ const authSlice = createSlice({
     setAuthenticated(state, action) {
       state.isAuthenticated = action.payload;
     },
-    setUserFav(state, action) {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          favourites: action.payload,
-        },
-      };
-    },
   },
-  extraReducers: (builder) => {
-    builder.addCase(addFavourite.fulfilled, (state, action) => {
-      // console.log(action.payload);
-      const { accommodation_id, accommodation_type } = action.payload;
-      const newFavourite = { accommodation_id, accommodation_type };
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          favourites: [...state.user.favourites, newFavourite],
-        },
-      };
-    });
-    // builder.addCase(getFavourite.fulfilled, (state, action) => {
-    //   return {
-    //     ...state,
-    //     user: {
-    //       ...state.user,
-    //       favourites: action.payload,
-    //     },
-    //   };
-    // });
-    builder.addCase(removeFavourite.fulfilled, (state, action) => {
-      const itemId = action.payload;
-      console.log(itemId);
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          favourites: state.user.favourites.filter(
-            (item) => item.id !== itemId
-          ),
-        },
-      };
-    });
-  },
+  extraReducers: (builder) => {},
 });
 
 export const {
@@ -163,7 +109,6 @@ export const {
   setIsLoading,
   setToken,
   setNewUser,
-  setUserFav,
 } = authSlice.actions;
 
 export default authSlice.reducer;

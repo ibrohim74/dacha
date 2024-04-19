@@ -1,3 +1,6 @@
+export const BASE_URL = "https://visitca.travel/api/";
+export const GOOGLE_STORAGE_URL = "https://storage.googleapis.com";
+
 //Public routes
 export const HOME_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -15,6 +18,8 @@ export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
 export const BOOKING_ROUTE = "/bookings";
 export const FAQ_ROUTE = "/faq";
 export const REQUESTS_ROUTE = "/requests";
+//add id of the city
+export const ABOUT_CITY = "/about_city";
 
 // Dashboard
 export const CABINET = "/cabinet/";
@@ -43,7 +48,7 @@ export const REQUEST_ANNOUNCEMENT = "announcement_request";
 
 //other
 export const NOT_FOUND = "not_found";
-export const TECH_WORKS = "tech_works";
+export const TECH_WORKS = "/tech_works";
 
 export const LANGUAGES = [
   { label: "English", code: "en" },

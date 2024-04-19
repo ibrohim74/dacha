@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Filter.module.css";
 import { Icons } from "../../assets/icons/icons";
 import { LocationOnOutlined } from "@mui/icons-material";
@@ -8,17 +8,45 @@ import { useTranslation } from "react-i18next";
 import Tabs from "../tabs/Tabs";
 import AccordionItem from "../accordion-item/AccordionItem";
 import FilterServices from "../filter-services/FilterServices";
+import { FilterContext } from "../../context/CatalogueFilterContext";
 
-export default function Filter() {
+export default function Filter({ priceRange, currentTab }) {
   const { t } = useTranslation();
-  const [rangeValues, setRangeValues] = useState([25000, 500000]);
+
+  const [rangeValues, setRangeValues] = useState(priceRange);
+  const { filterParams, updateFilter, resetAllFilters } =
+    useContext(FilterContext);
+
+  const [selectedTags, setSelectedTags] = useState(filterParams.tags || []);
+
+  // console.log(priceRange);
+
+  const handleLocationChange = (event) => {
+    updateFilter({ locationName: event.target.value });
+  };
+  const handleRatingChange = (value) => {
+    updateFilter({ minRating: value });
+  };
+
+  const handleTest = () => {
+    console.log("test click");
+  };
+
+  const handleTagChange = (tag) => {
+    const newSelectedTags = selectedTags.includes(tag)
+      ? selectedTags.filter((selectedTag) => selectedTag !== tag)
+      : [...selectedTags, tag];
+    setSelectedTags(newSelectedTags);
+    updateFilter({ tags: newSelectedTags });
+  };
 
   const handleRangeChange = (values) => {
     setRangeValues(values);
+    updateFilter({ minPrice: values[0], maxPrice: values[1] });
   };
 
   const numberFormatter = (value) => {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (
@@ -29,6 +57,7 @@ export default function Filter() {
             type="text"
             className={styles["filter-location-input"]}
             placeholder={t("filter_search_placeholder")}
+            onChange={handleLocationChange}
           />
           <div className={styles["filter-location-output"]}>
             <LocationOnOutlined />
@@ -39,42 +68,44 @@ export default function Filter() {
         <Tabs
           firstTab={t("hotels_title")}
           secondTab={t("cottages_title")}
+          currentTab={currentTab}
           content={{
             firstTab: (
               <>
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="priceRange">{t("filter_price")}</label>
+
                   <div className={styles["filter-range"]}>
-                    <FilterBox>{numberFormatter(rangeValues[0])}</FilterBox>
+                    <FilterBox>{rangeValues[0]}</FilterBox>
                     <Slider
                       range
-                      min={25000}
-                      max={500000}
+                      min={rangeValues[0]}
+                      max={rangeValues[1]}
                       defaultValue={rangeValues}
                       className={styles["filter-range-slider"]}
                       onChange={handleRangeChange}
                       tooltip={{ formatter: null }}
                     />
-                    <FilterBox>{numberFormatter(rangeValues[1])}</FilterBox>
+                    <FilterBox>{rangeValues[1]}</FilterBox>
                   </div>
                 </div>
 
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="">{t("filter_rating")}</label>
                   <div className={styles["boxes-wrapper"]}>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(1)}>
                       <Icons.Star /> <span>1</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(2)}>
                       <Icons.Star /> <span>2</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(3)}>
                       <Icons.Star /> <span>3</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(4)}>
                       <Icons.Star /> <span>4</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(5)}>
                       <Icons.Star /> <span>5</span>
                     </FilterBox>
                   </div>
@@ -103,36 +134,36 @@ export default function Filter() {
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="priceRange">{t("filter_price")}</label>
                   <div className={styles["filter-range"]}>
-                    <FilterBox>{numberFormatter(rangeValues[0])}</FilterBox>
+                    <FilterBox>{rangeValues[0]}</FilterBox>
                     <Slider
                       range
-                      min={25000}
-                      max={500000}
+                      min={rangeValues[0]}
+                      max={rangeValues[1]}
                       defaultValue={rangeValues}
                       className={styles["filter-range-slider"]}
                       onChange={handleRangeChange}
                       tooltip={{ formatter: null }}
                     />
-                    <FilterBox>{numberFormatter(rangeValues[1])}</FilterBox>
+                    <FilterBox>{rangeValues[1]}</FilterBox>
                   </div>
                 </div>
 
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="">{t("filter_rating")}</label>
                   <div className={styles["boxes-wrapper"]}>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(1)}>
                       <Icons.Star /> <span>1</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(2)}>
                       <Icons.Star /> <span>2</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(3)}>
                       <Icons.Star /> <span>3</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(4)}>
                       <Icons.Star /> <span>4</span>
                     </FilterBox>
-                    <FilterBox>
+                    <FilterBox onClick={() => handleRatingChange(5)}>
                       <Icons.Star /> <span>5</span>
                     </FilterBox>
                   </div>
@@ -159,11 +190,17 @@ export default function Filter() {
           }}
         />
       </div>
-      <Button type="full-width-gray">{t("filter_clear_btn")}</Button>
+      <Button type="full-width-gray" onClick={resetAllFilters}>
+        {t("filter_clear_btn")}
+      </Button>
     </div>
   );
 }
 
-function FilterBox({ children }) {
-  return <div className={styles["filter-box"]}>{children}</div>;
+function FilterBox({ children, onClick }) {
+  return (
+    <div className={styles["filter-box"]} onClick={onClick}>
+      {children}
+    </div>
+  );
 }

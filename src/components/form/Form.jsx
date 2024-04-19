@@ -7,9 +7,17 @@ import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
 
 export default function Form({ type = "globalSearch" }) {
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
   const { t } = useTranslation();
+
+  const [location, setLocation] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [numGuests, setNumGuests] = useState(1);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch({ location, startDate, endDate, numGuests });
+  };
 
   return (
     <form className={`${styles["form"]} ${styles[type]}`}>
@@ -22,6 +30,8 @@ export default function Form({ type = "globalSearch" }) {
               id="destination"
               placeholder={t("form_location_placeholder")}
               className={`${styles["form-input"]} ${styles["form-input-location"]}`}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
               required
             />
           </div>
@@ -63,10 +73,14 @@ export default function Form({ type = "globalSearch" }) {
               required
               min={1}
               placeholder={t("form_guests_placeholder")}
+              value={numGuests}
+              onChange={(e) => setNumGuests(parseInt(e.target.value))}
             />
           </div>
 
-          <Button type="primary">{t("form_button")}</Button>
+          <Button type="primary" onClick={handleSubmit}>
+            {t("form_button")}
+          </Button>
         </>
       )}
 

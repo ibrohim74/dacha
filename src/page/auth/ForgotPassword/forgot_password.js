@@ -10,20 +10,24 @@ import {
   restoreUser,
 } from "../../../store/auth/authActions";
 import { setUserField } from "../../../store/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE } from "../../../processes/utils/consts";
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { email } = useSelector((state) => state.auth.user);
+
+  const [newPassword, setNewPassword] = useState({});
 
   const [selectedVerificationType, setSelectedVerificationType] = useState("");
+
   const [passwordConfirm, setPasswordConfirm] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState("");
-  const [newPassword, setNewPassword] = useState({});
-  // const verificationType = useSelector((state) => state.auth.verificationType);
-  const { email } = useSelector((state) => state.auth.user);
-  console.log(email);
+  const [codeIsChecked, setCodeIsChecked] = useState(false);
 
-  console.log(localStorage.getItem("token"));
+  const [token, setToken] = useState("");
 
   const handleRestoreUser = () => {
     console.log(selectedVerificationType);
@@ -33,14 +37,26 @@ const ForgotPassword = () => {
     setPasswordConfirm(true);
   };
 
-  const handleChangePassword = async () => {
-    console.log("here");
+  const handleCheckCode = async () => {
+    const response = await checkCodeAPI(confirmationCode, email, "restore");
+    if (response.status === 200) {
+      setToken(response?.data.access_token);
+      setCodeIsChecked(true);
+    } else {
+      console.error("Error checking code:", response);
+    }
+  };
 
-    checkCodeAPI(confirmationCode, email, "restore");
-    changePassword(
+  const handleChangePassword = async () => {
+    const response = await changePassword(
       newPassword.new_password,
-      newPassword.new_confirmed_password
+      newPassword.new_confirmed_password,
+      token
     );
+
+    if (response.status === 200) {
+      navigate(LOGIN_ROUTE);
+    }
   };
 
   return (
@@ -85,41 +101,51 @@ const ForgotPassword = () => {
                 />
               </div>
 
-              <div className={styles["input-row"]}>
-                <label htmlFor="new-password">{t("auth_new_password")}</label>
-                <input
-                  type="password"
-                  id="new-password"
-                  placeholder={t("auth_new_password_placeholder")}
-                  required
-                  onChange={(e) =>
-                    setNewPassword({
-                      ...newPassword,
-                      new_password: e.target.value,
-                    })
-                  }
-                />
-              </div>
+              {codeIsChecked && (
+                <>
+                  <div className={styles["input-row"]}>
+                    <label htmlFor="new-password">
+                      {t("auth_new_password")}
+                    </label>
+                    <input
+                      type="password"
+                      id="new-password"
+                      placeholder={t("auth_new_password_placeholder")}
+                      required
+                      onChange={(e) =>
+                        setNewPassword({
+                          ...newPassword,
+                          new_password: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-              <div className={styles["input-row"]}>
-                <label htmlFor="confirm-password">
-                  {t("auth_new_password_confirm")}
-                </label>
-                <input
-                  type="password"
-                  id="confirm-password"
-                  placeholder={t("auth_new_password_confirm_placeholder")}
-                  required
-                  onChange={(e) =>
-                    setNewPassword({
-                      ...newPassword,
-                      new_confirmed_password: e.target.value,
-                    })
-                  }
-                />
-              </div>
+                  <div className={styles["input-row"]}>
+                    <label htmlFor="confirm-password">
+                      {t("auth_new_password_confirm")}
+                    </label>
+                    <input
+                      type="password"
+                      id="confirm-password"
+                      placeholder={t("auth_new_password_confirm_placeholder")}
+                      required
+                      onChange={(e) =>
+                        setNewPassword({
+                          ...newPassword,
+                          new_confirmed_password: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              )}
             </div>
-            <Button type="full-width-primary" onClick={handleChangePassword}>
+
+            <Button
+              type="full-width-primary"
+              onClick={codeIsChecked ? handleChangePassword : handleCheckCode}
+            >
               {t("confirm")}
             </Button>
           </>

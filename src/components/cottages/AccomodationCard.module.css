@@ -129,6 +129,25 @@
   fill: rgb(244, 220, 9);
 }
 
+.accommodation-tags {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.accommodation-tag {
+  background-color: var(--bg-color);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  width: fit-content;
+}
+
 @media only screen and (min-width: 360px) and (max-width: 560px) {
   .accomodation-wrapper {
     flex-direction: column;

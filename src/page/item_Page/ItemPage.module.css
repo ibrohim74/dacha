@@ -103,8 +103,10 @@
 
 .item-main-similar {
   width: 100%;
-  /* height: 10rem; */
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .item-main-similar-wrapper {

@@ -2,6 +2,7 @@ import { $authHost, $host } from "../../processes/http/http";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { BASE_URL } from "../../processes/utils/consts";
 
 let isWaiting = false;
 
@@ -52,27 +53,28 @@ export const checkCodeAPI = async (code, email, type) => {
 
 // export const changeOldPassword
 
-export const changePassword = async (newPassword, newConfirmedPassword) => {
+export const changePassword = async (
+  newPassword,
+  newConfirmedPassword,
+  token
+) => {
   if (newPassword == newConfirmedPassword) {
     if (newPassword.length >= 8 && newConfirmedPassword.length >= 8) {
       try {
-        // console.log(initialState);
-        const res = await $authHost.post(
-          `change_password`,
+        const res = await axios.post(
+          `${BASE_URL}change_password`,
           {
             password: newPassword,
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         if (res.status === 200) {
-          message.success(t("password_changed_msg"));
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 1500);
+          message.success("password_changed_msg");
+          return res;
         }
       } catch (e) {
         console.log(e);

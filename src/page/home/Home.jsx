@@ -23,9 +23,8 @@ const Home = () => {
   const [buttonAllHotel, setButtonAllHotel] = useState(1);
   const { t } = useTranslation();
   const elementsRef = useRef(null);
-  const { userLocation } = useUserLocation();
 
-  const isEmptyLocation = Object.keys(userLocation).length === 0;
+  const { userLocation, emptyLocation } = useUserLocation();
 
   useEffect(() => {
     getAllDacha(buttonAllDach).then((r) => {
@@ -59,7 +58,7 @@ const Home = () => {
           title={t("hotels_title")}
         />
       </AppLayout>
-      {isEmptyLocation && <LocationRequest />}
+      {emptyLocation && <LocationRequest />}
     </>
   );
 };

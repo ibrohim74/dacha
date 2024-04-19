@@ -9,6 +9,7 @@ import {
   getUser,
   logout,
   sendProfile_data,
+  updateUser,
 } from "../../store/profile/profileActions";
 import { Icons } from "../../assets/icons/icons";
 import EditInput from "../../components/edit-input/edit-input";
@@ -30,8 +31,8 @@ const Profile = () => {
   const JWT = localStorage.getItem("token")
     ? jwtDecode(localStorage.getItem("token"))
     : null;
+
   const [notifications, contextHolder] = notification.useNotification();
-  const [loadingImg, setLoadingImg] = useState(false);
   const [initialState, setInitialState] = useState({});
 
   useEffect(() => {
@@ -48,8 +49,14 @@ const Profile = () => {
     setUpdatedProfileFields({ field: fieldname, value: e.target.value });
   };
 
-  const { username, firstName, lastName, email, phone_number, image_path } =
-    useSelector((state) => state.auth.user);
+  const { firstName, lastName, email, phone_number, image_path } = useSelector(
+    (state) => state.auth.user
+  );
+
+  const user = useSelector((state) => state.auth.user);
+
+  const updatedUser = { ...user, updatedProfileFields };
+  // console.log(updatedUser);
 
   const [authOption, setAuthOption] = useState("phone");
   const { t } = useTranslation();
@@ -61,14 +68,10 @@ const Profile = () => {
   };
 
   const handleSend = () => {
-    sendProfile_data(initialValues)
+    updateUser(updatedUser)
       .then((r) => {
         if (r?.status === 200) {
           message.success("Update");
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 1500);
         }
       })
       .catch((e) => {
@@ -83,8 +86,6 @@ const Profile = () => {
       JWT.userId
     );
   };
-
-  // console.log(CurrentUser);
 
   return (
     <AppLayout>
@@ -225,6 +226,11 @@ const Profile = () => {
             },
             {
               label: t("profile_second_tab"),
+              content: (
+                <Box className={styles["profile-tab"]}>
+                  <PaymentMethods />
+                </Box>
+              ),
             },
           ]}
         />
@@ -236,8 +242,6 @@ const Profile = () => {
           <DeleteAccount />
         </Modal.Window>
       </Modal>
-
-      <PaymentMethods />
     </AppLayout>
   );
 };

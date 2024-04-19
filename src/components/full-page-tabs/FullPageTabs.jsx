@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styles from "./FullPageTabs.module.css";
 import { Icons } from "../../assets/icons/icons";
 
-export default function FullPageTabs({ tabs }) {
-  const [activeTab, setActiveTab] = useState(tabs[0].label);
+export default function FullPageTabs({ tabs, currentTab }) {
+  const [activeTab, setActiveTab] = useState(
+    currentTab ? tabs[0].currentTab : tabs[0].label
+  );
 
   const handleTabClick = (tabLabel) => {
     setActiveTab(tabLabel);

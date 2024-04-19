@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../assets/icons/icons";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { GOOGLE_STORAGE_URL } from "../../processes/utils/consts";
 
 export default function CataloguePreview({ items, route, title }) {
   const slicedItems = items.slice(0, 6);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  // console.log(items);
 
   return (
     <div className={styles["cards-preview"]}>
@@ -46,7 +48,7 @@ export default function CataloguePreview({ items, route, title }) {
       ) : (
         <div className={styles["card-preview-empty"]}>
           <Icons.EmptyPagePlaceholder />
-          <p>Nothing is found</p>
+          <p>{t("favs_placeholder")}</p>
         </div>
       )}
     </div>
@@ -54,7 +56,6 @@ export default function CataloguePreview({ items, route, title }) {
 }
 
 function CataloguePreviewCard({ title, location, price, image, rating }) {
-  const [userRating, setUserRating] = useState("");
   const MAX_LOCATION_LENGTH = 40;
 
   const handleClick = () => {};
@@ -67,7 +68,11 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
   return (
     <div className={styles["card"]}>
       <img
-        src={image ? image : require("../../assets/cottage_placeholder.png")}
+        src={
+          image
+            ? `${GOOGLE_STORAGE_URL}${image}`
+            : require("../../assets/cottage_placeholder.png")
+        }
         alt="placeholder"
         className={styles["card-image"]}
       />
@@ -81,7 +86,7 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
           <p className={styles["card-info-price"]}>{price}</p>
         </div>
 
-        <StarRating onSetRating={setUserRating} />
+        <StarRating staticRating={true} rating={rating} />
       </div>
     </div>
   );

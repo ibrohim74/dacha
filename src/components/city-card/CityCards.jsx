@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CityCard.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -42,13 +42,14 @@ const citiesData = [
 
 export default function CityCards() {
   const { t } = useTranslation();
-  const { userLocation } = useUserLocation();
+  const { userLocation, emptyLocation } = useUserLocation();
 
-  const isEmptyLocation = Object.keys(userLocation).length === 0;
+  console.log(userLocation);
+  console.log(emptyLocation);
 
   return (
     <>
-      {isEmptyLocation && (
+      {emptyLocation && (
         <div className={styles["cities-wrapper"]}>
           <Swiper
             slidesPerGroup={2.8}
@@ -62,14 +63,14 @@ export default function CityCards() {
             spaceBetween={18}
           >
             {citiesData.map((city) => (
-              <SwiperSlide>
-                <PreviewCityCard city={city} key={city.name} />
+              <SwiperSlide key={city.name + Math.random()}>
+                <PreviewCityCard city={city} />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       )}
-      {!isEmptyLocation && (
+      {!emptyLocation && (
         <CityCard
           title={t("city_card_city_bukhara")}
           descr={t("city_card_descr_bukhara")}

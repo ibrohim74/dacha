@@ -8,18 +8,19 @@ import StarRating from "../starRating/StarRating";
 import Button from "../Button/Button";
 import { Icons } from "../../assets/icons/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getFav,
-  getFavourite,
-  removeFavourite,
-} from "../../store/favs/favActions";
 import { getAllDacha } from "../../page/home/API/homeAPI";
-import { setUserFav } from "../../store/auth/authSlice";
+import {
+  useDeleteFeaturedMutation,
+  useGetUserFeaturedQuery,
+} from "../../servises/featuredAPI";
 
 export default function Favorites() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { id, favourites } = useSelector((state) => state.auth.user);
+  const { id } = useSelector((state) => state.auth.user);
+
+  const { data: favourites, error, isLoading } = useGetUserFeaturedQuery(id);
+  // console.log(favourites);
 
   //temporary solution
   const [cottages, setCottages] = useState([]);
@@ -35,36 +36,40 @@ export default function Favorites() {
       });
   }, [id]);
 
-  const mappedFavourites = favourites.reduce((acc, current) => {
+  const mappedFavourites = favourites?.reduce((acc, current) => {
     const type = current.accommodation_type;
     acc[type] = acc[type] || [];
     acc[type].push(current);
     return acc;
   }, {});
 
-  // console.log(mappedFavourites);
+  console.log(mappedFavourites);
 
   function findCottageByFavItem(cottages, favourites) {
-    return useMemo(() => {
-      const matchedCottages = [];
-      const favItemIds = [];
+    // return useMemo(() => {
+    const matchedCottages = [];
+    const favItemIds = [];
 
-      for (const item of favourites) {
-        favItemIds.push(item.accommodation_id);
-      }
+    for (const item of favourites) {
+      favItemIds.push(item.accommodation_id);
+    }
 
-      for (const cottage of cottages) {
-        for (const favId of favItemIds) {
-          if (cottage.id === favId) {
-            matchedCottages.push(cottage);
-          }
+    for (const cottage of cottages) {
+      for (const favId of favItemIds) {
+        if (cottage.id === favId) {
+          matchedCottages.push(cottage);
         }
       }
-      return matchedCottages;
-    }, [cottages, favourites]);
+    }
+    return matchedCottages;
+    // }, [cottages, favourites]);
   }
 
-  const favCottages = findCottageByFavItem(cottages, favourites);
+  let favCottages = [];
+
+  if (favourites) {
+    favCottages = findCottageByFavItem(cottages, favourites);
+  }
 
   return (
     <AppLayout>
@@ -82,6 +87,7 @@ export default function Favorites() {
             label: t("cottages_title"),
             content: (
               <>
+                {isLoading && <p>Loading...</p>}
                 {!favCottages.length && (
                   <EmptyTab placeholderText={t("favs_placeholder")} />
                 )}
@@ -115,15 +121,15 @@ export default function Favorites() {
 const FavouriteItemCard = ({ favoriteItem }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const { id, title, info, location_name, rating, ratingStar, reviews_number } =
     favoriteItem;
 
-  // console.log(id);
+  const [mutate, isLoading, error] = useDeleteFeaturedMutation();
 
-  const handleDeleteFavourite = (favId) => {
-    console.log("deleting");
-    dispatch(removeFavourite(favId));
+  const handleDeleteFavourite = (featuredId) => {
+    console.log(isLoading);
+    mutate(featuredId);
+    console.log(error);
   };
 
   return (

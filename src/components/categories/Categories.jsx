@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./Categories.module.css";
-import { PLACE, VILLAS_ROUTE } from "../../processes/utils/consts";
+import {
+  COTTAGES_CATALOGUE_ROUTE,
+  PLACE,
+  VILLAS_ROUTE,
+} from "../../processes/utils/consts";
 import { useTranslation } from "react-i18next";
 import { Icons } from "../../assets/icons/icons";
 
@@ -12,7 +16,7 @@ export default function Categories() {
       <CategoryCard
         category={t("housing")}
         icon={<Icons.Housing />}
-        route={VILLAS_ROUTE}
+        route={COTTAGES_CATALOGUE_ROUTE}
       />
       <CategoryCard category={t("food")} icon={<Icons.Food />} route="" />
       <CategoryCard

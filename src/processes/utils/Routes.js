@@ -32,6 +32,7 @@ import {
   TECH_WORKS,
   FAQ_ROUTE,
   REQUESTS_ROUTE,
+  ABOUT_CITY,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/Login/login";
@@ -74,6 +75,7 @@ import NotFound from "../../components/not-found/NotFound";
 import TechWorks from "../../components/tech-works/TechWorks";
 import FAQ from "../../components/faq/FAQ";
 import Requests from "../../components/requests/Requests";
+import CityPage from "../../components/city-page/CityPage";
 
 export const Public = [
   {
@@ -151,6 +153,10 @@ export const Public = [
   {
     Component: <Requests />,
     path: REQUESTS_ROUTE,
+  },
+  {
+    Component: <CityPage />,
+    path: ABOUT_CITY,
   },
 ];
 

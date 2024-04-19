@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  CABINET,
-  HOME_ROUTE,
-  LOGIN_ROUTE,
-  REQUEST_ANNOUNCEMENT,
-  REQUEST_USER,
-} from "../../processes/utils/consts";
+import { LOGIN_ROUTE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { jwtDecode } from "jwt-decode";
 import { $authHost, $host } from "../../processes/http/http";
@@ -28,29 +22,28 @@ import Notifications from "../notifications/Notifications";
 const Header = (props, { elementsRef }) => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [userRequest, setUserRequest] = useState([]);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const {
-    id,
-    username,
-    firstName,
-    lastName,
-    email,
-    phone_number,
-    image_path,
-    role,
-  } = useSelector((state) => state.auth.user);
+  const { id, username, image_path, role } = useSelector(
+    (state) => state.auth.user
+  );
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
-  const accMenuRef = useRef();
-  const accButtonRef = useRef();
+  const handleShowSidebar = () => {
+    setShowSidebar(!showSidebar);
+    setShowNotifications(false);
+  };
 
-  const handleShowSidebar = () => setShowSidebar(!showSidebar);
-  const closeSidebar = () => setShowSidebar(false);
+  const handleShowNotifications = () => {
+    setShowNotifications(!showNotifications);
+    setShowSidebar(false);
+  };
 
+  //check this
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -59,23 +52,6 @@ const Header = (props, { elementsRef }) => {
       getUser();
     }
   }, [dispatch]);
-
-  const handleClickOutside = (event) => {
-    if (
-      accMenuRef.current &&
-      !accMenuRef.current.contains(event.target) &&
-      accButtonRef.current !== event.target
-    ) {
-      closeSidebar();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -123,37 +99,38 @@ const Header = (props, { elementsRef }) => {
 
           {isAuth ? (
             <>
-              {role === "seller" && (
-                <Modal.Open opens="notifications">
-                  <Link style={{ width: "25px", height: "25px" }}>
-                    <Badge
-                      count={userRequest.length}
-                      showZero
+              <Link
+                className={styles["header-notification"]}
+                onClick={handleShowNotifications}
+              >
+                {role === "seller" && (
+                  <Badge
+                    count={userRequest.length}
+                    showZero
+                    className={styles["header-notification-badge"]}
+                  >
+                    <Icons.Bell
+                      className={styles["notification-btn"]}
                       style={{ width: "100%", height: "100%" }}
-                    >
-                      <Icons.Bell
-                        className={styles["notification-btn"]}
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Badge>
-                  </Link>
-                </Modal.Open>
-              )}
-              {role === "user" && (
-                <Modal.Open opens="notifications">
-                  <Link style={{ width: "25px", height: "25px" }}>
-                    <Badge
-                      count={userRequest.length}
-                      showZero
+                    />
+                  </Badge>
+                )}
+                {role === "user" && (
+                  <Badge
+                    count={userRequest.length}
+                    showZero
+                    className={styles["header-notification-badge"]}
+                  >
+                    <Icons.Bell
+                      className={styles["notification-btn"]}
                       style={{ width: "100%", height: "100%" }}
-                    >
-                      <Icons.Bell
-                        className={styles["notification-btn"]}
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Badge>
-                  </Link>
-                </Modal.Open>
+                    />
+                  </Badge>
+                )}
+              </Link>
+
+              {showNotifications && (
+                <Notifications close={() => setShowNotifications(false)} />
               )}
               <div
                 className={styles["header-profile"]}
@@ -184,10 +161,6 @@ const Header = (props, { elementsRef }) => {
           )}
         </div>
       </div>
-
-      <Modal.Window title={t("notifications_title")} name="notifications">
-        <Notifications />
-      </Modal.Window>
     </Modal>
   );
 };

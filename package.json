@@ -23,6 +23,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.12.5",
     "axios": "^1.6.2",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "i": "^0.3.7",
     "i18next": "^23.10.1",

@@ -323,6 +323,63 @@
   color: var(--font-color-1);
 }
 
+.datepicker-box {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+}
+
+.form-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.form-input-wrapper label {
+  font-size: 14px;
+  color: var(--font-black);
+  margin-bottom: 8px;
+}
+
+.datepicker-box input {
+  padding: 10px 15px;
+  outline: none;
+  border: none;
+  color: var(--font-color-main);
+  background-color: var(--bg-color);
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.1;
+  height: 45px;
+  width: 100%;
+}
+
+.booking-datepicker {
+  background-color: #fff !important;
+}
+
+.booking-action-info-people {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--brand-color-2);
+  border-radius: 5px;
+}
+
+.booking-action-info-people input {
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: "Montserrat";
+  width: 190px;
+}
+
 .booking-action-remove {
   display: flex;
   align-items: center;

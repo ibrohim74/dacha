@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import styles from "./FilterServices.module.css";
+import i18next from "i18next";
 
 const tags = [
-  {
-    id: "parking",
-    name: "Парковка",
-  },
-  { id: "wifi", name: "Wi-Fi" },
-  { id: "shower", name: "Душ" },
-  { id: "breakfast", name: "Завтрак" },
-  { id: "pool", name: "Бассейн" },
-  { id: "airconditioner", name: "Кондиционер" },
+  { id: "parking", name: i18next.t("tag_parking") },
+  { id: "wifi", name: i18next.t("tag_wifi") },
+  { id: "breakfast", name: i18next.t("tag_breakfast") },
+  { id: "pool", name: i18next.t("tag_pool") },
+  { id: "airconditioner", name: i18next.t("tag_airconditioner") },
 ];
 
 export default function FilterServices() {

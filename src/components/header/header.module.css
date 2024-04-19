@@ -33,6 +33,16 @@
   font-size: 16px;
 }
 
+.header-notification {
+  width: 25px;
+  height: 25px;
+}
+
+.header-notification-badge {
+  width: 100%;
+  height: 100%;
+}
+
 .header-right,
 .auth-routes {
   display: flex;
