@@ -47,6 +47,7 @@ const Login = () => {
     if (username && password) {
       loginAPI(data).then((res) => {
         console.log("login token", res);
+        // localStorage.setItem("token");
         if (res.status === 200) {
           console.log(res);
           dispatch(setSignedIn(res.data));

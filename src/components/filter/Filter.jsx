@@ -8,14 +8,14 @@ import { useTranslation } from "react-i18next";
 import Tabs from "../tabs/Tabs";
 import AccordionItem from "../accordion-item/AccordionItem";
 import FilterServices from "../filter-services/FilterServices";
-import { FilterContext } from "../../context/CatalogueFilterContext";
+import { CatalogueContext } from "../../context/CatalogueContext";
 
 export default function Filter({ priceRange, currentTab }) {
   const { t } = useTranslation();
 
   const [rangeValues, setRangeValues] = useState(priceRange);
   const { filterParams, updateFilter, resetAllFilters } =
-    useContext(FilterContext);
+    useContext(CatalogueContext);
 
   const [selectedTags, setSelectedTags] = useState(filterParams.tags || []);
 
@@ -26,10 +26,6 @@ export default function Filter({ priceRange, currentTab }) {
   };
   const handleRatingChange = (value) => {
     updateFilter({ minRating: value });
-  };
-
-  const handleTest = () => {
-    console.log("test click");
   };
 
   const handleTagChange = (tag) => {

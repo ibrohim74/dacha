@@ -236,6 +236,9 @@ i18n
           tag_pool: "Swimming pool",
           booking_title: "Booking",
           booking_action: "Book",
+          params_not_found:
+            "Nothing was found for the entered parameters. Please refresh the page or change the search/filter parameters.",
+          city_history: "History of the city",
         },
       },
       uz: {
@@ -468,6 +471,9 @@ i18n
           tag_pool: "Basseyn",
           booking_title: "Bron qilish",
           booking_action: "Bron qilish",
+          params_not_found:
+            "Kiritilgan parametrlar bo'yicha hech narsa topilmadi. Iltimos, sahifani yangilang yoki qidiruv / filtr parametrlarini o'zgartiring.",
+          city_history: "Shahar tarixi",
         },
       },
       ru: {
@@ -692,6 +698,9 @@ i18n
           tag_pool: "Бассейн",
           booking_title: "Бронирование",
           booking_action: "Бронировать",
+          params_not_found:
+            "По введенным параметрам ничего не найдено. Пожалуйста, обновите страницу или измените параметры поиска / фильтра.",
+          city_history: "История города",
         },
       },
     },

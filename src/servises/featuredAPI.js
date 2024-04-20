@@ -9,7 +9,6 @@ export const feauturedAPI = createApi({
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   }),
-
   endpoints: (builder) => ({
     createFeatured: builder.mutation({
       query: (featured) => ({
@@ -25,6 +24,7 @@ export const feauturedAPI = createApi({
       query: (featured_id) => ({
         url: `/featured/${featured_id}`,
         method: "DELETE",
+        // credentials: "include",
       }),
     }),
     getUserFeatured: builder.query({

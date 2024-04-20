@@ -8,6 +8,7 @@ import LeaveReviews from "../../../../components/review/leaveReviews";
 const BookingUser = (props) => {
     const [booking, setBooking] = useState([]);
     const { dachasIdList, setDachasIdList } = props;
+    
     useEffect(() => {
         GetUserBooking().then(r => {
             console.log(r)

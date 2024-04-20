@@ -40,7 +40,7 @@ export default function BookingPlace({ accommodation_type }) {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         price: cottage?.price,
-        overallPrice: totalDays * cottage?.price,
+        overallPrice: Number(totalDays) * Number(cottage?.price),
         accommodation_type: "cottage",
       });
     } else {
@@ -171,6 +171,8 @@ const BookingConfirmation = ({ bookingInfo }) => {
     overallPrice,
     additionalPrice,
   } = bookingInfo;
+
+  console.log(overallPrice);
 
   return (
     <div className={styles["confirmation-modal"]}>

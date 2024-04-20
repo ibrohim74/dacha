@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Form.module.css";
 import { CalendarMonth } from "@mui/icons-material";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
+import { CatalogueContext } from "../../context/CatalogueContext";
 
 export default function Form({ type = "globalSearch" }) {
   const { t } = useTranslation();
+  const { updateSearch } = useContext(CatalogueContext);
 
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [numGuests, setNumGuests] = useState(1);
 
+  console.log(window.location);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch({ location, startDate, endDate, numGuests });
+    updateSearch({
+      locationName: location,
+      startDate: startDate,
+      endDate: endDate,
+      guests: numGuests,
+    });
+
+    // if (
+    //   window.pathname != "/cottages_catalogue" ||
+    //   window.pathname != "/hotels_catalogue"
+    // ) {
+    //   window.location.assign("/cottages_catalogue");
+    // }
   };
 
   return (

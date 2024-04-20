@@ -30,6 +30,10 @@
   gap: 1.5rem;
 }
 
+.catalogue-items-empty p {
+  text-align: center;
+}
+
 @media only screen and (min-width: 360px) and (max-width: 560px) {
   .catalogue-layout {
     flex-direction: column;

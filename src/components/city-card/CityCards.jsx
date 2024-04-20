@@ -8,37 +8,9 @@ import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import { Navigation } from "swiper/modules";
 import useUserLocation from "../../hooks/useUserLocation";
-
-const citiesData = [
-  {
-    name: "Bukhara",
-    img: require("../../assets/bukhara.jpg"),
-  },
-  {
-    name: "Khiva",
-    img: require("../../assets/khiva.jpg"),
-  },
-  {
-    name: "Tashkent",
-    img: require("../../assets/tashkent.jpg"),
-  },
-  {
-    name: "Khiva",
-    img: require("../../assets/khiva.jpg"),
-  },
-  {
-    name: "Tashkent",
-    img: require("../../assets/tashkent.jpg"),
-  },
-  {
-    name: "Khiva",
-    img: require("../../assets/khiva.jpg"),
-  },
-  {
-    name: "Tashkent",
-    img: require("../../assets/tashkent.jpg"),
-  },
-];
+import { citiesData } from "./citiesDatabase";
+import { ABOUT_CITY } from "../../processes/utils/consts";
+import { useNavigate } from "react-router-dom";
 
 export default function CityCards() {
   const { t } = useTranslation();
@@ -88,7 +60,7 @@ export default function CityCards() {
   );
 }
 
-function CityCard({ title, descr, img, weather }) {
+export function CityCard({ title, descr, img, weather }) {
   const { t } = useTranslation();
   const { weatherDeg, weatherDescr } = weather;
 
@@ -113,12 +85,19 @@ function CityCard({ title, descr, img, weather }) {
 }
 
 const PreviewCityCard = ({ city }) => {
-  const { name, img } = city;
+  const { id, name, img, latitude, longitude } = city;
+  const navigate = useNavigate();
+
+  const handleCityClick = () => {
+    const route = ABOUT_CITY.replace(":id", id);
+    navigate(route);
+  };
+
   return (
     <div className={styles["preview-city-card"]}>
       <span>{name}</span>
-      <img alt={name} src={img} />
-      <button>Выбрать</button>
+      <img alt={name} src={img[0].imgPath} />
+      <button onClick={handleCityClick}>Выбрать</button>
     </div>
   );
 };

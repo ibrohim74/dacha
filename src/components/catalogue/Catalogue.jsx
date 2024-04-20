@@ -7,14 +7,15 @@ import styles from "./Catalogue.module.css";
 import { useTranslation } from "react-i18next";
 import Form from "../form/Form";
 import { Icons } from "../../assets/icons/icons";
-import { FilterContext } from "../../context/CatalogueFilterContext";
+import { CatalogueContext } from "../../context/CatalogueContext";
+import useSearch from "../../hooks/useSearch";
 
 export default function Catalogue({ products, isLoading, currentTab }) {
   const { t } = useTranslation();
   const elementsRef = useRef(null);
-  const [searchResults, setSearchResults] = useState([]);
+  const { isValidBooking } = useSearch();
 
-  const { filterParams } = useContext(FilterContext);
+  const { filterParams, searchParams } = useContext(CatalogueContext);
 
   function findMinMaxPrice(cottages) {
     let minPrice = Infinity;
@@ -37,9 +38,8 @@ export default function Catalogue({ products, isLoading, currentTab }) {
     return undefined;
   }, [isLoading, products]);
 
-  const filteredProducts = React.useMemo(() => {
+  const filteredProducts = useMemo(() => {
     return products?.filter((cottage) => {
-      // Filter by location name
       if (
         filterParams.locationName &&
         !cottage.location_name
@@ -49,7 +49,6 @@ export default function Catalogue({ products, isLoading, currentTab }) {
         return false;
       }
 
-      // Filter by price range
       if (filterParams.minPrice && cottage.price < filterParams.minPrice) {
         return false;
       }
@@ -57,12 +56,10 @@ export default function Catalogue({ products, isLoading, currentTab }) {
         return false;
       }
 
-      // Filter by rating
       if (filterParams.minRating && cottage.rating < filterParams.minRating) {
         return false;
       }
 
-      // Filter by tags
       if (
         filterParams.tags.length > 0 &&
         !filterParams.tags.every(
@@ -76,6 +73,27 @@ export default function Catalogue({ products, isLoading, currentTab }) {
     });
   }, [products, filterParams]);
 
+  const searchResults = useMemo(() => {
+    return searchParams.locationName
+      ? filteredProducts?.filter((cottage) => {
+          if (
+            searchParams.locationName &&
+            !cottage.location_name
+              .toLowerCase()
+              .includes(searchParams.locationName.toLowerCase())
+          ) {
+            return false;
+          }
+
+          return true;
+        })
+      : filteredProducts;
+  }, [filteredProducts, searchParams]);
+
+  const validSearchResults = useMemo(() => {
+    return searchResults?.filter((cottage) => isValidBooking(cottage));
+  }, [searchResults, isValidBooking]);
+
   return (
     <AppLayout elementsRef={elementsRef}>
       <div className={styles["form-wrapper"]}>
@@ -87,9 +105,10 @@ export default function Catalogue({ products, isLoading, currentTab }) {
       ) : (
         <div className={styles["catalogue-layout"]}>
           <Filter priceRange={priceRange} currentTab={currentTab} />
-          {filteredProducts?.length ? (
+
+          {validSearchResults?.length ? (
             <div className={styles["catalogue-items"]}>
-              {filteredProducts?.map((product) => (
+              {validSearchResults?.map((product) => (
                 <AccomodationCard accommodation={product} key={product.id} />
               ))}
               <Button type="full-width-white">{t("view_more")}</Button>
@@ -97,7 +116,7 @@ export default function Catalogue({ products, isLoading, currentTab }) {
           ) : (
             <div className={styles["catalogue-items-empty"]}>
               <Icons.EmptyPagePlaceholder />
-              <p>Try to reload</p>
+              <p>{t("params_not_found")}</p>
             </div>
           )}
         </div>

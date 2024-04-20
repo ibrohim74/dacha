@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export const FilterContext = createContext();
+export const CatalogueContext = createContext();
 
-const FilterProvider = ({ children }) => {
+const CatalogueProvider = ({ children }) => {
   const [filterParams, setFilterParams] = useState({
     locationName: "",
     minPrice: null,
@@ -36,13 +36,29 @@ const FilterProvider = ({ children }) => {
     });
   };
 
+  const resetSearchParams = () => {
+    setSearchParams({
+      locationName: "",
+      startDate: null,
+      endDate: null,
+      guests: 1,
+    });
+  };
+
   return (
-    <FilterContext.Provider
-      value={{ filterParams, updateFilter, resetAllFilters }}
+    <CatalogueContext.Provider
+      value={{
+        filterParams,
+        updateFilter,
+        resetAllFilters,
+        updateSearch,
+        searchParams,
+        resetSearchParams,
+      }}
     >
       {children}
-    </FilterContext.Provider>
+    </CatalogueContext.Provider>
   );
 };
 
-export default FilterProvider;
+export default CatalogueProvider;

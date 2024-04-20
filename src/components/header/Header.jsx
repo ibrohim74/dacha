@@ -59,29 +59,29 @@ const Header = (props, { elementsRef }) => {
     navigate(`/villas?search=${searchTerm}`);
   };
 
-  const getRequestsUser = async () => {
-    if (role === "seller") {
-      try {
-        const res = await $authHost.get(`/seller/${id}/requests`);
-        console.log(res);
-        setUserRequest(res?.data);
-      } catch (e) {
-        console.log(e);
-      }
-    } else if (role === "user") {
-      try {
-        const res = await $authHost.get(`/customer/${id}/requests`);
-        console.log(res);
-        setUserRequest(res?.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
+  // const getRequestsUser = async () => {
+  //   if (role === "seller") {
+  //     try {
+  //       const res = await $authHost.get(`/seller/${id}/requests`);
+  //       console.log(res);
+  //       setUserRequest(res?.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   } else if (role === "user") {
+  //     try {
+  //       const res = await $authHost.get(`/customer/${id}/requests`);
+  //       console.log(res);
+  //       setUserRequest(res?.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    getRequestsUser();
-  }, [role]);
+  // useEffect(() => {
+  //   getRequestsUser();
+  // }, [role]);
 
   return (
     <Modal>

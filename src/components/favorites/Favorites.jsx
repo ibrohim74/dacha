@@ -124,13 +124,7 @@ const FavouriteItemCard = ({ favoriteItem }) => {
   const { id, title, info, location_name, rating, ratingStar, reviews_number } =
     favoriteItem;
 
-  const [mutate, isLoading, error] = useDeleteFeaturedMutation();
-
-  const handleDeleteFavourite = (featuredId) => {
-    console.log(isLoading);
-    mutate(featuredId);
-    console.log(error);
-  };
+  const [mutate] = useDeleteFeaturedMutation();
 
   return (
     <div className={styles["fav-card"]}>
@@ -152,7 +146,7 @@ const FavouriteItemCard = ({ favoriteItem }) => {
         </span>
       </div>
 
-      <Button type="icon-red" onClick={() => handleDeleteFavourite(id)}>
+      <Button type="icon-red" onClick={() => mutate(id)}>
         <Icons.Remove />
       </Button>
     </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { HOME_ROUTE } from "../utils/consts";
+import { BASE_URL, HOME_ROUTE } from "../utils/consts";
 import { message, notification } from "antd";
 import store from "../../store/store";
 import { setToken } from "../../store/auth/authSlice";
@@ -23,15 +23,12 @@ const updateAuthHeader = (token) => {
 
 const refreshToken = async (thunkAPI) => {
   try {
-    const response = await $host.post(
-      "https://visitca.travel/api/refresh_token",
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await axios.post(`${BASE_URL}refresh_token`, null, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(localStorage.getItem("token"));
     console.log(response);
 
     authToken = response.data.access_token;

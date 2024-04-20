@@ -7,15 +7,17 @@ import {
 } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavourite } from "../../store/favs/favActions";
 import { useTranslation } from "react-i18next";
+import { useCreateFeaturedMutation } from "../../servises/featuredAPI";
 
 export default function AccomodationCard({ accommodation }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  console.log(accommodation);
+  // console.log(accommodation);
+
+  const [mutate, error, isLoading] = useCreateFeaturedMutation();
 
   const {
     id,
@@ -30,10 +32,16 @@ export default function AccomodationCard({ accommodation }) {
     type,
   } = accommodation;
 
-  const handleAddFavourites = (id, type) => {
-    const accType = type ? type : "dacha";
+  const handleAddFavourites = async (id, type) => {
+    const accType = type ? "dacha" : "hotel";
     const newFav = { accommodation_id: id, accommodation_type: accType };
-    dispatch(addFavourite(newFav));
+
+    try {
+      const { data } = await mutate(newFav);
+      console.log("New featured item created:", data);
+    } catch (error) {
+      console.error("Error creating featured item:", error);
+    }
   };
 
   const handleRemoveFromFavourite = (favId) => {

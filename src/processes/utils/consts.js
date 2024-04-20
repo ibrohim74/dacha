@@ -19,7 +19,7 @@ export const BOOKING_ROUTE = "/bookings";
 export const FAQ_ROUTE = "/faq";
 export const REQUESTS_ROUTE = "/requests";
 //add id of the city
-export const ABOUT_CITY = "/about_city";
+export const ABOUT_CITY = "/about_city/:id";
 
 // Dashboard
 export const CABINET = "/cabinet/";
