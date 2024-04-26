@@ -103,6 +103,21 @@
   font-weight: 600;
 }
 
+.functional-icon {
+  width: 35px;
+  height: 35px;
+  background-color: var(--font-color-3);
+  border-radius: 50%;
+}
+
+.functional-icon:hover {
+  background-color: #333;
+}
+
+.functional-icon svg {
+  fill: var(--brand-color-2);
+}
+
 .icon {
   width: 44px;
   height: 44px;

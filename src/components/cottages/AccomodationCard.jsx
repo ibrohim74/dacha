@@ -9,15 +9,13 @@ import { Icons } from "../../assets/icons/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useCreateFeaturedMutation } from "../../servises/featuredAPI";
+import { useGetAccommodationTagsQuery } from "../../servises/tagsAPI";
+import { splitImagePaths } from "../../helpers/splitImagePath";
 
 export default function AccomodationCard({ accommodation }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  // console.log(accommodation);
-
-  const [mutate, error, isLoading] = useCreateFeaturedMutation();
 
   const {
     id,
@@ -31,6 +29,16 @@ export default function AccomodationCard({ accommodation }) {
     location_name,
     type,
   } = accommodation;
+
+  const acc_type = "dacha";
+
+  const images = splitImagePaths(photos_path);
+
+  const { data: cottageTags, isLoadingTags } = useGetAccommodationTagsQuery(
+    id,
+    type
+  );
+  const [mutate, error, isLoading] = useCreateFeaturedMutation();
 
   const handleAddFavourites = async (id, type) => {
     const accType = type ? "dacha" : "hotel";
@@ -62,7 +70,7 @@ export default function AccomodationCard({ accommodation }) {
         <img
           src={
             photos_path.length
-              ? `${GOOGLE_STORAGE_URL}${photos_path}`
+              ? `${GOOGLE_STORAGE_URL}${images[0]}`
               : require("../../assets/cottage_placeholder.png")
           }
           alt="accomodation image placeholder"
@@ -96,10 +104,11 @@ export default function AccomodationCard({ accommodation }) {
         </div>
 
         <div className={styles["accommodation-tags"]}>
-          <div className={styles["accommodation-tag"]}>{t("tag_parking")}</div>
-          <div className={styles["accommodation-tag"]}>
-            {t("tag_breakfast")}
-          </div>
+          {cottageTags?.map((tag) => (
+            <div className={styles["accommodation-tag"]} key={tag.id}>
+              {tag.name}
+            </div>
+          ))}
         </div>
 
         <div className={styles["accomodation-lower-part"]}>

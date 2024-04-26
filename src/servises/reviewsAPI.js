@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BASE_URL } from "../processes/utils/consts";
 
-export const reviewsApi = createApi({
+export const reviewsAPI = createApi({
   reducerPath: "reviewsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -13,14 +14,26 @@ export const reviewsApi = createApi({
       query: (review_id) => `/reviews/${review_id}`,
     }),
     updateReview: builder.mutation({
-      query: (review_id, data) => ({
+      query: ({ review_id, ...data }) => ({
         url: `/reviews/${review_id}`,
         method: "PUT",
-        body: data,
+        body: { ...data },
+      }),
+    }),
+    deleteReview: builder.mutation({
+      query: (review_id) => ({
+        url: `/reviews/${review_id}`,
+        method: "DELETE",
       }),
     }),
     getRoomReviews: builder.query({
       query: (accommodation_id) => `/room/${accommodation_id}/reviews`,
+    }),
+    getCottageReviews: builder.query({
+      query: (accommodation_id) => `/dacha/${accommodation_id}/reviews`,
+    }),
+    getHotelReviews: builder.query({
+      query: (accommodation_id) => `/hotel/${accommodation_id}/reviews`,
     }),
     createReview: builder.mutation({
       query: (data) => ({
@@ -35,4 +48,13 @@ export const reviewsApi = createApi({
   }),
 });
 
-export const { useGetReviewByIdQuery } = reviewsApi;
+export const {
+  useGetReviewByIdQuery,
+  useUpdateReviewMutation,
+  useCreateReviewMutation,
+  useGetCottageReviewsQuery,
+  useGetHotelReviewsQuery,
+  useGetRoomReviewsQuery,
+  useGetUserReviewsQuery,
+  useDeleteReviewMutation,
+} = reviewsAPI;

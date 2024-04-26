@@ -9,12 +9,15 @@ import Form from "../form/Form";
 import { Icons } from "../../assets/icons/icons";
 import { CatalogueContext } from "../../context/CatalogueContext";
 import useSearch from "../../hooks/useSearch";
+import Loader from "../loader/Loader";
+import { getAccommodationTags } from "../../servises/tagsAPI";
 
 export default function Catalogue({ products, isLoading, currentTab }) {
-  const { t } = useTranslation();
   const elementsRef = useRef(null);
-  const { isValidBooking } = useSearch();
 
+  const { t } = useTranslation();
+  const { isValidBooking } = useSearch();
+  const [cottageTags, setCottageTags] = useState(null);
   const { filterParams, searchParams } = useContext(CatalogueContext);
 
   function findMinMaxPrice(cottages) {
@@ -30,6 +33,26 @@ export default function Catalogue({ products, isLoading, currentTab }) {
     const data = [minPrice, maxPrice];
     return data;
   }
+
+  useEffect(() => {
+    const fetchCottageTags = async () => {
+      isLoading;
+
+      try {
+        const allTags = [];
+        for (const product of products) {
+          const tags = await getAccommodationTags(product.id, product.type);
+          allTags.push({ id: product.id, tags });
+        }
+        setCottageTags(allTags);
+        console.log("everything is okay");
+      } catch (error) {
+        console.error("Error fetching cottage tags:", error);
+      }
+    };
+
+    fetchCottageTags();
+  }, [products]);
 
   const priceRange = useMemo(() => {
     if (!isLoading && products) {
@@ -52,6 +75,7 @@ export default function Catalogue({ products, isLoading, currentTab }) {
       if (filterParams.minPrice && cottage.price < filterParams.minPrice) {
         return false;
       }
+
       if (filterParams.maxPrice && cottage.price > filterParams.maxPrice) {
         return false;
       }
@@ -60,18 +84,17 @@ export default function Catalogue({ products, isLoading, currentTab }) {
         return false;
       }
 
-      if (
-        filterParams.tags.length > 0 &&
-        !filterParams.tags.every(
-          (tag) => cottage.tags && cottage.tags.includes(tag)
-        )
-      ) {
-        return false;
+      if (!cottageTags) return false;
+      const cottageData = cottageTags.find((data) => data.id === cottage.id);
+      if (!cottageData) return false;
+
+      if (filterParams.tags.length !== 0) {
+        return filterParams.tags.every((tag) => cottageData.tags.includes(tag));
       }
 
       return true;
     });
-  }, [products, filterParams]);
+  }, [products, filterParams, cottageTags]);
 
   const searchResults = useMemo(() => {
     return searchParams.locationName
@@ -101,7 +124,7 @@ export default function Catalogue({ products, isLoading, currentTab }) {
       </div>
 
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <div className={styles["catalogue-layout"]}>
           <Filter priceRange={priceRange} currentTab={currentTab} />

@@ -5,13 +5,6 @@ export const usersAPI = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -22,10 +15,10 @@ export const usersAPI = createApi({
       query: (user_id) => `user/${user_id}`,
     }),
     updateUser: build.mutation({
-      query: (user_id, user_data) => ({
+      query: ({ user_id, ...user_data }) => ({
         url: `user/${user_id}`,
+        body: { ...user_data },
         method: "PUT",
-        body: user_data,
       }),
     }),
     registerUser: build.mutation({

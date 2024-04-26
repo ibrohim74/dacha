@@ -12,6 +12,12 @@ import { isStrongPassword } from "./helper";
 import { useTranslation } from "react-i18next";
 import ProfileImage from "../../../components/profile-image/ProfileImage";
 
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 export default function RegistrationSetup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -108,16 +114,51 @@ export default function RegistrationSetup() {
             />
           </div>
           <div className={styles["input-row"]}>
-            <label htmlFor="role">Who are you?</label>
-            <input
-              type="text"
-              id="role"
-              placeholder="enter your role"
-              required
-              onChange={(e) =>
-                setCreatedUser({ ...createdUser, role: e.target.value })
-              }
-            />
+            <label htmlFor="role" id="role">
+              {t("registration_role_label")}
+            </label>
+
+            <FormControl className={styles["registration-dropdown"]}>
+              <Select
+                labelId="role"
+                id="role"
+                className={styles["registration-dropdown-select"]}
+                onChange={(e) =>
+                  setCreatedUser({ ...createdUser, role: e.target.value })
+                }
+                sx={{
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderStyle: "none",
+                    borderRadius: 10,
+                  },
+                  fontSize: 14,
+                  fontWeight: 500,
+                  fontFamily: "Montserrat",
+                }}
+              >
+                <MenuItem
+                  selected={true}
+                  sx={{
+                    fontSize: 14,
+                    fontWeight: 500,
+                    fontFamily: "Montserrat",
+                  }}
+                  value="user"
+                >
+                  {t("registration_role_user")}
+                </MenuItem>
+                <MenuItem
+                  sx={{
+                    fontSize: 14,
+                    fontWeight: 500,
+                    fontFamily: "Montserrat",
+                  }}
+                  value="seller"
+                >
+                  {t("registration_role_seller")}
+                </MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </div>
 

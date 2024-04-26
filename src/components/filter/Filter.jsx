@@ -9,6 +9,8 @@ import Tabs from "../tabs/Tabs";
 import AccordionItem from "../accordion-item/AccordionItem";
 import FilterServices from "../filter-services/FilterServices";
 import { CatalogueContext } from "../../context/CatalogueContext";
+import { useGetAllTagsQuery } from "../../servises/tagsAPI";
+import i18next from "i18next";
 
 export default function Filter({ priceRange, currentTab }) {
   const { t } = useTranslation();
@@ -19,7 +21,17 @@ export default function Filter({ priceRange, currentTab }) {
 
   const [selectedTags, setSelectedTags] = useState(filterParams.tags || []);
 
-  // console.log(priceRange);
+  // const { data: allTags } = useGetAllTagsQuery();
+  // console.log(allTags);
+
+  //simulating that we have tags
+  const tags = [
+    { id: "parking", name: i18next.t("tag_parking") },
+    { id: "wifi", name: i18next.t("tag_wifi") },
+    { id: "breakfast", name: i18next.t("tag_breakfast") },
+    { id: "pool", name: i18next.t("tag_pool") },
+    { id: "airconditioner", name: i18next.t("tag_airconditioner") },
+  ];
 
   const handleLocationChange = (event) => {
     updateFilter({ locationName: event.target.value });
@@ -41,6 +53,7 @@ export default function Filter({ priceRange, currentTab }) {
     updateFilter({ minPrice: values[0], maxPrice: values[1] });
   };
 
+  //import it from the helpers
   const numberFormatter = (value) => {
     return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -57,7 +70,7 @@ export default function Filter({ priceRange, currentTab }) {
           />
           <div className={styles["filter-location-output"]}>
             <LocationOnOutlined />
-            Location
+            {t("form_location")}
           </div>
         </div>
 
@@ -121,7 +134,7 @@ export default function Filter({ priceRange, currentTab }) {
                     title={t("filter_services")}
                     content="lorem impusum"
                   />
-                  <AccordionItem title=" Питание" content="lorem impusum" />
+                  <AccordionItem title={t("meal")} content="lorem impusum" />
                 </div>
               </>
             ),
@@ -177,7 +190,7 @@ export default function Filter({ priceRange, currentTab }) {
                 <div className={styles["filter-item-box"]}>
                   <AccordionItem
                     title={t("filter_services")}
-                    content={<FilterServices />}
+                    content={<FilterServices tags={tags} />}
                   />
                   <AccordionItem title="Питание" content="lorem impusum" />
                 </div>

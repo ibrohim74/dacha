@@ -16,7 +16,7 @@ export default function Form({ type = "globalSearch" }) {
   const [endDate, setEndDate] = useState(null);
   const [numGuests, setNumGuests] = useState(1);
 
-  console.log(window.location);
+  // console.log(window.location);
 
   const handleSubmit = (event) => {
     event.preventDefault();

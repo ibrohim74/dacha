@@ -74,12 +74,12 @@
   font-size: 14px;
 }
 
-.pending,
-.completed {
+.ongoing,
+.finished {
   background-color: var(--surface-color);
 }
 
-.rejected {
+.cancelled {
   background-color: #ffefef;
 }
 
@@ -215,10 +215,25 @@
 }
 
 .booking-review {
-  margin-top: 18px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.booking-review-container {
+  margin-top: 18px;
+  border: 1px solid var(--surface-color);
+  border-radius: 20px;
+  padding: 1rem;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.booking-review-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* booking in action on item pages */

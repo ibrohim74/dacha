@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading, setUserField } from "../../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
 import { Add, Edit } from "@mui/icons-material";
+import { GOOGLE_STORAGE_URL } from "../../processes/utils/consts";
 
 const MAX_FILE_SIZE_IN_MB = 3;
 
@@ -106,7 +107,7 @@ export default function ProfileImage({ image_path }) {
         {image_path ? (
           <>
             <img
-              src={`https://visitca.travel/api/${user.image_path}`}
+              src={`${GOOGLE_STORAGE_URL}${user.image_path}`}
               alt="avatar"
               className={styles["profile-image"]}
             />

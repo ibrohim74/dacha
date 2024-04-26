@@ -18,8 +18,8 @@ export const COTTAGES_CATALOGUE_ROUTE = "/cottages_catalogue";
 export const BOOKING_ROUTE = "/bookings";
 export const FAQ_ROUTE = "/faq";
 export const REQUESTS_ROUTE = "/requests";
-//add id of the city
 export const ABOUT_CITY = "/about_city/:id";
+export const NEW_REQUEST = "/new_request";
 
 // Dashboard
 export const CABINET = "/cabinet/";
@@ -47,7 +47,7 @@ export const REQUEST_ANNOUNCEMENT = "announcement_request";
 // Moderate Routes
 
 //other
-export const NOT_FOUND = "not_found";
+export const NOT_FOUND = "/not_found";
 export const TECH_WORKS = "/tech_works";
 
 export const LANGUAGES = [

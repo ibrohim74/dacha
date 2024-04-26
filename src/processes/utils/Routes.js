@@ -33,6 +33,7 @@ import {
   FAQ_ROUTE,
   REQUESTS_ROUTE,
   ABOUT_CITY,
+  NEW_REQUEST,
 } from "./consts";
 import Home from "../../page/home/Home";
 import Login from "../../page/auth/Login/login";
@@ -66,7 +67,7 @@ import {
   PieChartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { Component } from "react";
 import Favorites from "../../components/favorites/Favorites";
 import ChangePassword from "../../components/change-password/ChangePassword";
 import RegistrationConfirm from "../../page/auth/Registration/RegistrationConfirm";
@@ -76,6 +77,7 @@ import TechWorks from "../../components/tech-works/TechWorks";
 import FAQ from "../../components/faq/FAQ";
 import Requests from "../../components/requests/Requests";
 import CityPage from "../../components/city-page/CityPage";
+import NewRequest from "../../components/requests/NewRequest";
 
 export const Public = [
   {
@@ -157,6 +159,10 @@ export const Public = [
   {
     Component: <CityPage />,
     path: ABOUT_CITY,
+  },
+  {
+    Component: <NewRequest />,
+    path: NEW_REQUEST,
   },
 ];
 

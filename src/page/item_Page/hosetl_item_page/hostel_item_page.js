@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const HostelItemPage = () => {
-    return (
-        <div>
-            sadasdasd
-        </div>
-    );
+  return <div>sadasdasd</div>;
 };
 
 export default HostelItemPage;

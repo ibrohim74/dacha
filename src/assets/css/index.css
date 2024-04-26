@@ -215,6 +215,13 @@ input[type="number"] {
   height: 100vh;
 }
 
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  border: none !important;
+  outline: none !important;
+}
+
 @media only screen and (min-width: 360px) and (max-width: 560px) {
   .react-datepicker-wrapper {
     width: 100% !important;

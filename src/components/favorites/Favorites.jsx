@@ -139,7 +139,7 @@ const FavouriteItemCard = ({ favoriteItem }) => {
       </div>
 
       <div className={styles["fav-card-ratings"]}>
-        <StarRating rating={rating} />
+        <StarRating rating={rating} staticRating={true} />
         <p>{rating}</p>
         <span>
           {reviews_number} {t("reviews")}

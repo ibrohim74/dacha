@@ -15,24 +15,19 @@ import AppLayout from "../../components/appLayout/AppLayout";
 import { BookingCard } from "../../components/bookings/Bookings";
 import LocationRequest from "../../components/location-request/LocationRequest";
 import useUserLocation from "../../hooks/useUserLocation";
+import { useGetAllDachasQuery } from "../../servises/cottagesAPI";
 
 const Home = () => {
-  const [dachas, setDachas] = useState([]);
   const [hostel, setHostel] = useState([]);
   const [buttonAllDach, setButtonAllDach] = useState(1);
   const [buttonAllHotel, setButtonAllHotel] = useState(1);
   const { t } = useTranslation();
   const elementsRef = useRef(null);
 
+  const { data: cottages, isLoadongCottages } = useGetAllDachasQuery();
+
   const { userLocation, emptyLocation } = useUserLocation();
 
-  useEffect(() => {
-    getAllDacha(buttonAllDach).then((r) => {
-      if (r?.status === 200) {
-        setDachas(r.data);
-      }
-    });
-  }, [buttonAllDach]);
   useEffect(() => {
     GetAllHostel(buttonAllHotel).then((r) => {
       if (r?.status === 200) {
@@ -48,7 +43,8 @@ const Home = () => {
         <Categories />
 
         <CataloguePreview
-          items={dachas}
+          items={cottages}
+          isLoadongCottages={isLoadongCottages}
           route={COTTAGES_CATALOGUE_ROUTE}
           title={t("cottages_title")}
         />

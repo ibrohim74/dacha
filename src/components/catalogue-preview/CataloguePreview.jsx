@@ -5,9 +5,16 @@ import { Icons } from "../../assets/icons/icons";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
 import { GOOGLE_STORAGE_URL } from "../../processes/utils/consts";
+import { splitImagePaths } from "../../helpers/splitImagePath";
+import Loader from "../loader/Loader";
 
-export default function CataloguePreview({ items, route, title }) {
-  const slicedItems = items.slice(0, 6);
+export default function CataloguePreview({
+  items,
+  route,
+  title,
+  isLoadingCottages,
+}) {
+  const slicedItems = items?.slice(0, 6);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -27,7 +34,9 @@ export default function CataloguePreview({ items, route, title }) {
         </div>
       </div>
 
-      {slicedItems.length ? (
+      {isLoadingCottages && <Loader />}
+
+      {slicedItems?.length ? (
         <div className={styles["cards-preview-container"]}>
           <div className={styles["cards-preview-wrapper"]}>
             {slicedItems.map((item) => (
@@ -60,6 +69,8 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
 
   const handleClick = () => {};
 
+  const images = splitImagePaths(image);
+
   const locationText =
     location.length > MAX_LOCATION_LENGTH
       ? `${location.substring(0, MAX_LOCATION_LENGTH)}...`
@@ -70,7 +81,7 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
       <img
         src={
           image
-            ? `${GOOGLE_STORAGE_URL}${image}`
+            ? `${GOOGLE_STORAGE_URL}${images[0]}`
             : require("../../assets/cottage_placeholder.png")
         }
         alt="placeholder"

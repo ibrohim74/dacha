@@ -117,7 +117,11 @@ const LayoutCabinet = () => {
               ))}
             {role === "seller" &&
               Seller.map(({ path, Component }) => (
-                <Route key={path} path={path} element={Component} />
+                <>
+                  {/* {console.log("role", role)} */}
+                  {/* {console.log("path", path)} */}
+                  <Route key={path} path={path} element={Component} />
+                </>
               ))}
             {role === "admin" &&
               Admin.map(({ path, Component }) => (

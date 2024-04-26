@@ -1,0 +1,57 @@
+.loader-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0px;
+  background-color: rgba(226 232 240, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.loader {
+  width: 45px;
+  aspect-ratio: 0.75;
+  background-color: #cccccc;
+
+  background-image: linear-gradient(
+      to right,
+      #737373 0%,
+      #737373 33.33%,
+      transparent 33.33%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #737373 33.33%,
+      #737373 66.66%,
+      transparent 66.66%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 33.33%,
+      #737373 66.66%,
+      #737373 100%
+    );
+
+  background-size: 33.33% 50%;
+
+  animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+  20% {
+    background-position: 0% 0%, 100% 0%, 100% 100%;
+  }
+  40% {
+    background-position: 100% 100%, 0% 0%, 0% 100%;
+  }
+  60% {
+    background-position: 0% 100%, 100% 0%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 0%, 0% 100%, 100% 100%;
+  }
+}

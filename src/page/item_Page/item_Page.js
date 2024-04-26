@@ -18,6 +18,8 @@ import {
   useGetAllDachasQuery,
   useGetDachaQuery,
 } from "../../servises/cottagesAPI";
+import Loader from "../../components/loader/Loader";
+import { useGetCottageReviewsQuery } from "../../servises/reviewsAPI";
 
 const ItemPage = () => {
   const { t } = useTranslation();
@@ -25,12 +27,16 @@ const ItemPage = () => {
   const { id: cottageId } = useParams();
   const { data: cottage, error, isLoading } = useGetDachaQuery(cottageId);
   const { data: cottages, isLoadingAll } = useGetAllDachasQuery();
+  const { data: reviews, isLoadingReviews } =
+    useGetCottageReviewsQuery(cottageId);
+
+  console.log(reviews);
 
   return (
     <AppLayout>
       {contextHolder}
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <div className={styles["item-page-container"]}>
           <ItemPageHeader

@@ -26,6 +26,7 @@ import ChangePassword from "../../components/change-password/ChangePassword";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserField } from "../../store/auth/authSlice";
 import { changePassword } from "../../store/auth/authActions";
+import { useUpdateUserMutation } from "../../servises/usersAPI";
 
 const Profile = () => {
   const JWT = localStorage.getItem("token")
@@ -49,14 +50,28 @@ const Profile = () => {
     setUpdatedProfileFields({ field: fieldname, value: e.target.value });
   };
 
-  const { firstName, lastName, email, phone_number, image_path } = useSelector(
-    (state) => state.auth.user
-  );
+  const { id, username, firstName, lastName, email, phone_number, image_path } =
+    useSelector((state) => state.auth.user);
+
+  // console.log(id);
 
   const user = useSelector((state) => state.auth.user);
+  // console.log(user);
 
-  const updatedUser = { ...user, updatedProfileFields };
-  // console.log(updatedUser);
+  const updatedUser = {
+    username: username,
+    firstName: updatedProfileFields.firstName
+      ? updatedProfileFields.firstName
+      : firstName,
+    lastName: updatedProfileFields.lastName
+      ? updatedProfileFields.lastName
+      : lastName,
+    phone_number: updatedProfileFields.phone_number
+      ? updatedProfileFields.phone_number
+      : phone_number,
+  };
+
+  console.log(updatedUser);
 
   const [authOption, setAuthOption] = useState("phone");
   const { t } = useTranslation();
@@ -67,16 +82,20 @@ const Profile = () => {
     }
   };
 
+  const [updateUserData, { isLoading, error }] = useUpdateUserMutation();
+
   const handleSend = () => {
-    updateUser(updatedUser)
-      .then((r) => {
-        if (r?.status === 200) {
-          message.success("Update");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    updateUserData({ user_id: id, ...updatedUser });
+    // console.log(updatedUser);
+    // try {
+    //   const response = await updateUserData(id, updatedUser);
+    //   console.log(updatedUser);
+    //   if (response.isSuccess) {
+    //     message.success("Update successful!");
+    //   }
+    // } catch (error) {
+    //   console.error("Error updating user data:", error);
+    // }
   };
 
   const handleChangePassword = async () => {

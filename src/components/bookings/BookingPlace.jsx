@@ -13,6 +13,9 @@ import { HOME_ROUTE } from "../../processes/utils/consts";
 import DatePicker from "react-datepicker";
 import { useGetDachaQuery } from "../../servises/cottagesAPI";
 import { format } from "date-fns";
+import { useCreateBookingRequestMutation } from "../../servises/bookingsAPI";
+import { reformatDateForServer } from "../../helpers/reformatTime";
+import { priceFormatter } from "../../helpers/priceFormatter";
 
 export default function BookingPlace({ accommodation_type }) {
   const [date, setDate] = useState({});
@@ -33,6 +36,7 @@ export default function BookingPlace({ accommodation_type }) {
       const diffInMs = Math.abs(date.endDate - date.startDate);
       const oneDayInMs = 1000 * 60 * 60 * 24;
       const days = Math.ceil(diffInMs / oneDayInMs);
+
       setTotalDays(days);
 
       setBookingInfo({
@@ -40,8 +44,12 @@ export default function BookingPlace({ accommodation_type }) {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         price: cottage?.price,
+        adults: people,
+        children: 0,
+        contacts: "",
         overallPrice: Number(totalDays) * Number(cottage?.price),
-        accommodation_type: "cottage",
+        accommodation_type: "dacha",
+        accommodation_id: cottageId,
       });
     } else {
       setTotalDays(0);
@@ -129,7 +137,7 @@ export default function BookingPlace({ accommodation_type }) {
           <div className={styles["booking-action-price"]}>
             <p>{cottage.price_type}</p>
             <span>
-              {cottage.price} {t("booking_currency")}
+              {priceFormatter(cottage.price)} {t("booking_currency")}
             </span>
           </div>
         </div>
@@ -141,7 +149,8 @@ export default function BookingPlace({ accommodation_type }) {
         <div className={styles["booking-action-total-price"]}>
           <p>{t("total_to_pay")}:</p>
           <p>
-            {Number(totalDays) * Number(cottage.price)} {t("booking_currency")}
+            {priceFormatter(Number(totalDays) * Number(cottage.price))}{" "}
+            {t("booking_currency")}
           </p>
         </div>
 
@@ -163,16 +172,35 @@ export default function BookingPlace({ accommodation_type }) {
 
 const BookingConfirmation = ({ bookingInfo }) => {
   const { t } = useTranslation();
+
   const {
     startDate,
     endDate,
     accommodation_type,
+    accommodation_id,
+    adults,
+    children,
+    contacts,
     price,
     overallPrice,
     additionalPrice,
   } = bookingInfo;
 
-  console.log(overallPrice);
+  const [createBooking, { isLoading, error }] =
+    useCreateBookingRequestMutation();
+
+  // console.log(overallPrice);
+
+  const newBooking = {
+    end_day: reformatDateForServer(endDate),
+    start_day: reformatDateForServer(startDate),
+    requested_price: overallPrice,
+    accommodation_id: accommodation_id,
+    adults: adults,
+    children: children,
+    contacts: contacts,
+    accommodation_type: accommodation_type,
+  };
 
   return (
     <div className={styles["confirmation-modal"]}>
@@ -208,27 +236,35 @@ const BookingConfirmation = ({ bookingInfo }) => {
               ? t("cottages_title")
               : t("hotels_title")}
           </p>
-          <p>{price}</p>
+          <p>{priceFormatter(price)}</p>
         </div>
 
         {additionalPrice && (
           <div className={styles["confirmation-details-item"]}>
             <p>{t("additional")}</p>
-            <p>{additionalPrice}</p>
+            <p>{priceFormatter(additionalPrice)}</p>
           </div>
         )}
 
         <div className={styles["confirmation-details-item"]}>
           <p>{t("total_to_pay")}</p>
           <span>
-            {additionalPrice
-              ? Number(additionalPrice) + Number(overallPrice)
-              : overallPrice}
+            {overallPrice &&
+              (!additionalPrice
+                ? priceFormatter(overallPrice)
+                : priceFormatter(
+                    Number(additionalPrice) + Number(overallPrice)
+                  ))}
           </span>
         </div>
       </div>
 
-      <Button type="full-width-primary">{t("pay")}</Button>
+      <Button
+        type="full-width-primary"
+        onClick={() => createBooking({ ...newBooking })}
+      >
+        {t("pay")}
+      </Button>
     </div>
   );
 };

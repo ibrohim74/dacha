@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./FilterServices.module.css";
 import i18next from "i18next";
+import { CatalogueContext } from "../../context/CatalogueContext";
 
 const tags = [
   { id: "parking", name: i18next.t("tag_parking") },
@@ -12,20 +13,17 @@ const tags = [
 
 export default function FilterServices() {
   const [selectedTags, setSelectedTags] = useState([]);
+  const { updateFilter } = useContext(CatalogueContext);
 
-  const handleTagChange = (id) => {
-    const isSelected = selectedTags.includes(id);
-
-    setSelectedTags((prevSelectedTags) => {
-      if (isSelected) {
-        return prevSelectedTags.filter((tag) => tag !== id);
-      } else {
-        return [...prevSelectedTags, id];
-      }
-    });
-
-    console.log(selectedTags);
+  const handleTagChange = (tag) => {
+    const updatedSelectedTags = selectedTags.includes(tag)
+      ? selectedTags.filter((selectedTag) => selectedTag !== tag)
+      : [...selectedTags, tag];
+    setSelectedTags(updatedSelectedTags);
+    updateFilter({ tags: updatedSelectedTags });
   };
+
+  console.log(selectedTags);
 
   return (
     <ul className={styles["filter-tags"]}>

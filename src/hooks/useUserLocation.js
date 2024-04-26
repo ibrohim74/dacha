@@ -9,7 +9,7 @@ function useUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation?.getCurrentPosition(
         (position) => {
-          console.log(position);
+          // console.log(position);
           setUserLocation({
             latitude: position?.coords?.latitude,
             longitude: position?.coords?.longitude,
@@ -19,13 +19,13 @@ function useUserLocation() {
 
         (error) => {
           setError(error);
-          console.error("Error getting user location:", error);
+          // console.error("Error getting user location:", error);
         }
       );
     } else {
       setError({ message: "Geolocation is not supported by this browser." });
     }
-    console.log(userLocation);
+    // console.log(userLocation);
   };
 
   // useEffect(() => {
