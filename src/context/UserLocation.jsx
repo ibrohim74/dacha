@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { isEmptyObject } from "../helpers/isEmptyObj";
 
-function useUserLocation() {
+export const UserLocationContext = createContext();
+
+const UserLocationProvider = ({ children }) => {
   const [userLocation, setUserLocation] = useState({});
   const [emptyLocation, setEmptyLocation] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +17,6 @@ function useUserLocation() {
             latitude: position?.coords?.latitude,
             longitude: position?.coords?.longitude,
           });
-          localStorage.setItem("userLocation", JSON.stringify(userLocation));
         },
 
         (error) => {
@@ -29,11 +30,25 @@ function useUserLocation() {
     }
   };
 
-  console.log(userLocation);
-  console.log(JSON.stringify(userLocation));
-  console.log(localStorage.getItem("userLocation"));
+  if (!isEmptyObject(userLocation)) {
+    // console.log("setting into local storage", userLocation);
+    localStorage.setItem("userLocation", JSON.stringify(userLocation));
+  }
 
-  return { userLocation, emptyLocation, error, getUserLocation };
-}
+  // console.log(localStorage.getItem("userLocation"));
 
-export default useUserLocation;
+  return (
+    <UserLocationContext.Provider
+      value={{
+        userLocation,
+        getUserLocation,
+        error,
+        emptyLocation,
+      }}
+    >
+      {children}
+    </UserLocationContext.Provider>
+  );
+};
+
+export default UserLocationProvider;

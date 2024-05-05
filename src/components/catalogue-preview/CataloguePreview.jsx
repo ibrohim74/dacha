@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icons } from "../../assets/icons/icons";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
-import { GOOGLE_STORAGE_URL } from "../../processes/utils/consts";
+import {
+  GOOGLE_STORAGE_URL,
+  PRODUCT_ROUTE,
+} from "../../processes/utils/consts";
 import { splitImagePaths } from "../../helpers/splitImagePath";
 import Loader from "../loader/Loader";
 
@@ -42,6 +45,7 @@ export default function CataloguePreview({
             {slicedItems.map((item) => (
               <CataloguePreviewCard
                 key={item.id}
+                id={item.id}
                 title={item.title}
                 location={item.location_name}
                 price={item.price}
@@ -64,10 +68,14 @@ export default function CataloguePreview({
   );
 }
 
-function CataloguePreviewCard({ title, location, price, image, rating }) {
+function CataloguePreviewCard({ id, title, location, price, image, rating }) {
   const MAX_LOCATION_LENGTH = 40;
+  const navigate = useNavigate();
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    const path = PRODUCT_ROUTE.replace(":id", id);
+    navigate(path);
+  };
 
   const images = splitImagePaths(image);
 
@@ -89,8 +97,8 @@ function CataloguePreviewCard({ title, location, price, image, rating }) {
       />
       <div className={styles["card-infobox"]}>
         <div className={styles["card-info"]}>
-          <h4>{title}</h4>
-          <p onClick={handleClick}>{locationText}</p>
+          <h4 onClick={handleClick}>{title}</h4>
+          <p>{locationText}</p>
           <div className={styles["card-info-distance"]}>
             <Icons.LocationPin /> 4.5 KM
           </div>

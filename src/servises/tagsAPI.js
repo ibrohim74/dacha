@@ -76,7 +76,7 @@ export const getAccommodationTags = async (
     const response = await $authHost.get(
       `/${accommodation_type}/${accommodation_id}/tags`
     );
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching accommodation tags:", error);

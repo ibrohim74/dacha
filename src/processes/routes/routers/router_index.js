@@ -12,10 +12,9 @@ const RouterIndex = () => {
         {Public.map(({ path, Component }) => (
           <Route key={path} path={path} element={Component} />
         ))}
-        {token &&
-          Layout.map(({ path, Component }) => (
-            <Route key={path} path={`${path}/*`} element={Component} />
-          ))}
+        {Layout.map(({ path, Component }) => (
+          <Route key={path} path={`${path}/*`} element={Component} />
+        ))}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -21,12 +21,15 @@ import {
   setUserField,
 } from "../../../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
+import { updateAuthHeader } from "../../../processes/http/http";
+import { setAccessToken } from "../../../servises/tokenStorage";
 
 const Login = () => {
-  const { password, username } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const { password, username } = useSelector((state) => state.auth.user);
 
   console.log(localStorage.getItem("token"));
 
@@ -47,9 +50,11 @@ const Login = () => {
     if (username && password) {
       loginAPI(data).then((res) => {
         console.log("login token", res);
-        // localStorage.setItem("token");
         if (res.status === 200) {
-          console.log(res);
+          localStorage.setItem("token", res?.data?.access_token);
+          // setAccessToken(res.data.access_token);
+          // updateAuthHeader(res.data.access_token);
+          // console.log(res);
           dispatch(setSignedIn(res.data));
           navigate(HOME_ROUTE);
         } else {
@@ -111,57 +116,3 @@ const Login = () => {
 };
 
 export default Login;
-
-{
-  /* <div className={styles[""]}>
-  
-<div className={styles[""]}>
-  <div className={styles[""]}>
-    <Icons.Logo />
-    <div>Travid</div>
-  </div>
-  <span className={styles[""]}>Войти в учётный запись</span>
-  <div autoComplete={"new-login"} className={styles[""]}>
-    <div className={styles[""]}>
-      <label htmlFor="username">имя пользователя</label>
-      <input
-        type="text"
-        id="username"
-        autoComplete={"new-email"}
-        value={initialState?.email}
-        onChange={(e) =>
-          setInitialState({ ...initialState, email: e.target.value })
-        }
-      />
-    </div>
-
-    <div className={styles[""]}>
-      <label htmlFor="password">Пароль</label>
-      <input
-        type="password"
-        id="password"
-        autoComplete={"new-password"}
-        value={initialState?.password}
-        onChange={(e) =>
-          setInitialState({ ...initialState, password: e.target.value })
-        }
-      />
-    </div>
-    <Link to={FORGOT_PASSWORD}>
-      {" "}
-      <span className={styles[""]}>Забыли пароль ?</span>
-    </Link>
-    {isLoading ? (
-      <div className={styles[""]}>
-        <LoadingOutlined />
-      </div>
-    ) : (
-      <div className={styles[""]} onClick={handleSend}>
-        <button>Войти</button>
-      </div>
-    )}
-  </div>
-</div>
-<Link to={REGISTER_ROUT}>Зарегистрироваться</Link>
-</div> */
-}

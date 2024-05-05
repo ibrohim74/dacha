@@ -16,7 +16,8 @@
   display: block;
 }
 
-.filter-box:hover {
+.filter-box:hover,
+.filter-box-selected {
   background-color: var(--brand-color-1);
 }
 

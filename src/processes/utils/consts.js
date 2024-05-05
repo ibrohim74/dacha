@@ -1,4 +1,4 @@
-export const BASE_URL = "https://visitca.travel/api/";
+export const BASE_URL = "https://visitca.travel/api";
 export const GOOGLE_STORAGE_URL = "https://storage.googleapis.com";
 
 //Public routes
@@ -55,3 +55,7 @@ export const LANGUAGES = [
   { label: "Russian", code: "ru" },
   { label: "Uzbek", code: "uz" },
 ];
+
+export const ACCESS_TOKEN_KEY = "accessToken";
+export const ACCESS_TOKEN_VERSION_KEY = "accessTokenVersion";
+export const ACCESS_TOKEN_VERSION = "1";

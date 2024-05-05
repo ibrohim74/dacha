@@ -7,6 +7,7 @@ import { LanguageProvider } from "./context/LangContext";
 import store from "../src/store/store";
 import { Provider } from "react-redux";
 import CatalogueProvider from "./context/CatalogueContext";
+import UserLocationProvider from "./context/UserLocation";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,9 @@ root.render(
     <Provider store={store}>
       <LanguageProvider>
         <CatalogueProvider>
-          <App />
+          <UserLocationProvider>
+            <App />
+          </UserLocationProvider>
         </CatalogueProvider>
       </LanguageProvider>
     </Provider>

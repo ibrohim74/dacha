@@ -70,6 +70,12 @@
 .card-info h4 {
   font-size: 18px;
   color: var(--font-color-main);
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.card-info h4:hover {
+  text-decoration: underline;
 }
 
 .card-info p {

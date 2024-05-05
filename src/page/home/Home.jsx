@@ -1,40 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   COTTAGES_CATALOGUE_ROUTE,
-  HOSTEL,
   HOTELS_CATALOGUE_ROUTE,
-  VILLAS_ROUTE,
 } from "../../processes/utils/consts";
-import styles from "./home.module.css";
-import { getAllDacha, GetAllHostel } from "./API/homeAPI";
 import HeroBox from "../../components/HeroBox/HeroBox";
 import Categories from "../../components/categories/Categories";
 import CataloguePreview from "../../components/catalogue-preview/CataloguePreview";
 import { useTranslation } from "react-i18next";
 import AppLayout from "../../components/appLayout/AppLayout";
-import { BookingCard } from "../../components/bookings/Bookings";
 import LocationRequest from "../../components/location-request/LocationRequest";
-import useUserLocation from "../../hooks/useUserLocation";
 import { useGetAllDachasQuery } from "../../servises/cottagesAPI";
+import { useGetAllHotelsQuery } from "../../servises/hotelsAPI";
+import { UserLocationContext } from "../../context/UserLocation";
 
 const Home = () => {
-  const [hostel, setHostel] = useState([]);
-  const [buttonAllDach, setButtonAllDach] = useState(1);
-  const [buttonAllHotel, setButtonAllHotel] = useState(1);
   const { t } = useTranslation();
   const elementsRef = useRef(null);
 
-  const { data: cottages, isLoadongCottages } = useGetAllDachasQuery();
+  const { data: cottages, isLoading: isLoadongCottages } =
+    useGetAllDachasQuery();
+  const { data: hotels, isLoading: isLoadingHotels } = useGetAllHotelsQuery();
 
-  const { userLocation, emptyLocation } = useUserLocation();
+  const { userLocation } = useContext(UserLocationContext);
+  const location = localStorage.getItem("userLocation");
 
-  useEffect(() => {
-    GetAllHostel(buttonAllHotel).then((r) => {
-      if (r?.status === 200) {
-        setHostel(r.data);
-      }
-    });
-  }, [buttonAllHotel]);
+  // console.log(userLocation);
 
   return (
     <>
@@ -49,12 +39,12 @@ const Home = () => {
           title={t("cottages_title")}
         />
         <CataloguePreview
-          items={hostel}
+          items={hotels}
           route={HOTELS_CATALOGUE_ROUTE}
           title={t("hotels_title")}
         />
       </AppLayout>
-      {emptyLocation && <LocationRequest />}
+      {!location && <LocationRequest />}
     </>
   );
 };

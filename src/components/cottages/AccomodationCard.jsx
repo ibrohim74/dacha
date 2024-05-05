@@ -8,7 +8,10 @@ import {
 import { Icons } from "../../assets/icons/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useCreateFeaturedMutation } from "../../servises/featuredAPI";
+import {
+  useCreateFeaturedMutation,
+  useGetUserFeaturedQuery,
+} from "../../servises/featuredAPI";
 import { useGetAccommodationTagsQuery } from "../../servises/tagsAPI";
 import { splitImagePaths } from "../../helpers/splitImagePath";
 
@@ -16,6 +19,8 @@ export default function AccomodationCard({ accommodation }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const { id: userId } = useSelector((state) => state?.auth?.user);
 
   const {
     id,
@@ -30,7 +35,17 @@ export default function AccomodationCard({ accommodation }) {
     type,
   } = accommodation;
 
-  const acc_type = "dacha";
+  const {
+    data: favourites,
+    error: errorFavourites,
+    isLoading: isLoadingFavourites,
+  } = useGetUserFeaturedQuery(userId);
+
+  const isFavourite = (accommodation_id) => {
+    return favourites?.some(
+      (favourite) => favourite?.accommodation_id === accommodation_id
+    );
+  };
 
   const images = splitImagePaths(photos_path);
 
@@ -39,6 +54,8 @@ export default function AccomodationCard({ accommodation }) {
     type
   );
   const [mutate, error, isLoading] = useCreateFeaturedMutation();
+
+  // console.log(favourites);
 
   const handleAddFavourites = async (id, type) => {
     const accType = type ? "dacha" : "hotel";
@@ -121,7 +138,7 @@ export default function AccomodationCard({ accommodation }) {
             className={styles["add-fav"]}
             onClick={() => handleAddFavourites(id, type)}
           >
-            <Icons.StarEmpty />
+            {isFavourite(id) ? <Icons.StarFull /> : <Icons.StarEmpty />}
           </div>
         </div>
       </div>

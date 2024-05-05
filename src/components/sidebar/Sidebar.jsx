@@ -7,6 +7,7 @@ import {
   SELLER_DASHBOARD,
   BOOKING_ROUTE,
   FAVORITES,
+  GOOGLE_STORAGE_URL,
 } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
 import { useTranslation } from "react-i18next";
@@ -17,19 +18,14 @@ import PaymentMethods from "../payment-methods/PaymentMethods";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { useSelector } from "react-redux";
 import Support from "../support/Support";
+import { useGetUserQuery } from "../../servises/usersAPI";
 
 export default function Sidebar({ close, onLogout }) {
-  const { username, phone, role, image_path } = useSelector(
+  const { id, username, phone, role, image_path } = useSelector(
     (state) => state.auth.user
   );
-
-  // console.log(image_path);
-
-  const [imgProfile, setImgProfile] = useState();
-  const [loadingImg, setLoadingImg] = useState(false);
   const JWT = jwtDecode(localStorage.getItem("token"));
   const { t } = useTranslation();
-  // console.log(username);
 
   const ref = useOutsideClick({ handler: close });
 
@@ -45,7 +41,7 @@ export default function Sidebar({ close, onLogout }) {
             <img
               src={
                 image_path
-                  ? `https://visitca.travel/api/${image_path}`
+                  ? `${GOOGLE_STORAGE_URL}${image_path}`
                   : require("../../assets/profile_placeholder.jpg")
               }
               alt="profile avatar placeholder"
@@ -103,7 +99,7 @@ export default function Sidebar({ close, onLogout }) {
             </Modal.Open>
             <Link className={styles["sidebar-link"]} onClick={onLogout}>
               <Icons.Logout />
-              <div className={styles["sidebar-link-item"]}>Выйти</div>
+              <div className={styles["sidebar-link-item"]}>{t("logout")}</div>
             </Link>
           </div>
         </div>

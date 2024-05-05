@@ -9,26 +9,28 @@ import Breadcrumb_dashboard from "../breadcrumb_dashboard/breadcrumb_dashboard";
 import { useGetDachaQuery } from "../../servises/cottagesAPI";
 import { useGetCustomerBookingsQuery } from "../../servises/bookingsAPI";
 import { useGetUserQuery } from "../../servises/usersAPI";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BookingCard } from "./BookingCard";
 import { useGetReviewByIdQuery } from "../../servises/reviewsAPI";
 import Loader from "../loader/Loader";
+import { setNewUser } from "../../store/auth/authSlice";
 
 export default function Bookings() {
   const { t } = useTranslation();
   const { id } = useSelector((state) => state.auth.user);
-
   const { data: cottage, isLoading: isLoadingCottage } = useGetDachaQuery(1);
 
+  console.log(id);
+
   const { data: userBookings, isLoading: isLoadingBookings } =
-    useGetCustomerBookingsQuery(id);
+    useGetCustomerBookingsQuery({ customer_id: id, status: "awaiting" });
 
   const { data: userReview, isLoading: isLoadingReview } =
     useGetReviewByIdQuery(2);
 
-  console.log(cottage);
+  // console.log(cottage);
 
-  console.log(userReview);
+  // console.log(userReview);
 
   console.log(userBookings);
 

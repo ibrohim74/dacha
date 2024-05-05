@@ -20,8 +20,8 @@ export const updateUser = async (data) => {
 };
 
 export const getUser = async () => {
+  console.log(JWT);
   try {
-    console.log(JWT);
     const res = await $host.get("user/" + JWT.userId);
     store.dispatch(setNewUser(res.data));
   } catch (e) {
@@ -29,7 +29,16 @@ export const getUser = async () => {
   }
 };
 
-export const logout = () => {
-  localStorage.removeItem("token");
-  window.location.assign(HOME_ROUTE);
+// export const logout = () => {
+//   localStorage.removeItem("token");
+//   window.location.assign(HOME_ROUTE);
+// };
+
+export const logout = async () => {
+  return new Promise((resolve) => {
+    localStorage.removeItem("token");
+    resolve();
+  }).then(() => {
+    window.location.assign(HOME_ROUTE);
+  });
 };

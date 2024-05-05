@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE } from "../../processes/utils/consts";
+import { GOOGLE_STORAGE_URL, LOGIN_ROUTE } from "../../processes/utils/consts";
 import { Icons } from "../../assets/icons/icons";
-import { jwtDecode } from "jwt-decode";
-import { $authHost, $host } from "../../processes/http/http";
 import Sidebar from "../sidebar/Sidebar";
 import Button from "../Button/Button";
-// import styles from "./Header.module.css";
 import styles from "./header.module.css";
 import LangDropdown from "../lang-dropdown/LangDropdown";
 import { useTranslation } from "react-i18next";
@@ -14,8 +11,7 @@ import Logo from "../logo/Logo";
 import SearchInput from "../searchInput/SearchInput";
 import { Badge } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, logout } from "../../store/profile/profileActions";
-import { setSignedIn, setToken } from "../../store/auth/authSlice";
+import { logout } from "../../store/profile/profileActions";
 import Modal from "../modal/Modal";
 import Notifications from "../notifications/Notifications";
 
@@ -25,13 +21,13 @@ const Header = (props, { elementsRef }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [userRequest, setUserRequest] = useState([]);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const { id, username, image_path, role } = useSelector(
     (state) => state.auth.user
   );
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  // console.log(isAuth);
 
   const handleShowSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -43,45 +39,11 @@ const Header = (props, { elementsRef }) => {
     setShowSidebar(false);
   };
 
-  //check this
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-    if (token) {
-      dispatch(setToken(token));
-      getUser();
-    }
-  }, [dispatch]);
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const searchTerm = event.target.elements.search.value;
-    navigate(`/villas?search=${searchTerm}`);
-  };
-
-  // const getRequestsUser = async () => {
-  //   if (role === "seller") {
-  //     try {
-  //       const res = await $authHost.get(`/seller/${id}/requests`);
-  //       console.log(res);
-  //       setUserRequest(res?.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   } else if (role === "user") {
-  //     try {
-  //       const res = await $authHost.get(`/customer/${id}/requests`);
-  //       console.log(res);
-  //       setUserRequest(res?.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   }
+  // const handleSearch = (event) => {
+  //   event.preventDefault();
+  //   const searchTerm = event.target.elements.search.value;
+  //   navigate(`/villas?search=${searchTerm}`);
   // };
-
-  // useEffect(() => {
-  //   getRequestsUser();
-  // }, [role]);
 
   return (
     <Modal>
@@ -91,7 +53,7 @@ const Header = (props, { elementsRef }) => {
       >
         <div className={styles["header-left"]}>
           <Logo />
-          <SearchInput elementsRef={elementsRef} />
+          {/* <SearchInput elementsRef={elementsRef} /> */}
         </div>
 
         <div className={styles["header-right"]}>
@@ -139,7 +101,7 @@ const Header = (props, { elementsRef }) => {
                 <img
                   src={
                     image_path
-                      ? `https://visitca.travel/api/${image_path}`
+                      ? `${GOOGLE_STORAGE_URL}${image_path}`
                       : require("../../assets/profile_placeholder.jpg")
                   }
                   alt="profile avatar placeholder"
@@ -149,7 +111,7 @@ const Header = (props, { elementsRef }) => {
               </div>
               {showSidebar && (
                 <Sidebar
-                  onLogout={() => logout()}
+                  onLogout={logout}
                   close={() => setShowSidebar(false)}
                 />
               )}

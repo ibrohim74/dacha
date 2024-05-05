@@ -7,35 +7,37 @@ import AppLayout from "../appLayout/AppLayout";
 import StarRating from "../starRating/StarRating";
 import Button from "../Button/Button";
 import { Icons } from "../../assets/icons/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllDacha } from "../../page/home/API/homeAPI";
+import { useSelector } from "react-redux";
 import {
   useDeleteFeaturedMutation,
   useGetUserFeaturedQuery,
 } from "../../servises/featuredAPI";
+import { useGetAllDachasQuery } from "../../servises/cottagesAPI";
+import Loader from "../loader/Loader";
 
 export default function Favorites() {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { id } = useSelector((state) => state.auth.user);
+  const { id } = useSelector((state) => state?.auth?.user);
 
-  const { data: favourites, error, isLoading } = useGetUserFeaturedQuery(id);
-  // console.log(favourites);
+  console.log(id);
 
-  //temporary solution
-  const [cottages, setCottages] = useState([]);
+  const {
+    data: favourites,
+    error,
+    isLoading: isLoadingFavourites,
+  } = useGetUserFeaturedQuery(id);
 
-  useEffect(() => {
-    getAllDacha()
-      .then((response) => {
-        // console.log(response.data);
-        setCottages(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+  // console.log(id, favourites);
 
+  const [favoutiteCottages, setFavoutiteCottages] = useState([]);
+
+  const {
+    data: cottages,
+    error: errorCottages,
+    isLoading: isLoadingCottages,
+  } = useGetAllDachasQuery();
+
+  //export to separate logic
   const mappedFavourites = favourites?.reduce((acc, current) => {
     const type = current.accommodation_type;
     acc[type] = acc[type] || [];
@@ -43,33 +45,23 @@ export default function Favorites() {
     return acc;
   }, {});
 
-  console.log(mappedFavourites);
+  useEffect(() => {
+    const favCottages = favourites?.map((favItem) => {
+      const matchedCottage = cottages?.find(
+        (cottage) => cottage.id === favItem.accommodation_id
+      );
 
-  function findCottageByFavItem(cottages, favourites) {
-    // return useMemo(() => {
-    const matchedCottages = [];
-    const favItemIds = [];
-
-    for (const item of favourites) {
-      favItemIds.push(item.accommodation_id);
-    }
-
-    for (const cottage of cottages) {
-      for (const favId of favItemIds) {
-        if (cottage.id === favId) {
-          matchedCottages.push(cottage);
-        }
+      if (matchedCottage) {
+        return { ...matchedCottage, fav_id: favItem.id };
+      } else {
+        return null;
       }
-    }
-    return matchedCottages;
-    // }, [cottages, favourites]);
-  }
+    });
 
-  let favCottages = [];
+    setFavoutiteCottages(favCottages);
+  }, [favourites]);
 
-  if (favourites) {
-    favCottages = findCottageByFavItem(cottages, favourites);
-  }
+  // console.log(favoutiteCottages);
 
   return (
     <AppLayout>
@@ -87,13 +79,13 @@ export default function Favorites() {
             label: t("cottages_title"),
             content: (
               <>
-                {isLoading && <p>Loading...</p>}
-                {!favCottages.length && (
+                {(isLoadingFavourites || isLoadingCottages) && <Loader />}
+                {!favoutiteCottages?.length && (
                   <EmptyTab placeholderText={t("favs_placeholder")} />
                 )}
-                {favCottages.length > 0 && (
+                {favoutiteCottages?.length > 0 && (
                   <div className={styles["favs-tab"]}>
-                    {favCottages.map((favCottage) => (
+                    {favoutiteCottages?.map((favCottage) => (
                       <FavouriteItemCard
                         favoriteItem={favCottage}
                         key={favCottage.id}
@@ -120,11 +112,19 @@ export default function Favorites() {
 
 const FavouriteItemCard = ({ favoriteItem }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { id, title, info, location_name, rating, ratingStar, reviews_number } =
-    favoriteItem;
+  const {
+    fav_id,
+    id,
+    title,
+    info,
+    location_name,
+    rating,
+    ratingStar,
+    reviews_number,
+  } = favoriteItem;
 
   const [mutate] = useDeleteFeaturedMutation();
+  console.log(fav_id);
 
   return (
     <div className={styles["fav-card"]}>
@@ -146,7 +146,7 @@ const FavouriteItemCard = ({ favoriteItem }) => {
         </span>
       </div>
 
-      <Button type="icon-red" onClick={() => mutate(id)}>
+      <Button type="icon-red" onClick={() => mutate(fav_id)}>
         <Icons.Remove />
       </Button>
     </div>

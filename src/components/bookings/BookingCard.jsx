@@ -94,7 +94,7 @@ export const BookingCard = ({ booking }) => {
                   <Edit />
                 </Button>
               </Modal.Open>
-              <Button type="functional-icon" onClick={() => deleteReview(2)}>
+              <Button type="functional-icon" onClick={() => deleteReview(4)}>
                 <DeleteOutline />
               </Button>
             </div>

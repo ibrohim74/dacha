@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../Button/Button";
 import styles from "./LocationRequest.module.css";
-import useUserLocation from "../../hooks/useUserLocation";
+import { UserLocationContext } from "../../context/UserLocation";
 
 export default function LocationRequest() {
   const { t } = useTranslation();
-  const { getUserLocation } = useUserLocation();
+  const { getUserLocation } = useContext(UserLocationContext);
 
   return (
     <div className={styles["location-request-container"]}>

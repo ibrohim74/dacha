@@ -11,10 +11,10 @@ import SellerDashboard_cotteg from "./component/cotteg_and_hotels/sellerDashboar
 import SellerDashboard_hotels from "./component/cotteg_and_hotels/sellerDashboard_hotels";
 
 const SellerDashboard = () => {
-    const [activeTab, setActiveTab] = useState(0);
-    const [activeTabCottage_Hotels, setActiveTabCottage_Hotels] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeTabCottage_Hotels, setActiveTabCottage_Hotels] = useState(0);
 
-    return (
+  return (
     <>
       <div className={container.container} style={{ marginTop: "50px" }}>
         <div className={style.titleDashboard}>

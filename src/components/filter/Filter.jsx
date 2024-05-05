@@ -11,6 +11,7 @@ import FilterServices from "../filter-services/FilterServices";
 import { CatalogueContext } from "../../context/CatalogueContext";
 import { useGetAllTagsQuery } from "../../servises/tagsAPI";
 import i18next from "i18next";
+import { FilterBox } from "./FilterBox";
 
 export default function Filter({ priceRange, currentTab }) {
   const { t } = useTranslation();
@@ -20,6 +21,7 @@ export default function Filter({ priceRange, currentTab }) {
     useContext(CatalogueContext);
 
   const [selectedTags, setSelectedTags] = useState(filterParams.tags || []);
+  const [isSelected, setIsSelected] = useState(false);
 
   // const { data: allTags } = useGetAllTagsQuery();
   // console.log(allTags);
@@ -38,6 +40,7 @@ export default function Filter({ priceRange, currentTab }) {
   };
   const handleRatingChange = (value) => {
     updateFilter({ minRating: value });
+    setIsSelected(!isSelected);
   };
 
   const handleTagChange = (tag) => {
@@ -202,14 +205,6 @@ export default function Filter({ priceRange, currentTab }) {
       <Button type="full-width-gray" onClick={resetAllFilters}>
         {t("filter_clear_btn")}
       </Button>
-    </div>
-  );
-}
-
-function FilterBox({ children, onClick }) {
-  return (
-    <div className={styles["filter-box"]} onClick={onClick}>
-      {children}
     </div>
   );
 }

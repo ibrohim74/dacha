@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { $authHost, $host } from "../../processes/http/http";
 import { Box } from "@mui/material";
-import Header_adminPage from "../../components/header_adminPage";
 import { message, notification } from "antd";
 import styles from "./profile.module.css";
-import {
-  getUser,
-  logout,
-  sendProfile_data,
-  updateUser,
-} from "../../store/profile/profileActions";
+import { logout } from "../../store/profile/profileActions";
 import { Icons } from "../../assets/icons/icons";
-import EditInput from "../../components/edit-input/edit-input";
-import AppLayout from "../../components/appLayout/AppLayout";
 import PageHeader from "../../components/page-header/PageHeader";
 import FullPageTabs from "../../components/full-page-tabs/FullPageTabs";
 import { useTranslation } from "react-i18next";
@@ -24,39 +15,44 @@ import Logout, { DeleteAccount } from "../../components/logout/Logout";
 import ProfileImage from "../../components/profile-image/ProfileImage";
 import ChangePassword from "../../components/change-password/ChangePassword";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserField } from "../../store/auth/authSlice";
+import { setNewUser, setUserField } from "../../store/auth/authSlice";
 import { changePassword } from "../../store/auth/authActions";
-import { useUpdateUserMutation } from "../../servises/usersAPI";
+import {
+  useGetUserQuery,
+  useUpdateUserMutation,
+} from "../../servises/usersAPI";
+import Loader from "../../components/loader/Loader";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const [changePassword, setChangePassword] = useState(false);
+  const [updatedProfileFields, setUpdatedProfileFields] = useState({});
+  const [notifications, contextHolder] = notification.useNotification();
+  const [initialState, setInitialState] = useState({});
+  const [authOption, setAuthOption] = useState("phone");
+
   const JWT = localStorage.getItem("token")
     ? jwtDecode(localStorage.getItem("token"))
     : null;
 
-  const [notifications, contextHolder] = notification.useNotification();
-  const [initialState, setInitialState] = useState({});
+  console.log(localStorage.getItem("token"));
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const dispatch = useDispatch();
-
-  const [changePassword, setChangePassword] = useState(false);
-  const [updatedProfileFields, setUpdatedProfileFields] = useState({});
-
-  const handleFieldEditing = (e, fieldname) => {
-    dispatch(setUserField({ field: fieldname, value: e.target.value }));
-    setUpdatedProfileFields({ field: fieldname, value: e.target.value });
-  };
+  const {
+    data: userData,
+    isLoading: isLoadingUser,
+    isSuccess,
+  } = useGetUserQuery(JWT.userId);
 
   const { id, username, firstName, lastName, email, phone_number, image_path } =
     useSelector((state) => state.auth.user);
 
-  // console.log(id);
+  const handleFieldEditing = (e, fieldname) => {
+    dispatch(setUserField({ field: fieldname, value: e.target.value }));
+    setUpdatedProfileFields({ [fieldname]: e.target.value });
+  };
 
-  const user = useSelector((state) => state.auth.user);
-  // console.log(user);
+  console.log(updatedProfileFields);
 
   const updatedUser = {
     username: username,
@@ -71,10 +67,7 @@ const Profile = () => {
       : phone_number,
   };
 
-  console.log(updatedUser);
-
-  const [authOption, setAuthOption] = useState("phone");
-  const { t } = useTranslation();
+  // console.log(updatedUser);
 
   const handleAuthOption = (isChecked, optionValue) => {
     if (isChecked) {
@@ -82,20 +75,13 @@ const Profile = () => {
     }
   };
 
-  const [updateUserData, { isLoading, error }] = useUpdateUserMutation();
+  const [updateUserData, { isLoading, isSuccess: successfullyUpdated, error }] =
+    useUpdateUserMutation();
 
-  const handleSend = () => {
-    updateUserData({ user_id: id, ...updatedUser });
-    // console.log(updatedUser);
-    // try {
-    //   const response = await updateUserData(id, updatedUser);
-    //   console.log(updatedUser);
-    //   if (response.isSuccess) {
-    //     message.success("Update successful!");
-    //   }
-    // } catch (error) {
-    //   console.error("Error updating user data:", error);
-    // }
+  const handleUpdate = () => {
+    console.log("profile", id);
+    console.log("profile", localStorage.getItem("token"));
+    updateUserData({ user_id: id, ...updatedProfileFields });
   };
 
   const handleChangePassword = async () => {
@@ -107,161 +93,169 @@ const Profile = () => {
   };
 
   return (
-    <AppLayout>
+    <>
       <PageHeader
         pageTitle={t("profile_title")}
         pageSubtitle={t("profile_subtitle")}
       />
-      <Modal>
-        <FullPageTabs
-          tabs={[
-            {
-              label: t("profile_first_tab"),
-              content: (
-                <Box className={styles["profile-tab"]}>
-                  {contextHolder}
+      {isLoadingUser ? (
+        <Loader />
+      ) : (
+        <Modal>
+          <FullPageTabs
+            tabs={[
+              {
+                label: t("profile_first_tab"),
+                content: (
+                  <Box className={styles["profile-tab"]}>
+                    {contextHolder}
 
-                  <ProfileImage image_path={image_path} />
+                    <ProfileImage image_path={image_path} />
 
-                  <div className={styles["profile-form"]}>
-                    <div className={styles["profile-input-row"]}>
-                      <div className={styles["profile-input-box"]}>
-                        <label htmlFor="firstName">
-                          {t("profile_form_name")}
-                        </label>
-                        <input
-                          className={styles["profile-input"]}
-                          value={firstName}
-                          onChange={(e) => {
-                            handleFieldEditing(e, "firstName");
-                          }}
-                        />
+                    <div className={styles["profile-form"]}>
+                      <div className={styles["profile-input-row"]}>
+                        <div className={styles["profile-input-box"]}>
+                          <label htmlFor="firstName">
+                            {t("profile_form_name")}
+                          </label>
+                          <input
+                            className={styles["profile-input"]}
+                            value={firstName}
+                            onChange={(e) => {
+                              handleFieldEditing(e, "firstName");
+                            }}
+                          />
+                        </div>
+
+                        <div className={styles["profile-input-box"]}>
+                          <label htmlFor="lastName">
+                            {t("profile_form_surname")}
+                          </label>
+                          <input
+                            className={styles["profile-input"]}
+                            value={lastName}
+                            onChange={(e) => {
+                              handleFieldEditing(e, "lastName");
+                            }}
+                          />
+                        </div>
                       </div>
 
-                      <div className={styles["profile-input-box"]}>
-                        <label htmlFor="lastName">
-                          {t("profile_form_surname")}
-                        </label>
-                        <input
-                          className={styles["profile-input"]}
-                          value={lastName}
-                          onChange={(e) => {
-                            handleFieldEditing(e, "lastName");
-                          }}
-                        />
+                      <div className={styles["profile-input-row"]}>
+                        <div className={styles["profile-input-box"]}>
+                          <label htmlFor="phone_number">
+                            {t("profile_form_phone")}
+                          </label>
+                          <input
+                            className={styles["profile-input"]}
+                            value={phone_number}
+                            onChange={(e) => {
+                              handleFieldEditing(e, "phone_number");
+                            }}
+                          />
+                        </div>
+                        <div className={styles["profile-input-box"]}>
+                          <label htmlFor="email">
+                            {t("profile_form_email")}
+                          </label>
+                          <input
+                            className={styles["profile-input"]}
+                            value={email}
+                            onChange={(e) => {
+                              handleFieldEditing(e, "email");
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles["profile-input-row"]}>
-                      <div className={styles["profile-input-box"]}>
+                      {changePassword && (
+                        <ChangePassword
+                          passwords={initialState}
+                          onSetPasswords={setInitialState}
+                        />
+                      )}
+
+                      <div className={styles["profile-checkboxes"]}>
                         <label htmlFor="phone_number">
-                          {t("profile_form_phone")}
+                          {t("profile_auth")}
                         </label>
-                        <input
-                          className={styles["profile-input"]}
-                          value={phone_number}
-                          onChange={(e) => {
-                            handleFieldEditing(e, "phone_number");
-                          }}
-                        />
-                      </div>
-                      <div className={styles["profile-input-box"]}>
-                        <label htmlFor="email">{t("profile_form_email")}</label>
-                        <input
-                          className={styles["profile-input"]}
-                          value={email}
-                          onChange={(e) => {
-                            handleFieldEditing(e, "email");
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {changePassword && (
-                      <ChangePassword
-                        passwords={initialState}
-                        onSetPasswords={setInitialState}
-                      />
-                    )}
-
-                    <div className={styles["profile-checkboxes"]}>
-                      <label htmlFor="phone_number">{t("profile_auth")}</label>
-                      <div className={styles["profile-checkbox-row"]}>
-                        <Checkbox
-                          isChecked={authOption === "phone"}
-                          onChange={(isChecked) =>
-                            handleAuthOption(isChecked, "phone")
-                          }
-                          label={t("profile_form_phone")}
-                        />
-                        <Checkbox
-                          isChecked={authOption === "email"}
-                          onChange={(isChecked) =>
-                            handleAuthOption(isChecked, "email")
-                          }
-                          label={t("profile_form_email")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles["profile-change-btns"]}>
-                    <Button type="full-width-primary" onClick={handleSend}>
-                      {t("save")}
-                    </Button>
-                    <Button
-                      type="full-width-primary"
-                      onClick={
-                        changePassword
-                          ? handleChangePassword
-                          : () => {
-                              setChangePassword(!changePassword);
+                        <div className={styles["profile-checkbox-row"]}>
+                          <Checkbox
+                            isChecked={authOption === "phone"}
+                            onChange={(isChecked) =>
+                              handleAuthOption(isChecked, "phone")
                             }
-                      }
-                    >
-                      {changePassword
-                        ? "Применить изменения"
-                        : t("change_password_btn")}
-                    </Button>
-                  </div>
+                            label={t("profile_form_phone")}
+                          />
+                          <Checkbox
+                            isChecked={authOption === "email"}
+                            onChange={(isChecked) =>
+                              handleAuthOption(isChecked, "email")
+                            }
+                            label={t("profile_form_email")}
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className={styles["profile-btns"]}>
-                    <Modal.Open opens="logout">
-                      <Button type="full-width-gray">
-                        <Icons.Logout />
-                        {t("profile_logout")}
+                    <div className={styles["profile-change-btns"]}>
+                      <Button type="full-width-primary" onClick={handleUpdate}>
+                        {t("save")}
                       </Button>
-                    </Modal.Open>
-
-                    <Modal.Open opens="deleteacc">
-                      <Button type="full-width-gray">
-                        <Icons.Remove />
-                        {t("profile_delete_account")}
+                      <Button
+                        type="full-width-primary"
+                        onClick={
+                          changePassword
+                            ? handleChangePassword
+                            : () => {
+                                setChangePassword(!changePassword);
+                              }
+                        }
+                      >
+                        {changePassword
+                          ? "Применить изменения"
+                          : t("change_password_btn")}
                       </Button>
-                    </Modal.Open>
-                  </div>
-                </Box>
-              ),
-            },
-            {
-              label: t("profile_second_tab"),
-              content: (
-                <Box className={styles["profile-tab"]}>
-                  <PaymentMethods />
-                </Box>
-              ),
-            },
-          ]}
-        />
+                    </div>
 
-        <Modal.Window name="logout">
-          <Logout onLogOut={logout} />
-        </Modal.Window>
-        <Modal.Window name="deleteacc">
-          <DeleteAccount />
-        </Modal.Window>
-      </Modal>
-    </AppLayout>
+                    <div className={styles["profile-btns"]}>
+                      <Modal.Open opens="logout">
+                        <Button type="full-width-gray">
+                          <Icons.Logout />
+                          {t("profile_logout")}
+                        </Button>
+                      </Modal.Open>
+
+                      <Modal.Open opens="deleteacc">
+                        <Button type="full-width-gray">
+                          <Icons.Remove />
+                          {t("profile_delete_account")}
+                        </Button>
+                      </Modal.Open>
+                    </div>
+                  </Box>
+                ),
+              },
+              {
+                label: t("profile_second_tab"),
+                content: (
+                  <Box className={styles["profile-tab"]}>
+                    <PaymentMethods />
+                  </Box>
+                ),
+              },
+            ]}
+          />
+
+          <Modal.Window name="logout">
+            <Logout onLogOut={logout} />
+          </Modal.Window>
+          <Modal.Window name="deleteacc">
+            <DeleteAccount />
+          </Modal.Window>
+        </Modal>
+      )}
+    </>
   );
 };
 

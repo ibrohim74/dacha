@@ -18,6 +18,7 @@ export default function Catalogue({ products, isLoading, currentTab }) {
   const { t } = useTranslation();
   const { isValidBooking } = useSearch();
   const [cottageTags, setCottageTags] = useState(null);
+  const [loadingTags, setLoadingTags] = useState(false);
   const { filterParams, searchParams } = useContext(CatalogueContext);
 
   function findMinMaxPrice(cottages) {
@@ -34,18 +35,21 @@ export default function Catalogue({ products, isLoading, currentTab }) {
     return data;
   }
 
-  useEffect(() => {
-    const fetchCottageTags = async () => {
-      isLoading;
+  useMemo(() => {
+    setLoadingTags(true);
 
+    const fetchCottageTags = async () => {
       try {
-        const allTags = [];
-        for (const product of products) {
+        const allPromises = products.map(async (product) => {
           const tags = await getAccommodationTags(product.id, product.type);
-          allTags.push({ id: product.id, tags });
-        }
+          // console.log(product.type);
+          return { id: product.id, tags };
+        });
+
+        const allTags = await Promise.all(allPromises);
         setCottageTags(allTags);
-        console.log("everything is okay");
+        setLoadingTags(false);
+        // console.log("everything is okay");
       } catch (error) {
         console.error("Error fetching cottage tags:", error);
       }
@@ -123,7 +127,7 @@ export default function Catalogue({ products, isLoading, currentTab }) {
         <Form />
       </div>
 
-      {isLoading ? (
+      {isLoading || loadingTags ? (
         <Loader />
       ) : (
         <div className={styles["catalogue-layout"]}>

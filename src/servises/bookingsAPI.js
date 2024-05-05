@@ -33,7 +33,14 @@ export const bookingAPI = createApi({
       query: (seller_id) => `/seller/${seller_id}/bookings`,
     }),
     getCustomerBookings: builder.query({
-      query: (customer_id) => `/customer/${customer_id}/bookings`,
+      query: (args) => {
+        const { customer_id, status } = args;
+        console.log(status);
+        return {
+          url: `/customer/${customer_id}/bookings`,
+          params: status,
+        };
+      },
     }),
     getSellerRequests: builder.query({
       query: (seller_id) => `/seller/${seller_id}/requests`,

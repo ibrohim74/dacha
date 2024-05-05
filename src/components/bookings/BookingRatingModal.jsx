@@ -18,16 +18,16 @@ export const BookingRatingModal = ({
   const [updatingReview, setUpdatingReview] = useState({ ...initialReview });
   const [userRating, setUserRating] = useState("");
 
-  console.log(updatingReview);
+  // console.log(updatingReview);
 
   const [createReview, { error, isLoading }] = useCreateReviewMutation();
   const [updateReview, { error: updateError, isLoading: isUpdating }] =
     useUpdateReviewMutation();
 
   const userReview = {
-    accommodation_id: "1",
+    accommodation_id: "5",
     accommodation_type: "dacha",
-    title: "Without a title for now",
+    title: newReview.title,
     body: newReview.body,
     rating: userRating,
   };
@@ -41,7 +41,7 @@ export const BookingRatingModal = ({
   // };
 
   const updatedReview = {
-    title: "Title of the review",
+    title: updatingReview.title,
     body: updatingReview.body,
     rating: updatingReview.rating,
   };
@@ -53,6 +53,23 @@ export const BookingRatingModal = ({
         <StarRating
           onSetRating={setUserRating}
           rating={initialReview ? updatingReview.rating : newReview.rating}
+        />
+      </div>
+
+      <div className={styles["booking-rating-item"]}>
+        <label htmlFor="">Title of the review</label>
+        <input
+          type="text"
+          value={initialReview ? updatingReview.title : newReview.title}
+          onChange={
+            initialReview
+              ? (e) =>
+                  setUpdatingReview({
+                    ...updatingReview,
+                    title: e.target.value,
+                  })
+              : (e) => setNewReview({ ...newReview, title: e.target.value })
+          }
         />
       </div>
 
@@ -73,7 +90,7 @@ export const BookingRatingModal = ({
                   setUpdatingReview({ ...updatingReview, body: e.target.value })
               : (e) => setNewReview({ ...newReview, body: e.target.value })
           }
-        ></textarea>
+        />
       </div>
 
       <div className={styles["booking-rating-btn"]}>
@@ -88,7 +105,7 @@ export const BookingRatingModal = ({
         {initialReview && (
           <Button
             type="full-width-primary"
-            onClick={() => updateReview({ review_id: 1, ...updatedReview })}
+            onClick={() => updateReview({ review_id: 2, ...updatedReview })}
           >
             {t("change")}
           </Button>

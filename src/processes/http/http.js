@@ -17,11 +17,11 @@ const $authHost = axios.create({
   baseURL: baseURL,
 });
 
-const updateAuthHeader = (token) => {
+export const updateAuthHeader = (token) => {
   $authHost.defaults.headers.Authorization = `Bearer ${token}`;
 };
 
-const refreshToken = async (thunkAPI) => {
+const refreshToken = async () => {
   try {
     const response = await axios.post(`${BASE_URL}refresh_token`, null, {
       headers: {
@@ -75,6 +75,6 @@ $host.interceptors.response.use(
   }
 );
 
-setInterval(refreshToken, 20 * 60 * 1000);
+// setInterval(refreshToken, 20 * 60 * 1000);
 
 export { $authHost, $host, refreshToken };

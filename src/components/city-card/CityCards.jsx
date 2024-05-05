@@ -1,27 +1,30 @@
 /* eslint-disable */
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./CityCard.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import { Navigation } from "swiper/modules";
-import useUserLocation from "../../hooks/useUserLocation";
 import { citiesData } from "./citiesDatabase";
 import { ABOUT_CITY } from "../../processes/utils/consts";
 import { useNavigate } from "react-router-dom";
+import { isEmptyObject } from "../../helpers/isEmptyObj";
+import { UserLocationContext } from "../../context/UserLocation";
 
 export default function CityCards() {
   const { t } = useTranslation();
-  const { userLocation, emptyLocation } = useUserLocation();
 
-  console.log(userLocation);
-  console.log(emptyLocation);
+  const { userLocation } = useContext(UserLocationContext);
+  const location = localStorage.getItem("userLocation");
+
+  // console.log(userLocation);
+  // console.log(location);
 
   return (
     <>
-      {emptyLocation && (
+      {!location && (
         <div className={styles["cities-wrapper"]}>
           <Swiper
             slidesPerGroup={2.8}
@@ -42,7 +45,7 @@ export default function CityCards() {
           </Swiper>
         </div>
       )}
-      {!emptyLocation && (
+      {location && (
         <CityCard
           title={t("city_card_city_bukhara")}
           descr={t("city_card_descr_bukhara")}

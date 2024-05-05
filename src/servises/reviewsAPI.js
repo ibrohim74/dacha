@@ -8,17 +8,21 @@ export const reviewsAPI = createApi({
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
+    // mode: "cors",
   }),
   endpoints: (builder) => ({
     getReviewById: builder.query({
       query: (review_id) => `/reviews/${review_id}`,
     }),
     updateReview: builder.mutation({
-      query: ({ review_id, ...data }) => ({
-        url: `/reviews/${review_id}`,
-        method: "PUT",
-        body: { ...data },
-      }),
+      query: ({ review_id, ...data }) => {
+        console.log(data);
+        return {
+          url: `/reviews/${review_id}`,
+          method: "PUT",
+          body: { ...data },
+        };
+      },
     }),
     deleteReview: builder.mutation({
       query: (review_id) => ({

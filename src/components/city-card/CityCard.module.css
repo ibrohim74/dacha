@@ -68,6 +68,7 @@
 .city-card {
   width: 100%;
   height: 15.6rem;
+  position: relative;
   border-radius: 20px;
   background-color: var(--brand-color-2);
   display: flex;
