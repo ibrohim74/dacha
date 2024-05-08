@@ -12,6 +12,7 @@ import { CatalogueContext } from "../../context/CatalogueContext";
 import { useGetAllTagsQuery } from "../../servises/tagsAPI";
 import i18next from "i18next";
 import { FilterBox } from "./FilterBox";
+import FilterStarRating from "./FilterStarRating";
 
 export default function Filter({ priceRange, currentTab }) {
   const { t } = useTranslation();
@@ -21,10 +22,9 @@ export default function Filter({ priceRange, currentTab }) {
     useContext(CatalogueContext);
 
   const [selectedTags, setSelectedTags] = useState(filterParams.tags || []);
-  const [isSelected, setIsSelected] = useState(false);
 
-  // const { data: allTags } = useGetAllTagsQuery();
-  // console.log(allTags);
+  const { data: allTags } = useGetAllTagsQuery();
+  console.log(allTags);
 
   //simulating that we have tags
   const tags = [
@@ -37,10 +37,6 @@ export default function Filter({ priceRange, currentTab }) {
 
   const handleLocationChange = (event) => {
     updateFilter({ locationName: event.target.value });
-  };
-  const handleRatingChange = (value) => {
-    updateFilter({ minRating: value });
-    setIsSelected(!isSelected);
   };
 
   const handleTagChange = (tag) => {
@@ -102,26 +98,7 @@ export default function Filter({ priceRange, currentTab }) {
                   </div>
                 </div>
 
-                <div className={styles["filter-item-box"]}>
-                  <label htmlFor="">{t("filter_rating")}</label>
-                  <div className={styles["boxes-wrapper"]}>
-                    <FilterBox onClick={() => handleRatingChange(1)}>
-                      <Icons.Star /> <span>1</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(2)}>
-                      <Icons.Star /> <span>2</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(3)}>
-                      <Icons.Star /> <span>3</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(4)}>
-                      <Icons.Star /> <span>4</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(5)}>
-                      <Icons.Star /> <span>5</span>
-                    </FilterBox>
-                  </div>
-                </div>
+                <FilterStarRating />
 
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="">{t("filter_distance")}</label>
@@ -160,26 +137,7 @@ export default function Filter({ priceRange, currentTab }) {
                   </div>
                 </div>
 
-                <div className={styles["filter-item-box"]}>
-                  <label htmlFor="">{t("filter_rating")}</label>
-                  <div className={styles["boxes-wrapper"]}>
-                    <FilterBox onClick={() => handleRatingChange(1)}>
-                      <Icons.Star /> <span>1</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(2)}>
-                      <Icons.Star /> <span>2</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(3)}>
-                      <Icons.Star /> <span>3</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(4)}>
-                      <Icons.Star /> <span>4</span>
-                    </FilterBox>
-                    <FilterBox onClick={() => handleRatingChange(5)}>
-                      <Icons.Star /> <span>5</span>
-                    </FilterBox>
-                  </div>
-                </div>
+                <FilterStarRating />
 
                 <div className={styles["filter-item-box"]}>
                   <label htmlFor="">{t("filter_distance")}</label>

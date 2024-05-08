@@ -23,7 +23,7 @@ export default function FilterServices() {
     updateFilter({ tags: updatedSelectedTags });
   };
 
-  console.log(selectedTags);
+  // console.log(selectedTags);
 
   return (
     <ul className={styles["filter-tags"]}>

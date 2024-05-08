@@ -6,17 +6,23 @@ import { CalendarMonth } from "@mui/icons-material";
 import Button from "../Button/Button";
 import { useTranslation } from "react-i18next";
 import { CatalogueContext } from "../../context/CatalogueContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  COTTAGES_CATALOGUE_ROUTE,
+  HOTELS_CATALOGUE_ROUTE,
+} from "../../processes/utils/consts";
 
 export default function Form({ type = "globalSearch" }) {
   const { t } = useTranslation();
   const { updateSearch } = useContext(CatalogueContext);
+  const navigate = useNavigate();
+
+  const pathname = useLocation();
 
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [numGuests, setNumGuests] = useState(1);
-
-  // console.log(window.location);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,12 +33,12 @@ export default function Form({ type = "globalSearch" }) {
       guests: numGuests,
     });
 
-    // if (
-    //   window.pathname != "/cottages_catalogue" ||
-    //   window.pathname != "/hotels_catalogue"
-    // ) {
-    //   window.location.assign("/cottages_catalogue");
-    // }
+    if (
+      pathname != COTTAGES_CATALOGUE_ROUTE ||
+      pathname != HOTELS_CATALOGUE_ROUTE
+    ) {
+      navigate(COTTAGES_CATALOGUE_ROUTE);
+    }
   };
 
   return (

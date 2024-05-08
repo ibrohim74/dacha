@@ -53,6 +53,8 @@ export default function AccomodationCard({ accommodation }) {
     id,
     type
   );
+
+  console.log(cottageTags);
   const [mutate, error, isLoading] = useCreateFeaturedMutation();
 
   // console.log(favourites);

@@ -10,17 +10,15 @@ import { Navigation } from "swiper/modules";
 import { citiesData } from "./citiesDatabase";
 import { ABOUT_CITY } from "../../processes/utils/consts";
 import { useNavigate } from "react-router-dom";
-import { isEmptyObject } from "../../helpers/isEmptyObj";
 import { UserLocationContext } from "../../context/UserLocation";
+import { getWeather } from "../../helpers/getWeather";
+import { findLocationRegion } from "../../helpers/findLocationRegion";
 
 export default function CityCards() {
   const { t } = useTranslation();
 
   const { userLocation } = useContext(UserLocationContext);
   const location = localStorage.getItem("userLocation");
-
-  // console.log(userLocation);
-  // console.log(location);
 
   return (
     <>
@@ -47,39 +45,49 @@ export default function CityCards() {
       )}
       {location && (
         <CityCard
-          title={t("city_card_city_bukhara")}
-          descr={t("city_card_descr_bukhara")}
+          location={location}
           img={require("../../assets/citycard-image.png")}
-          weather={{ weatherDeg: 17, weatherDescr: "облачно" }}
         />
       )}
     </>
-    // <CityCard
-    //   title={t("geolocation_request")}
-    //   descr={t("geolocation_request_descr")}
-    //   img={require("../../assets/geolocation_request.png")}
-    //   weather={{ weatherDeg: "", weatherDescr: "" }}
-    // />
   );
 }
 
-export function CityCard({ title, descr, img, weather }) {
+export function CityCard({ img, location }) {
   const { t } = useTranslation();
-  const { weatherDeg, weatherDescr } = weather;
+
+  const [temp, setTemp] = useState("");
+  const [condition, setCondition] = useState("");
+
+  const userLocation = JSON.parse(location);
+  const { latitude, longitude } = userLocation;
+
+  const region = findLocationRegion(latitude, longitude);
+
+  getWeather(latitude, longitude)
+    .then((weatherData) => {
+      if (weatherData) {
+        setTemp(weatherData.current.temp_c);
+        setCondition(weatherData.current.condition.icon);
+      } else {
+        console.log("Failed to retrieve weather data");
+      }
+    })
+    .catch((error) => console.error(error));
 
   return (
     <div className={styles["city-card"]}>
       <div className={styles["city-card-info"]}>
-        <h4>{title}</h4>
-        <p>{descr}</p>
+        <h4>{region.name}</h4>
+        <p>{region.descr}</p>
       </div>
       <img src={img} alt="city-card" className={styles["city-card-img"]} />
-      {weatherDeg && weatherDescr && (
+      {temp && (
         <div className={styles["city-card-weather-box"]}>
           <p>{t("weather")}</p>
-          <div>
-            {weatherDeg}&deg;
-            {weatherDescr}
+          <div className={styles["city-card-weather-info"]}>
+            <p className={styles["city-card-weather-info-deg"]}>{temp}&deg;</p>
+            <img src={condition} alt="weather-icon" />
           </div>
         </div>
       )}
@@ -100,7 +108,7 @@ const PreviewCityCard = ({ city }) => {
     <div className={styles["preview-city-card"]}>
       <span>{name}</span>
       <img alt={name} src={img[0].imgPath} />
-      <button onClick={handleCityClick}>Выбрать</button>
+      <button onClick={handleCityClick}>{t("choose")}</button>
     </div>
   );
 };

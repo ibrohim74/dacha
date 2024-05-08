@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.7",
     "@mui/x-charts": "^6.19.8",
     "@mui/x-data-grid": "^5.17.2",
+    "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.3",
     "@splidejs/react-splide": "^0.7.12",
     "@testing-library/jest-dom": "^5.17.0",

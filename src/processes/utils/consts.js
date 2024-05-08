@@ -1,5 +1,6 @@
 export const BASE_URL = "https://visitca.travel/api";
 export const GOOGLE_STORAGE_URL = "https://storage.googleapis.com";
+export const WEATHER_BASE_URL = "http://api.weatherapi.com/v1/current.json";
 
 //Public routes
 export const HOME_ROUTE = "/";

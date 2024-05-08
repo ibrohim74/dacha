@@ -107,12 +107,28 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 45%;
-  right: 10%;
+  top: 41%;
+  right: 11%;
   font-size: 24px;
 }
 
-.city-card-weather-box p {
+.city-card-weather-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-card-weather-info-deg {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.city-card-weather-info img {
+  width: 35px;
+  height: 35px;
+}
+
+.city-card-weather-box > p {
   font-size: 14px;
 }
 
