@@ -98,6 +98,7 @@ export function CityCard({ img, location }) {
 const PreviewCityCard = ({ city }) => {
   const { id, name, img, latitude, longitude } = city;
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleCityClick = () => {
     const route = ABOUT_CITY.replace(":id", id);
