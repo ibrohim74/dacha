@@ -7,7 +7,11 @@ export async function getWeather(latitude, longitude) {
 
   // WEATHER_BASE_URL = "http://api.weatherapi.com/v1/current.json";
 
-  const url = `${WEATHER_BASE_URL}??key=${apiKey}&q=${latitude},${longitude}`;
+  const url = `${WEATHER_BASE_URL}?key=${apiKey}&q=${latitude},${longitude}`;
+
+  // http://api.weatherapi.com/v1/current.json??key=21c332391c804785aa885105240605&q=41.3138944,69.3141504
+
+  // http://api.weatherapi.com/v1/current.json?key=21c332391c804785aa885105240605&q=41.2994958,69.2400734
 
   try {
     const response = await fetch(url);
